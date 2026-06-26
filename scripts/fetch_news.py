@@ -20,6 +20,7 @@ from datetime import datetime, timedelta, timezone
 
 import feedparser
 import httpx
+from bs4 import BeautifulSoup
 
 from common import CACHE_DIR, env_int, env_str, log, write_json
 
@@ -45,7 +46,7 @@ HN_PER_QUERY = env_int("NEWS_HN_PER_QUERY", 10)
 REDDIT_FEEDS = [
     f.strip() for f in env_str(
         "NEWS_REDDIT_SUBS",
-        "LocalLLaMA,MachineLearning,singularity,OpenAI",
+        "LocalLLaMA,MachineLearning,singularity,OpenAI,ClaudeAI,ArtificialInteligence,MistralAI,StableDiffusion",
     ).split(",") if f.strip()
 ]
 REDDIT_PER_SUB = env_int("NEWS_REDDIT_PER_SUB", 25)
@@ -57,15 +58,33 @@ REDDIT_PER_SUB = env_int("NEWS_REDDIT_PER_SUB", 25)
 CHINESE_FEEDS: list[tuple[str, str, bool]] = [
     ("qbitai",   "https://www.qbitai.com/feed",   True),   # ai_focused=True
     ("infoq-ai", "https://www.infoq.cn/feed/ai",  True),
+    ("aigc-cn",  "https://www.aigc.cn/feed",      True),   # 新智元 / AIGC.cn
+    ("zhidx",    "https://www.zhidx.com/feed",    False),  # 智东西，general-ish
+    ("leiphone", "https://www.leiphone.com/feed", False),  # 雷峰网，general-ish
     ("36kr",     "https://36kr.com/feed",         False),  # general tech, needs filter
 ]
 CN_PER_FEED = env_int("NEWS_CN_PER_FEED", 20)
 CN_WINDOW_HOURS = env_int("NEWS_CN_WINDOW_HOURS", 48)
 
+# Domestic sites without stable RSS. Best-effort HTML extraction; failures do
+# not break the run. `ai_focused=True` means downstream keeps the item even if
+# the short title/snippet does not hit the broad CN keyword regex.
+CN_PAGE_FEEDS: list[tuple[str, str, bool]] = [
+    ("jiqizhixin", "https://www.jiqizhixin.com/", True),       # 机器之心
+    ("aibase",     "https://www.aibase.com/zh/news", True),    # AIbase 中文资讯
+]
+CN_PAGE_PER_SITE = env_int("NEWS_CN_PAGE_PER_SITE", 20)
+
 # Industry / applied-ML blog RSS — high signal for an e-commerce / recsys /
 # agent practitioner (production write-ups + curated digests). All AI-focused
 # so they bypass the keyword gate. Blogs post infrequently → wider window.
 BLOG_FEEDS: list[tuple[str, str]] = [
+    ("openai-news",    "https://openai.com/news/rss.xml"),
+    ("google-ai",      "https://blog.google/technology/ai/rss/"),
+    ("deepmind",       "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/rss/"),
+    ("nvidia-ai",      "https://blogs.nvidia.com/blog/category/deep-learning/feed/"),
+    ("meta-ai",        "https://ai.meta.com/blog/rss/"),
+    ("paperswithcode", "https://paperswithcode.com/feed.xml"),
     ("amazon-science", "https://www.amazon.science/index.rss"),
     ("eugeneyan",      "https://eugeneyan.com/rss/"),
     ("netflix-tech",   "https://netflixtechblog.com/feed"),
@@ -104,7 +123,7 @@ def fetch_hn(query: str) -> list[NewsItem]:
     params = {
         "query": query,
         "tags": "story",
-        "numericFilters": f"created_at_i>{cutoff},points>={HN_MIN_POINTS}",
+        "numericFilters": [f"created_at_i>{cutoff}", f"points>={HN_MIN_POINTS}"],
         "hitsPerPage": HN_PER_QUERY,
     }
     try:
@@ -173,6 +192,53 @@ def fetch_chinese_feed(name: str, url: str, ai_focused: bool) -> list[NewsItem]:
             snippet=_strip_html(e.get("summary", ""))[:400],
             ai_focused=ai_focused,
         ))
+    return out
+
+
+def fetch_chinese_page(name: str, url: str, ai_focused: bool) -> list[NewsItem]:
+    log.info("fetching cn-page:%s", name)
+    try:
+        with httpx.Client(timeout=TIMEOUT, headers={"User-Agent": UA}, follow_redirects=True) as cli:
+            r = cli.get(url)
+            r.raise_for_status()
+            body = r.text
+    except Exception as exc:
+        log.warning("cn page fetch failed %s: %s", name, exc)
+        return []
+
+    try:
+        soup = BeautifulSoup(body, "html.parser")
+    except Exception as exc:
+        log.warning("cn page parse failed %s: %s", name, exc)
+        return []
+
+    out: list[NewsItem] = []
+    seen: set[str] = set()
+    for a in soup.select("a[href]"):
+        title = " ".join(a.get_text(" ", strip=True).split())
+        href = (a.get("href") or "").strip()
+        if len(title) < 8 or not href:
+            continue
+        if href.startswith("/"):
+            href = url.rstrip("/") + href
+        if not href.startswith("http") or href in seen:
+            continue
+        # Keep only likely article links; this avoids nav/category/footer noise.
+        if name == "aibase" and "/news/" not in href:
+            continue
+        if name == "jiqizhixin" and not re.search(r"/articles/|/article/", href):
+            continue
+        seen.add(href)
+        out.append(NewsItem(
+            title=title[:300],
+            url=href,
+            source=f"cn:{name}",
+            published="",
+            snippet="",
+            ai_focused=ai_focused,
+        ))
+        if len(out) >= CN_PAGE_PER_SITE:
+            break
     return out
 
 
@@ -277,6 +343,14 @@ def main():
              len(CHINESE_FEEDS), CN_PER_FEED, CN_WINDOW_HOURS)
     for name, url, ai_focused in CHINESE_FEEDS:
         for it in fetch_chinese_feed(name, url, ai_focused):
+            if it.url not in items:
+                items[it.url] = it
+        time.sleep(0.5)
+
+    log.info("Chinese page sources: %d sources × %d each",
+             len(CN_PAGE_FEEDS), CN_PAGE_PER_SITE)
+    for name, url, ai_focused in CN_PAGE_FEEDS:
+        for it in fetch_chinese_page(name, url, ai_focused):
             if it.url not in items:
                 items[it.url] = it
         time.sleep(0.5)
