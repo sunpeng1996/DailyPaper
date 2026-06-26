@@ -1,0 +1,37 @@
+---
+title: How Post-Training Shapes Biological Reasoning Models
+title_zh: How Post-Training Shapes Biological Reasoning Mode
+authors:
+- Lukas Fesser
+- Hanlin Zhang
+- Michelle M. Li
+- Eric Wang
+- Bryan Perozzi
+- Shekoofeh Azizi
+- Sham M. Kakade
+- Marinka Zitnik
+arxiv_id: '2606.16517'
+url: https://arxiv.org/abs/2606.16517
+pdf_url: https://arxiv.org/pdf/2606.16517
+published: '2026-06-14'
+collected: '2026-06-26'
+category: Multimodal
+direction: Multimodal
+tags:
+- Multimodal
+- LLM
+one_liner: Scientific reasoning models for biology combine language models with foundation
+  models trained...
+practical_value: '- 可先根据论文标题和摘要判断是否进入人工精读列表。
+
+  - 当前未配置 DeepSeek API Key，已使用规则摘要兜底；配置 Key 后会恢复中文精读、打分和业务可借鉴点生成。'
+score: 8
+source: huggingface-daily
+depth: abstract
+---
+
+### 摘要
+
+Scientific reasoning models for biology combine language models with foundation models trained on multimodal biological data, including DNA, RNA, and proteins. These models are built through post-training, yet how each stage shapes reasoning and generalization remains poorly understood. We study when post-training improves performance and when it induces over-specialization. Across genomics, transcriptomics, and proteins, we train and evaluate more than 100 biological reasoning models under controlled variation in backbone, continued pre-training (CPT), supervised fine-tuning (SFT), and reinforcement learning (RL), measuring both in-domain (ID) and out-of-domain (OOD) performance. We find that each post-training stage reshapes generalization in a distinct way rather than contributing uniform gains. CPT improves downstream performance by aligning models with biological language. SFT consistently increases ID performance but causes OOD performance to peak early and decline as models fit the training distribution. RL, when applied to strong SFT checkpoints with aligned rewards, improves OOD performance and partially recovers generalization. These results show that biological reasoning does not improve monotonically with additional supervision or compute. Instead, performance depends on how training stages are composed. Under fixed post-training budgets, the strongest ID-OOD trade-off comes from brief SFT, larger RL allocations, and asymmetric adaptation capacity across stages.
+
+> 当前运行未检测到 DeepSeek API Key，本卡片由规则降级流程生成。

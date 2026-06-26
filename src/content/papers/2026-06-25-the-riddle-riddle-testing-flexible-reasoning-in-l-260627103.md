@@ -1,0 +1,34 @@
+---
+title: 'The Riddle Riddle: Testing Flexible Reasoning in Large Language Models and
+  Humans'
+title_zh: 'The Riddle Riddle: Testing Flexible Reasoning in L'
+authors:
+- Bella Fascendini
+- Kathryn McGregor
+- Max D. Gupta
+- Thomas L. Griffiths
+arxiv_id: '2606.27103'
+url: https://arxiv.org/abs/2606.27103
+pdf_url: https://arxiv.org/pdf/2606.27103
+published: '2026-06-25'
+collected: '2026-06-26'
+category: RAG
+direction: RAG
+tags:
+- RAG
+- LLM
+one_liner: Humans flexibly adapt their reasoning strategies to the requirements of
+  a given problem. Large...
+practical_value: '- 可先根据论文标题和摘要判断是否进入人工精读列表。
+
+  - 当前未配置 DeepSeek API Key，已使用规则摘要兜底；配置 Key 后会恢复中文精读、打分和业务可借鉴点生成。'
+score: 10
+source: arxiv-cs.CL
+depth: abstract
+---
+
+### 摘要
+
+Humans flexibly adapt their reasoning strategies to the requirements of a given problem. Large language models (LLMs) have performed well on many cognitive tasks, however, it is unclear whether this accuracy is a result of pattern matching from training data or flexible reasoning. Here, we introduce a novel paradigm to test this question: the riddle riddle paradigm. Riddle riddles are word problems written to mimic popular riddles, but altered so their answers only require literal interpretations. Identifying correct answers requires looking past the structure of each question and flexibly apply different reasoning strategies based on the content. If LLMs respond to surface features, such as form, a riddle-like structure should cause models to use an inventive reasoning strategy even when a literal interpretation suffices. Alternatively, if LLMs reason based on content, they should flexibly switch strategies when appropriate. Across two experiments with nine state-of-the-art LLMs and 100 human participants, we show humans and LLMs fail on this paradigm in opposite directions. LLMs were far more accurate on genuine riddles than on riddle riddles (84.9% vs. 50.7%); whereas humans showed the reverse effect (50.5% vs. 80.5%). Error analysis shows that 90.8% of LLM errors on riddle riddles (the condition where they show diminished performance) were due to inappropriate use of inventive reasoning while only 57.6% of human errors on genuine riddles were due to overextending literal reasoning. Thus, while both groups make mistakes, reasoning mistakes are made more often by LLMs than by humans. Overall, LLMs' strong performance on genuine riddles may reflect memory retrieval rather than flexible strategy selection, and without stimuli designed to elicit this contrast, it becomes easy to conflate LLM-generated outputs that look like reasoning with genuine reasoning.
+
+> 当前运行未检测到 DeepSeek API Key，本卡片由规则降级流程生成。
