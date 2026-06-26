@@ -50,9 +50,6 @@ jobs:
   digest:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -71,7 +68,7 @@ jobs:
           pip install -r requirements.txt
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-      # ---- agent pipeline (no feishu yet — push that AFTER deploy) ----
+      # ---- agent pipeline ----
       - name: Fetch papers
         run: python scripts/fetch.py
       - name: Process papers
@@ -118,14 +115,20 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
 
-      # ---- notify last, so card links resolve against the fresh deploy ----
-      # Non-fatal: the site is already deployed by this point. A Feishu
-      # misconfig (wrong chat_id / bot not in group) must not red-flag the
-      # whole run. The error still shows in this step's log.
+      # Non-fatal: Feishu misconfig (wrong chat_id / bot not in group) must not
+      # red-flag content generation or Pages deployment.
       - name: Push Feishu digest
         continue-on-error: true
         run: python scripts/push_feishu.py
+
+  deploy:
+    needs: digest
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
