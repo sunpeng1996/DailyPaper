@@ -1,0 +1,90 @@
+{
+  "interests": {
+    "description": "前置筛选：只保留 Agent、多模态大模型、后训练、生成式搜推相关内容。",
+    "keywords": [
+      "agent",
+      "agents",
+      "tool use",
+      "tool-use",
+      "function calling",
+      "workflow",
+      "trajectory",
+      "mcp",
+      "swe-agent",
+      "web agent",
+      "multimodal",
+      "multi-modal",
+      "vision-language",
+      "vision language",
+      "vlm",
+      "vla",
+      "video-language",
+      "image understanding",
+      "qwen-vl",
+      "qwen2-vl",
+      "qwen3-vl",
+      "post-training",
+      "post training",
+      "alignment",
+      "instruction tuning",
+      "sft",
+      "rlhf",
+      "dpo",
+      "ppo",
+      "grpo",
+      "reward model",
+      "preference optimization",
+      "generative recommendation",
+      "genrec",
+      "recommendation as generation",
+      "semantic id",
+      "semantic ids",
+      "generative retrieval",
+      "neural search",
+      "sponsored search",
+      "recommender",
+      "recommendation",
+      "ranking",
+      "retrieval",
+      "search ranking",
+      "广告",
+      "推荐",
+      "搜推",
+      "生成式推荐",
+      "生成式检索",
+      "多模态",
+      "视觉语言",
+      "智能体",
+      "后训练",
+      "对齐",
+      "奖励模型"
+    ]
+  },
+  "sources": {
+    "arxiv": {
+      "enabled": true,
+      "query": "cat:cs.AI OR cat:cs.CL OR cat:cs.CV OR cat:cs.LG OR cat:cs.IR"
+    },
+    "hugging_face": {
+      "enabled": true,
+      "url": "https://huggingface.co/papers"
+    },
+    "hacker_news": {
+      "enabled": true,
+      "query": "agent OR multimodal OR post-training OR recommendation OR retrieval OR search"
+    },
+    "reddit": {
+      "enabled": true,
+      "subreddits": ["LocalLLaMA", "MachineLearning", "singularity", "ArtificialInteligence"]
+    },
+    "chinese_media": {
+      "enabled": true,
+      "rss": {
+        "机器之心": "https://www.jiqizhixin.com/rss",
+        "量子位": "https://www.qbitai.com/feed",
+        "InfoQ AI": "https://www.infoq.cn/feed/ai",
+        "新智元": "https://www.aigc.cn/rss"
+      }
+    }
+  }
+}
