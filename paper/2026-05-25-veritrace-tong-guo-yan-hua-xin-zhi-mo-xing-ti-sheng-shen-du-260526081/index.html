@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出解释更新、偏差反馈、模式修订三个显式调节循环，让智能体的认知图持续逼近现实"><meta property="og:title" content="VeriTrace: Evolving Mental Models for Deep Research Agents"><meta property="og:description" content="提出解释更新、偏差反馈、模式修订三个显式调节循环，让智能体的认知图持续逼近现实"><meta property="og:type" content="website"><title>VeriTrace: Evolving Mental Models for Deep Research Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26081" target="_blank" rel="noopener">2605.26081</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>VeriTrace: Evolving Mental Models for Deep Research Agents</h1> <p class="title-zh">VeriTrace：通过演化心智模型提升深度研究智能体</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 自我调节与认知图框架</span> </div> <p class="affiliations">University of Cambridge · Technical University of Munich · The Alan Turing Institute</p> <div class="meta">Haolang Zhao, Yunbo Long, Lukas Beckenbauer, Alexandra Brintrup</div> <p class="one-liner">提出解释更新、偏差反馈、模式修订三个显式调节循环，让智能体的认知图持续逼近现实</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/DeepResearch">DeepResearch</a><a class="tag" href="/DailyPaper/tag/Agent">Agent</a><a class="tag" href="/DailyPaper/tag/CognitiveGraph">CognitiveGraph</a><a class="tag" href="/DailyPaper/tag/MentalModel">MentalModel</a><a class="tag" href="/DailyPaper/tag/RegulatoryLoops">RegulatoryLoops</a><a class="tag" href="/DailyPaper/tag/SelfRegulation">SelfRegulation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>反馈驱动的结构化认知更新：将产品/品类知识建模为认知图，引入显式“解释更新”循环，对搜索/爬取到的信息分类（确认、矛盾、填补、意外），避免噪音累积并自动标记冲突，可直接用于电商知识图谱的持续验证与修正。</li><li>偏差感知的动态搜索策略：借鉴“偏差反馈”将搜索结果的期望–现实差距量化为四维信号，路由到五种策略（利用/验证/替换/转向/探索），可落地到推荐系统的多路召回编排，根据召回质量自动切换策略，减少盲目扩大召回的浪费。</li><li>框架级重构处理歧义与变化：“模式修订”允许在发现证据不匹配时重定义概念节点和关系（如拆分、合并、旋转维度），同时保留已有发现不变，可应用于电商问答中的意图重规划，当发现用户原意图与现实商品体系冲突时，自动重构查询结构而非强行填充错误框架。</li><li>可解释的证据溯源：认知图保存了任务ID到发现项的完整链路，写作时按节点提取证据子集并强制引用，适合生成式推荐中要求输出带出处的推荐理由，可直接迁移为带引用的解释生成机制。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：深度研究智能体需要整合多源、不确定的互联信息，现有系统会构建中间层（大纲、信息树等）但缺乏对中间层演化的显式控制，导致错误信息沿依赖关系传播，模型规模被用来弥补调节缺失。作者认为应像心智模型一样，通过反馈持续对齐任务理解与现实。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>设计三个显式调节循环：① 解释更新——新发现对照当前认知图被分类为确认、矛盾、填补或意外，主动塑造信息吸收而不是被动累积；② 偏差反馈——将搜索结果与规划的期望对比，生成四维信号（内容相关度、来源可信度、可访问性障碍、意外发现强度），驱动五种搜索策略（利用/验证/替换/转向/探索），进行有目的的错误恢复；③ 模式修订——当累加反馈表明当前概念框架错误时，执行五个图操作（具象化、增补、轴旋转、修剪、前提纠正），在保留已有证据不变的前提下重构节点和边。</li>
+<li>实现为认知图框架 VeriTrace：节点为概念（带接受标准、发现集合、认知状态），边为探究关系（带探究目标、尝试计数、状态），由规划器、搜索器、阅读器和图管理器协同运行。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 DeepResearch Bench 上，采用相同 Qwen3.5-27B 骨干，VeriTrace 的洞察力（Insight）维度比最强基线高 4.22 个百分点，综合（Overall）高 1.49 个百分点；改用 DeepSeek-V4-Pro 后取得开源系统最佳综合分（55.77）和洞察分（59.56）。</li>
+<li>在 DeepConsult 咨询型查询基准上，胜率比最强基线高 5.9 个百分点。</li>
+<li>消融实验显示：移除偏差反馈使搜索量升至 1.31 倍而质量下降（-1.65 pp）；移除解释更新使搜索量降至 0.42 倍且性能严重恶化（-1.52 pp）；移除模式修订在需要框架调整的查询子集上降幅达 4.75 pp。</li>
+</ul>
+<p><strong>核心洞见</strong>：显式调节循环让代理在搜索过程中维持事实一致的心智模型，从而在源头上提升推理的可靠性，这比单纯扩大模型规模更能有效提升深度研究的质量。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26081&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26081" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26081" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26081" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

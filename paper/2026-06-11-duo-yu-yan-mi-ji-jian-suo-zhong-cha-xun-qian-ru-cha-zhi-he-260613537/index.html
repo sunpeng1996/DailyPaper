@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="英语主导非对称性：非英语文档混合查询有益，英语文档索引纯英语最优，英语是最强混合伙伴"><meta property="og:title" content="When Does Mixing Help? Analyzing Query Embedding Interpolation in Multilingual Dense Retrieval"><meta property="og:description" content="英语主导非对称性：非英语文档混合查询有益，英语文档索引纯英语最优，英语是最强混合伙伴"><meta property="og:type" content="website"><title>When Does Mixing Help? Analyzing Query Embedding Interpolation in Multilingual Dense Retrieval</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13537" target="_blank" rel="noopener">2606.13537</a>  </div> <h1>When Does Mixing Help? Analyzing Query Embedding Interpolation in Multilingual Dense Retrieval</h1> <p class="title-zh">多语言密集检索中查询嵌入插值何时有效？</p> <div class="dir-row"> <span class="direction-chip">🧭 多语言密集检索 · 查询嵌入混合策略</span> </div> <p class="affiliations">National University of Singapore</p> <div class="meta">Tongyao Zhu, Chao-Ming Huang, Min-Yen Kan</div> <p class="one-liner">英语主导非对称性：非英语文档混合查询有益，英语文档索引纯英语最优，英语是最强混合伙伴</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/multilingual dense retrieval">multilingual dense retrieval</a><a class="tag" href="/DailyPaper/tag/query embedding interpolation">query embedding interpolation</a><a class="tag" href="/DailyPaper/tag/code-mixing">code-mixing</a><a class="tag" href="/DailyPaper/tag/BGE-M3">BGE-M3</a><a class="tag" href="/DailyPaper/tag/typological distance">typological distance</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>跨境电商多语言搜索优化：当商品文档主要为非英语语言时，可以尝试将用户查询的英语翻译与原查询嵌入插值，利用英语作为“锚点”提升跨语言理解，实验中非英语文档索引上混合查询均优于单语查询。</li><li>索引语言决定混合策略：若索引中包含大量英语文档（如全球站），建议保持纯英语查询以获得最佳效果，混合反而有害；该非对称性可指导工程上按索引语言动态选择是否启用查询混合。</li><li>选择最佳混合伙伴：英语与任何非英语语言混合均有增益，且是通用最强伙伴；在多语言Agent或推荐系统中，可优先使用英语变体作为辅助表示，无需为每个语言对单独寻优。</li><li>根据语言类型距离调参：当排除英语干扰后，混合收益与语言间类型距离负相关；对于语法结构相近的语言对（如西班牙语-意大利语），可预期更高混合收益，可用于启发式设计混合比例超参数。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多语言社区中用户常混合语言表达单一信息需求，但密集检索对这种混合查询的敏感性缺乏系统分析。本文旨在揭示查询嵌入混合对检索性能的影响规律。</p>
+<p><strong>方法</strong>：在mMARCO数据集上，使用BGE-M3编码器获取平行查询的单语嵌入，通过插值（线性加权）构造混合查询嵌入，系统改变混合比例进行检索实验。分析不同文档语言索引下，混合比例与nDCG@10的关系，并考察语言类型距离等因素。</p>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>最优混合比例在88/105个实验设置中超越最佳单语端点，证明混合整体有益。</li>
+<li>非对称性：对非英语文档索引，混合一致提升性能；对包含英语的文档索引，纯英语查询始终最优。</li>
+<li>英语作为混合伙伴：对任何非英语文档语言，英语混合均带来最大增益，是最强“锚点”。</li>
+<li>控制英语效应后，混合收益与语言类型距离显著负相关（如德语-荷兰语收益高于汉语-芬兰语），表明语言结构越近，混合越有效。</li>
+<li>上述规律在模型规模和系列间保持稳健。</li>
+</ul>
+<p>结论：混合语言查询的敏感性是结构化和可预测的，可指导实际多语言检索系统的查询表示设计。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13537&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13537" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13537" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13537" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

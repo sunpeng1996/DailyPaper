@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="理论揭示均匀与高斯噪声等价性，提出对称伯努利噪声 SymNoise，显著超越 NEFTune"><meta property="og:title" content="Understanding and Improving Noisy Embedding Techniques in Instruction Finetuning"><meta property="og:description" content="理论揭示均匀与高斯噪声等价性，提出对称伯努利噪声 SymNoise，显著超越 NEFTune"><meta property="og:type" content="website"><title>Understanding and Improving Noisy Embedding Techniques in Instruction Finetuning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23171" target="_blank" rel="noopener">2605.23171</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Understanding and Improving Noisy Embedding Techniques in Instruction Finetuning</h1> <p class="title-zh">理解和改进指令微调中的噪声嵌入技术</p> <div class="dir-row"> <span class="direction-chip">🧭 指令微调 · 嵌入噪声注入</span> </div> <p class="affiliations">Johns Hopkins University</p> <div class="meta">Abhay Yadav</div> <p class="one-liner">理论揭示均匀与高斯噪声等价性，提出对称伯努利噪声 SymNoise，显著超越 NEFTune</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Noisy Embeddings">Noisy Embeddings</a><a class="tag" href="/DailyPaper/tag/Instruction Finetuning">Instruction Finetuning</a><a class="tag" href="/DailyPaper/tag/SymNoise">SymNoise</a><a class="tag" href="/DailyPaper/tag/NEFTune">NEFTune</a><a class="tag" href="/DailyPaper/tag/Curvature Regularization">Curvature Regularization</a><a class="tag" href="/DailyPaper/tag/LLaMA">LLaMA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在指令微调中改用对称伯努利噪声（±1 对）替代均匀噪声，实现简单、即插即用，成本极低，可直接提升对话/推荐解释的生成质量。</li><li>噪声缩放定律：不同噪声分布通过规范二阶矩可校准，例如高斯噪声需除以 √3 才能达到与均匀噪声相似的扰动幅度，避免噪声过量导致性能退化。</li><li>双端点扰动（正负同时训练）的曲率正则化设计可迁移至多模态对齐、语义ID 生成等任务，增强局部光滑性，抑制过拟合。</li><li>在电商场景的少量标注指令数据（如商品描述生成、客服多轮对话）上，SymNoise 有助于稳定微调，提升回答多样性和长度质量，且不牺牲标准任务能力。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>指令微调（instruction finetuning）中，NEFTune 通过向嵌入注入均匀噪声大幅提高模型指令跟随能力，但其为何优于常用的高斯噪声一直缺乏解释。此工作旨在揭示噪声类型的等价性条件，并提出更优的噪声策略，从而更高效地利用有限指令数据、防止过拟合。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>理论分析</strong>：推导均匀、高斯、伯努利噪声的期望 L2 范数，证明在相同范数缩放（如高斯除以 √3、伯努利除以 √3）下，不同噪声在微调中表现可比，解释了 NEFTune 中均匀噪声的合理性。</li>
+<li><strong>SymNoise 方法</strong>：向嵌入同时添加对称的伯努利噪声（ε ∈ {-1, 1} 等概率），分别得到正扰动嵌入 X + ε/√3 和负扰动嵌入 X - ε/√3，拼接后输入模型。这隐含地强制模型在嵌入邻域满足 f(x+ε) ≈ f(x-ε)，实现更严格的曲率正则化，而无需直接计算 Hessian。</li>
+<li><strong>算法实现</strong>：沿用 NEFTune 的噪声缩放因子 α/√(Ld)，仅在嵌入层改动前向，训练开销几乎无增加。</li>
+</ul>
+<h3 id="关键结果">关键结果</h3>
+<ul>
+<li>在 LLaMA-2-7B + Alpaca 数据集上，SymNoise 使 AlpacaEval 胜率从 29.79% 跃升至 69.04%，相较 NEFTune 的 64.69% 提升 6.7%。</li>
+<li>在 Evol-Instruct、ShareGPT、OpenPlatypus 四个数据集上平均胜率 75.33%，高于 NEFTune 的 72.80%。</li>
+<li>在 OPT-6.7B、LLaMA-1-7B、LLaMA-2-7B 等多个模型上均一致优于 NEFTune。</li>
+<li>OpenLLM Leaderboard（ARC, HellaSwag, MMLU）任务得分保持或轻微提升，说明生成质量提升不牺牲常识推理能力。</li>
+<li>消融实验：高斯噪声若未适当缩放（除以 √3）则性能退化；单纯伯努利噪声不加对称分量效果不如 SymNoise。生成回复更长但非简单重复，2-gram 重复率相近。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：对称伯努利噪声通过双端点扰动实现更强曲率正则化，是替换均匀噪声的简单高效微调策略，可在多个指令数据集和模型上稳定提升生成质量。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23171&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23171" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23171" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23171" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

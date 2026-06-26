@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="ProAct架构利用空闲时间预测未来需求并主动准备，在ProActEval上减少交互轮次14.8%，降低用户努力11.7%，幻觉率下降28.1%"><meta property="og:title" content="Anticipate and Learn: Unleashing Idle-Time Compute in Proactive Agents"><meta property="og:description" content="ProAct架构利用空闲时间预测未来需求并主动准备，在ProActEval上减少交互轮次14.8%，降低用户努力11.7%，幻觉率下降28.1%"><meta property="og:type" content="website"><title>Anticipate and Learn: Unleashing Idle-Time Compute in Proactive Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.25971" target="_blank" rel="noopener">2605.25971</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Anticipate and Learn: Unleashing Idle-Time Compute in Proactive Agents</h1> <p class="title-zh">预见与学习：释放主动式智能体的空闲计算能力</p> <div class="dir-row"> <span class="direction-chip">🧭 主动式智能体 · 空闲计算优化</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Tencent</p> <div class="meta">Haoyi Hu, Qirong Lyu, Xianghan Kong, Weiwen Liu, Jianghao Lin, Zixuan Guo 等</div> <p class="one-liner">ProAct架构利用空闲时间预测未来需求并主动准备，在ProActEval上减少交互轮次14.8%，降低用户努力11.7%，幻觉率下降28.1%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Proactive Agent">Proactive Agent</a><a class="tag" href="/DailyPaper/tag/Idle-Time Compute">Idle-Time Compute</a><a class="tag" href="/DailyPaper/tag/Future-State Prediction">Future-State Prediction</a><a class="tag" href="/DailyPaper/tag/Memory">Memory</a><a class="tag" href="/DailyPaper/tag/ProActEval">ProActEval</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对话式推荐中的前瞻计算：可借鉴 ProAct 的“对话历史 + 持久记忆 → 未来需求预测”管道，在电商对话助手场景下，利用提问间隙预取候选商品、生成推荐解释，降低用户显式询问轮次。</li><li>价值感知的主动推送：论文的 \(S(z)\) 评分（用户相关性、知识缺口、增量价值、时效性）和 PushScore 门控（信息价值 vs. 打断成本）可直接迁移到主动推荐系统中，决定是否向用户推送推荐卡片，避免骚扰。</li><li>持久记忆与主动维护：ProAct 的 memory layer 持续抽取用户偏好、事实、未决缺口，并将其转化为预测需求，这相当于一种“记忆驱动的意图发现”机制，可嵌入用户长期画像系统，驱动个性化主动触发。</li><li>分离响应与前瞻计算：将部分算力从“请求时推理”迁移到空闲期预计算，尤其适合电商大促等高负载场景，可离线生成候选项并缓存至 KV cache，在线仅需轻量匹配，降低延迟。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前 AI 智能体以被动响应用户请求为主，交互间的空闲时间完全浪费，无法主动准备未来需求。受心理学主动应对策略启发，论文提出将空闲时间转化为“预测—准备—记忆更新”循环，使智能体从静态响应转向持续进化。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>架构</strong>：ProAct 由持久记忆层、未来状态预测（Future‑State Prediction）和空闲时获取（Idle‑Time Acquisition）组成。记忆层维护用户画像、实体事实、对话摘要与待填补的知识缺口。</li>
+<li><strong>未来状态预测</strong>：基于对话历史 (H_t) 与记忆 (M_t) 生成候选未来需求集 (Z_t)，包括局部场景外推、关联主题扩展以及记忆缺口填充，经置信度过滤与去重后输出。</li>
+<li><strong>空闲时获取与门控</strong>：对每个候选 (z) 计算价值分数 (S(z) = w_r r + w_g g + w_v v + w_\tau \tau)（相关性、缺口、增量价值、时效性），仅对通过阈值者分配搜索预算，生成带溯源的知识工件，并通过效用感知门控决定立即推送（push）、排队整合（queue）或静默存储（store）。</li>
+<li><strong>基准</strong>：配套提出 ProActEval，包含 200 个场景、40 个领域，附有可预测需求链与多样化认知画像，用于严格评估主动能力。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 ProActEval 上，相比纯被动基线，ProAct 将完成任务的交互轮数 ((T_{100})) 减少 14.8%，用户显式提问次数（User Effort）降低 11.7%，幻觉率下降 28.1%。</li>
+<li>消融实验表明，无方向性的空闲搜索仅带来微小增益，而定向预测是实现提质减轮的核心。</li>
+<li>在 MemBench 反射记忆任务上，ProAct 达到 10k 上下文 84.3% 和 100k 上下文 86.3% 的准确率，验证记忆系统对长期主动行为的支撑。</li>
+</ul>
+<p><strong>一句话</strong>：真正的主动智能体不是替用户做决策，而是用价值函数在正确时机交付恰到好处的准备，让帮助无感发生。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.25971&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.25971" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.25971" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.25971" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

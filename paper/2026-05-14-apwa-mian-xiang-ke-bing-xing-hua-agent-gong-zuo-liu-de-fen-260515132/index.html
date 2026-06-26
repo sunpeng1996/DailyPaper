@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 APWA，一种将任务自动分解为无干扰子任务并大规模并行执行的分布式多智能体架构，在现有系统失败的场景下实现线性扩展"><meta property="og:title" content="APWA: A Distributed Architecture for Parallelizable Agentic Workflows"><meta property="og:description" content="提出 APWA，一种将任务自动分解为无干扰子任务并大规模并行执行的分布式多智能体架构，在现有系统失败的场景下实现线性扩展"><meta property="og:type" content="website"><title>APWA: A Distributed Architecture for Parallelizable Agentic Workflows</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.15132" target="_blank" rel="noopener">2605.15132</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>APWA: A Distributed Architecture for Parallelizable Agentic Workflows</h1> <p class="title-zh">APWA：面向可并行化 Agent 工作流的分布式多智能体架构</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent</span> </div> <p class="affiliations">Northeastern University</p> <div class="meta">Evan Rose, Tushin Mallick, Matthew D. Laws, Cristina Nita-Rotaru, Alina Oprea</div> <p class="one-liner">提出 APWA，一种将任务自动分解为无干扰子任务并大规模并行执行的分布式多智能体架构，在现有系统失败的场景下实现线性扩展</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/Parallelization">Parallelization</a><a class="tag" href="/DailyPaper/tag/Distributed System">Distributed System</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Agentic Workflow">Agentic Workflow</a> </div>  <div class="content"> <p><strong>动机</strong><br>
+当前基于大模型的多智能体系统（如 AutoGen、Magentic-One）在解决复杂任务时面临推理、协调和计算扩展瓶颈，尤其当任务涉及海量数据或不重叠的子问题时，集中式协调导致串行执行、上下文爆炸或编排失败，无法利用底层并行计算资源。亟需一种能够自动分解任务、支持大规模并行执行且对数据和任务模式无特化假设的分布式架构。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>核心抽象</strong>：引入 Manager（全局任务分解与编排）、Worker（自治解决子任务）和 Executor（分布式资源调度与容错）三层解耦，Manager 仅维护紧凑的元数据，Worker 拥有完全本地状态，消除中心推理瓶颈。</li>
+<li><strong>并行化机制</strong>：通过 <em>subtask templates</em> 和占位符机制实现批量子任务定义，Manager 无需逐一构造每个子任务实例，数据规模与任务逻辑解耦。</li>
+<li><strong>数据抽象</strong>：<em>Data Tables</em> 为 LLM 提供只读、 schema 化的超大规模数据集表示，搭配分析/操作工具，使 Manager 能在不枚举全部数据的前提下推理和重构数据。</li>
+<li><strong>动态能力发现</strong>：<em>Capability Registry</em> 允许 Worker 在运行时加载领域专用工具或 Agent（如 WebSurfer），Manager 通过预设自动匹配能力，实现任务无关性。</li>
+<li><strong>实现</strong>：基于 Ray 框架实现执行器，支持数千个 Worker 并发、自动重试和轻量路由（对简单子任务直接调用 LLM 而非完整 Agent 环境）。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在三个并行化基准上评估：PII-300k（结构化 PII 遮蔽，27 类）、SchemaBench（异构文档结构化提取）和 SummaryBench（层次化摘要，三文本规模 166KB–10.5MB）。对比直接 LLM、Magentic-One 和 MegaAgent：<strong>直接 LLM</strong> 在小输入可工作但在 4096 条记录或 10.5MB 文本时 100% 失败；<strong>Magentic-One</strong> 在所有 SummaryBench 实验中全部失败（编排失误或上下文爆炸）；<strong>MegaAgent</strong> 失败率 60–80%，输出质量近乎为 0。APWA 在所有规模下均完成任务，SummaryBench 失败率 0%，PII-300k 扩展至 4096 条时结构/语义分数分别为 0.9/0.544（直接 LLM 0.75/0.162 但仅 512 条），墙钟时间仅从 19s 增至 221s（近 200× 数据量仅增加约 10× 时间）。在 Web 浏览报告合成实验中，APWA 以 100 个 topic 完成时间 595s，质量>0.975，证明其对异构子 Agent 的编排能力。</p>
+<p><strong>最值得记住的一句话</strong><br>
+APWA 通过 Manager-Worker 的双层规划与大规模并行子任务执行，首次让多智能体系统在数据量远超出单模型上下文窗口时仍能保持高成功率与线性可扩展性，其关键在于<strong>让 LLM 只推理全局元数据，而无需直接处理全量数据</strong>。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.15132&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.15132" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.15132" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.15132" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将分词器嵌入判别式排序模型端到端联合训练，使排序器原生具备生成式检索能力"><meta property="og:title" content="Discrimination Is Generation: Unifying Ranking and Retrieval from a Tokenizer Perspective"><meta property="og:description" content="将分词器嵌入判别式排序模型端到端联合训练，使排序器原生具备生成式检索能力"><meta property="og:type" content="website"><title>Discrimination Is Generation: Unifying Ranking and Retrieval from a Tokenizer Perspective</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14853" target="_blank" rel="noopener">2605.14853</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Discrimination Is Generation: Unifying Ranking and Retrieval from a Tokenizer Perspective</h1> <p class="title-zh">区分即生成：从分词器视角统一排序与检索</p> <div class="dir-row"> <span class="direction-chip">🧭 RecSys</span> </div> <p class="affiliations">Meituan</p> <div class="meta">Shuli Wang, Junwei Yin, Changhao Li, Senjie Kou, Chi Wang, Yinqiu Huang 等</div> <p class="one-liner">将分词器嵌入判别式排序模型端到端联合训练，使排序器原生具备生成式检索能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RecSys">RecSys</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/Discriminative Training">Discriminative Training</a><a class="tag" href="/DailyPaper/tag/Unified Retrieval-Ranking">Unified Retrieval-Ranking</a><a class="tag" href="/DailyPaper/tag/Tokenizer">Tokenizer</a><a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a> </div>  <div class="content"> <p><strong>动机</strong> 生成式推荐将物品量化为语义ID（SID）并通过束搜索实现全库检索，突破了传统漏斗的计算瓶颈。然而，现有SID构建过程与个性化信号完全解耦：分词器仅编码物品静态属性，用户-物品交叉特征（u2i）从未参与码本训练，导致同一个SID对不同用户无区分度，生成式检索持续落后于判别式排序。根本原因在于架构层面——分词器独立训练，判别式梯度无法回传至码本，个性化信号天然缺失。本文重新审视SID的本质：排序在物品空间求argmax，检索在token空间求argmax，二者是同一优化问题在不同粒度上的求解；生成式检索能力早已蕴含在判别式排序模型之中，分词器的角色是将其释放。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>特征分类体系</strong>：将特征分为三类——物品静态特征（Type-I）编码入SID；请求级特征（Type-II）作为排序和检索的条件；用户-物品交叉特征（Type-III）在训练时隐式拉近码本边界至推荐决策边界，推理时通过MLP u2t在token粒度近似。</li>
+<li><strong>统一分词器</strong>：SID解耦为地址码本（VQ+RQ，EMA更新）与语义嵌入（端到端训练），解决了寻址与语义共享的矛盾；离线平衡K-Means树保证零碰撞初始化。</li>
+<li><strong>统一训练</strong>：五部分联合损失——排序BCE、逐层检索BCE、码本承诺损失、语义重构损失及MLP u2t蒸馏损失。每个训练步，同一token桶内物品的u2i特征聚合为u2t，驱动码本分区向用户偏好边界靠拢；MLP u2t学习从用户表示和SID前缀预测个性化u2t，弥补桶内平均的信息损失。</li>
+<li><strong>统一推理</strong>：排序模型直接执行束搜索检索，仅将物品嵌入替换为SID前缀嵌入，并将u2i特征替换为MLP u2t在线输出，检索路径与排序路径共享同一Mixer，从根本上消除传统双系统语义鸿沟。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在5个数据集上（淘宝广告、KuaiRec-S/B、美团大规模及小规模业务），DIG在检索Recall@10上全面超越TIGER、LETTER、DAS、DOS、ETEGRec等基线，同时排序AUC一致提升。稀疏且u2i特征丰富的工业场景增益尤为显著：淘宝Recall@10从0.0007提升至0.0019（+171%），美团小规模从0.0035提升至0.0112（+220%）。排序AUC在淘宝+0.0177，美团小规模+0.0205。消融实验证实，端到端判别式梯度、训练侧u2i信号、推理侧MLP u2t三者缺一不可，且协同效果超过各自独立贡献之和。</p>
+<p>最值得记住的一句话：<strong>排序和检索是同一优化在不同粒度上的求解，判别式排序模型早已内蕴生成式检索能力，分词器只是将其释放。</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14853&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14853" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14853" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14853" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

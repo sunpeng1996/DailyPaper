@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="交替训练框架，利用均衡求解器为多智能体策略提供监督信号，并通过成对分解实现可扩展的博弈训练。"><meta property="og:title" content="DNQ: Deep Nash Q-Network for Partially Observable n-Player Games"><meta property="og:description" content="交替训练框架，利用均衡求解器为多智能体策略提供监督信号，并通过成对分解实现可扩展的博弈训练。"><meta property="og:type" content="website"><title>DNQ: Deep Nash Q-Network for Partially Observable n-Player Games</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06480" target="_blank" rel="noopener">2606.06480</a>  </div> <h1>DNQ: Deep Nash Q-Network for Partially Observable n-Player Games</h1> <p class="title-zh">DNQ：部分可观测 n 人博弈的深度纳什 Q 网络</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体博弈 · 求解器监督策略学习</span> </div>  <div class="meta">Qintong Xie, Edward Koh, Xavier Cadet, Peter Chin</div> <p class="one-liner">交替训练框架，利用均衡求解器为多智能体策略提供监督信号，并通过成对分解实现可扩展的博弈训练。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/Game Theory">Game Theory</a><a class="tag" href="/DailyPaper/tag/Nash Equilibrium">Nash Equilibrium</a><a class="tag" href="/DailyPaper/tag/Bidding">Bidding</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>均衡求解器作为策略监督：对于电商竞价广告、多智能体资源分配等非平稳环境，可直接将外部博弈求解器（如 Nash 均衡计算）生成的目标分布作为策略模仿的监督信号，避免传统 RL 的不稳定训练。</li><li>成对分解降低复杂度：当智能体数量多时，将 n 人博弈分解为每对智能体的双人博弈，大幅降低均衡求解成本和训练时间，适合大规模多智能体场景（如多商家竞价）。</li><li>掩码策略用于合法动作：在策略模仿时对不合法的动作（如超出预算的竞价）进行掩码，只对合法动作分布计算 KL 散度，确保策略始终满足约束，可直接借鉴到带约束的推荐出价策略中。</li><li>共享批评家摊销收益学习：用一个共享网络预测所有智能体对的收益矩阵，减少参数并加速收敛，适用于智能体间存在对称或相似属性的场景，如电商平台多个类似卖家竞价。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多智能体竞争场景（如拍卖、资源分配）中，策略需适应对手的持续变化，传统单智能体 RL 因环境非平稳而失效。亟需一种能学习均衡策略且可扩展的训练方法。</p>
+<p><strong>方法</strong>：提出 DNQ 框架，交替执行四步：收集交互轨迹、用共享批评家估计每对智能体的收益矩阵（成对形式）或完整收益张量（精确形式）、调用博弈求解器（如线性规划）计算纳什均衡策略、通过最小化策略与均衡目标的 KL 散度进行模仿学习。重点设计<strong>成对分解</strong>：将 n 人博弈近似为所有双人博弈的并集，极大降低均衡求解的代价，同时采用动作掩码保证约束满足，共享批评家实现跨智能体和状态的收益预测。</p>
+<p><strong>结果</strong>：实验在多人同步出价环境中对比了成对与精确两种形式。成对方法在 5 智能体以上仍可高效训练，精确方法随 n 增长计算代价爆炸；成对方法的批评损失更低，策略熵适中，资源使用接近均衡策略，验证了可扩展性，但也显示策略保真度与可扩展性之间的折衷。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06480&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06480" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06480" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06480" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

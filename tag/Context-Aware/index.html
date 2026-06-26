@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Context-Aware - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Context-Aware - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Context-Aware</h2> <p style="color: var(--fg-muted); font-size: 14px;">2 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-27-tong-guo-xian-shi-shang-xia-wen-fan-kui-shi-xian-llmtui-jian-260529141">Toward User Preference Alignment in LLM Recommendation via Explicit Context Feedback</a></h2> <p class="title-zh">通过显式上下文反馈实现LLM推荐中的用户偏好对齐</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM推荐 · 显式反馈整合</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">University of Illinois Chicago · Meta</p> <p class="summary">论证将评论文本等显式反馈深度融入LLM推荐流程，以实现细粒度偏好对齐、提升多样性与可解释性</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>评论驱动标签系统：从用户评论中抽取出结构化偏好标签（如 #LightWeightPhone、#NoJumpScares），作为召回过滤信号或重排特征。电商场景下可将标签异步生成并接入实时排序管线，低延迟融合语义理解。</li><li>负面信号图谱构建：将用户明确批评的属性构造成负面偏好图，避免推荐触发用户厌恶的商品（如“电池差”“太甜”），既能减少无效曝光，又能提升信任度。</li><li>用户属性跨域复用：利用用户自述的身份标签（素食主义者、专业摄影师）在不同业务线间传递稳定的偏好约束，实现从商品推荐到内容推荐的跨域对齐。</li><li>可解释性提升：在推荐理由中引用用户的原话或提炼的偏好点（如“因为您提到不喜欢跳跃惊吓，我们避免推荐此类影片”），增强推荐透明度和用户控制感。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span> <span>cs.IR</span> <span class="sep">|</span> <span class="badge badge-score">score 10/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Recommendation">Recommendation</a><a class="tag" href="/DailyPaper/tag/Explicit Feedback">Explicit Feedback</a><a class="tag" href="/DailyPaper/tag/Preference Alignment">Preference Alignment</a><a class="tag" href="/DailyPaper/tag/Context-Aware">Context-Aware</a><a class="tag" href="/DailyPaper/tag/User Profile">User Profile</a> </div> </article><article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-14-latern-ce-shi-shi-shang-xia-wen-gan-zhi-ke-jie-shi-shi-pin-260515054">LATERN: Test-Time Context-Aware Explainable Video Anomaly Detection</a></h2> <p class="title-zh">LATERN：测试时上下文感知可解释视频异常检测</p> <div class="dir-row"> <span class="direction-chip">🧭 视频异常检测 · 上下文感知VLM</span>  </div> <p class="affiliations">University of Iowa</p> <p class="summary">通过上下文感知评分与递归证据聚合，使冻结VLM在测试时能生成连贯的事件级异常解释。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>图像扎根的记忆机制：根据帧多样性和视觉-文本对齐选择性保留历史帧作为上下文，可借鉴到多模态推荐中的时序行为建模，动态保留关键交互帧以增强长期兴趣理解。</li><li>递归证据聚合：分层聚合片段分数形成事件级决策，类似于 Agent 的多轮推理或层次化决策，可用于电商直播中的违规行为检测，从连续帧中逐步确认违规事件。</li><li>冻结 VLM 的测试时增强：不微调模型，仅通过外部记忆和聚合提升性能，适用于难以快速微调的大模型，可在商品描述异常检测或虚假评论识别中叠加类似轻量上下文模块。</li><li>解释一致性优化：显式要求事件级解释需跨段时间一致，对电商客服 Agent 的多轮对话摘要或推荐理由生成有参考价值，避免片段式、前后矛盾的输出。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span> <span>cs.CV</span> <span class="sep">|</span> <span class="badge badge-score">score 6/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Video Anomaly Detection">Video Anomaly Detection</a><a class="tag" href="/DailyPaper/tag/Vision-Language Models">Vision-Language Models</a><a class="tag" href="/DailyPaper/tag/Context-Aware">Context-Aware</a><a class="tag" href="/DailyPaper/tag/Test-Time">Test-Time</a><a class="tag" href="/DailyPaper/tag/Evidence Aggregation">Evidence Aggregation</a><a class="tag" href="/DailyPaper/tag/Explainability">Explainability</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

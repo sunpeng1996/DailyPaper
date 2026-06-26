@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个从头预训练的大规模均匀扩散语言模型，在知识、推理、编码上与同规模自回归模型竞争，常识略弱"><meta property="og:title" content="Sumi: Open Uniform Diffusion Language Model from Scratch"><meta property="og:description" content="首个从头预训练的大规模均匀扩散语言模型，在知识、推理、编码上与同规模自回归模型竞争，常识略弱"><meta property="og:type" content="website"><title>Sumi: Open Uniform Diffusion Language Model from Scratch</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-16">2026-06-16</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.19005" target="_blank" rel="noopener">2606.19005</a>  </div> <h1>Sumi: Open Uniform Diffusion Language Model from Scratch</h1> <p class="title-zh">Sumi：从头预训练的开源7B均匀扩散语言模型</p> <div class="dir-row"> <span class="direction-chip">🧭 均匀扩散语言模型预训练</span> </div> <p class="affiliations">Tohoku University</p> <div class="meta">Mengyu Ye, Keito Kudo, Wataru Ikeda, Ryosuke Matsuda, Keisuke Sakaguchi, Jun Suzuki</div> <p class="one-liner">首个从头预训练的大规模均匀扩散语言模型，在知识、推理、编码上与同规模自回归模型竞争，常识略弱</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Diffusion Language Model">Diffusion Language Model</a><a class="tag" href="/DailyPaper/tag/UDLM">UDLM</a><a class="tag" href="/DailyPaper/tag/Pretraining">Pretraining</a><a class="tag" href="/DailyPaper/tag/7B">7B</a><a class="tag" href="/DailyPaper/tag/Open Source">Open Source</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>扩散生成允许任意位置并行更新，可用于搜索/推荐中的 query 改写、item 描述生成，利用温度调控多样性；微调时可将扩散步数作为可控 knob，平衡质量与延迟。</li><li>在 Agent 场景中，均匀扩散的迭代修订特性适合生成多步推理或计划，支持中途修正输出，相比自回归更灵活。</li><li>教育数据偏重导致常识弱，启示我们在推荐领域微调时需注入大量领域交易日志、用户评论等语料，避免常识缺失影响自然度。</li><li>开源训练配方和完整数据混合说明，可直接复现或调整配比，构建面向电商/广告的垂直 LLM 基座。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：均匀扩散语言模型（UDLM）在理论上更灵活（任意 token 可随时更新），但此前没有从头预训练的大规模版本，阻碍了其与自回归模型（AR）和掩码扩散模型（MDLM）的公平对比与社区研究。<br>
+<strong>方法</strong>：Sumi 采用均匀扩散过程，在每个扩散步允许对所有 token 重新采样，训练 7B 参数模型，使用 1.5T token 公开语料（含大量教育类数据），并公开完整数据配方与训练细节。<br>
+<strong>关键结果</strong>：在 MMLU（知识）、GSM8K（推理）、HumanEval（编码）等基准上与同 token 量的 AR 模型表现相当，但常识基准（如 HellaSwag）明显落后，归因于教育数据主导的训练混合。模型权重、检查点全部开源。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.19005&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.19005" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.19005" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.19005" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

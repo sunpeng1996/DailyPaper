@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出将多模态Agent记忆建模为动作-世界交互循环，构建覆盖写入、更新、检索、使用四阶段诊断的基准"><meta property="og:title" content="WorldMemArena: Evaluating Multimodal Agent Memory Through Action-World Interaction"><meta property="og:description" content="提出将多模态Agent记忆建模为动作-世界交互循环，构建覆盖写入、更新、检索、使用四阶段诊断的基准"><meta property="og:type" content="website"><title>WorldMemArena: Evaluating Multimodal Agent Memory Through Action-World Interaction</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29341" target="_blank" rel="noopener">2605.29341</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>WorldMemArena: Evaluating Multimodal Agent Memory Through Action-World Interaction</h1> <p class="title-zh">WorldMemArena：通过动作-世界交互评估多模态Agent记忆</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态 Agent 记忆评估</span> </div> <p class="affiliations">University of California, Santa Barbara · J.P. Morgan Chase · ETH Zurich · Stanford University · Johns Hopkins University</p> <div class="meta">Chengzhi Liu, Yuzhe Yang, Sophia Xiao Pu, Yepeng Liu, Lin Long, Yichen Guo 等</div> <p class="one-liner">提出将多模态Agent记忆建模为动作-世界交互循环，构建覆盖写入、更新、检索、使用四阶段诊断的基准</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Agent">Multimodal Agent</a><a class="tag" href="/DailyPaper/tag/Memory Evaluation">Memory Evaluation</a><a class="tag" href="/DailyPaper/tag/Action-World Interaction">Action-World Interaction</a><a class="tag" href="/DailyPaper/tag/Memory Lifecycle">Memory Lifecycle</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆评估应分解为写入、更新、检索、使用四个阶段，避免仅看最终问答分数，帮助在电商对话Agent中精确定位失败点（如偏好更新延迟、证据检索错误）。</li><li>多模态记忆（商品图、界面截图）不可简单压缩为文本，需保留视觉细节，否则关键信息丢失会直接影响推荐与问答质量。</li><li>记忆维护需支持修订和遗忘，而非单纯追加；电商中用户兴趣变化、商品状态更新等需及时覆盖，防止过时知识干扰决策。</li><li>自管理记忆（harness）更灵活但成本高，可结合场景采用混合策略：核心任务用结构化记忆，长尾交互尝试自主管理，平衡效果与开销。</li> </ul> </div> <div class="content"> <p><strong>动机</strong> 现有Agent记忆评估以静态对话为主，只看最终问答准确率，无法诊断记忆在写入、更新、检索、使用各环节的失效，且忽视多模态输入和动态交互对记忆的压力。随着Agent开始自建记忆，缺乏统一的四阶段诊断基准。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>将多模态Agent记忆形式化为<strong>动作-世界交互循环</strong>，并定义可观察的四阶段生命周期：观察-写入、更新-整合、检索决策、使用-行动。</li>
+<li>构建 <strong>WorldMemArena</strong> 基准：400个多会话任务，覆盖<strong>终身演化</strong>（个人/项目状态变化）和<strong>Agent执行</strong>（真实轨迹中的观察-动作-反馈），平均每任务18.4个会话、9.1K tokens，包含24,258个QA对和15,595张图片。</li>
+<li>每个会话标注gold memory points、状态更新点、干扰点及证据链，支持按阶段诊断。</li>
+<li>统一对比三类记忆范式：长上下文模型、人工设计的记忆系统（RAG、MemGPT等）、基于harness的记忆Agent（OpenClaw、Codex）。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>高<strong>记忆存储召回</strong>不一定带来高QA正确率：Qwen3-VL-Embedding存储召回86.2%但QA正确率仅51.86%；MemGPT存储召回85.2%却达到57.81% QA正确率。</li>
+<li><strong>多模态记忆仍是瓶颈</strong>：系统在视觉搜索、跨模态推理上性能显著下降（平均QA正确率约0.33-0.55）。</li>
+<li><strong>更新与干扰拒绝普遍较弱</strong>：多数系统更新时间处理正确率约57-59%，干扰拒绝率仅22-32%，倾向追加而非修订。</li>
+<li><strong>Agent执行比终身演化更难</strong>：系统在Agentic Execution任务上QA正确率比Lifelong Evolution低约0.15-0.25。</li>
+<li>Harness记忆Agent（OpenClaw+GPT）QA正确率48.31%，低于部分手动系统但更灵活，不过token消耗和推理成本显著更高。</li>
+</ul>
+<p><strong>值得记住的一句话</strong> 强记忆存储不等于可靠决策；记忆应被当作通过交互不断演化的能力，而非可独立优化的静态模块。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29341&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29341" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29341" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29341" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Sophia - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Sophia - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Sophia</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-20-jiu-zheng-yu-tiao-jian-yu-yan-mo-xing-you-hua-qi-zhong-de-ji-260520756">Correcting Stochastic Update Bias in Preconditioned Language Model Optimizers</a></h2> <p class="title-zh">纠正预条件语言模型优化器中的随机更新偏差</p> <div class="dir-row"> <span class="direction-chip">🧭 预条件优化器偏差校正</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">Fastino Labs</p> <p class="summary">通过微批次交叉拟合与Delta方法逆修正，消除梯度-预条件子耦合和逆预条件有限样本偏差，提升AdamW、Sophia、Shampoo预训练效果</p> <details class="practical"> <summary>📌 工作参考价值（5 点）</summary> <ul> <li>可用于生成式推荐/大模型训练中的优化器改进：当使用AdamW、Sophia、Shampoo等自适应优化器时，将批次拆分为独立子批，分别估计梯度和预条件子，可移除耦合偏差；同时利用子批方差对逆预条件子做泰勒/Jackknife校正，降低逆运算的非线性偏差。代码级实现只需对现有优化器做包装（Algorithm 1），无需改动模型。</li><li>在噪声较大、预条件子估计不稳定的场景（如小批量、低EMA系数）效果更明显：电商推荐模型中若使用对角二阶矩（AdamW）或曲率估计（Sophia），可借鉴本文的Delta方法逆校正，公式为 \(\tilde{T}(\bar{p}_k) = 1/(\bar{p}_k + \lambda) - \widehat{\text{Var}}(\bar{p}_k)/(\bar{p}_k + \lambda)^3\)，仅需维护子批方差，计算开销极小。</li><li>矩阵预条件子（如Shampoo）的校正可在特征基下进行：对于推荐系统中可能的矩阵预条件（如K-FAC），可利用平均预条件子的特征分解，将每个子批投影到该基下，对特征值逐元素校正。避免反复特征分解，工程上可行。</li><li>在Agent多智体训练中，若每个Agent的本地更新可视为微批次，可利用方差校正来提升全局聚合的稳定性：将各Agent本地计算的预条件子统计量视为独立子批，使用Jackknife或方差校正再聚合，降低系统估计偏差，可能提升收敛速度和最终策略质量。</li><li>注意拆分方式要保留原优化器的分母规模：实验显示两折拆分（各用一半数据）会因分母样本减半而增大方差，推荐使用留一法（LOO）构造分母，保持分母接近全批量规模，从而在移除耦合的同时不显著增加噪声。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span> <span>stat.ML</span> <span class="sep">|</span> <span class="badge badge-score">score 8/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Bias Correction">Bias Correction</a><a class="tag" href="/DailyPaper/tag/Preconditioned Optimizer">Preconditioned Optimizer</a><a class="tag" href="/DailyPaper/tag/AdamW">AdamW</a><a class="tag" href="/DailyPaper/tag/Sophia">Sophia</a><a class="tag" href="/DailyPaper/tag/Shampoo">Shampoo</a><a class="tag" href="/DailyPaper/tag/Language Model Pretraining">Language Model Pretraining</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

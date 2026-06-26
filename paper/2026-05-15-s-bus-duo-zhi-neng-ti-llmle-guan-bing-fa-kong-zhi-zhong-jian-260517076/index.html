@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="服务器端 HTTP 日志自动重构读集，实现多智能体共享 NL 状态的乐观并发控制，零 agent 改动。"><meta property="og:title" content="S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination"><meta property="og:description" content="服务器端 HTTP 日志自动重构读集，实现多智能体共享 NL 状态的乐观并发控制，零 agent 改动。"><meta property="og:type" content="website"><title>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.17076" target="_blank" rel="noopener">2605.17076</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</h1> <p class="title-zh">S-Bus：多智能体LLM乐观并发控制中间件</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体一致性中间件 · 乐观并发控制</span> </div>  <div class="meta">Sajjad Khan</div> <p class="one-liner">服务器端 HTTP 日志自动重构读集，实现多智能体共享 NL 状态的乐观并发控制，零 agent 改动。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/DeliveryLog">DeliveryLog</a><a class="tag" href="/DailyPaper/tag/Optimistic Concurrency Control">Optimistic Concurrency Control</a><a class="tag" href="/DailyPaper/tag/Observable-Read Isolation">Observable-Read Isolation</a><a class="tag" href="/DailyPaper/tag/Multi-Agent LLM">Multi-Agent LLM</a><a class="tag" href="/DailyPaper/tag/HTTP Middleware">HTTP Middleware</a><a class="tag" href="/DailyPaper/tag/SWE-bench">SWE-bench</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对于多 agent 协作修改共享 NL 状态（如商品描述、推荐策略片段），可借鉴 DeliveryLog 自动追踪 agent HTTP GET 请求的版本，在提交时做跨键检查，无需 agent 侧编码读集追踪，大幅降低开发负担。</li><li>采用专用 shard 拓扑（每个 agent 拥有独立的写键，只读取共享参考 shard）可天然避免写冲突，同时利用乐观锁防止跨 shard 陈旧读取。电商场景中，多个 agent 可并行修改不同商品的详情，共享品牌规范等只读信息。</li><li>对于非加法性的 NL 状态更新（如覆盖式策略修改），乐观并发控制比 CRDT 或最后写入获胜更安全；HTTP 409 冲突响应可触发 agent 重读并重新生成，保持整体一致性。</li><li>该中间件对现有 agent 框架透明，可直接部署为旁路服务；在 HTTP/1.1 场景下几乎零改造，HTTP/2 下可通过 ARSI 模式强制完备读集重建。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多智能体 LLM 并行读写共享自然语言状态时，产生结构性竞态条件（写覆盖、跨 shard 陈旧读），现有框架缺乏写所有权语义，冲突不易发现。需一种轻量一致性机制保证协作正确性。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出 <strong>DeliveryLog</strong>：服务端为每个 agent 记录其 HTTP GET 请求返回时的 (key, version)，在 agent 提交时自动聚合为读集，无需 agent 显式声明或改造。</li>
+<li>定义一致性模型 <strong>Observable-Read Isolation (ORI)</strong>：基于 HTTP 可观测读集的因果一致性，防止写-写冲突和跨 shard 陈旧读，允许不可观测读集上的写偏斜。</li>
+<li>实现精简中间件（Rust 950 行核心逻辑），结合原子提交锁、跨键版本校验和写前日志，提供乐观并发控制。</li>
+<li>三层次形式验证：TLA+ 模型检查（N=3 下 2076 万状态 0 违反），TLAPS 证明读集单调性和提交安全性（1 个基础公理除外），Dafny 验证 9 个归纳引理。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 SWE-bench 多 agent 代码协调任务上，专用 shard 下 S-Bus 的成功率与框架可比，协调开销极低（CF=0.13 vs LangGraph 6.18）。</li>
+<li>与 PostgreSQL SERIALIZABLE 和 Redis WATCH 对比，在 88 万次提交尝试中零 Type‑I 破坏，安全对等。</li>
+<li>数据管道设计任务中，ORI 开启时 0/638 次提交出现不一致，关闭时 590/639 次不一致。</li>
+<li>可观测读覆盖率：单步 26.1%，会话累积（利用早期 GET 记录）可达 99.8%，但 agent 自报存在 29–37% 过度声明。</li>
+<li>拓扑影响：专用 shard 场景 ORI 语义中性（100% 一致），单 shard 协作写作场景有害（需额外合并策略）。</li>
+<li>分布式故障转移 30/30 ORI 不变式存活，仅剩 5ms 并发故障窗口。</li>
+</ul>
+<p><strong>核心启示</strong>：HTTP 流量本身就是隐式的读集，服务端通过 DeliveryLog 捕获它，即可在不侵入多智能体系统的前提下提供可证明的乐观并发控制。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.17076&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.17076" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.17076" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.17076" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

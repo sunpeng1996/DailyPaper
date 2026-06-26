@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#scene abstraction - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#scene abstraction - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#scene abstraction</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-21-chang-jing-chou-xiang-ci-hui-qing-jing-hua-yi-yi-de-jie-gou-260522542">Scene Abstraction for Lexical Semantics: Structured Representations of Situated Meaning</a></h2> <p class="title-zh">场景抽象：词汇情境化意义的结构化表示</p> <div class="dir-row"> <span class="direction-chip">🧭 基于LLM的词汇场景结构化表示</span>  </div> <p class="affiliations">University of Texas at Austin · University of Massachusetts, Amherst</p> <p class="summary">用LLM少样本提示从语境中提取结构化场景，捕捉词语的情境、属性和情感关联</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>在商品搜索和推荐中，对查询词和商品描述进行场景抽象（事件、实体、氛围、情感），可构建超越纯文本匹配的语义索引，提升长尾查询与相关商品的关联度。</li><li>对话Agent在理解用户意图时，可利用场景轮廓（如“独自喝咖啡”的场景轮廓：专注、提神、清晨）生成更贴合情境的回应，避免字面匹配导致的答非所问。</li><li>生成式推荐的理由生成可借鉴Expression Profile模块，将商品的场景化属性（如“静谧的冬夜”、“喜庆的节日氛围”）融入推荐文案，增强情感共鸣。</li><li>构建领域场景知识库（如将电商类目top关键词的场景预先抽象并向量化），可以冷启动实时场景解析，直接用于召回或重排阶段的特征增强。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span> <span>cs.CL</span> <span class="sep">|</span> <span class="badge badge-score">score 6/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/lexical semantics">lexical semantics</a><a class="tag" href="/DailyPaper/tag/scene abstraction">scene abstraction</a><a class="tag" href="/DailyPaper/tag/few-shot prompting">few-shot prompting</a><a class="tag" href="/DailyPaper/tag/structured representation">structured representation</a><a class="tag" href="/DailyPaper/tag/dataset">dataset</a><a class="tag" href="/DailyPaper/tag/word meaning in context">word meaning in context</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

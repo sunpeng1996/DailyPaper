@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过差分信号与 EMA 累积跨批次操作级证据，解决离线记忆蒸馏中的信号矛盾问题"><meta property="og:title" content="Marginal Advantage Accumulation for Memory-Driven Agent Self-Evolution"><meta property="og:description" content="通过差分信号与 EMA 累积跨批次操作级证据，解决离线记忆蒸馏中的信号矛盾问题"><meta property="og:type" content="website"><title>Marginal Advantage Accumulation for Memory-Driven Agent Self-Evolution</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20475" target="_blank" rel="noopener">2606.20475</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Marginal Advantage Accumulation for Memory-Driven Agent Self-Evolution</h1> <p class="title-zh">边际优势累积：跨批次证据驱动的 Agent 记忆自进化</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 记忆自进化 · 跨批次证据累积</span> </div> <p class="affiliations">Alibaba International Digital Commerce Group</p> <div class="meta">Mingyu Yang, Keye Zheng, Congchao Cheng, Yujie Liu, Xingkang Lu, Fan Jiang 等</div> <p class="one-liner">通过差分信号与 EMA 累积跨批次操作级证据，解决离线记忆蒸馏中的信号矛盾问题</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Marginal Advantage Accumulation">Marginal Advantage Accumulation</a><a class="tag" href="/DailyPaper/tag/Agent Self-Evolution">Agent Self-Evolution</a><a class="tag" href="/DailyPaper/tag/Trace Distillation">Trace Distillation</a><a class="tag" href="/DailyPaper/tag/Offline Memory Optimization">Offline Memory Optimization</a><a class="tag" href="/DailyPaper/tag/EMA Evidence Accumulation">EMA Evidence Accumulation</a><a class="tag" href="/DailyPaper/tag/Semantic Identity Merging">Semantic Identity Merging</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆更新的离线优化范式：当 agent 需要从历史执行痕迹中抽取可复用记忆（如电商导购策略、广告投放流程模板），可采用 MAA 的‘提案-评分-差分-EMA 累积’流水线，完全避免线上 rollout 的高成本，适合高延迟、高成本的真实业务环境。</li><li>差分评估消除批次混杂：直接把操作评分作为优化信号容易受批次难度影响，借鉴 MAA 的‘同一批次内 baseline 与候选同步打分再求差’的设计，可得到跨批次可比的操作优势方向信号。在推荐 agent 的策略搜索中，可以用 LLM 对候选策略与当前策略在同一批请求上同时打分再差分，得到更干净的优化方向。</li><li>基于语义合并的跨批次操作追踪：对 agent 输出的文本操作（如改写规则、新策略片段），可通过 embedding 相似度合并语义等价的候选项，避免因表述差异导致的证据碎片化。该技巧可直接用于线上记忆管理系统的操作去重与合并。</li><li>EMA 证据累积与三种操作模式识别：通过 EMA 跟踪每个操作的边际优势，可以自动区分‘稳定有效’、‘虚假相关’和‘场景特定’三类操作，实现安全的离线记忆演化。在搜索广告的查询改写记忆或 prompt 库优化中，可避免单次正样本就把噪声策略写入长期记忆。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>在 Agent 自进化中，离线轨迹蒸馏是主流范式：从历史执行轨迹中压缩出可复用的记忆（如规则、技能片段）注入后续推理。但一个根本问题被忽略——同一操作在不同批次可能收到相反反馈（如“补充坐标轴标签”在二维图批次有用，在热力图批次有害），而现有方法仅在单批次内做决策，缺乏跨批次的操作级证据累积机制，导致无法区分稳定有效的操作与偶然命中。任务越复杂、轨迹越长，该问题越严重。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<p>MAA 将问题形式化为两大结构需求：<strong>可对齐性</strong>（跨批次识别同一操作）与<strong>可比性</strong>（跨批次信号可加和）。以此为设计原则：</p>
+<ul>
+<li><strong>地址化记忆库与语义身份合并</strong>：每个操作由 (类型, 锚点 ID, 内容嵌入) 标识，新候选与已有单元余弦相似度 ≥0.85 时合并，避免表述差异造成的证据碎片。</li>
+<li><strong>边际优势差分构造</strong>：对当前批次，Score 通道以 LLM 并排评估 baseline 记忆与施加候选操作后的记忆，通过差分 <code>δ = u(M_i, B) - u(M, B)</code> 将绝对评分转化为相对 baseline 的边际优势，消除批次难度混杂，使跨批次信号可比。</li>
+<li><strong>跨批次 EMA 累积</strong>：对每个操作维护 EMA (β=0.9)，跨批次累加差分信号。方向一致的信号被放大，方向交替的信号正负抵消，并在偏置校正后稳定到真实方向。</li>
+<li><strong>候选池管理与 top-k 更新</strong>：按累积量排序，仅应用 top-k 个正优势操作，设置生存时间与下界淘汰，结合验证集最佳检查点回滚。
+方法完全离线，不用线上 rollout，仅凭现有轨迹与 LLM 代理评分驱动，计算成本仅为在线方法的约 1/4。</li>
+</ul>
+<h2 id="关键实验">关键实验</h2>
+<p>在 ScienceAgentBench、ALFWorld、SpreadsheetBench、HotpotQA 四个基准上，测试 Qwen3.7‑Max、Qwen3.6‑Flash、GPT‑5.4、DeepSeek‑V4‑Flash 四个模型，对比冻结基线、单次蒸馏、反应式更新、Trace2Skill、在线方法 SkillOpt。<strong>MAA 在 16 个设置中取得 14 个最优</strong>，在强模型上全面超越 SkillOpt（如 GPT‑5.4 科学任务 +0.9 pp），且优化阶段 token 消耗减少约 75%，训练时间从 12‑14 小时缩至 2.5 小时。
+消融显示，差分构造是主要增益来源，连续幅度提供额外排名精度。方向诊断表明差分符号的一致性达 88.7%‑95.1%，与真实增益方向对齐准确率 61.5%‑73.8%，为 EMA 收敛提供基础。证据轨迹生动展示了稳定有效、虚假相关、场景特定三类操作的累积曲线。</p>
+<p><strong>最值得记住的一句话：通过差分将绝对评分转化为跨批次可比的边际优势，再以 EMA 累积操作级证据，让 Agent 记忆演化首次拥有“假设检验”能力，不再被单批次噪声误导。</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20475&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20475" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20475" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20475" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

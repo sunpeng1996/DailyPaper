@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用 LLM 当用户搭闭环仿真台 RecLoop（双记忆 + 周期反思 agent，推荐器每轮重训，跑 15 轮），系统量化生成式推荐 vs 传统 ID 序列推荐的信息茧房。结论：生成式更抗曝光层茧房（用户间 Jaccard 0.064 vs SASRec 0.223），但茧房转移进了 code 空间、集中在粗层（首 token 熵降 49.6%）；并首创 Code-Space 结构性茧房指标。"><meta property="og:title" content="Do Generative Recommenders Deepen the Information Cocoon? A Closed-Loop Simulation with LLM-powered User Simulators · 论文沉淀"><meta property="og:description" content="用 LLM 当用户搭闭环仿真台 RecLoop（双记忆 + 周期反思 agent，推荐器每轮重训，跑 15 轮），系统量化生成式推荐 vs 传统 ID 序列推荐的信息茧房。结论：生成式更抗曝光层茧房（用户间 Jaccard 0.064 vs SASRec 0.223），但茧房转移进了 code 空间、集中在粗层（首 token 熵降 49.6%）；并首创 Code-Space 结构性茧房指标。"><meta property="og:type" content="website"><title>Do Generative Recommenders Deepen the Information Cocoon? A Closed-Loop Simulation with LLM-powered User Simulators · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>👥 User Simulator</span> <span class="sep">·</span><time>2026-06</time> <span class="sep">·</span><span>arXiv (投 ACM TOIS)</span>  </div> <h1>Do Generative Recommenders Deepen the Information Cocoon? A Closed-Loop Simulation with LLM-powered User Simulators</h1> <p class="archive-authors">Jiyuan Yang, Gengxin Sun, Mengqi Zhang, Xin Xin, Pengjie Ren, et al. (8 人)</p> <p class="affiliations">Shandong University × Renmin University of China</p> <p class="one-liner">用 LLM 当用户搭闭环仿真台 RecLoop（双记忆 + 周期反思 agent，推荐器每轮重训，跑 15 轮），系统量化生成式推荐 vs 传统 ID 序列推荐的信息茧房。结论：生成式更抗曝光层茧房（用户间 Jaccard 0.064 vs SASRec 0.223），但茧房转移进了 code 空间、集中在粗层（首 token 熵降 49.6%）；并首创 Code-Space 结构性茧房指标。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">LLM User Simulator</span><span class="tag tag-static">Closed-Loop Simulation</span><span class="tag tag-static">Generative Recommendation</span><span class="tag tag-static">Information Cocoon</span><span class="tag tag-static">Code-Space Entropy</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>信息茧房是<strong>反馈回路</strong>（曝光→点击→重训）反复累积的长期现象，静态离线评测把用户偏好和曝光分布当固定的、根本测不出。传统 ID 序列推荐的茧房已研究透；但<strong>生成式推荐</strong>把「打分选 item」换成「自回归生成多层离散 code 序列」，它对茧房的影响是个先验无法判断的经验问题。</p>
+<p><img src="/ai-papers-daily/figures/do-generative-recommenders-deepen-the-information-cocoon-a-c/fig1.png" alt="Figure 1 — (a) 信息茧房反馈回路：推荐→用户交互→数据更新 反复强化曝光；(b) 传统(原子 ID 打分匹配) vs 生成式(Encoder→自回归 Decoder→SID 序列→映射回 item) 两种范式"></p>
+<p><strong>关键 idea</strong>：搭一个用 <strong>LLM 当用户</strong>的闭环仿真台 <strong>RecLoop</strong>，让推荐器反复「推荐→反馈→重训」15 轮，量化生成式 vs 传统 ID 推荐的茧房；并<strong>首创 Code-Space 结构性茧房指标</strong>，把茧房从「用户看到什么」重新定义为「生成式模型内部 code 空间塌缩到哪」——这是传统系统不存在的视角。结论：生成式更抗<strong>曝光层</strong>茧房，但茧房<strong>转移</strong>进了 code 空间、且集中在<strong>粗层</strong>。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/do-generative-recommenders-deepen-the-information-cocoon-a-c/fig2.png" alt="Figure 2 — RecLoop 闭环仿真框架：推荐器模块(候选生成+每轮重训) ⇄ LLM 用户 agent 模块(动态画像 / 双记忆 / 周期反思 / Action) 构成闭反馈环"></p>
+<p>闭环每一轮 <code>t</code>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>S_u^t (累积历史) ──[推荐器 f_θ^t]──> 曝光列表 E_u^t (top-K=5)</span></span>
+<span class="line"><span>                                          │</span></span>
+<span class="line"><span>                         [LLM user agent 按 P^t/M^t 选 1 个 i_u^t (或 null)]</span></span>
+<span class="line"><span>                                          │</span></span>
+<span class="line"><span>            S_u^{t+1} = S_u^t ⊕ i_u^t  (选中项并入历史 + 训练集)</span></span>
+<span class="line"><span>                                          │</span></span>
+<span class="line"><span>  所有用户过完 → 新交互并入训练集 → [重训 f_θ^{t+1}] → 进入 t+1，共 T=15 轮</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>初始化用<strong>真实历史</strong>(最早 ≤50 条)warm start。每轮推荐都条件于此前所有仿真决策，茧房才能逐轮累积显现。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-llm-用户模拟器四部件全程-prompt-驱动零训练">1. LLM 用户模拟器（四部件，全程 prompt 驱动，零训练）</h3>
+<p>底座 <strong>Qwen3-8B</strong>，temperature=0(确定性反馈、可复现)，vLLM 本地部署，<strong>不做任何 SFT/RL</strong>：</p>
+<ul>
+<li><strong>动态画像</strong>：<code>base profile</code>(离线用 Prompt A 从真实购买/评论史合成第一人称心理画像，200-300 词，data-driven 禁臆测) + <code>stage-wise profile P^t</code>(初始化 = base，每 Δ=5 轮经反思更新，两次反思间固定)。</li>
+<li><strong>双记忆</strong>：短期 <code>M^t</code>=最近 <strong>W=5</strong> 轮滑窗(选择+理由)，喂决策；长期=完整轨迹 <code>S^t</code>，喂反思。</li>
+<li><strong>周期反思</strong>(每 Δ=5 轮)：用 Prompt D 读完整轨迹 → 产出 JSON 行为摘要(preference_patterns / key_decision_factors / behavioral_trends / insights / summary) → 更新 P^t，保留 base 作锚。省算力 + 抗离群交互。</li>
+<li><strong>Action</strong>：单次 LLM 调用，四层 prompt——context(P^t 作 system role) / memory(M^t) / perception(候选结构化描述) / <strong>constraint(枚举合法 item ID 防幻觉)</strong>；输出 <code>{reason, selected_item_id 或 null}</code>。</li>
+</ul>
+<h3 id="2-被测推荐器2-范式--2-模型">2. 被测推荐器（2 范式 × 2 模型）</h3>
+<ul>
+<li><strong>传统 ID 序列</strong>：SASRec、Mamba4Rec(连续 embedding + 内积打分)。</li>
+<li><strong>生成式</strong>：TIGER(RQ-VAE 切 Semantic ID + Transformer 自回归)、<strong>OneRec</strong>(LLM-based，用 MiniOneRec 代码库，<strong>只 SFT 不 RL</strong>——为把茧房差异干净归因到架构而非训练法；含 0.5B/1.5B/3B 三档)。</li>
+<li>每轮用更新后的序列重训(沿用各自原超参)。</li>
+</ul>
+<h3 id="3-双层茧房指标">3. 双层茧房指标</h3>
+<p><strong>曝光层</strong>(模型无关，每轮算)：</p>
+<ul>
+<li>品类熵 <code>E_{t,l} = −(1/|U|)∑_u ∑_c p_{t,u}(c) log p_{t,u}(c)</code>(熵降=单用户曝光变窄)</li>
+<li>用户间 Jaccard <code>J̄_t = avg_{u&#x3C;v} |E_u∩E_v|/|E_u∪E_v|</code>(越大=同质化)</li>
+<li>覆盖 Cov / CatCov(系统触达的 item / 品类占比)</li>
+<li>Gini 系数(曝光是否集中到少数头部 item)</li>
+</ul>
+<p><strong>Code 层</strong>(生成式特有，首创)：</p>
+<ul>
+<li>逐层 code 熵 <code>H_{t,n} = −(1/|U|)∑_u ∑_{c∈V_n} p_{t,u,n}(c) log p_{t,u,n}(c)</code>，归一化 <code>Ĥ=H/log|V_n|</code></li>
+<li>top-κ 集中度(少数 code 是否垄断该层生成分布)</li>
+<li>相对熵降 <code>δ_n = (H_{1,n}−H_{T,n})/H_{1,n}</code>——茧房在各 code 层的分布指纹</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据</strong>：两 Amazon 数据集——Office Products(4,905 用户 / 2,420 item / 5K agent)、Toys &#x26; Games(19,412 用户 / 11,924 item / 20K agent)，含 4 级品类树。<strong>协议</strong>：T=15 轮，top-K=5，每轮重训，W=5、Δ=5；用户 agent=Qwen3-8B temp=0；硬件 A800 80GB。</p>
+<p><strong>RQ1 曝光层：生成式更抗</strong> ——Office 末轮用户间 Jaccard：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>范式</th><th>Office 末轮 Jaccard ↓</th></tr></thead><tbody><tr><td>SASRec</td><td>传统 ID</td><td>0.223</td></tr><tr><td>Mamba4Rec</td><td>传统 ID</td><td>0.138</td></tr><tr><td>TIGER</td><td>生成式</td><td>0.108</td></tr><tr><td>OneRec</td><td>生成式</td><td><strong>0.064</strong></td></tr></tbody></table>
+<p>但 <strong>Gini 对所有模型都涨</strong>(Office 0.966~0.993)——头部 item 集中是范式无关的，生成式也救不了。</p>
+<p><strong>RQ2 code 空间：结构性茧房集中在粗层</strong> ——TIGER 在 Office：δ Layer0=<strong>53.6%</strong> / Layer1=40.4% / Layer2=13.4%；首 token 归一化熵 0.895→0.451(<strong>-49.6%</strong>)，top-10 粗 code 累计概率 27%→<strong>86.6%</strong>。粗层(早 token=路由决策)塌得最狠，细层保留局部多样性。</p>
+<p><strong>RQ3 tokenization</strong>：CID(协作信号)比 SID(语义)更易塌缩、削弱细层缓冲(TIGER 明显)，但 Toys 上出现反转 → dataset-dependent。</p>
+<p><strong>RQ4 model scale</strong>：OneRec-3B 末轮各层熵 6.672/7.218/7.119 远高于 0.5B 的 5.303/5.238/4.873；最细层活跃 code 数 <strong>3B=233 vs 0.5B=70</strong> → 大模型保留更广 code 空间、更抗结构茧房。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：① 用户是 LLM 不是真人，且作者自承<strong>未对真实交互分布做校准</strong>，茧房绝对值不可解读为真实严重程度；② 每配置只跑一条轨迹、无多 seed / 置信区间；③ 仅 2 个 Amazon 数据集、每范式 2 模型、scale 仅到 3B、无 diversity-aware baseline；④ 纯诊断、未给缓解方法。</p>
+<p><strong>对电商 / 搜推的可借鉴点</strong>：</p>
+<ol>
+<li><strong>OneRec 是字节自家生成式推荐</strong>，本文证明它抗同质化但有 code 空间结构茧房、且 3B 明显比 0.5B 更抗——「逐层 code 熵 + 首 token top-κ 集中度」可直接搬来当<strong>线上多样性监控指标</strong>，比品类熵更早预警塌缩。</li>
+<li><strong>tokenizer 选型多了茧房维度</strong>：CID 涨精度但把热度偏置带进 code 空间、削弱细层缓冲——做 Semantic ID 时别只用 next-item 精度调 tokenizer，要并行看 code 熵。</li>
+<li><strong>RecLoop 的「确定性反馈 + 约束层防幻觉 + 周期反思」三件套</strong>可直接补强 push / 推荐 simulator 的长期演化能力(与 OneRetrieval 的「可编辑 SID」、UserGPT 的「simulator-as-trainer」可串成一条线读)。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2606.17707" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/Dregen-Yor/RecLoop" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

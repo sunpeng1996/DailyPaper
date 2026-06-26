@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Program Functions - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Program Functions - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Program Functions</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-17-jiang-dai-li-ji-neng-sheng-ji-wei-ke-zhi-xing-cheng-xu-han-260517734">Harnessing LLM Agents with Skill Programs</a></h2> <p class="title-zh">将代理技能升级为可执行程序函数：HASP 框架</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 技能可执行化 · Program Function</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">New York University · Salesforce AI Research</p> <p class="summary">把 LLM Agent 的已知技能从被动文本变为可触发、可干预状态-动作的 Program Functions，实现推理时修正、后训练监督与技能库自进化。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>推理时动作硬修正：将常见失败模式（如过早终止、实体混淆）编码为 Program Function，在 Agent 循环中直接改写动作或注入纠正上下文，而不是只放入 Prompt 作为建议。这一思路可直接用于电商搜索 Agent 的多步推理，例如当检测到搜索结果过少时强制改写 Query，或在提交订单前强制检查库存。</li><li>结构化干预信号用于数据筛选：每个 PF 介入记录包含时机、模式、正确性、结果四维评分，作为轨迹质量权重叠加在任务奖励上。在构建离线对话或搜索轨迹数据时，可借鉴这种多维质量打分，提升 SFT/拒绝采样数据的有效性。</li><li>技能库演化需严格过滤：候选 PF 必须通过语法与模拟执行验证及教师审核才能入库，否则会严重损害性能（全过滤 60.3% vs 无过滤 36.3%）。在业务中构建可进化的策略库或规则库时，必须设计类似的自动化校验与人工审核门槛，避免技能“污染”。</li><li>内部化行为纠正 PF 更有效：训练后，那些纠正模型自身行为（如搜索不充分、查询过长）的 PF 会逐渐沉默，而与输入相关的 PF 仍激活。这提示我们可以有选择地只对高频行为错误进行强制干预，并进行针对性训练来内化，从而降低上线时的判断开销。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-17">2026-05-17</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 9/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Program Functions">Program Functions</a><a class="tag" href="/DailyPaper/tag/Agent Harness">Agent Harness</a><a class="tag" href="/DailyPaper/tag/Skill Library">Skill Library</a><a class="tag" href="/DailyPaper/tag/Post-training">Post-training</a><a class="tag" href="/DailyPaper/tag/Self-improvement">Self-improvement</a><a class="tag" href="/DailyPaper/tag/ReAct Agent">ReAct Agent</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

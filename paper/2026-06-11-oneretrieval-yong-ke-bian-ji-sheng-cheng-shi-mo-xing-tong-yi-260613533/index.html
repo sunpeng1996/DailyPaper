@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个兼具高召回与倒排索引级实时编辑能力的生成式检索框架，通过关键词对齐编码和预留槽位实现多路召回统一。"><meta property="og:title" content="OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model"><meta property="og:description" content="首个兼具高召回与倒排索引级实时编辑能力的生成式检索框架，通过关键词对齐编码和预留槽位实现多路召回统一。"><meta property="og:type" content="website"><title>OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13533" target="_blank" rel="noopener">2606.13533</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model</h1> <p class="title-zh">OneRetrieval：用可编辑生成式模型统一电商多路检索</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式检索 · 可编辑Semantic ID</span> </div> <p class="affiliations">Kuaishou Technology</p> <div class="meta">Xuxin Zhang, Ben Chen, Yue Lv, Siyuan Wang, Yupeng Li, Yufei Ma 等</div> <p class="one-liner">首个兼具高召回与倒排索引级实时编辑能力的生成式检索框架，通过关键词对齐编码和预留槽位实现多路召回统一。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Retrieval">Generative Retrieval</a><a class="tag" href="/DailyPaper/tag/Keyword-Aligned Encoding">Keyword-Aligned Encoding</a><a class="tag" href="/DailyPaper/tag/Multi-Branch Retrieval">Multi-Branch Retrieval</a><a class="tag" href="/DailyPaper/tag/Editability">Editability</a><a class="tag" href="/DailyPaper/tag/E-commerce Search">E-commerce Search</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>保留槽位实现术语实时注入：在码本中为每个属性组预留少量 token，训练时不绑定具体词，仅通过自路由监督保证可解码；部署后只需更新属性词典和 SID-to-item 查找表即可立即上线新词，无需重训模型，完美替代倒排索引的编辑能力。</li><li>关键词对齐编码 (KAE) 解耦语义与编辑：将语义标识符的每个位置绑定到可解释的属性词而不是量化嵌入，使编辑能力来源于上游字典，与模型策略分离；同时利用 LM 先验提升召回，位置透明便于 debug 和人工干预。</li><li>信息论驱动的非均匀容量分配：通过互信息损失聚类将 18 类细粒度属性合并为 6 组，密集组分配更大码本容量（2048 vs 1024），显著减少属性词冲突，提升深层召回（HR@350 达 0.6055）且几乎不增推理成本。</li><li>四阶段 SFT 联合保障质量与可编辑性：阶段 0 对齐槽位与属性词先验，阶段 2 引入协同共现信号为预留槽路由打下基础，阶段 3 用极小量自路由样本保持预留槽可发射；新增功能与检索质量通过近解耦的 stage 分别保障，避免相互干扰，可直接迁移到其他生成式推荐系统。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：工业电商搜索通常采用倒排、稠密、协同三路召回，各自存在语义盲区或长尾偏见，且分支独立训练、人工融合，无法联合优化。其中倒排索引虽然点击转化偏低，却因能在几小时内上线新品或流行词而不可替代。现有生成式检索 (GR) 方法或因闭码本无法编辑新词，或因开放词汇依赖模型泛化而无显式干预机制，均未解决统一召回所需的实时编辑性。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>关键词对齐编码 (KAE)</strong>：将每条 SID 的 L=6 个位置分别绑定到从物品属性词典匹配的关键属性词，而非量化嵌入，使标识符可解释且利用语言模型先验；码本非层次化，避免实体前缀错误扩散。</li>
+<li><strong>可扩展码本</strong>：每个位置码本分为空、聚类、独有、预留四块，预留 10 个槽位在训练时不绑定词，仅通过第 3 阶段的自路由监督保持可解码；部署后只需在属性词典和查找表中绑定新词即可实时生效。容量按属性密度非均匀分配（密集组 2048，轻量组 1024）。</li>
+<li><strong>信息论属性合并</strong>：基于互信息损失将 18 类细粒度属性聚类为 6 组（ECOM6），确保最少信息丢失。</li>
+<li><strong>四阶段 SFT</strong>：阶段 0 对齐槽位–属性词，阶段 1 对齐内容与 SID，阶段 2 注入协同共现，阶段 3 个性化检索并用极小量样本训练保留槽自路由。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>离线基准（500 万请求）：OneRetrieval 深层召回 (HR@350) 与最强生成基线 OneSearch 持平（点击 0.6055 vs 0.6007，订单 0.5482 vs 0.5550），远超其他生成和稠密方法。</li>
+<li>可编辑性：干预命中率 (IHR@350) 达 0.0806，比闭码本量化方法 (如 RQ-OPQ 的 0.0021) 高出一个量级以上。</li>
+<li>在线 A/B：仅替换倒排索引分支后订单量显著提升；进一步替换稠密分支后，转化无显著变化但 CTR 显著提升，证明单一生成模型可接管几乎整个检索阶段。</li>
+</ul>
+<p><strong>核心洞见</strong>：将检索标识符对齐到可解释的关键属性词并预留槽位，使生成式检索首次具备倒排索引级别的实时编辑能力，从而可能统一电商搜索的多路召回。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13533&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13533" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13533" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13533" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="发现隐藏状态 ℓ2 范数是无需训练的模型内在推理强度指标，并基于此提出三种推理增强技术。"><meta property="og:title" content="The Tell-Tale Norm: $\ell_2$ Magnitude as a Signal for Reasoning Dynamics in Large Language Models"><meta property="og:description" content="发现隐藏状态 ℓ2 范数是无需训练的模型内在推理强度指标，并基于此提出三种推理增强技术。"><meta property="og:type" content="website"><title>The Tell-Tale Norm: $\ell_2$ Magnitude as a Signal for Reasoning Dynamics in Large Language Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06188" target="_blank" rel="noopener">2606.06188</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>The Tell-Tale Norm: $\ell_2$ Magnitude as a Signal for Reasoning Dynamics in Large Language Models</h1> <p class="title-zh">ℓ2 范数：大语言模型推理动态的内在信号</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 推理内在信号与测试时控制</span> </div> <p class="affiliations">Peking University · Zhejiang University</p> <div class="meta">Jinyang Zhang, Hongxin Ding, Yue Fang, Weibin Liao, Muyang Ye, Junfeng Zhao 等</div> <p class="one-liner">发现隐藏状态 ℓ2 范数是无需训练的模型内在推理强度指标，并基于此提出三种推理增强技术。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/ℓ2 norm">ℓ2 norm</a><a class="tag" href="/DailyPaper/tag/reasoning dynamics">reasoning dynamics</a><a class="tag" href="/DailyPaper/tag/sparse autoencoders">sparse autoencoders</a><a class="tag" href="/DailyPaper/tag/test-time scaling">test-time scaling</a><a class="tag" href="/DailyPaper/tag/hidden state">hidden state</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在 LLM Agent 推理链中，可实时监控各层 ℓ2 范数，检测推理峰值以自适应分配计算资源（如递归计算或提前退出），在电商复杂查询解析、多步决策等场景提升效率。</li><li>对生成式推荐，ℓ2 范数可作为一种无监督的候选序列质量度量，替代外部打分或规则，用于生成式 item 推荐中的响应重排或生成路径选择。</li><li>三种推理增强技术（层递归、隐藏状态引导、响应选择）无需额外训练，可直接嵌入现有的推理引擎，为推理时 Agent 缩放提供轻量、数据无关的工具。</li><li>发现 ℓ2 范数与 SAE 推理特征激活高度正相关且具有因果性，提示在训练推荐/Agent 模型时，可加入 ℓ2 正则或约束来激励中间推理表征，提升模型对复杂任务的泛化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：大语言模型（LLM）在复杂推理上的表现日益突出，但其内部层间推理动态仍不透明。现有方法依赖稀疏自编码器（SAE）等外部探针，或从输出层分析，训练成本高、模型特定性强，难以通用。亟需一种模型内在、无需训练的推理强度信号，以便感知和控制推理过程。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>利用 SAE 分析 Qwen-3 等模型的逐层隐藏状态，发现推理特征激活在后期层急剧升高，揭示层间推理动态。</li>
+<li>理论证明在 SAE 重建保真和特征正交假设下，隐藏状态 ℓ2 范数可上下界 SAE 推理特征激活强度，从而成为推理强度的内生指标。</li>
+<li>大规模相关与因果分析：ℓ2 范数与 SAE 推理激活 Spearman 相关系数达 0.84–0.87，与输出熵正相关；抑制高范数隐藏状态导致性能大幅下降，证明其因果重要性。</li>
+<li>提出三种测试时推理增强技术：自适应逐层推理递归（ALRR）在 ℓ2 峰值层内迭代加深计算；内生推理状态引导（ERSS）利用历史高范数状态增强当前表征；ℓ2 引导的响应选择（LRS）用中间-后层范数累积分拣候选输出。所有技术无需额外训练或数据。</li>
+</ul>
+<p><strong>关键结果</strong>：在 Qwen3 系列和 DeepSeek-R1-Distill-Llama 上，覆盖数学与通用推理基准，平均相对提升 4.51%，挑战性任务 AIME 提升达 9.13%。跨基准 ℓ2 分布显示任务难度影响明显，验证了自适应阈值机制的必要性。</p>
+<p><strong>核心启示</strong>：隐藏状态 ℓ2 范数是一个简单、可靠的内在推理强度信号，可低成本地监控和放大 LLM 的推理计算，为推理增强和机制解释性提供了新视角。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06188&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06188" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06188" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06188" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

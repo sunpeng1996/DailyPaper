@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="VLM 中仅 9% 的注意力头（凝视头）能跟踪当前生成的图像区域，重定向这些头即可控制模型描述目标区域。"><meta property="og:title" content="Gaze Heads: How VLMs Look at What They Describe"><meta property="og:description" content="VLM 中仅 9% 的注意力头（凝视头）能跟踪当前生成的图像区域，重定向这些头即可控制模型描述目标区域。"><meta property="og:type" content="website"><title>Gaze Heads: How VLMs Look at What They Describe</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-06-12">2026-06-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14703" target="_blank" rel="noopener">2606.14703</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Gaze Heads: How VLMs Look at What They Describe</h1> <p class="title-zh">凝视头：视觉语言模型如何注视其所描述内容</p> <div class="dir-row"> <span class="direction-chip">🧭 视觉语言模型 · 注意力机制 · 模型操控</span> </div> <p class="affiliations">Northeastern University</p> <div class="meta">Rohit Gandikota, David Bau</div> <p class="one-liner">VLM 中仅 9% 的注意力头（凝视头）能跟踪当前生成的图像区域，重定向这些头即可控制模型描述目标区域。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/Attention Heads">Attention Heads</a><a class="tag" href="/DailyPaper/tag/Interpretability">Interpretability</a><a class="tag" href="/DailyPaper/tag/Gaze Steering">Gaze Steering</a><a class="tag" href="/DailyPaper/tag/Comic Strips">Comic Strips</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>推理时低成本控制 VLM 描述焦点：通过仅修改不到 9% 的注意力头（凝视头）的注意力掩码，无需重新训练即可将模型输出重定向到图像的任意区域，可用于多模态商品描述、QA 等场景，强制模型聚焦于指定商品或特征。</li><li>低资源发现关键 head 的方法：使用简单的“凝视分数”（不同查询下注意力转移的对角相关性）在少量前向传播中定位可操控的 head 集，工程上容易复现，可用于其他多模态模型的分析与微调指导。</li><li>动态注意力干预：可在生成过程中实时切换凝视目标，让模型逐段描述不同区域，类似对话式交互中逐步引导模型关注不同商品或属性，为可控多模态对话提供新接口。</li><li>注意：仅对联合训练视觉编码器的 VLM 有效（如 Qwen3-VL、InternVL），对冻结编码器的模型（LLaVA、Bunny）效果差，选型时需留意架构差异。</li> </ul> </div> <div class="content"> <p>动机：视觉语言模型（VLM）内部如何将视觉信息转换为语言描述尚不明确。已有工作关注整图注意力或静态定位，但未揭示模型在逐 token 生成时如何动态跟踪当前描述的图像区域。本文从人类凝视行为得到启发，寻找并验证 VLM 中是否存在类似的“凝视”机制。</p>
+<p>方法关键点：</p>
+<ul>
+<li><strong>漫画条受控测试平台</strong>：使用六格漫画，利用其空间布局编码叙事顺序，每个面板具有明确的位置与内容区分，为评估注意力轨迹提供了无歧义的 ground truth。</li>
+<li><strong>凝视分数</strong>：针对每个注意力头，在不同面板查询下计算其分配到对应面板的图像 token 注意力比例（对角分量均值），筛选出能随查询变化而重定向注意力的 head。该方法仅需少量无标注前向传播。</li>
+<li><strong>干预实验</strong>：对选出的 top-100 凝视头施加注意力掩码偏差（+∞ 目标面板，−∞ 其他面板），强制模型将视觉注意力集中到指定面板，检验输出是否被重定向。</li>
+</ul>
+<p>关键实验与结果：</p>
+<ul>
+<li>数据集：COMICS（3,948 幅漫画）用于发现，GPT Image-1 生成 500 幅六格漫画作为验证集，同时使用 COCO val2017 测试自然图像迁移。</li>
+<li>主要指标：VQA 重定向准确率（强制 1-of-6 判断，随机基线 16.7%）、动态叙述与目标面板顺序的 Spearman 相关性。</li>
+<li>Qwen3-VL-8B 上，重定向 top-100 凝视头（占全部 1,152 头的 8.7%）使 VQA 准确率达到 <strong>83.1%</strong>，而随机非凝视头无法重定向，干预所有头则破坏生成。静态叙事任务中重定向准确率 79.4%。</li>
+<li>动态切换凝视目标时，模型叙述与调度顺序的相关性达 0.87，且能自然“收尾当前面板、开始描述新面板”。</li>
+<li>在 COCO 自然图像上，凝视头重定向使目标物体识别准确率从 25.9% 提升至 76.5%（整体），对大物体效果最佳（80.3%）。</li>
+<li>跨模型验证：该机制在 Qwen3-VL 2B~32B、Qwen2-VL、Ovis1.5、InternVL3.5 等联合训练视觉编码器的 VLM 上均有效；但在冻结编码器的 LLaVA 系列和 Bunny 上效果显著下降，提示机制可能依赖视觉编码器的联合微调。</li>
+</ul>
+<p>值得记住的一句话：<strong>VLM 内部用于将视觉区域绑定到语言的机制被高度集中在一小部分注意力头中，通过简单编辑这些头的注意力即可在推理时任意控制模型“看哪里、说什么”。</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14703&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14703" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14703" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14703" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

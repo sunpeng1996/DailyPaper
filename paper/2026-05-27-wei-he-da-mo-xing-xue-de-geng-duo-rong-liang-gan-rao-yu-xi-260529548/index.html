@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="揭示大模型通过减少梯度干扰和增强稀疏观测记忆保留来学习稀有任务，并指导数据混合设计"><meta property="og:title" content="Why Larger Models Learn More: Effects of Capacity, Interference, and Rare-Task Retention"><meta property="og:description" content="揭示大模型通过减少梯度干扰和增强稀疏观测记忆保留来学习稀有任务，并指导数据混合设计"><meta property="og:type" content="website"><title>Why Larger Models Learn More: Effects of Capacity, Interference, and Rare-Task Retention</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29548" target="_blank" rel="noopener">2605.29548</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Why Larger Models Learn More: Effects of Capacity, Interference, and Rare-Task Retention</h1> <p class="title-zh">为何大模型学得更多：容量、干扰与稀有任务保留的效应</p> <div class="dir-row"> <span class="direction-chip">🧭 模型缩放 · 数据混合中的稀有任务学习</span> </div> <p class="affiliations">Stanford University · Kempner Institute at Harvard University · MIT · Anthropic</p> <div class="meta">Jing Huang, Daniel Wurgaft, Rachit Bansal, Laura Ruis, Naomi Saphra, David Alvarez-Melis 等</div> <p class="one-liner">揭示大模型通过减少梯度干扰和增强稀疏观测记忆保留来学习稀有任务，并指导数据混合设计</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/scaling laws">scaling laws</a><a class="tag" href="/DailyPaper/tag/gradient interference">gradient interference</a><a class="tag" href="/DailyPaper/tag/rare-task learning">rare-task learning</a><a class="tag" href="/DailyPaper/tag/data mixture">data mixture</a><a class="tag" href="/DailyPaper/tag/memory retention">memory retention</a><a class="tag" href="/DailyPaper/tag/OLMo">OLMo</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>数据混合优于单纯扩模型：若目标任务（如长尾商品推荐、低频 Query 改写）频率极低，直接提升其采样频率可能比扩大模型更高效，文中在真实 OLMo 预训练中验证了这一点。</li><li>梯度干扰可作为资源分配的监控信号：在多任务学习（如电商搜索的多目标优化、Agent 多技能训练）中，监控频繁任务梯度对稀有任务方向的余弦相似度，可诊断是否发生覆盖式遗忘，进而调整训练策略或动态加权。</li><li>大模型天然利于长尾任务：工程上若无法大幅提升长尾数据量，可采用更大基座模型（或策略性地增加关键层的神经元数）来保留稀疏但有价值的信号，例如冷启动推荐或低频搜索词的理解。</li><li>“记忆”可辅助泛化：文中指出保留稀有观测的中间特征有助于逐步积累信号、学习可泛化的结构，这启发了在推荐或对话 Agent 中主动缓存并回放长尾样本，以促进从稀疏交互中学习规律。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+大型模型经常能解决小型模型完全无法学习的任务，但除了模型容量不足之外，背后的训练动态原因并不清楚。本文从幂律缩放定律出发，指出即使给予无限数据，小模型的渐近损失依然高于大模型，这意味着数据分布中存在仅靠增加数据无法学到的部分，必须通过扩大模型规模才能习得。作者进而追问：这部分只有大模型能学到的数据分布到底是什么？参数增加如何帮助学习？</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>构造多任务线性回归合成设置：K 个任务按频率 π_k 混合，每个任务具有谱衰减控制复杂度，由此解析出“特征效用” u_{k,j} = π_k λ_{k,j}，最优表示保留效用最高的 N 个特征。</li>
+<li>理论推导表明，当模型宽度 N 增大时，会首先学习高频/低复杂度任务的特征，低频/高复杂度任务的特征因效用低而被忽略；稀有任务的学习需要跨越一个临界宽度 N_crit，此时高频任务梯度因残差缩小而变弱，不再覆盖稀有特征。</li>
+<li>提出“减少干扰与更好保留”假说：大模型凭借更多神经元，让频繁任务的梯度更新变得很弱，从而稀有任务的参数更新能在多次观测间积累，形成持续学习；小模型则陷入“更新—遗忘”循环。</li>
+<li>在真实 LLM 预训练中，采用 OLMo 管线（4M～4B 参数），通过注入可控频率的“比较”和“模加”任务，复制合成实验的行为、表征和梯度三个层面的分析。</li>
+</ul>
+<p><strong>关键实验与结果</strong></p>
+<ul>
+<li>合成任务中，大宽度模型在频率低至 0.25% 的任务上损失明显低于小模型，且仅在残差 δ_F 足够小时稀有任务信号才获得有效编码。</li>
+<li>匹配频率的注入实验显示：小模型在一次稀有批次后信号迅速衰减到近零，而大模型能保留并累积信号（图 4）。</li>
+<li>OLMo 实验中，令牌频率从 7.8×10⁻³ 到 2.4×10⁻⁸，大模型（1B/4B）在低频任务上训练损失低且测试准确率高，小模型（4M/20M）几乎失败；稀有任务保留受损时，损失随注入间隔 G 单调递增。</li>
+<li>表征层面，大模型对比较任务的全局排序特征和模加任务的傅里叶模式编码更强；梯度分析显示，小模型（20M）的非任务令牌梯度与任务方向余弦相似度高达 0.10±0.09，而 1B 模型几乎正交（7.58×10⁻⁵），表明大模型有效解耦了通用语言建模与注入任务的梯度干扰。</li>
+</ul>
+<p><strong>核心结论</strong><br>
+“理解大模型为何学得更多，不能只看模型表达能力，更要看梯度优化下的学习动态——任务频率和数据混合共同决定了哪些特征能被稳定保留并累积为可泛化的结构。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29548&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29548" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29548" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29548" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

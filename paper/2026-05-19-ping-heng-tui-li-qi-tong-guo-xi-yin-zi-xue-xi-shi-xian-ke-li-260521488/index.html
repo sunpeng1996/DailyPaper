@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将迭代推理模型视为学习任务条件吸引子，通过塑造吸引子景观实现测试时深度与广度双轴扩展，无需外部验证器即可大幅提升推理性能。"><meta property="og:title" content="Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning"><meta property="og:description" content="将迭代推理模型视为学习任务条件吸引子，通过塑造吸引子景观实现测试时深度与广度双轴扩展，无需外部验证器即可大幅提升推理性能。"><meta property="og:type" content="website"><title>Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-05-19">2026-05-19</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21488" target="_blank" rel="noopener">2605.21488</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning</h1> <p class="title-zh">平衡推理器：通过吸引子学习实现可扩展推理</p> <div class="dir-row"> <span class="direction-chip">🧭 迭代推理 · 吸引子动力学</span> </div> <p class="affiliations">CMU</p> <div class="meta">Benhao Huang, Zhengyang Geng, Zico Kolter</div> <p class="one-liner">将迭代推理模型视为学习任务条件吸引子，通过塑造吸引子景观实现测试时深度与广度双轴扩展，无需外部验证器即可大幅提升推理性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/equilibrium reasoners">equilibrium reasoners</a><a class="tag" href="/DailyPaper/tag/attractor landscape">attractor landscape</a><a class="tag" href="/DailyPaper/tag/test-time scaling">test-time scaling</a><a class="tag" href="/DailyPaper/tag/weight-tied models">weight-tied models</a><a class="tag" href="/DailyPaper/tag/iterative reasoning">iterative reasoning</a><a class="tag" href="/DailyPaper/tag/adaptive computation">adaptive computation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>深度与广度双轴扩展框架：可将迭代更新模块（如推荐系统中的多步状态精炼或 Agent 的多轮推理）设计为权重绑定形式，通过增加迭代步数（深度）和并行采样不同初始状态（广度）来提升性能，并利用残差作为收敛信号提前终止或筛选最优轨迹。</li><li>训练技巧：随机初始化和路径噪声：在训练多步迭代模型时，用随机潜状态初始化替代固定初始化，并注入轻微噪声，可以扩大正确解的吸引盆地，提高泛化能力和在不同重启下的稳定性。这一思路可迁移到生成式推荐或 Agent 策略训练中，增强对初始条件的鲁棒性。</li><li>自适应计算分配：结合 ACT 机制，根据样本难度动态分配迭代步数，减少简单样本的浪费计算，将更多资源留给困难样本。在电商搜索或广告系统中，对于简单查询可提前终止深度推理，保持低延迟，复杂查询则允许更多步精炼。</li><li>残差作为内在置信度：利用固定点残差（∥f(z)-z∥）作为模型自身的置信度指标，无需外部验证器即可进行 top-1 选择或提前停止。在生成式推荐解码或多智体协作中，可使用类似自一致性信号来动态调整计算量或融合候选结果。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：测试时计算扩展（如更多迭代或多次重启）常能提升推理性能，但其内在机制仍不清楚。本文提出一种吸引子视角：可泛化的迭代推理源于学习任务条件的吸引子动力学，即内部潜空间中的稳定不动点对应正确解。当模型内部吸引子景观与任务度量景观对齐时，更强的收敛（更低的残差）就会带来更高的准确率。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>平衡推理器（EqR）</strong>：将迭代更新 $z_{k+1}=f_\theta(z_k;x)$ 视为一个潜动力学系统，通过深度（迭代步数 $D$）和广度（随机初始化轨迹数 $B$）两个轴扩展测试时计算。</li>
+<li><strong>训练干预</strong>：引入随机状态初始化（RI）和路径噪声注入（NI）来塑造吸引子景观，使正确吸引子更易到达且盆地更宽。</li>
+<li><strong>优化方法</strong>：采用分段在线训练（SOT）交替更新潜状态和参数，限制梯度反向传播长度以稳定长轨迹训练；自适应计算时间（ACT）根据难度提前终止简单样本。</li>
+<li><strong>选择信号</strong>：利用固定点残差 $|f_\theta(z;x)-z|$ 作为收敛度量，在经良好塑造的景观中，收敛程度与任务正确性紧密相关，可替代多数投票作为高效选择依据。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 Sudoku-Extreme 上，EqR 在 $D=64, B=128$ 时达到 <strong>99.8%</strong> 精确准确率，远超前馈模型的 2.6% 及 HRM/TRM≥55% 的水平；在 Maze-Unique 上达到 <strong>93.0%</strong>。</li>
+<li>形状化训练使基线从 84.8% 提升至 86.4%（Sudoku），并大幅提升 Maze 准确率（44.9%→82.2%）。</li>
+<li>使用 ACT 后，在 92.99% 准确率目标下，EqR 所需的平均函数评估数（NFE）仅为基线的 1/3.76，EqR+ACT 更降至 1/11.34。</li>
+</ul>
+<p><strong>核心洞见</strong>：<em>迭代推理模型应被评估其内部动力学是否使正确解成为稳定、可达、可选的吸引子，而不仅是最终准确率。</em></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21488&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21488" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21488" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21488" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

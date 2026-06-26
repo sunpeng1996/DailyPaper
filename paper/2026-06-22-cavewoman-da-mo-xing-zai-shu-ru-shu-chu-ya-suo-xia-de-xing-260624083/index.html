@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="输入压缩反而增加成本并损害准确性，输出压缩能省钱但导致语义偏离基线"><meta property="og:title" content="CAVEWOMAN: How Large Language Models Behave Under Linguistic Input and Output Compression"><meta property="og:description" content="输入压缩反而增加成本并损害准确性，输出压缩能省钱但导致语义偏离基线"><meta property="og:type" content="website"><title>CAVEWOMAN: How Large Language Models Behave Under Linguistic Input and Output Compression</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-22">2026-06-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.24083" target="_blank" rel="noopener">2606.24083</a>  </div> <h1>CAVEWOMAN: How Large Language Models Behave Under Linguistic Input and Output Compression</h1> <p class="title-zh">CAVEWOMAN：大模型在输入输出压缩下的行为研究</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 推理成本与语义保真度评估</span> </div> <p class="affiliations">Independent · Adobe Research</p> <div class="meta">Morayo Danielle Adeyemi, Ryan A. Rossi, Franck Dernoncourt</div> <p class="one-liner">输入压缩反而增加成本并损害准确性，输出压缩能省钱但导致语义偏离基线</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/input compression">input compression</a><a class="tag" href="/DailyPaper/tag/output compression">output compression</a><a class="tag" href="/DailyPaper/tag/cost efficiency">cost efficiency</a><a class="tag" href="/DailyPaper/tag/accuracy">accuracy</a><a class="tag" href="/DailyPaper/tag/semantic divergence">semantic divergence</a><a class="tag" href="/DailyPaper/tag/evaluation protocol">evaluation protocol</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商/搜索等依赖 LLM 生成文案、推荐理由等的场景中，不要通过压缩用户输入（如缩写查询词、省略语法）来节省成本，实验证明这会迫使模型输出更长回复，总成本反而上升，且准确性显著下降。</li><li>输出压缩（如限定模型简短回答）能有效降低 API 调用成本，尤其在使用开放权重模型时；但需注意，即使答案正确，其表面文本可能与无压缩基线产生语义偏离，因此需额外监控生成内容与原始风格的一致性。</li><li>实现时可将输出压缩作为成本控制手段，结合语义对齐度指标（如 entailment 检测）确保压缩后内容不违背原意，适合高频生成场景（如自动回复、消息推送）。</li><li>如果使用自建模型，可按 token 计费时优先压缩输出；若模型输出长度不可控，可设置最大 token 数来硬性限制，但需权衡准确性和语义偏移。</li> </ul> </div> <div class="content"> <p><strong>动机</strong></p>
+<p>业界常建议用“穴居人式”压缩语言（如“Talk short. Drop grammar. Save token.”）来降低 LLM 推理成本，但缺乏系统评估：压缩输入（用户提示）和输出（模型回复）的效果是否相同？实际成本与准确性如何变化？</p>
+<p><strong>方法</strong></p>
+<p>提出 <strong>CAVEWOMAN</strong> 双通道评估协议，同时测量：</p>
+<ol>
+<li>任务准确性</li>
+<li>每样本实际推理成本（token 数 × 对应通道单价）</li>
+<li>生成文本与无压缩参考文本的语义一致性（基于 NLI 的 entailment 指标）</li>
+</ol>
+<p>在 8 个模型（含 API 与开放权重模型）、5 个数据集、5 个压缩等级上进行控制实验，确保输入和输出压缩在相同样本上测量。</p>
+<p><strong>关键结果</strong></p>
+<ul>
+<li><strong>输出压缩</strong>显著降低实际成本：API 模型通常节省 1.4–2.4 倍，开放权重模型节省更明显，最佳情况可达 3 倍。</li>
+<li><strong>输入压缩</strong>反而是 strict lose-lose：平均净成本增加约 <strong>15%</strong>，在部分数据集上高达 <strong>1.8 倍</strong>，强压缩时甚至 <strong>2.7 倍</strong>；原因是模型为弥补信息缺失而生成长回复，同时准确性大幅下降。</li>
+<li><strong>语义偏离严重</strong>：即使答案正确，非推理模型中约半数生成文本不再蕴含其无压缩基线生成的内容，这一偏离在长度控制、多重检验及不同语义指标下均稳健存在。</li>
+</ul>
+<p>结论：压缩策略必须区分输入与输出通道，输入压缩有害无益，输出压缩虽省钱但需警惕语义保真度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.24083&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.24083" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.24083" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.24083" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个并行视频工具调用多智能体RL框架，识别并解决工具先验悖论导致的格式崩溃与工具跳过问题。"><meta property="og:title" content="ParaVT: Taming the Tool Prior Paradox for Parallel Tool Use in Agentic Video Reinforcement Learning"><meta property="og:description" content="首个并行视频工具调用多智能体RL框架，识别并解决工具先验悖论导致的格式崩溃与工具跳过问题。"><meta property="og:type" content="website"><title>ParaVT: Taming the Tool Prior Paradox for Parallel Tool Use in Agentic Video Reinforcement Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.20342" target="_blank" rel="noopener">2605.20342</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>ParaVT: Taming the Tool Prior Paradox for Parallel Tool Use in Agentic Video Reinforcement Learning</h1> <p class="title-zh">ParaVT：驯服并行视频工具调用的工具先验悖论</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 多智体协作与工具调用优化</span> </div> <p class="affiliations">MiroMind · Nanyang Technological University · The University of Hong Kong · Hong Kong University of Science and Technology (Guangzhou) · Tsinghua University</p> <div class="meta">Zuhao Yang, Kaichen Zhang, Sudong Wang, Keming Wu, Zhongyu Yang, Bo Li 等</div> <p class="one-liner">首个并行视频工具调用多智能体RL框架，识别并解决工具先验悖论导致的格式崩溃与工具跳过问题。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Parallel Tool Calling">Parallel Tool Calling</a><a class="tag" href="/DailyPaper/tag/Tool Prior Paradox">Tool Prior Paradox</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Multi-Agent RL">Multi-Agent RL</a><a class="tag" href="/DailyPaper/tag/Video Understanding">Video Understanding</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>工具先验悖论处理：当使用预训练已有工具能力的模型做 RL 微调时，会出现格式崩溃（例如标签错误）和跳过工具的捷径。可借鉴 PARA-GRPO 的探索锚定技术：对关键格式标记（如 &lt;/think&gt;、&lt;/answer&gt;）施加额外奖励，并用约束生成强制开头标记，稳定结构化输出。在电商 Agent 中，若模型需要生成 API 调用格式，可以类似地对调用标签进行强化。</li><li>并行工具调度设计：从串行工具调用转为并行调度，能避免错误传播、降低上下文膨胀、实现固定延迟。在推荐系统多路召回或 Agent 多工具并行执行场景中，可以设计主代理一次调度多个子系统并行工作，并聚合结果，提高效率和容错。</li><li>nFrames Gating 创造工具必要性：通过随机控制输入的信息量（如减少概览帧），强制模型在部分样本上必须使用工具，避免奖励黑客行为。此法可迁移到检索增强场景：在训练 Agent 判断是否需要检索时，可随机删除部分文档，确保不使用检索的答案得分低，从而强化检索动机。</li><li>串行轨迹转并行数据构造：将串行工具调用轨迹合并为单轮并行调用，并用文本总结替代原始输出，既对齐训练格式又控制上下文长度。对于电商操作数据（如搜索、点击、加购），可将顺序操作按独立性合并成并行动作轨迹，用于训练多任务 Agent。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：在长视频理解中，现有工具增强方法采用串行调用（一次一个裁剪），错误会逐步传播，多轮上下文累积污染，且推理耗时随调用次数线性增长。并行工具调用可缓解这些问题，但直接应用 RL 训练会遇到 <strong>工具先验悖论</strong>：预训练模型自带的工具调用能力（先验）在温度采样下会导致结构化格式崩溃（如标签错误），同时许多问题无需工具就可回答，RL 策略会收敛到跳过工具的捷径，使工具学习失败。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>ParaVT 框架</strong>：主智能体单轮发出 K 个并行 <code>crop_video</code> 调用，派发给 K 个权重复用的子智能体，各自返回文本摘要，主智能体聚合证据后作答。并行调度提供对等纠错、控制上下文增长、限制推理延迟。</li>
+<li><strong>工具先验悖论诊断</strong>：通过 Qwen3-VL（强先验，格式崩溃但工具调用）与 Qwen2.5-VL（弱先验，格式完美但零工具调用）的跨模型对比，确认预训练工具先验是格式崩溃与工具探索的共同驱动力。</li>
+<li><strong>PARA-GRPO 算法</strong>：包含两个组件。<strong>探索锚定</strong>：在 <code>&#x3C;/think></code> 等关闭标签位置施加选择性奖励（α, β, γ），并用受限生成固定开头 <code>&#x3C;think> </code>，稳定格式而不限制内容；<strong>nFrames Gating</strong>：每样本随机选择概览帧数 n∈{4,8,16,32,64}，低 n 时概述不足以直接回答，创造工具调用奖励差距，解决必要性缺口。</li>
+<li><strong>数据配制</strong>：97K 多任务 SFT 数据（30% 含工具调用），通过合并独立串行调用并替换帧响应为文本摘要，构建单轮并行轨迹；4.4K RL 数据覆盖开放式 QA、选择题、时域接地点。</li>
+</ul>
+<p><strong>关键结果</strong>：在六个长视频基准上，ParaVT-8B 相对 Qwen3-VL-8B 平均提升 <strong>+7.9%</strong>，LongVideoBench +15.7%，LVBench +20.2%。训练时格式奖励从 0.13 升至 <strong>0.64</strong>，工具调用率维持在 0.21，避免了两极分化。并行调度相比串行在全部基准上提升。</p>
+<p><strong>记住</strong>：工具先验悖论是提升模型工具使用能力的核心矛盾，PARA-GRPO 通过锚定格式和门控工具必要性，为工具增强的 Agent RL 提供了可泛化的训练方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.20342&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.20342" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.20342" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.20342" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

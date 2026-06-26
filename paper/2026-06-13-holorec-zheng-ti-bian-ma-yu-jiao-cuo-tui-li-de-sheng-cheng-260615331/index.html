@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多粒度嵌套残差量化构建层级语义编码，通过门控交错推理实现内生链式思维，统一表示、推理与生成"><meta property="og:title" content="HoloRec: Holistic Encoding and Interleaved Reasoning for Generative Recommendation"><meta property="og:description" content="提出多粒度嵌套残差量化构建层级语义编码，通过门控交错推理实现内生链式思维，统一表示、推理与生成"><meta property="og:type" content="website"><title>HoloRec: Holistic Encoding and Interleaved Reasoning for Generative Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-13">2026-06-13</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.15331" target="_blank" rel="noopener">2606.15331</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>HoloRec: Holistic Encoding and Interleaved Reasoning for Generative Recommendation</h1> <p class="title-zh">HoloRec：整体编码与交错推理的生成式推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 层级语义编码与内生推理</span> </div> <p class="affiliations">Institute of Information Engineering, Chinese Academy of Sciences · School of Artificial Intelligence, Beijing Normal University · JD.com</p> <div class="meta">Shuqi Zhao, Jingsong Su, Xiang Liu, Xingzhi Yao, Yiming Qiu, Huimu Wang 等</div> <p class="one-liner">提出多粒度嵌套残差量化构建层级语义编码，通过门控交错推理实现内生链式思维，统一表示、推理与生成</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Hierarchical Semantic Encoding">Hierarchical Semantic Encoding</a><a class="tag" href="/DailyPaper/tag/Interleaved Reasoning">Interleaved Reasoning</a><a class="tag" href="/DailyPaper/tag/Chain-of-Thought">Chain-of-Thought</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/Residual Quantization">Residual Quantization</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多粒度语义ID构建：对item embedding按维度切片进行嵌套残差量化，生成粗到细的离散编码矩阵，可用于电商召回-粗排-精排的级联体系，在不同阶段使用不同粒度，减少计算开销同时保持语义对齐。</li><li>免费午餐的多粒度辅助训练：训练时添加粗粒度预测头（共享backbone），用粗粒度语义ID作为辅助标签，推理时去掉该头不增开销，可直接提升召回多样性（粗粒度标签帮助模型覆盖更多候选），适合电商长尾商品推荐。</li><li>内生交错推理机制：在自回归生成过程中，每一步先预测粗粒度语义分布，经门控注入到细粒度解码，隐式实现Chain-of-Thought而无需外部推理数据。可迁移到对话式推荐Agent中，在生成推荐列表时逐步细化用户意图，提升Top-1准确率。</li><li>稀疏场景增益显著：整体编码和交错推理对稀疏数据（如Beauty数据集相对TIGER Hit@5提升14.2%）效果突出，可用于解决电商中冷启动用户或新商品推荐问题。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>生成式推荐通过自回归生成统一了召回和排序，但现有方法存在三个问题：1) 物品语义表示大多为扁平向量，缺乏粗到细的层级结构，无法显式支持多步推理；2) 高质量的推荐Chain-of-Thought（CoT）数据获取昂贵、极度稀缺；3) 即使有CoT数据，推理步骤与最终生成常分离成两个阶段，推理未能深度指导生成。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>整体语义编码</strong>：对物品embedding按不同的前若干维度（如8/16/32维）切片，共享码本进行多层残差量化，形成M×L的层级离散编码矩阵；引入整体重构损失，强制每个粒度独立重构原始语义，提供自监督的多粒度信号，缓解CoT数据稀缺。</li>
+<li><strong>非思考模式</strong>：训练时在细粒度预测头部外增加粗粒度预测头，用相应粒度的语义ID作为标签进行多任务学习，推理时移除粗粒度头，无额外开销却可利用层级监督提升性能。</li>
+<li><strong>思考模式（内生CoT）</strong>：自回归解码时，先用上一步细粒度隐状态预测粗粒度语义分布，得到软粗粒度嵌入，经门控机制注入当前解码状态，再预测细粒度token，形成“预测粗→注入细→生成”的交错推理，直接在生成过程中嵌入思维链，无需外部标注数据。</li>
+</ul>
+<h2 id="关键实验结果">关键实验结果</h2>
+<p>在Amazon Beauty和Instruments两个数据集上，以T5为backbone，对比MF、SASRec、BERT4Rec、TIGER等基线。</p>
+<ul>
+<li>Beauty上Hit@5达0.0451，NDCG@5达0.0307，相对TIGER分别提升14.2%和17.2%。</li>
+<li>Instruments上Hit@10达0.1105，NDCG@10达0.0828，相对TIGER提升4.4%和3.9%。</li>
+<li>消融显示：多粒度监督对齐主要提升Hit@10等召回指标，交错推理主要提升Hit@1和Hit@5等精度指标，两者互补。</li>
+<li>稀疏场景收益更明显，长序列用户Top-1提升更显著。</li>
+</ul>
+<p><strong>核心洞见</strong>：层级语义编码与内生交错推理的组合，让生成式推荐模型在稀疏和高精度场景下均能获得收益，且几乎不增加参数和在线推理复杂度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.15331&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.15331" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.15331" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.15331" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="针对 LLM Agent 记忆的强近期偏斜与查询异质性，设计自适应级联检索系统，实现次线性扩展与跨工作负载自动融合选择。"><meta property="og:title" content="AgentIR: A Workload-Adaptive Cascade Retrieval Substrate for Long-Term Conversational Memory"><meta property="og:description" content="针对 LLM Agent 记忆的强近期偏斜与查询异质性，设计自适应级联检索系统，实现次线性扩展与跨工作负载自动融合选择。"><meta property="og:type" content="website"><title>AgentIR: A Workload-Adaptive Cascade Retrieval Substrate for Long-Term Conversational Memory</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-24">2026-05-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.25092" target="_blank" rel="noopener">2605.25092</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>AgentIR: A Workload-Adaptive Cascade Retrieval Substrate for Long-Term Conversational Memory</h1> <p class="title-zh">AgentIR: 面向长期会话记忆的自适应级联检索基底</p> <div class="dir-row"> <span class="direction-chip">🧭 自适应级联检索 · Agent 记忆工作负载</span> </div> <p class="affiliations">University of Southern California</p> <div class="meta">Aojie Yuan, Haiyue Zhang, Shahin Nazarian</div> <p class="one-liner">针对 LLM Agent 记忆的强近期偏斜与查询异质性，设计自适应级联检索系统，实现次线性扩展与跨工作负载自动融合选择。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/agent memory">agent memory</a><a class="tag" href="/DailyPaper/tag/hybrid retrieval">hybrid retrieval</a><a class="tag" href="/DailyPaper/tag/cascade router">cascade router</a><a class="tag" href="/DailyPaper/tag/recency bias">recency bias</a><a class="tag" href="/DailyPaper/tag/BM25 acceleration">BM25 acceleration</a><a class="tag" href="/DailyPaper/tag/GPU retrieval">GPU retrieval</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>时间分区索引利用 recency skew：将 Agent 记忆按时间窗口分桶，查询时仅检索最新分区，在典型近期偏斜分布下复杂度 O(log 1/ε)，实测 5M 记录下子 100μs 延迟，可显著降低在线客服或推荐系统中长期历史查询的延迟。</li><li>级联路由按查询置信度跳过稠密通道：先跑廉价的 BM25，若Top-k 分数差跨过阈值则跳过耗时的 Dense 通道，在 LongMemEval 上跳过 63% 查询仍保持同等精度，部署时可用少量标注数据（50样本）自动学习阈值，适用于电商 Agent 中多数查询为简单事实查找的场景。</li><li>两轴控制面适配异质查询：融合策略（BM25/Dense/RRF/带时效偏好的 RRF）和是否激活稠密通道均按查询决策，可应对同一个 Agent 会话中从事实查找、推理到时间查询的类型切换。可用于推荐系统中混合搜索（关键词 vs 语义）的动态切换。</li><li>BM25 工程加速与正确性坑点：SIMD 向量化、MaxScore 剪枝、GPU 两段核函数及共享内存初始化问题等具体实现细节可直接复用到自研稀疏检索模块，避免因预归一化 TF 或 nDCG 公式错误导致 6-8× 质量下降。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM Agent 在长期多轮交互中积累海量记忆记录（对话、工具调用、规划等），每次推理需实时查询记忆，要求亚 10ms 的检索延迟。传统的 IR 引擎（Lucene、FAISS）假定索引静态、查询分布平稳，未利用 Agent 记忆的强烈近期偏斜、单调增长和查询类型高度异构等特性，导致延迟高、资源浪费。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>设计 AgentIR，保持三条实时通道：SIMD 加速的 BM25 稀疏检索、HNSW 稠密检索、时间分区索引，对每条查询在<strong>两轴</strong>上做决策：用哪种融合（BM25、Dense、RRF 或带时效偏好和重要度加权的 agent_rrf）以及是否激活耗时的稠密通道（级联路由器）。</li>
+<li>时间分区索引利用指数衰减的近期偏斜，按 7 天窗口分区，查询时仅搜索最近几个分区，理论期望工作量 O(log 1/ε)，独立于总语料规模。</li>
+<li>稀疏检索采用 AVX2 向量化的 CSR 布局、MaxScore 剪枝，GPU 两段核函数（评分 + Top-k），并特别注意了 BM25 实现中的三个坑：预归一化 TF、线性增益 nDCG、GPU 共享内存未初始化。</li>
+<li>运行时查询类型路由器：用 TF-IDF 或 BGE-small 特征 + 逻辑回归预测查询类型，路由到该类型最佳融合策略，仅需 &#x3C;1 ms 额外开销。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 LongMemEval（500 条问题，19K 会话）上，带时效偏好的 RRF 达到 R@10=0.978、LLM 严格准确率 0.254；级联路由器跳过 63% 查询，实现 2.67× 加速且准确率持平；配合查询类型阈值 5 折交叉验证下可达 5.76× 加速。</li>
+<li>在 LoCoMo 对话 QA 上，同一触发机制自动学习到 BM25 单独即最优，跳过全部稠密通道，加速 132×，且 Hit@5 提升 0.089。</li>
+<li>BEIR 9 个数据集上，CPU 8 线程比 Pyserini 快 10 倍（几何平均），GPU 快 1.8-39 倍，nDCG@10 差异在 ±0.020 内；时间分区索引在 5M 记录下提供 1769× 加速，且语料增长 1234 倍时延迟仅增长 3.6 倍，单次查询 p50 延迟保持 90μs。</li>
+<li>搭建了 SPLADE 到 CSR 格式的桥梁，验证了可无缝接入学得稀疏权重以提升质量，且不改动检索内核。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：Agent 记忆检索不是“小 IR”，其极端的近期偏斜、异质查询和在线增长使专门的索引结构与自适应路由带来的收益远超通用引擎。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.25092&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.25092" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.25092" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.25092" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

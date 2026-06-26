@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="为多 LLM 智能体协作提出一种层次化最终性控制原语，输出语义提交、裁决提交或安全中止三类带证书的承诺。"><meta property="og:title" content="Hierarchical Certified Semantic Commitment for Byzantine-Resilient LLM-Agent Collaboration"><meta property="og:description" content="为多 LLM 智能体协作提出一种层次化最终性控制原语，输出语义提交、裁决提交或安全中止三类带证书的承诺。"><meta property="og:type" content="website"><title>Hierarchical Certified Semantic Commitment for Byzantine-Resilient LLM-Agent Collaboration</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07316" target="_blank" rel="noopener">2606.07316</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Hierarchical Certified Semantic Commitment for Byzantine-Resilient LLM-Agent Collaboration</h1> <p class="title-zh">层次化认证语义承诺：面向拜占庭容错的 LLM 智能体协作最终性控制</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 多智体协作 · 拜占庭容错 · 语义承诺</span> </div> <p class="affiliations">University of Glasgow · University of Western Ontario</p> <div class="meta">Haoran Xu, Lei Zhang, Iadh Ounis, Xianbin Wang</div> <p class="one-liner">为多 LLM 智能体协作提出一种层次化最终性控制原语，输出语义提交、裁决提交或安全中止三类带证书的承诺。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Byzantine resilience">Byzantine resilience</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/semantic commitment">semantic commitment</a><a class="tag" href="/DailyPaper/tag/typed finality">typed finality</a><a class="tag" href="/DailyPaper/tag/multi-agent collaboration">multi-agent collaboration</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>结构化提案 + 确定性编码：在电商多 Agent 辩论或事实核查场景中，可要求每个 Agent 输出结构化字段（裁决、置信度、证据链），并对该结构进行确定性语义编码（如 Sentence-Transformer），为后续几何分析或证书绑定提供统一基础。</li><li>层次化最终性决策：借鉴三类承诺机制（semantic_commit / verdict_commit / abort），根据嵌入一致性和投票 margin 分级决定是否提交及提交类型，避免在不一致时强行输出无保证的结果，提升系统可审计性。</li><li>不依赖外部真相的证书：协议仅使用嵌入几何与投票计数，不依赖 gold truth 或外部法官。在设计多 Agent 协作流程时，可将最终决策与有噪声的外部标签解耦，通过 2f+1 签名证书提供可验证的安全保证。</li><li>嵌入级安全中止：当语义核心不可信时主动 abort，防止拜占庭语义投毒污染下游任务。在推荐场景的 Agent 辩论或内容安全审核中，可设置类似半径阈值作为自动安全兜底。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+多 LLM 智能体协作进行事实核查、路由决策等任务时，智能体输出的自然语言提案虽语义一致但文本各异，传统拜占庭容错（BFT）协议要求字节级一致，无法直接适用。软投票或多数聚合没有证书、不区分语义一致性，且容易受到拜占庭语义投毒——恶意智能体生成的文本流畅、接近诚实提案的嵌入分布，却能恶意翻转下游分类器。<br>
+因此需要一种能从嵌入几何和投票信号中自动判断“应提交何种类型结果”的最终性控制原语。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>结构化提案与确定性编码</strong>：每个智能体输出包含裁决、置信度、证据 ID、理由等字段的提案；协议对提案文本进行规范化和共享嵌入编码，得到单位球面上的嵌入向量。</li>
+<li><strong>层次化决策管道</strong>：
+<ol>
+<li>按裁决分组，选出最大组作为候选（需 ≥2f+1）。</li>
+<li>在候选组内通过角度图找出满足 2f+1 大小且半径 ≤θ_α 的连通分量，作为语义核心。</li>
+<li>若语义核心存在 → 聚合为嵌入中位数并量化，生成 <code>semantic_commit</code>，绑定 2f+1 证书。</li>
+<li>若语义核心不满足但裁决 margin≥1 → 生成 <code>verdict_commit</code>，仅包含裁决负载和证书。</li>
+<li>否则 → 输出带类型原因的 <code>abort</code>。</li>
+</ol>
+</li>
+<li><strong>证书与安全</strong>：所有提交均绑定 2f+1 个不同签名者证书，保证至少 f+1 个诚实节点参与。协议不依赖外部真相或证据校验。</li>
+</ul>
+<p><strong>关键实验与数字</strong></p>
+<ul>
+<li>控制诊断基准 <strong>BCS_v1</strong>：在 BFT 可行区（n≥3f+1），语义偏离低至 0.31°–2.04°；超出 BFT 时 100% 中止。</li>
+<li>真实智能体基准 <strong>MVR-50</strong>（50 个 Climate-FEVER 任务，10 个 Agent，f=2）：
+<ul>
+<li>提交率：静态 0.90 / 抢先 0.92。</li>
+<li>诚实参考无效提交率（invalid_hmaj）仅 0.02 / 0.00，与带证书的多数基线（B3）相近，但额外贡献了 74%/72% 轮次的 <code>semantic_commit</code>（带嵌入溯源）。</li>
+<li>若去掉判决回退（严格语义 CSC），提交率降至 0.54/0.48，证明层次化回退对覆盖率提升 +0.36/+0.44 不可或缺。<br>
+<strong>核心贡献</strong>：不是简单的多数投票，而是区分语义级与裁决级最终性的类型化承诺，使下游可以查验是否达成语义聚合或仅达成交互一致。</li>
+</ul>
+</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07316&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07316" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07316" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07316" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

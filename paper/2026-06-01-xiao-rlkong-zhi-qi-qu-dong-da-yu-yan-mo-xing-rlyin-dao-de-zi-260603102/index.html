@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将自适应采样建模为MDP，用4层MLP的RL控制器仅依赖答案统计联合优化正确率、延迟与计算量。"><meta property="og:title" content="Small RL Controller, Large Language Model: RL-Guided Adaptive Sampling for Test-Time Scaling"><meta property="og:description" content="将自适应采样建模为MDP，用4层MLP的RL控制器仅依赖答案统计联合优化正确率、延迟与计算量。"><meta property="og:type" content="website"><title>Small RL Controller, Large Language Model: RL-Guided Adaptive Sampling for Test-Time Scaling</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-06-01">2026-06-01</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.03102" target="_blank" rel="noopener">2606.03102</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Small RL Controller, Large Language Model: RL-Guided Adaptive Sampling for Test-Time Scaling</h1> <p class="title-zh">小RL控制器驱动大语言模型：RL引导的自适应采样实现测试时扩展</p> <div class="dir-row"> <span class="direction-chip">🧭 测试时扩展 · 强化学习自适应采样</span> </div> <p class="affiliations">University of North Carolina at Chapel Hill · University of Maryland, College Park · Washington University in St. Louis</p> <div class="meta">Runpeng Dai, Tong Zheng, Rui Liu, Chengsong Huang, Hongtu Zhu</div> <p class="one-liner">将自适应采样建模为MDP，用4层MLP的RL控制器仅依赖答案统计联合优化正确率、延迟与计算量。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Test-Time Scaling">Test-Time Scaling</a><a class="tag" href="/DailyPaper/tag/Adaptive Sampling">Adaptive Sampling</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/Self-Consistency">Self-Consistency</a><a class="tag" href="/DailyPaper/tag/MDP">MDP</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>动态资源分配MDP化：将推理预算分配形式化为MDP的思路可直接迁移到电商推荐系统的召回、排序阶段，用轻量RL控制器动态决定何时停止多路召回或特征计算，平衡延迟与效果。</li><li>仅依赖轻量统计状态：状态仅需top-K答案计数、总样本数和熵，无需模型内部logits或置信度，部署极简，适合在线服务场景。类似地，在推荐系统中可以仅用候选集统计特征（如多样性、得分分布）做决策。</li><li>跨模型泛化能力：控制器在不同LLM和数据集间可迁移，暗示训练一个通用预算分配器可行。在Agent或多智体场景中，可先基于低成本模型训练协调器，再无损迁移到昂贵模型上使用。</li><li>Lagrangian视角提供约束优化理论支撑：将延迟/计算约束通过拉格朗日对偶显式引入奖励函数，便于在业务中直接设定成本上限并寻优，可启发多目标推荐系统的在线预算控制。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+测试时扩展（如Self-Consistency）可显著提升LLM推理性能，但带来高昂的计算与延迟成本。现有自适应采样方法（如ASC、ESC）要么依赖启发式阈值或分布假设，要么需要模型内部信号（置信度、隐藏状态），且常破坏原有推理流程。亟需一种轻量、无侵入且能显式优化准确率–成本–延迟三元权衡的方法。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>MDP建模</strong>：将自适应采样定义为有限时域MDP。状态为当前采样池中答案的top-K频率、总数及熵，动作空间{0,1,2,4}，0表示停止并对池内答案进行多数投票，其余表示并行追加指定数量样本。</li>
+<li><strong>奖励设计</strong>：步级奖励为$–\lambda_{lat} – \lambda_{comp} * a_t$，惩罚额外轮次与样本；终端奖励基于当前多数答案是否与继续采样到最大预算N=32时的多数答案一致（一致+1，否则-1），避免依赖真实标签。</li>
+<li><strong>控制器</strong>：4层MLP，用PPO训练，离线采样128条回答构造轨迹，仅需CPU训练与部署，完全无侵入。</li>
+<li><strong>Lagrangian视角</strong>：优化目标等价于在约束期望轮次与样本数下最大化准确率的拉格朗日松弛，为调参提供理论依据。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在AIME24、AIME25、HMMT25三个数学推理基准上，使用Qwen3-0.6B/1.7B/4B及GPT-4.1-nano作为采样器。RL-Guided Sampling相比ASC：平均采样轮次减少近3–4倍，总样本数减少约30%，准确率持平；相比ESC：轮次减少约10%，总样本减少约35%，且准确率略高。控制器跨数据集和模型（如从Qwen3-0.6B训练的控制器直接用于GPT-4.1-nano）仍保持显著效率优势。消融实验表明，使用“运行多数票”作为奖励信号优于全量多数或真实标签，后者反而引入噪声导致效果下降。</p>
+<p><strong>一句话核心</strong><br>
+仅用答案统计的轻量RL控制器即可实现超越启发式方法的自适应采样，无需模型内部信号，且跨模型泛化。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.03102&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.03102" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.03102" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.03102" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Negative Entropy - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Negative Entropy - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Negative Entropy</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-14-ph-jun-heng-mian-xiang-hun-he-zhuan-jia-xun-lian-de-tu-dui-260515403">$φ$-Balancing for Mixture-of-Experts Training</a></h2> <p class="title-zh">ϕ-均衡：面向混合专家训练的凸对偶负载均衡框架</p> <div class="dir-row"> <span class="direction-chip">🧭 MoE 训练 · 负载均衡</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">University of Texas at Austin · Northwestern University</p> <p class="summary">利用严格凸势函数与镜面下降，将 MoE 负载均衡从启发式 batch 统计提升为人口级凸优化，仅需 EMA 跟踪路由概率即实现更稳定均衡与专家专业化</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>用 EMA 替代 batch 统计，消除负载均衡偏差：在电商推荐或 Agent 系统的 MoE 层中，可直接将 ST-MoE 损失中的 batch 频率 f_e 替换为 EMA 路由概率经镜面映射 ∇ϕ(m) 的加权，实现全局均衡，避免因小批次造成的不均匀分配，对长尾流量和冷启动专家更友好。</li><li>负熵势函数是简单有效的默认选择：实验证明负熵作为 ϕ 在各种规模与粒度下均最优，实现简单（L_aux = Σ p_e * (log m_e + 1)），且对 EMA 衰减率鲁棒（推荐 0.6–0.7），可直接替换现有负载均衡损失而无需额外调参。</li><li>促进专家专业化，适配多域推荐：ϕ-均衡允许路由根据全局分布动态分配专家，使不同专家自然专注于不同商品类目或行为模式，适合电商多场景联合建模（如搜索、推荐、广告），可尝试冻结部分专家实现领域隔离。</li><li>工程开销极小，易于集成：仅需在每个 MoE 层维护一份 EMA 向量并增加一步 stop_gradient 的 ∇ϕ 计算，额外算力可忽略，适合大规模分布式训练，能够无缝融入现有 DeepSpeed-MoE 等框架。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span> <span>stat.ML</span> <span class="sep">|</span> <span class="badge badge-score">score 8/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/MoE">MoE</a><a class="tag" href="/DailyPaper/tag/Load Balancing">Load Balancing</a><a class="tag" href="/DailyPaper/tag/Mirror Descent">Mirror Descent</a><a class="tag" href="/DailyPaper/tag/Convex Duality">Convex Duality</a><a class="tag" href="/DailyPaper/tag/EMA">EMA</a><a class="tag" href="/DailyPaper/tag/Negative Entropy">Negative Entropy</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

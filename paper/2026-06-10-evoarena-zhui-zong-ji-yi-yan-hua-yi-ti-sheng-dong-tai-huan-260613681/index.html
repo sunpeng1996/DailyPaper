@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出动态环境评测套件 EvoArena 和补丁式记忆机制 EvoMem，通过记录记忆变化轨迹让代理在持续演化的任务中更鲁棒。"><meta property="og:title" content="EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments"><meta property="og:description" content="提出动态环境评测套件 EvoArena 和补丁式记忆机制 EvoMem，通过记录记忆变化轨迹让代理在持续演化的任务中更鲁棒。"><meta property="og:type" content="website"><title>EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13681" target="_blank" rel="noopener">2606.13681</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments</h1> <p class="title-zh">EvoArena: 追踪记忆演化以提升动态环境中的 LLM 代理鲁棒性</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent 鲁棒性 · 环境演化与记忆进化</span> </div> <p class="affiliations">National University of Singapore · Singapore Management University · University of Washington · University College London · University of Pennsylvania</p> <div class="meta">Jundong Xu, Qingchuan Li, Jiaying Wu, Yihuai Lan, Shuyue Stella Li, Huichi Zhou 等</div> <p class="one-liner">提出动态环境评测套件 EvoArena 和补丁式记忆机制 EvoMem，通过记录记忆变化轨迹让代理在持续演化的任务中更鲁棒。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a><a class="tag" href="/DailyPaper/tag/Dynamic Environment">Dynamic Environment</a><a class="tag" href="/DailyPaper/tag/Memory Evolution">Memory Evolution</a><a class="tag" href="/DailyPaper/tag/Patch-based Memory">Patch-based Memory</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆演化追踪：将记忆更新记录为“补丁”，保留变更前后状态、原因和证据。电商推荐中用户偏好随时间变化，可记录每次偏好更新及触发上下文，用于更精准的长期用户建模。</li><li>链式任务评估：EvoArena 的链式准确率评估方法要求连续子任务全对才算成功，可借鉴到 Agent 流水线评测，衡量系统在持续变化环境下的端到端可靠性，而非仅看单步指标。</li><li>版本化状态管理：当系统规则或模型更新时，保留旧版本知识，避免新信息完全覆盖旧信息。在推荐策略迭代或 A/B 测试时，可回溯历史版本行为，支持更稳健的上线决策。</li><li>补丁检索推理：查询时检索相关历史变更，而不仅用最新记忆，可用于处理时间敏感或条件依赖的任务。例如根据当前上下文检索用户过去的偏好变化轨迹，辅助动态意图识别。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有 LLM Agent 评测大多假设静态环境，但真实部署中接口、规则、代码和用户偏好会持续变化。Agent 需要知道哪些变了、哪些仍然有效，才能在不同版本下可靠行动。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>EvoArena 评测套件</strong>：将终端工作流、软件工程、社交对话三个领域构造为<strong>渐进演化版本链</strong>，要求 Agent 在保持目标不变但环境约束变化的连续任务中解决问题。包含 Terminal-Bench-Evo（命令行工作流演化）、SWE-Chain-Evo（代码库里程碑演化）和 PersonaMem-Evo（用户偏好演化）。</li>
+<li><strong>EvoMem 记忆机制</strong>：一种轻量级 git-like 的补丁记录方法。当记忆发生非增量式更新（如覆盖旧规则）时，生成包含前后状态、更新理由、触发证据的补丁，存入追加式历史。推理时从最新记忆和相关的历史补丁中检索，使 Agent 能基于环境演化轨迹做决策。</li>
+<li><strong>实现</strong>：EvoMem 作为通用抽象层，无缝接入 Terminus2、OpenHands、A-Mem 等不同 Agent 记忆系统，仅监控记忆变更并补充补丁检索。</li>
+</ul>
+<p><strong>关键实验结果</strong>：</p>
+<ul>
+<li>现有强大 Agent 在 EvoArena 上平均步级准确率仅 39.6%，链级准确率更低，说明环境演化带来明显退化。</li>
+<li>EvoMem 在 EvoArena 上平均提升 1.5% 步级准确率和 3.7% 链级准确率，在 GAIA 和 LoCoMo 标准基准上分别提升 6.1% 和 4.8%。</li>
+<li>机制分析表明，当 Agent 真正利用检索到的补丁信息并体现在行动中时，增益更大，说明<strong>操作化记忆演化轨迹是提升鲁棒性的关键</strong>。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13681&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13681" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13681" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13681" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

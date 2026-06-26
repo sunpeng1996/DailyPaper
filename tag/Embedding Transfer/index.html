@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Embedding Transfer - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Embedding Transfer - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Embedding Transfer</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-28-loopfm-ji-yu-ji-chu-mo-xing-li-shi-biao-zheng-de-tui-jian-yi-260529280">LoopFM: Learning frOm HistOrical RePresentations of Foundation Model for Recommendation</a></h2> <p class="title-zh">LoopFM：基于基础模型历史表征的推荐知识迁移</p> <div class="dir-row"> <span class="direction-chip">🧭 知识蒸馏优化 · 历史表示结构化</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">Meta AI</p> <p class="summary">将大模型历史中间层嵌入压缩并序列化为小模型输入特征，打破标量知识蒸馏的带宽瓶颈。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>离线生成用户侧序列特征：将大模型已产生的历史交互 embedding 按键（如 user ID）压缩成时间序列，作为 lightweight 模型的直接输入，无需实时推理大模型，显著降低在线延迟。</li><li>正交填充知识缺口：LoopFM 序列提供跨域、跨特征交互信息，与标量 KD 互补；在线上可并行部署两条迁移通道，提升整体迁移率（内部实验迁移率翻倍）。</li><li>以压缩控制成本，以结构保留时序信号：用自动编码器 + Matryoshka 维度灵活 + INT4 量化，可实现 4× 存储压缩；序列化方式比简单池化更好（DMIN attention 优于 mean-pool），但 sum-pool 也能捕获大部分增益，可按成本选择。</li><li>容量差距越大收益越高：小模型直接学高基数 ID 序列效果差，而 LoopFM 提供的低维、信息浓缩表示使小模型直接受益，这适合电商推荐中的重模型-轻模型架构。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span> <span>cs.IR</span> <span class="sep">|</span> <span class="badge badge-score">score 10/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Knowledge Distillation">Knowledge Distillation</a><a class="tag" href="/DailyPaper/tag/Foundation Model">Foundation Model</a><a class="tag" href="/DailyPaper/tag/Embedding Transfer">Embedding Transfer</a><a class="tag" href="/DailyPaper/tag/Sequential Recommendation">Sequential Recommendation</a><a class="tag" href="/DailyPaper/tag/Compression">Compression</a><a class="tag" href="/DailyPaper/tag/Industrial Recommendation">Industrial Recommendation</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

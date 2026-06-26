@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用多智能体协作在有限预算内自主搜索 Transformer-Mamba 混合架构，性能与效率超越人工设计基准"><meta property="og:title" content="Agentic Discovery of Neural Architectures: AIRA-Compose and AIRA-Design"><meta property="og:description" content="用多智能体协作在有限预算内自主搜索 Transformer-Mamba 混合架构，性能与效率超越人工设计基准"><meta property="og:type" content="website"><title>Agentic Discovery of Neural Architectures: AIRA-Compose and AIRA-Design</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.15871" target="_blank" rel="noopener">2605.15871</a>  </div> <h1>Agentic Discovery of Neural Architectures: AIRA-Compose and AIRA-Design</h1> <p class="title-zh">基于智能体的神经架构自主发现：AIRA-Compose 与 AIRA-Design</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 驱动的神经架构自动发现</span> </div> <p class="affiliations">FAIR at Meta</p> <div class="meta">Alberto Pepe, Chien-Yu Lin, Despoina Magka, Bilge Acun, Yannan Nellie Wu, Anton Protopopov 等</div> <p class="one-liner">用多智能体协作在有限预算内自主搜索 Transformer-Mamba 混合架构，性能与效率超越人工设计基准</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent">Agent</a><a class="tag" href="/DailyPaper/tag/Architecture Search">Architecture Search</a><a class="tag" href="/DailyPaper/tag/Self-Improving AI">Self-Improving AI</a><a class="tag" href="/DailyPaper/tag/Transformer-Mamba Hybrid">Transformer-Mamba Hybrid</a><a class="tag" href="/DailyPaper/tag/Neural Architecture Design">Neural Architecture Design</a><a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多智能体组合搜索可复用：在电商推荐模型的 CTR/序列模块中，可借鉴AIRA的11-agent协作模式，将Attention、MLP、Mamba等计算原语作为搜索空间，用固定GPU预算自动探索高效混合架构，减少人工试错成本。</li><li>小尺度评估+外推策略：对推荐模型结构搜索，先在百万参数量级快速评估候选设计，再extrapolate到生产级大模型，这种“低成本过滤”能显著提升搜索效率，可复用于召回、排序模型的架构迭代。</li><li>直接由Agent编写算子与脚本：AIRA-Design让Agent生成注意力机制和训练脚本，这一思路可迁移至长序列推荐场景（如用户行为序列），自动优化长程依赖处理，降低对专家手工设计的依赖。</li><li>固定预算下的多Agent竞赛机制：多个Agent在限定时间/资源内并行提出方案并相互评估，这种竞争性协作可应用于推荐系统的超参优化、特征工程自动化，快速找到性价比最高的配置。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：实现自改进AI，探索LLM agent能否自主设计出超越标准Transformer的基础模型架构，推动递归式自我进步。</p>
+<p><strong>方法</strong>：提出双框架：</p>
+<ul>
+<li><strong>AIRA-Compose</strong>：11个agent在24小时计算预算内，以Attention、MLP、Mamba为基本原语进行组合搜索。先在百万参数量级评估候选模型，再外推至350M/1B/3B参数级预训练。最终得到14个新架构，分为Transformer基的AIRAformers和Transformer-Mamba混合的AIRAhybrids。</li>
+<li><strong>AIRA-Design</strong>：20个agent直接编写新型注意力机制和训练脚本，处理长序列依赖，在Long Range Arena和Autoresearch基准上评测。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>1B参数预训练下，AIRAformer-D和AIRAhybrid-D在下游任务准确率分别比Llama 3.2高2.4%和3.8%。</li>
+<li>缩放效率显著提升：AIRAformer-C比Llama 3.2快54%，AIRAhybrid-C比Nemotron-2快23%。</li>
+<li>AIRA-Design设计的注意力架构在文档匹配和文本分类上仅比人类SOTA差2.3%和2.6%；训练脚本优化超基准，验证bits-per-byte达0.968。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.15871&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.15871" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.15871" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.15871" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

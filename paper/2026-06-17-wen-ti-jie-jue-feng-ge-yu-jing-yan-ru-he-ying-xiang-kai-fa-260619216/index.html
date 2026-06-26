@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过有声思维研究识别开发者与编程助手对话的 5 种交互模式和 10 种需求，揭示认知多样性的影响"><meta property="og:title" content="No Two Developers Think Alike: How Problem-Solving Styles and Experience Shape Needs in Conversational Interaction with Copilot"><meta property="og:description" content="通过有声思维研究识别开发者与编程助手对话的 5 种交互模式和 10 种需求，揭示认知多样性的影响"><meta property="og:type" content="website"><title>No Two Developers Think Alike: How Problem-Solving Styles and Experience Shape Needs in Conversational Interaction with Copilot</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-17">2026-06-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.19216" target="_blank" rel="noopener">2606.19216</a>  </div> <h1>No Two Developers Think Alike: How Problem-Solving Styles and Experience Shape Needs in Conversational Interaction with Copilot</h1> <p class="title-zh">问题解决风格与经验如何影响开发者与 Copilot 对话的需求</p> <div class="dir-row"> <span class="direction-chip">🧭 对话式助手交互的认知多样性研究</span> </div> <p class="affiliations">Radboud University · Federal University of Technology – Paraná · Microsoft</p> <div class="meta">Jonan Richards, Bruno Alves de Oliveira, Iury Oliveira, Igor Wiese, Mairieli Wessel</div> <p class="one-liner">通过有声思维研究识别开发者与编程助手对话的 5 种交互模式和 10 种需求，揭示认知多样性的影响</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/cognitive diversity">cognitive diversity</a><a class="tag" href="/DailyPaper/tag/programming assistants">programming assistants</a><a class="tag" href="/DailyPaper/tag/interaction modes">interaction modes</a><a class="tag" href="/DailyPaper/tag/developer needs">developer needs</a><a class="tag" href="/DailyPaper/tag/user study">user study</a><a class="tag" href="/DailyPaper/tag/GitHub Copilot">GitHub Copilot</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在对话式推荐助手（如购物导购、广告客服）中，可参照此研究设计用户意图识别模块，根据用户的提问风格（如探索型 vs. 聚焦型）动态调整推荐策略，提供更个性化的交互体验。</li><li>为不同经验水平的用户提供差异化引导：新手可能需要逐步解释和示例，而专家偏好简洁快速的意图理解，可在对话流中设置自适应路径。</li><li>对用户交互日志进行模式聚类，类似文中识别的5种模式，可用于监控用户行为并触发主动帮助（如识别“挣扎”模式时推送提示）。</li><li>在评估对话式搜索/推荐系统时，引入认知多样性变量（如问题解决风格量表），更全面地解释不同用户群的满意度差异，避免“一刀切”的评估指标。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：基于 LLM 的编程助手（如 GitHub Copilot Chat）虽被广泛使用，但现有研究显示开发者需求存在显著个体差异，部分特定群体面临独特挑战。现有工具设计多为“通用型”，未考虑认知多样性如何影响交互。</p>
+<p><strong>方法</strong>：采用混合方法有声思维研究，招募 27 名专业开发者与学生，在真实编程环境中使用 Copilot Chat，通过出声思维、即时追问和事后问卷，收集交互行为与主观反馈。分析阶段结合定性编码与定量聚类，归纳出 5 种典型交互模式、10 项核心需求，并关联开发者的问题解决风格（Kirton Adaption–Innovation Inventory）与经验水平。</p>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>识别出 5 种交互模式：主动型、被动型、实验型、挣扎型、避开型，每种模式对应不同的需求组合。</li>
+<li>提炼出 10 项需求，如“理解建议生成逻辑”“控制对话节奏”“获得解释而非代码”等，高频需求包括“保持上下文”和“获得多样化建议”。</li>
+<li>问题解决风格（适应型 vs. 创新型）显著影响交互模式：适应型开发者更倾向结构化、逐步的交互，创新型开发者喜欢跳跃式探索。经验水平也会影响对提示精确性和解释深度的需求。</li>
+</ul>
+<p><strong>贡献</strong>：构建了编程助手交互的概念模型，揭示了认知多样性对交互的塑造作用，为个性化编程助手设计提供了实证依据。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.19216&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.19216" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.19216" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.19216" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

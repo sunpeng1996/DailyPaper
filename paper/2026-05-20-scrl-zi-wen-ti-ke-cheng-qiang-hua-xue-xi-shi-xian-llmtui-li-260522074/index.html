@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过可验证子问题构建难度课程，结合子问题级归一化把部分推理进展转化为细粒度学习信号，显著提升困难数学题的RL训练效率"><meta property="og:title" content="From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning"><meta property="og:description" content="通过可验证子问题构建难度课程，结合子问题级归一化把部分推理进展转化为细粒度学习信号，显著提升困难数学题的RL训练效率"><meta property="og:type" content="website"><title>From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22074" target="_blank" rel="noopener">2605.22074</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning</h1> <p class="title-zh">SCRL：子问题课程强化学习实现LLM推理细粒度信用分配</p> <div class="dir-row"> <span class="direction-chip">🧭 课程RL · 子问题分解与信用分配</span> </div> <p class="affiliations">LeapLab, Tsinghua University · Qiuzhen College, Tsinghua University</p> <div class="meta">Xitai Jiang, Zihan Tang, Wenze Lin, Yang Yue, Shenzhi Wang, Gao Huang</div> <p class="one-liner">通过可验证子问题构建难度课程，结合子问题级归一化把部分推理进展转化为细粒度学习信号，显著提升困难数学题的RL训练效率</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Curriculum Learning">Curriculum Learning</a><a class="tag" href="/DailyPaper/tag/Credit Assignment">Credit Assignment</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Mathematical Reasoning">Mathematical Reasoning</a><a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/Subproblem">Subproblem</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多步推理任务的训练范式：当业务问题可分解为可独立验证的子步骤（如电商长链决策、多轮Agent交互），可借鉴子问题课程+进度感知奖励校正，将稀疏最终奖励转化为密集的中间信号，避免梯度死区。</li><li>细粒度信用分配：子问题级归一化在每个子步骤位置独立计算优势，再映射到回答 span 的 token，无需额外奖励模型或过程标注。可直接用于多步推荐对话或规划模型，为每个中间决策分配细粒度学习信号。</li><li>混合训练保持分布一致性：采用一半课程 rollout、一半原始 rollout 的混合训练，防止 prompt 不匹配，保证模型在推理时能处理原始问题，适合在线 on-policy 训练场景。</li><li>降低生成器依赖：实验表明即使使用较弱模型生成子问题，SCRR 依然有效，仅需有参考解即可分解，不要求完美构造，工程实现成本低。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：基于可验证奖励的强化学习（RLVR，如 GRPO）在困难数学题上常因正确样本稀少导致组内归一化失效，且样本级信用分配无法利用部分正确的进展。如何从困难题中提取更细粒度的学习信号，使模型在保持 on-policy 探索的同时有效利用中间步骤，成为关键。</p>
+<p><strong>方法</strong>：SCRL 包含三步。①<strong>子问题构建</strong>：给定题目与参考解，用外部 LLM 将推理链拆解为 K 个可验证的子问题，难度递增，最后一个子问题固定为原题，形成课程。②<strong>在线滚动</strong>：模型在一个 rollout 中批量回答所有子问题，用 <code>&#x3C;pj>...&#x3C;/pj></code> 标签标记答案 span；验证答案得到奖励向量，经<strong>进度感知校正</strong>（只保留最长连续成功前缀）得到最终子问题奖励。③<strong>训练算法</strong>：<strong>子问题级归一化</strong>在每个子问题位置独立计算优势，再映射回对应 span 的 token，实现 token 级信用分配；训练采用<strong>混合组</strong>：一半课程 rollout + 一半原题 rollout，共同优化。</p>
+<p><strong>理论</strong>：从 Fisher 信息几何证明，原题在低成功率时陷入梯度死区，而子问题分解将优化提升到乘积流形，恢复非退化的梯度信号，且恢复比随题目难度增大而增大。</p>
+<p><strong>实验</strong>：在 7 个数学推理基准上，SCRL 在 Qwen3-4B-Base 上平均准确率 35.0%，比 GRPO 的 30.9% 高出 4.1 个点（Qwen3-14B 上 +1.9）；在 AIME24/25、IMO-Bench 三个困难集上，pass@1 和 pass@64 分别提升 3.7 和 4.6 个点。消融证实：子问题数 K=4 最优；弱生成器仍能带来 2.7 点提升；奖励校正和位置归一化都是有效设计。</p>
+<p><strong>核心 insight</strong>：通过将困难题系统性拆解为可验证子问题，并用位置感知的归一化给予中间步骤独立信用，RLVR 得以跳出奖励稀疏的困境，而模型始终在自己的滚动中探索，避免引入外部前缀造成的分布偏移。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22074&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22074" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22074" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22074" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

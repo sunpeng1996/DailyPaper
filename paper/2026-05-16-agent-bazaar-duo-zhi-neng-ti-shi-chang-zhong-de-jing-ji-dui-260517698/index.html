@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多智能体市场仿真框架，揭示LLM代理在B2C/C2C市场的崩溃与欺诈失败模式，并通过REINFORCE++训练9B模型实现经济对齐，性能超越前沿模型。"><meta property="og:title" content="Agent Bazaar: Enabling Economic Alignment in Multi-Agent Marketplaces"><meta property="og:description" content="提出多智能体市场仿真框架，揭示LLM代理在B2C/C2C市场的崩溃与欺诈失败模式，并通过REINFORCE++训练9B模型实现经济对齐，性能超越前沿模型。"><meta property="og:type" content="website"><title>Agent Bazaar: Enabling Economic Alignment in Multi-Agent Marketplaces</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-16">2026-05-16</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.17698" target="_blank" rel="noopener">2605.17698</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Agent Bazaar: Enabling Economic Alignment in Multi-Agent Marketplaces</h1> <p class="title-zh">Agent Bazaar：多智能体市场中的经济对齐仿真与强化学习训练</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体经济对齐 · 市场仿真 · RL训练</span> </div> <p class="affiliations">Princeton University</p> <div class="meta">Seth Karten, Cameron Crow, Chi Jin</div> <p class="one-liner">提出多智能体市场仿真框架，揭示LLM代理在B2C/C2C市场的崩溃与欺诈失败模式，并通过REINFORCE++训练9B模型实现经济对齐，性能超越前沿模型。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Economic Alignment">Economic Alignment</a><a class="tag" href="/DailyPaper/tag/Multi-Agent Simulation">Multi-Agent Simulation</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/REINFORCE++">REINFORCE++</a><a class="tag" href="/DailyPaper/tag/Market Crash">Market Crash</a><a class="tag" href="/DailyPaper/tag/Sybil Attack">Sybil Attack</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商市场防护Sybil攻击的买家审核策略：可借鉴Skeptical Guardian模式，在买家决策时注入对卖家声誉、价格区间与描述一致性的交叉验证逻辑，尤其是当多个账户可能被同一主体操控时，通过行为聚类识别Sybil集群。</li><li>价格战市场的稳定性设计：限制消费者可见信息并不总能改善市场，过度提高搜索可见性反而加速恶性降价（dlc增大导致崩溃更难抑制）。在电商推荐系统中可考虑动态调整商品曝光度，避免陷入无利润的价格内卷。</li><li>EAS标量指标用于智能体系统健康评估：结合稳定性、诚信度、福利与盈利四个维度的经济对齐分数，可直接迁移到评估电商智能体（如自动定价、自动客服）的整体市场影响，取代纯效率指标。</li><li>RL训练使小模型获得经济对齐能力：用REINFORCE++加自适应课程（根据生存/检测率调整对手难度）和平方log-ratio正则化，仅需1.3%参数LoRA微调，9B模型即可在稳定性与反欺诈上超越大得多的模型。这种方法可用于训练电商中的自动议价或选品Agent，使其在优化自身收益的同时维护全局市场健康。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：随着LLM开始作为经济代理直接参与市场交易，其集体行为可能引发系统性风险，如2010年闪崩式的价格螺旋和利用虚假身份进行大规模欺诈。传统的“对齐”只关注单代理的助人、无害等，却无法捕捉多代理市场中的稳定性与诚信性。本文定义“经济对齐”为代理系统保持市场稳定、保护参与者福利的能力，并构建仿真框架Agent Bazaar来暴露和缓解两种典型失败模式。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>两个市场环境</strong>：B2C市场“Crash”模拟五家LLM厂商定价竞争，消费者随机采样可见厂商，价格战可能跌破成本触发破产连锁；C2C市场“Lemon Market”中，一个欺诈主控者可创建多个Sybil卖家身份，每个身份独立评价，当评价降低时弃用并新建身份，买家无法直接区分诚实与欺诈卖家。</li>
+<li><strong>经济对齐评分（EAS）</strong>：融合破产率、价格波动、Sybil检出率、欺诈购买率、市场存活率和代理利润的标量指标，用于跨模型比较。</li>
+<li><strong>对齐引导策略</strong>：Stabilizing Firm引导厂商保持价格高于成本，不跟随恶意降价，并进行上下文反思；Skeptical Guardian引导买家交叉检验价格与质量层级、卖家评价，并反思历史决策。</li>
+<li><strong>强化学习训练</strong>：基于Qwen 3.5 9B，用REINFORCE++和LoRA微调，采用平方log-ratio惩罚防止策略坍塌，对手为冻结的基础模型拷贝，课程难度随代理表现自适应调整（稳定厂商占比或Sybil集群大小）。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>前沿模型在无干预时普遍失败：Gemini 3 Flash在Crash中破产率87%，GPT 5.4为67%，仅Sonnet 4.6无需干预即可稳定；Lemon Market中Sybil收入份额随欺诈卖家比例增大而上升，至K=9时达10-17%。</li>
+<li>对齐策略有所改善但脆弱：消费者可见厂商数增多时，稳定厂商策略仍会失败（dlc=5时破产率>65%）。</li>
+<li>RL训练后的9B模型EAS达0.79，超越所有参评的前沿和大尺寸模型（如Hermes 3 405B的0.72，Sonnet 4.6的0.60），且模型大小与经济对齐无明显相关性。</li>
+</ul>
+<p><strong>一句话结论</strong>：经济对齐是一种与通用能力正交的特性，可通过目标明确的RL训练让小模型习得，并作为市场锚点惠及未训练代理。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.17698&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.17698" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.17698" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.17698" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

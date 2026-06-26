@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出“教师-伙伴-自我”多源负采样框架，通过发散重排序和共识蒸馏突破自引导硬负采样的三大瓶颈"><meta property="og:title" content="Divergence Meets Consensus: A Multi-Source Negative Sampling Framework for Sequential Recommendation"><meta property="og:description" content="提出“教师-伙伴-自我”多源负采样框架，通过发散重排序和共识蒸馏突破自引导硬负采样的三大瓶颈"><meta property="og:type" content="website"><title>Divergence Meets Consensus: A Multi-Source Negative Sampling Framework for Sequential Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-19">2026-05-19</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.19651" target="_blank" rel="noopener">2605.19651</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Divergence Meets Consensus: A Multi-Source Negative Sampling Framework for Sequential Recommendation</h1> <p class="title-zh">发散与共识：面向序列推荐的多源负采样框架</p> <div class="dir-row"> <span class="direction-chip">🧭 序列推荐 · 多源负采样协同优化</span> </div> <p class="affiliations">Renmin University of China · Shandong University · Peking University</p> <div class="meta">Yuanzi Li, Lingjie Wang, Jingyu Zhao, Zihang Tian, Yuhan Wang, Lei Wang 等</div> <p class="one-liner">提出“教师-伙伴-自我”多源负采样框架，通过发散重排序和共识蒸馏突破自引导硬负采样的三大瓶颈</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/NegativeSampling">NegativeSampling</a><a class="tag" href="/DailyPaper/tag/SequentialRecommendation">SequentialRecommendation</a><a class="tag" href="/DailyPaper/tag/HardNegativeMining">HardNegativeMining</a><a class="tag" href="/DailyPaper/tag/KnowledgeDistillation">KnowledgeDistillation</a><a class="tag" href="/DailyPaper/tag/MultiSourceScoring">MultiSourceScoring</a><a class="tag" href="/DailyPaper/tag/DivergenceReranking">DivergenceReranking</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多模型协作打破自反馈循环：使用一个结构不同的peer模型（如主模型用SASRec，peer用Mamba4Rec）提供外部负样本打分，可以注入异质信号，防止模型自引导退化。电商序列推荐可在线上训练时同时维护两个异构模型，互相提供负样本候选。</li><li>利用预测分歧提升负样本多样性：计算self与peer对同一item的打分差异，选择分歧大的item作为负例，既能保证困难度又带来多样性，相比单纯取预测最高分的方法，更能覆盖物品空间。可直接应用于召回粗排模型的负抽样，提高长尾物品的暴露率。</li><li>共识蒸馏充分复用计算：将teacher模型在候选池上的打分分布通过KL散度蒸馏到self模型，作为额外训练损失。这一做法在不增加前向推理的前提下，把原本丢弃的候选打分变成了知识迁移信号。在实际推荐系统中，每次负采样时不妨加一个蒸馏loss，几乎零成本提升泛化能力。</li><li>即插即用的通用框架：方法对MLP、RNN、Transformer、Mamba等主流序列模型均有效，且同时适配BCE和BPR损失。在已有训练流程中引入peer模型和teacher蒸馏头即可，部署成本低，可直接作为负采样模块嵌入现有电商推荐训练管线。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+当前主流的自引导硬负采样（如DNS、DNS+）虽然能动态适配模型状态，但暴露出三个核心缺陷：（1）<strong>负自强化循环</strong>——采样与模型更新紧密耦合，一旦选错负例，梯度更新进一步恶化模型，形成恶性循环，陷入局部最优；（2）<strong>采样多样性受限</strong>——仅依赖当前模型参数，采样集中在模型当前关注的狭窄区域，全局物品空间探索不足，损害泛化性；（3）<strong>计算资源浪费</strong>——为挑选一个硬负例需对整个候选池打分，但绝大多数评分被丢弃，信息增益与计算开销严重失衡。</p>
+<p><strong>方法关键点</strong><br>
+受维果茨基“最近发展区（ZPD）”理论启发，提出<strong>MDCNS</strong>框架，构建“教师-伙伴-自我”三视角协同的负采样范式，包含三个核心组件：</p>
+<ul>
+<li><strong>多源评分</strong>：除待训练的self模型外，引入一个结构不同的peer模型和集成两者分数的teacher模型，各自对候选池打分，打破自反馈闭环，引入外部学习信号。</li>
+<li><strong>发散重排序</strong>：计算self与peer的预测差异（绝对差值）作为发散分，与原始评分相加得到“发散感知分”，据此选出Top-M个候选，再随机采样一个作为该视角的负例。这让负例同时具备挑战性和视角多样性，且缓解假阴性问题。</li>
+<li><strong>共识蒸馏</strong>：将teacher模型在候选池上的分数经温度参数化的softmax转化为概率分布，用KL散度将其蒸馏到self模型，作为补充的蒸馏损失。这充分复用了计算开销，将全局排序知识迁移到self，提升训练信号利用率。<br>
+最终优化目标为三个视角负例对应的推荐损失（BPR或BCE）之和加蒸馏损失。</li>
+</ul>
+<p><strong>关键实验结果</strong><br>
+在6个真实数据集（Amazon Beauty/Toys/Sports/Health，LastFM，KuaiRand）上，以SASRec为self、Mamba4Rec为peer进行评测。MDCNS在所有数据集和全部指标（Recall@5/10/20、NDCG@5/10/20）上均稳定优于8个基线，包括RNS、DNS、MixGCF、AdaSIR、SRNS、DNS+等。在Beauty数据集上，Recall@20提升27.29%，NDCG@20提升36.44%。此外，该方法在FMLP4Rec、GRU4Rec、LinRec等多种骨干模型及BCE/BPR两种损失函数下均取得一致显著提升，且即便peer模型较弱（如GRU4Rec）也能保持竞争力，展现出强泛化性。消融实验证实多源评分、发散重排序和共识蒸馏缺一不可。训练曲线显示蒸馏损失在训练过程中持续增大，说明机制持续提供有用梯度。</p>
+<p><strong>一句话记忆</strong>：用“教师-伙伴-自我”多源视角打破自引导死结，以发散选样保证多样性，以共识蒸馏充分复用计算，把负采样从纯消耗件升级为知识协同件。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.19651&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.19651" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.19651" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.19651" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

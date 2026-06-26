@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="揭示多步特洛伊攻击范式，提出ClawTrojan基准和DASGuard防御方法，实现95.5%攻击成功率与强动态防御"><meta property="og:title" content="From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors"><meta property="og:description" content="揭示多步特洛伊攻击范式，提出ClawTrojan基准和DASGuard防御方法，实现95.5%攻击成功率与强动态防御"><meta property="og:type" content="website"><title>From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31042" target="_blank" rel="noopener">2605.31042</a>  </div> <h1>From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors</h1> <p class="title-zh">从提示注入到持久控制：防御智能体框架中的特洛伊后门</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent安全：多步注入攻击与防御</span> </div> <p class="affiliations">Gaoling School of Artificial Intelligence, Renmin University of China</p> <div class="meta">Jiejun Tan, Zhicheng Dou, Xinyu Yang, Yuyang Hu, Yiruo Cheng, Xiaoxi Li 等</div> <p class="one-liner">揭示多步特洛伊攻击范式，提出ClawTrojan基准和DASGuard防御方法，实现95.5%攻击成功率与强动态防御</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Prompt Injection">Prompt Injection</a><a class="tag" href="/DailyPaper/tag/Trojan Attack">Trojan Attack</a><a class="tag" href="/DailyPaper/tag/Agent Security">Agent Security</a><a class="tag" href="/DailyPaper/tag/Multi-step Attack">Multi-step Attack</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/Defense">Defense</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在构建本地智能体工具（如文件读写、API调用）时，需考虑跨步骤的上下文攻击：单步无害的注入可能被持久化并延迟执行，防御应追踪数据来源和传播。</li><li>DASGuard的防御策略可借鉴：扫描敏感文件中的控制类文本（如指令、代码），追溯其来源，若非可信源则移除或净化，结合运行时阻断和提交清洁。</li><li>设计Agent系统时，应区分可信与不可信数据源，对来自外部文件或工具输出的内容进行沙箱处理，避免污染工作空间状态。</li><li>对于电商场景中的Agent（如自动客服、订单处理），防止通过用户输入或外部文档植入的后门，可借鉴ClawTrojan的攻击场景进行安全评估。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM智能体逐渐从聊天机器人演变为操作真实工作空间的工具，能够读写文件、调用工具并跨会话复用状态。攻击者可以在文件或工具输出中嵌入提示注入，智能体读取后将其存储并在后续步骤中执行，形成多步特洛伊攻击。这种攻击的每一步单独看都无害，但组合起来可将不可信文本转化为持久控制内容。现有防御通常孤立检查每个步骤，能阻断明显的恶意行为，但无法检测早期写入操作（植入后门）。</p>
+<p><strong>方法</strong>：作者构建ClawTrojan基准，模拟本地智能体工作空间中的多步攻击，在OpenClaw式环境中评估GPT-5.4等模型。此外提出DASGuard防御，扫描敏感本地文件中的控制类文本，追溯其来源，并移除来自非可信来源的控制内容，结合运行时攻击阻断和对工作空间的清洁提交。</p>
+<p><strong>结果</strong>：ClawTrojan在GPT-5.4上达到95.5%的攻击成功率，而传统单轮提示注入攻击几乎为零。DASGuard通过动态防御有效降低了攻击成功率，展示了组合防御的效力。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31042&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31042" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31042" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31042" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

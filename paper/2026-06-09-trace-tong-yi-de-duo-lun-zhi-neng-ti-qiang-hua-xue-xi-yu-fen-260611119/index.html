@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将 rollout 预算分配到更可能产生混合奖励的 prompt 根和交互前缀，提升智能体 RL 样本效率。"><meta property="og:title" content="TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning"><meta property="og:description" content="将 rollout 预算分配到更可能产生混合奖励的 prompt 根和交互前缀，提升智能体 RL 样本效率。"><meta property="og:type" content="website"><title>TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.11119" target="_blank" rel="noopener">2606.11119</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning</h1> <p class="title-zh">TRACE：统一的多轮智能体强化学习 rollout 预算分配框架</p> <div class="dir-row"> <span class="direction-chip">🧭 智能体强化学习 · 树形 rollout 分配</span> </div> <p class="affiliations">Tsinghua University · Tencent</p> <div class="meta">Heming Zou, Qi Wang, Yun Qu, Yuhang Jiang, Lizhou Cai, Yixiu Mao 等</div> <p class="one-liner">将 rollout 预算分配到更可能产生混合奖励的 prompt 根和交互前缀，提升智能体 RL 样本效率。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Rollout Allocation">Rollout Allocation</a><a class="tag" href="/DailyPaper/tag/Agentic RL">Agentic RL</a><a class="tag" href="/DailyPaper/tag/Multi-turn RLVR">Multi-turn RLVR</a><a class="tag" href="/DailyPaper/tag/Tree-structured Rollouts">Tree-structured Rollouts</a><a class="tag" href="/DailyPaper/tag/Prefix Value Prediction">Prefix Value Prediction</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>预算分配的层级化思路可以迁移到电商 Agent 对话流：区分 prompt 层面（用户 query）和中间状态（已执行工具、已获取信息）的扩展价值，在 Agent 解决用户问题的多轮交互中，对关键决策节点（例如调用搜索 API 前、首轮价格查询后）进行分支探索，避免在确定性高的步骤浪费采样。</li><li>轻量级前缀价值预测器设计直接可复用：用同一预测器估计 prompt 和中间前缀的条件成功概率，以递归树监督的 MSE 回归训练，与下游策略优化解耦。在构建购物助手等 Agent 时，可以搭建类似的“关键难度”预估模块，指导何时对模型输出进行多次重采样或多路展开。</li><li>树形 rollout 生成的工程化实现：采用“初始化-扩展”两阶段策略（先完成所有 bare rollout，再按 prompt 本地化扩展前缀），能贴合并行推理引擎，减少跨 prompt 等待。对于高并发线上 Agent 服务，设计 budget 分配时考虑前缀展开的本地化以减少通信开销是重要参考。</li><li>混合奖励对比激活更新的视角：明确只有锚点后代同时出现成功与失败时梯度才有效，因此在生成式推荐或电商搜索 Agent 的训练中，可以有意识地构造成对对比样本（同一前缀下的不同推荐结果），放大有效学习信号，避免在单一结果上浪费计算。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多轮智能体强化学习（RLVR）中，rollout 预算昂贵且学习信号稀疏。传统方法仅按 prompt 难度分配采样数，忽略同一 rollout 内不同交互回合的前缀状态蕴含的信息量差异。过于简单或困难的实例产生低方差奖励，单一终端奖励难以提供局部信用赋值。该工作将 budget 分配抽象为在 rollout 树锚点上构造“混合奖励对比”——让同一前缀下出现成功与失败两种结果，从而激活有效梯度。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>将 ReAct 式多轮交互视为树结构，每个 thought-action-observation 回合是一个语义节点，prompt 为根，中间前缀为内部节点，均可成为分支扩展的锚点。</li>
+<li>提出混合奖励对比分配原则：向最可能产生成功与失败混合后代集的锚点分配更多 rollout 预算。统一了 prompt 过滤、根 rollout 数量分配、中间前缀继续采样这三种决策。</li>
+<li><strong>TRACE 框架</strong>：两阶段分配——①全局根分配：根据预测器估计的 prompt 条件成功概率，以最大化跨 prompt 的混合奖励概率为目标分配根 rollout 数量；②局部前缀扩展：对每个活跃 prompt，在已有前缀中根据预测概率和已观察分支奖励，分配额外的 continuation 分支，以翻转观察结果。</li>
+<li>使用共享的轻量级前缀价值预测器 V ~ψ(H)，通过树递归监督（自底向上聚合后代的平均奖励）进行 MSE 训练，仅为分配器服务，与下游策略优化器解耦。</li>
+<li>最终生成 rollout 树提供给支持树感知的策略优化器（如 group-relative updates），利用根级和前缀级的对比对增强策略梯度。</li>
+</ul>
+<p><strong>关键结果</strong>：在 Qwen3-8B/14B 上，涵盖数学推理（DeepScaler）、多跳问答（HotpotQA）和函数调用（BFCL v4）三个智能体场景。同等 rollout 预算下，TRACE 相比 GRPO、PCL、TreePO（随机树）分别提升：Qwen3-14B Multi-Hop QA 平均准确率提高 2.8 个百分点；数学推理平均从 73.5→74.9；训练过程中的有效对比样本比率（effective ratio）大幅提升，例如 DeepScaler 从 GRPO 的 34.7%→59.7%。消融证实根分配和前缀分配各自贡献且可叠加，且根覆盖宽度比过深扩展更重要。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.11119&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.11119" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.11119" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.11119" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

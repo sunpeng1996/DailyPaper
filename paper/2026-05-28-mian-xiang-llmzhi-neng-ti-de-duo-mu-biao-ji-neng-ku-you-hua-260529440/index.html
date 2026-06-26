@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出SkillBrew，通过效用-多样性-覆盖度多目标全局优化解决技能库膨胀与冗余问题"><meta property="og:title" content="SkillBrew: Multi-Objective Curation of Skill Banks for LLM Agents"><meta property="og:description" content="提出SkillBrew，通过效用-多样性-覆盖度多目标全局优化解决技能库膨胀与冗余问题"><meta property="og:type" content="website"><title>SkillBrew: Multi-Objective Curation of Skill Banks for LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29440" target="_blank" rel="noopener">2605.29440</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SkillBrew: Multi-Objective Curation of Skill Banks for LLM Agents</h1> <p class="title-zh">面向LLM智能体的多目标技能库优化框架</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent 技能库的多目标全局优化</span> </div> <p class="affiliations">City University of Hong Kong · Squirrel Ai Learning · University of Science and Technology of China · University of California, San Diego · Griffith University</p> <div class="meta">Wentao Hu, Zhendong Chu, Yiming Zhang, Junda Wu, Ming Jin, Xiangyu Zhao 等</div> <p class="one-liner">提出SkillBrew，通过效用-多样性-覆盖度多目标全局优化解决技能库膨胀与冗余问题</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/skill bank curation">skill bank curation</a><a class="tag" href="/DailyPaper/tag/multi-objective optimization">multi-objective optimization</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/Pareto optimization">Pareto optimization</a><a class="tag" href="/DailyPaper/tag/counterfactual replay">counterfactual replay</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>技能库不应只增不减，可引入效用、多样性和覆盖度三目标联合评价，避免冗余或低效技能挤占检索槽位。</li><li>通过反事实重放（leave-one-out replay）量化单个技能的边际贡献，为编辑决策（KEEP / REWRITE / REMOVE）提供细粒度信号，可在Agent日常运行中低成本积累证据。</li><li>双层 propose-then-verify 循环可分隔提议与验证，避免过拟合：用支持集产生编辑候选，在查询集上帕累托选择，保证推广性。</li><li>技能库跨模型迁移能力强，可为电商对话Agent或推荐Agent构建通用决策知识库，通过持续 curation 提升推荐逻辑的稳定性与覆盖度。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+LLM Agent 在长期任务中常依赖技能库（skill bank）来积累可复用的流程知识，但现有方法大多是“只增不减”或基于单一标量评分管理技能，造成技能库膨胀、冗余甚至有害技能污染。单纯依靠效用一个维度无法平衡技能的多样性、覆盖度，而这三个目标天然相互制衡——扩大覆盖会引入冗余降低多样性，严格剪枝又会损失覆盖。亟需一种全局、多目标的技能库管理范式。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>形式化为带约束的多目标优化：最大化效用、多样性、覆盖度，并以效用作为最低阈值约束，多样性和覆盖度作为结构化正则。</li>
+<li>采用双层 <strong>propose-then-verify</strong> 循环：内层从支持集轨迹中通过反事实重放诊断每个技能（KEEP/REWRITE/REMOVE），并生成候选编辑；外层在查询集上评估候选库的效用、多样性和覆盖度，用帕累托前沿选择，并引入“空候选”允许无变更传递。</li>
+<li>反事实评估：对每个被检索技能执行 leave-one-out 重放，计算技能移除前后的任务奖励差，得到细粒度的边际贡献。</li>
+<li>多样性用技能嵌入 Gram 矩阵的行列式体积度量；覆盖度由检索密度和技能使用率乘积定义。</li>
+<li>编辑计划器综合三种操作（ADD/REWRITE/REMOVE）组合生成多个候选库，并保留 KEEP 技能作为保护槽。实验中使用 GPT‑5.4 驱动蒸馏、诊断和计划器，Agent 工作器固定为 ReAct 风格。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>数据集：ALFWorld（6 类家庭任务）和 WebShop（在线购物模拟），均采用训练/支持/查询/测试划分。</li>
+<li>基线：Zero‑Shot、ReAct、4 种记忆基线（Reflexion、Mem0、MemP、SimpleMem）、4 种技能基线（Voyager、ExpeL、EvoSkill、Skill‑Pro）。</li>
+<li>所有方法使用相同冻结的 Qwen2.5‑7B‑Instruct 工作器。SkillBrew 在 ALFWorld 平均成功率达 59.0%（比最强技能基线高出 9.7%，比 ReAct 高 27.8%）；WebShop 得分 59.3%，完全匹配率 38.4%。跨工作器迁移实验中，GPT‑4o 搭配 SkillBrew 将 ALFWorld 成功率从 46.4% 提升至 88.1%。</li>
+<li>消融显示，仅用效用目标时成功率为 45.8%，加入多样性和覆盖度后提升到 59.0%；三种编辑操作全部使用方能达到最优。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：技能库应当作为一个全局的多目标优化对象，而不是孤立评估技能，这样产生的流程知识才真正有效、多样且覆盖广泛。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29440&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29440" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29440" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29440" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

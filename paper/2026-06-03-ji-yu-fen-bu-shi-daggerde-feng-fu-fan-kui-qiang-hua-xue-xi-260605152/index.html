@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出DistIL，用前向交叉熵代替反向KL，实现单调策略改进与未来感知信用分配，在科学推理、编码和数学难题上超越现有自蒸馏方法。"><meta property="og:title" content="Reinforcement Learning from Rich Feedback with Distributional DAgger"><meta property="og:description" content="提出DistIL，用前向交叉熵代替反向KL，实现单调策略改进与未来感知信用分配，在科学推理、编码和数学难题上超越现有自蒸馏方法。"><meta property="og:type" content="website"><title>Reinforcement Learning from Rich Feedback with Distributional DAgger</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05152" target="_blank" rel="noopener">2606.05152</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Reinforcement Learning from Rich Feedback with Distributional DAgger</h1> <p class="title-zh">基于分布式DAgger的丰富反馈强化学习方法</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM强化训练 · 自蒸馏信用分配</span> </div> <p class="affiliations">University of Southern California</p> <div class="meta">Rishabh Agrawal, Jacob Fein-Ashley, Paria Rashidinejad</div> <p class="one-liner">提出DistIL，用前向交叉熵代替反向KL，实现单调策略改进与未来感知信用分配，在科学推理、编码和数学难题上超越现有自蒸馏方法。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/Self-Distillation">Self-Distillation</a><a class="tag" href="/DailyPaper/tag/Forward Cross-Entropy">Forward Cross-Entropy</a><a class="tag" href="/DailyPaper/tag/Credit Assignment">Credit Assignment</a><a class="tag" href="/DailyPaper/tag/Imitation Learning">Imitation Learning</a><a class="tag" href="/DailyPaper/tag/Monotonic Improvement">Monotonic Improvement</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用前向交叉熵替代反向KL做策略蒸馏：在电商Agent或推荐策略自蒸馏中，反向KL可能因对数比加权而抑制某些有效行为，改用前向交叉熵能直接向教师方向移动，获得单调改进保证，训练更稳定。</li><li>未来感知的序列级信用分配：拒绝局部token-wise梯度近似，保留对未来状态的梯度传播，可让Agent的早期决策（如对话策略中的首轮动作）得到准确的延迟奖励信号，避免收敛到次优策略，适用于多轮对话或推荐序列优化。</li><li>黑盒教师兼容的样本估计：DistIL只需从教师采样即可估计梯度，无需教师概率，方便利用外部黑盒模型、人工专家或带反馈的推理痕迹，在电商场景中可直接用用户行为日志或工具反馈来蒸馏策略，降低对教师内部结构的依赖。</li><li>奖励对齐的下界优化解释：前向交叉熵目标可被视为最大化教师加权的成功对数似然下界，直接提升Pass@N，这一视角可用于推荐系统的列表级评估优化，比如在生成式推荐中提升Top-K准确率。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前主流RLVR（可验证奖励的强化学习）只给最终答案一个二元信号，导致整个响应中每个token获得相同权重，信用分配极弱，且无法利用代码执行日志、专家修正等丰富反馈。现有自蒸馏方法（如SDPO用反向KL、OPSD用JS散度）虽然试图将稀疏奖励转化为token级指导，但存在两个根本缺陷：1) 最小化f-散度不能保证策略单调改进，即使教师更好，更新仍可能增加坏动作的概率；2) 局部token-wise梯度近似忽略了早期token对未来教师-学生分歧的影响，会收敛到严格次优策略。</p>
+<p><strong>方法</strong>：提出DistIL，一种分布式DAgger模仿学习变体。核心是优化前向交叉熵（H×）损失，在学生访问的状态上匹配教师分布，并采用完整的序列级梯度，包含教师加权局部模仿项和未来信用传播项。该设计允许仅从教师采样来估计梯度，支持黑盒教师。算法在PPO式信任域更新框架下实现，教师参数通过EMA更新。</p>
+<p><strong>关键结果</strong>：在科学推理（SciKnowEval L3）、编码（LiveCodeBench）和极难数学题（AIME24/25等）三个场景下，DistIL一致超越SDPO、OPSD、GRPO等基线。例如，在Qwen3-8B上，科学推理平均@16提升3.1点（5h）；编码任务中，Accuracy/Avg@16达到0.656（SDPO 0.643）；在GRPO完全无法提升的难题集上，DistIL比SDPO高3.8点（AIME25 Avg@16）。消融实验验证了未来信用分配和Top-100教师token采样的有效性。理论证明前向交叉熵满足单调改进、次线性悔恨界，并最大化教师加权的成功概率下界，从而提升Pass@N。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05152&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05152" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05152" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05152" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

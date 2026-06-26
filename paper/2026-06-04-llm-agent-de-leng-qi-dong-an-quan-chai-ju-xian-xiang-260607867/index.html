@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="发现 LLM Agent 在会话起始安全性最弱，通过预先完成少量常规任务可显著提升安全性 9-52%"><meta property="og:title" content="The Cold-Start Safety Gap in LLM Agents"><meta property="og:description" content="发现 LLM Agent 在会话起始安全性最弱，通过预先完成少量常规任务可显著提升安全性 9-52%"><meta property="og:type" content="website"><title>The Cold-Start Safety Gap in LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">2606.07867</a>  </div> <h1>The Cold-Start Safety Gap in LLM Agents</h1> <p class="title-zh">LLM Agent 的冷启动安全差距现象</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 安全性 · 冷启动安全差距</span> </div> <p class="affiliations">University of California, San Diego</p> <div class="meta">Chung-En Sun, Linbo Liu, Tsui-Wei Weng</div> <p class="one-liner">发现 LLM Agent 在会话起始安全性最弱，通过预先完成少量常规任务可显著提升安全性 9-52%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/cold-start">cold-start</a><a class="tag" href="/DailyPaper/tag/safety">safety</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/representation analysis">representation analysis</a><a class="tag" href="/DailyPaper/tag/deployment strategy">deployment strategy</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>Agent 部署预热策略：在 Agent 正式接收用户请求前，先让它完成几个常规的无害工具调用任务（如查询天气、简单 API 调用），可以显著降低后续面对恶意请求时的风险。这个预热步骤可直接嵌入 Agent 初始化流程，成本低且不影响模型功能。</li><li>安全评估中加入对话深度维度：现有安全评估往往只在首轮对话测试，遗漏了冷启动脆弱性。在设计内部 Agent 安全 Benchmark 时，应控制前置常规任务数量，模拟真实部署中上下文逐渐累积的场景，避免高估安全性。</li><li>基于隐藏表示的在线安全监控：论文发现模型隐藏状态会随前置任务增多向安全对齐区域迁移，这一动态特征可用来构建轻量级安全监控器——在 Agent 运行过程中持续检测状态偏离，预警潜在不安全行为。</li><li>区分安全与效用的影响因素：实验表明，Agent 先前的回答对安全影响较小但对保持效用至关重要，因此预热时若只施以安全指令而忽略实际任务执行，可能损害后续功能。部署预热应使用真实的常规任务，而非单纯的安全提示。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：具备工具调用能力的 LLM Agent 在实际部署中存在安全隐患，但现有评测通常假定 Agent 从零历史开始应对危险请求，忽略了会话长度对安全性的影响。该工作首次揭示“冷启动安全差距”——Agent 在对话初期危险性最高，随着前置常规任务数增加安全性逐渐提高。</p>
+<p><strong>方法</strong>：提出 SODA（Safety Over Depth for Agents）基准，控制 Agent 在遭遇安全威胁前已完成的前置常规任务数量（0 至 20），评估 7 款来自 4 个家族的模型。通过隐藏状态表示分析、消融实验（区分任务内容、模型自身回答、用户消息等）探究影响机制。并在 AgentHarm、Agent Safety Bench 等安全基准与 BFCL、API-Bank 等效用基准上交叉验证。</p>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>前置任务数从 0 增至 20 时，安全性提升幅度达 9–52%，几乎所有模型均表现出冷启动脆弱性。</li>
+<li>表示分析证实隐藏状态逐步向安全对齐区域偏移。</li>
+<li>消融发现：前置常规任务本身是安全提升的主要驱动，而 Agent 自己之前的回答对安全影响较小，但对保持后续功能性至关重要。</li>
+<li>预热策略在不牺牲工具使用能力的条件下，能同时提升安全基准与效用基准上的表现。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07867&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07867" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07867" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

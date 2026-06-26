@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个大规模用户思维数据集，揭示对话中未言明的意图与反应，并展示其在行为预测与模型对齐中的价值。"><meta property="og:title" content="ThoughtTrace: Understanding User Thoughts in Real-World LLM Interactions"><meta property="og:description" content="首个大规模用户思维数据集，揭示对话中未言明的意图与反应，并展示其在行为预测与模型对齐中的价值。"><meta property="og:type" content="website"><title>ThoughtTrace: Understanding User Thoughts in Real-World LLM Interactions</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.20087" target="_blank" rel="noopener">2605.20087</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>ThoughtTrace: Understanding User Thoughts in Real-World LLM Interactions</h1> <p class="title-zh">ThoughtTrace：真实LLM对话中的用户思维数据集</p> <div class="dir-row"> <span class="direction-chip">🧭 用户思维采集与对齐 · 用户行为预测</span> </div> <p class="affiliations">Johns Hopkins University · Massachusetts Institute of Technology · Google Research</p> <div class="meta">Chuanyang Jin, Binze Li, Haopeng Xie, Cathy Mengying Fang, Tianjian Li, Shayne Longpre 等</div> <p class="one-liner">首个大规模用户思维数据集，揭示对话中未言明的意图与反应，并展示其在行为预测与模型对齐中的价值。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/user thoughts">user thoughts</a><a class="tag" href="/DailyPaper/tag/human-AI interaction">human-AI interaction</a><a class="tag" href="/DailyPaper/tag/dataset">dataset</a><a class="tag" href="/DailyPaper/tag/alignment">alignment</a><a class="tag" href="/DailyPaper/tag/behavior prediction">behavior prediction</a><a class="tag" href="/DailyPaper/tag/conversational AI">conversational AI</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商对话推荐：采集用户未显式表达的任务动机、内容/风格期望等‘理由’，构建用户意图特征，提升对话式推荐中自然语言理解的深度。</li><li>Agent对齐：用户对助手回复的‘反应’（如内容相关性、呈现风格不满）可直接作为细粒度偏好信号，用于DPO/RLHF训练，比从后续消息推断偏好更准确、更密集。</li><li>用户模拟器：训练模型同时预测下一轮消息及对应的思考（理由+反应），生成更贴近真实用户认知过程的模拟对话，用于离线评估和强化学习环境。</li><li>工程落地：若业务场景允许，可在交互后收集用户事后标注的‘当时想法’，作为高价值训练信号；即使非侵入式，也可将点击、停留时长等作为思考的弱代理变量。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有对话AI数据集仅捕获用户说了什么，完全忽略其内心思考，如任务动机、上下文约束、对回复的隐性评价等。这些未言明的认知背景直接影响对话走向和满意度，但在真实交互中大量流失。为填补这一空白，作者提出用户思维（thoughts）作为新数据模态，并首次大规模采集真实对话中用户的自我报告思维。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li>构建实时对话标注平台，招募1058名参与者在20个不同对话模型上完成真实任务，并在每轮发送消息前标注‘理由’（为何这样问），对每轮助手回复标注‘反应’（有何感受）。</li>
+<li>最终得到2155段对话、17058轮交互、10174条思考标注，附带人口统计和AI使用习惯元数据。</li>
+<li>思考分为7类理由（如任务动机、上下文约束、内容/风格期望）和5类反应（如明确肯定、内容相关性不满、呈现风格不满等）。</li>
+<li>通过嵌入距离、LLM语义覆盖评分及前沿模型推断实验，证明思考与表面消息存在显著差异且难以从上下文自动推断。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>思考与消息的语义重叠度有限：理由的平均覆盖得分仅3.22/5，反应更只有2.00/5。</li>
+<li>前沿LLM推断思考的平均相似度仅2.93（理由）和2.54（反应），证实其隐式性。</li>
+<li>思考增强的下一轮用户消息预测相比纯对话历史带来41.7%的相对提升。</li>
+<li>基于思考的不满反应生成思考引导的改写（thought-guided rewrites），并用DPO微调Qwen3.5-4B，在Arena-Hard上比消息引导改写高4.5%，比基准模型提升25.6%，同时发现思考能捕获2.2倍于消息的负面反馈。</li>
+</ul>
+<p><strong>核心洞察</strong><br>
+“用户思考是对话中的‘暗物质’——不显式出现，却主宰着交互的引力方向。一旦被显性标注，它就变成预测意图和校准偏好的最强监督信号。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.20087&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.20087" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.20087" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.20087" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

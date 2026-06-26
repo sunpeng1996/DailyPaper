@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过显著性掩码与协同对比学习，强制模型利用跨模态协同信息，在三个数据集上提升平均约10%，推理零额外开销。"><meta property="og:title" content="SynGR: Unleashing the Potential of Cross-Modal Synergy for Generative Recommendation"><meta property="og:description" content="通过显著性掩码与协同对比学习，强制模型利用跨模态协同信息，在三个数据集上提升平均约10%，推理零额外开销。"><meta property="og:type" content="website"><title>SynGR: Unleashing the Potential of Cross-Modal Synergy for Generative Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.18920" target="_blank" rel="noopener">2605.18920</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SynGR: Unleashing the Potential of Cross-Modal Synergy for Generative Recommendation</h1> <p class="title-zh">SynGR：生成式推荐中释放跨模态协同潜力</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 跨模态协同信息挖掘</span> </div> <p class="affiliations">Beihang University</p> <div class="meta">Wei Chen, Xingyu Guo, Shuang Li, Fuwei Zhang, Meng Yuan, Jing Fan 等</div> <p class="one-liner">通过显著性掩码与协同对比学习，强制模型利用跨模态协同信息，在三个数据集上提升平均约10%，推理零额外开销。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/GenRec">GenRec</a><a class="tag" href="/DailyPaper/tag/Cross-Modal Synergy">Cross-Modal Synergy</a><a class="tag" href="/DailyPaper/tag/Multimodal">Multimodal</a><a class="tag" href="/DailyPaper/tag/RQ-VAE">RQ-VAE</a><a class="tag" href="/DailyPaper/tag/Saliency Masking">Saliency Masking</a><a class="tag" href="/DailyPaper/tag/Contrastive Learning">Contrastive Learning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>模态依赖诊断：可从自注意力图提取token显著性得分，量化模态贡献，用于判断模型是否偏向文本或视觉，作为在线模型健康度监控。</li><li>动态掩码训练策略：训练中对主导模态的高saliency token进行top-r掩码，迫使模型探索跨模态交互，可迁移至电商多模态推荐、搜索重排序，防止单模态特征过拟合，提升泛化。</li><li>协同对比学习三元组构造：将原始序列、掩码序列、单模态序列分别作为正锚负样本做InfoNCE损失，可复用至其他多模态融合任务（如多模态商品描述生成、跨模态召回），强化交互语义。</li><li>轻量即插即用：掩码诊断复用前向注意力图，对比损失计算仅O(Nd)，推理零增加，且25%左右的训练加速，适合已上线多模态生成式推荐系统的低成本升级。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>现有多模态生成式推荐（GR）主要采用对齐式融合，强化跨模态一致性，却忽略了仅有在模态交互中才涌现的协同信息（synergistic information）。这类信息刻画了单模态无法推断的高阶商品语义（如品牌格调、审美与功能的叠加），对精准匹配用户意图至关重要。信息论分析表明，当前方法在生成目标下倾向于依赖信息密度更高的模态（如文本），形成“捷径学习”，导致模型退化至单模态主导，协同信息仅占学习表示的7.5%。为解决该“协同缺口”，需要一种显式干预，打破最小阻力路径，迫使模型挖掘跨模态协同。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>协同信息理论框架</strong>：基于部分信息分解（PID），将多模态互信息分解为冗余、独有和协同三部分，指出对齐优化仅覆盖前两者，缺失协同项。</li>
+<li><strong>显著性感知掩码</strong>（Saliency-aware Masking）：从Transformer最后一层自注意力计算各token的全局显著性得分，聚合得到模态级密度，识别主导模态（多为文本）。对top-r高显著性token进行[MASK]，阻断捷径，逼迫模型从跨模态线索重构语义。</li>
+<li><strong>协同对比学习</strong>：构造三元组——原始序列（正例）、掩码序列（锚点）、单模态序列（负例）。通过掩码感知池化得到序列表征，用InfoNCE损失拉近锚与正、推远锚与负，显式强化协同信息S，抑制冗余和独有信息。</li>
+<li><strong>多视图生成联合优化</strong>：生成损失同时作用在原始、掩码、单模态三条路径，保留必要冗余与独有信息，协同损失作为正则项，共享Transformer参数，训练效率高。</li>
+</ul>
+<h2 id="关键实验">关键实验</h2>
+<p>在Amazon Arts、Games、Instruments三个类别数据集上，与16个基线（BERT4Rec、TIGER、MQL4GRec、MACRec等）比较，SynGR在所有指标上达到最优，较最强基线MACRec平均相对提升约10%。其中Instruments场景HR@10提升28.58%，NDCG@10提升12.17%。消融实验证明，随机掩码替代显著性掩码、取消单模态负例或去除对比损失均导致性能下降，验证了自适应掩码与协同对比的必要性。训练时间较MACRec缩短约23%，推理速度提升4-6%，说明高效可部署。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.18920&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.18920" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.18920" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.18920" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

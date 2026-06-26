@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出“Workspace+Skill”机制，推动LLM从单次对话转向有状态、可复用的任务执行"><meta property="og:title" content="From Chatbot to Digital Colleague: The Paradigm Shift Toward Persistent Autonomous AI"><meta property="og:description" content="提出“Workspace+Skill”机制，推动LLM从单次对话转向有状态、可复用的任务执行"><meta property="og:type" content="website"><title>From Chatbot to Digital Colleague: The Paradigm Shift Toward Persistent Autonomous AI</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14502" target="_blank" rel="noopener">2606.14502</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>From Chatbot to Digital Colleague: The Paradigm Shift Toward Persistent Autonomous AI</h1> <p class="title-zh">从聊天机器人到数字同事：持久自主AI的范式转移</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 演进：从对话到可持久自主工作</span> </div> <p class="affiliations">Tencent Youtu Lab · Tsinghua University · Sun Yat-sen University · Central South University · University of Illinois at Chicago</p> <div class="meta">Yongheng Zhang, Ziang Liu, Jiaxuan Zhu, Shuai Wang, Xiangqi Chen, Haojing Huang 等</div> <p class="one-liner">提出“Workspace+Skill”机制，推动LLM从单次对话转向有状态、可复用的任务执行</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Survey">Survey</a><a class="tag" href="/DailyPaper/tag/Autonomous Agent">Autonomous Agent</a><a class="tag" href="/DailyPaper/tag/Workspace">Workspace</a><a class="tag" href="/DailyPaper/tag/Skill">Skill</a><a class="tag" href="/DailyPaper/tag/LLM Reasoning">LLM Reasoning</a><a class="tag" href="/DailyPaper/tag/Task Closure">Task Closure</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>构建有状态的 Agent 工作区：参考 OpenClaw 的 Workspace 概念，为电商 Agent（如自动比价、库存管理）维护持久化的文件系统、终端、浏览器状态，避免每次调用都重新获取上下文。</li><li>用“技能（Skill）”封装可复用推理链：将常见业务流程（如订单处理、退款审核）建模为可参数化的 Skill，包含规划、工具序列、中间校验与错误恢复，提升任务闭环率。</li><li>评估范式从答案质量转向任务状态验证：对于推荐或运营 Agent，不应仅看最终回答的准确性，而应检查任务是否真正改变了系统状态（如是否完成了一次广告投放调整），用“任务闭环率”作为核心指标。</li><li>数据构造从指令-响应对转向状态-动作-观测轨迹：训练电商 Agent 时，记录完整的交互轨迹（用户意图 → 动作 → 环境反馈），以轨迹级 reward 进行强化学习，比单轮 SFT 更能培养长期规划能力。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>LLM 正从单纯的对话生成器转向能推理、行动、记忆和自我改进的集成 AI 系统。传统 Chatbot 仅以“快速反应”模式压缩知识、生成流畅回答，但在复杂推理、长链执行、自我验证上捉襟见肘。论文提出从“聊天机器人”到“数字同事”的范式转移，核心问题是：<strong>如何让 AI 系统将用户意图可靠地转化为完成任务</strong>，而非仅仅生成一个好答案。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>两维度四阶段演进框架</strong>：认知核心维度（Chatbot → Thinking LLM），工具增强执行维度（Agent → OpenClaw），并用“Workspace + Skill”机制打通两者。</li>
+<li><strong>Workspace</strong>：给 LLM 一个持久化的数字工作区（文件、终端、浏览器、数据库等），使任务执行有状态、可审计、可恢复，告别临时性的工具调用。</li>
+<li><strong>Skill</strong>：将可复用的任务过程封装为参数化的“技能”，包含规划、工具排序、中间验证和纠错，从临时 prompt 升级为可组合的能力包。</li>
+<li><strong>思维 LLM 的训练范式</strong>：通过强化学习（RLVR/GRPO）让模型内化长链推理、多路径探索与自我纠正，无需外部框架，实现推理时的“慢思考”。</li>
+<li><strong>数据与评估的对应转移</strong>：从知识语料 → 指令-响应对 → CoT 过程奖励 → 状态-动作-观测轨迹；评估从答案正确性 → 过程验证 → 任务闭环率与工作区状态核验。</li>
+</ul>
+<h3 id="关键观察">关键观察</h3>
+<ul>
+<li>前沿 AI Agent 可完成的中位编码任务时长从 2019 年的几秒增长到 2026 年的超过 12 小时，显示系统在长时间自主任务上的重大突破。</li>
+<li>DeepSeek-R1 等模型通过纯 RL 训练自发出现“Aha moment”式的自省行为，但该现象是否真实涌现仍有争议。</li>
+<li>推理能力并非完全从零训练，蒸馏少量高质量 CoT 数据（如 LIMO 仅用 817 条样例）即可激活预训练模型中的潜在推理能力。</li>
+</ul>
+<blockquote>
+<p><strong>最值得记住的一句话</strong>：从 Chatbot 到 Digital Colleague 的关键一跃不是更强的语言生成，而是通过 Workspace 提供状态，Skill 提供可复用操作，让 LLM 真正完成可验证的工作。</p>
+</blockquote> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14502&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14502" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14502" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14502" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

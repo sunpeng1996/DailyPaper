@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在工具使用前插入IntentFrame推断，用gap分控制探测预算，提升隐式需求覆盖率。"><meta property="og:title" content="AURA: Intent-Directed Probing for Implicit-Need Surfacing in Situated LLM Agents"><meta property="og:description" content="在工具使用前插入IntentFrame推断，用gap分控制探测预算，提升隐式需求覆盖率。"><meta property="og:type" content="website"><title>AURA: Intent-Directed Probing for Implicit-Need Surfacing in Situated LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05557" target="_blank" rel="noopener">2606.05557</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>AURA: Intent-Directed Probing for Implicit-Need Surfacing in Situated LLM Agents</h1> <p class="title-zh">AURA：基于意图导向探测的情景化LLM Agent隐式需求浮现</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent意图推断与探测控制</span> </div> <p class="affiliations">Guangdong Institute of Intelligence Science and Technology</p> <div class="meta">Yang Li, Jiaxiang Liu, Jiang Cai, Mingkun Xu</div> <p class="one-liner">在工具使用前插入IntentFrame推断，用gap分控制探测预算，提升隐式需求覆盖率。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Implicit-Need Surfacing">Implicit-Need Surfacing</a><a class="tag" href="/DailyPaper/tag/Proactive Probing">Proactive Probing</a><a class="tag" href="/DailyPaper/tag/Intent Inference">Intent Inference</a><a class="tag" href="/DailyPaper/tag/Situated Agents">Situated Agents</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Tool Use">Tool Use</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在对话式推荐或客服Agent中，显式建模用户字面查询与隐式需求之间的gap：由LLM输出结构化IntentFrame，根据gap值决定后续信息检索预算（如调用商品详情、评价、库存API的步数），避免对显式需求已获满足的查询过度探查。</li><li>将探查与回答生成解耦：探查结果作为紧凑的上下文传入最终生成，支持缓存和跳过；一旦探查结果已满足隐式需求即提前停止，减少API调用和延迟。</li><li>利用gap分触发预警（heads-up alert）：当gap较高时，向用户主动提示推断出的潜在需求（如商品库存紧张、同类目的替代品、价格波动），提升交互主动性。</li><li>工具白名单机制确保隐私合规：通过工具注册表和基于pattern的allow/deny策略，低gap查询自动跳过禁止工具，隐私敏感场景可零违规。可借鉴至需要控制数据访问权限的推荐/客服系统。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+LLM Agent常只回答用户字面查询，忽略背后的隐含信息需求（例如“林伟在哪？”可能隐含“她有空吗？”）。现有ReAct等方法在推理时调用工具，没有显式推断并量化这一差距。这导致决策上下文缺失、回答编造细节。AURA旨在让Agent在回答前先推断隐含需求，并据此控制探查预算，从而有选择地获取私有状态。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li>提出<strong>IntentFrame</strong>：一个由LLM在场景感知后、工具调用前生成的JSON结构，包含字面需求、隐含需求列表、gap分（0-1）、推荐探针工具集、预警标志、置信度等。</li>
+<li><strong>gap路由探查</strong>：gap分按阶梯函数映射为探查步数上限（如0～0.2→0步，0.8～1→5步），探测器（Explore阶段）根据预算和推荐工具进行目标导向的有限多步调用，拿到结果后提前停止。探查结果总结后供推理使用。</li>
+<li><strong>两阶段流水线</strong>：确定性上下文组装（感知→场景→记忆）→LLM控制推理（意图推断→探查→推理→行动→交互）。记忆基于重近度、重要性、词法相似性加权检索。</li>
+</ul>
+<p><strong>实验与关键结果</strong></p>
+<ul>
+<li>在自建的<strong>100查询四场景隐式需求基准</strong>（AURATown多Agent模拟）上，AURA-Intent的隐式需求覆盖率达到<strong>0.804</strong>，显著优于ReAct式NoIntent的0.733（∆=+0.071, p&#x3C;10⁻⁶），三个场景单独显著，两外一个场景持平（夜间场景公共状态已暗示可用性）。</li>
+<li>消融实验：①将LLM意图推断替换为启发式规则，分数从0.803骤降至0.368；②去除few-shot示例导致gap校准失效，增益不显著——说明LLM校准是性能核心。</li>
+<li>事实性查询中，AURA不是准确率最优（Fixed-Probe FA=0.766 vs AURA GapRouted 0.696），但实现了<strong>82%更少的探针调用</strong>（1.40 vs 8.00）和<strong>零禁止工具违规</strong>，成为访问成本Pareto最优点。</li>
+<li>人类评估AURA在环境觉察力、回复有用性、Agent拟真度、事实准确性四个维度均显著优于基线。</li>
+</ul>
+<p><strong>一句话总结</strong>：在工具调用前推算表面查询与隐含需求的gap并据此分配探查预算，让Agent从被动回答升级为主动补全上下文，是隐式需求场景可泛化的控制点。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05557&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05557" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05557" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05557" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

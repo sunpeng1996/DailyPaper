@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 CA-PG，通过对含目标项的候选集边际化概率求梯度，大幅降低方差，提升早期检索训练稳定性。"><meta property="og:title" content="Credit-assigned Policy Gradient for Early Stage Retrieval in Two-stage Ranking"><meta property="og:description" content="提出 CA-PG，通过对含目标项的候选集边际化概率求梯度，大幅降低方差，提升早期检索训练稳定性。"><meta property="og:type" content="website"><title>Credit-assigned Policy Gradient for Early Stage Retrieval in Two-stage Ranking</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26385" target="_blank" rel="noopener">2605.26385</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Credit-assigned Policy Gradient for Early Stage Retrieval in Two-stage Ranking</h1> <p class="title-zh">两阶段排序早期检索的信贷分配策略梯度方法</p> <div class="dir-row"> <span class="direction-chip">🧭 两阶段推荐 · 早期检索策略梯度</span> </div> <p class="affiliations">Cornell University · Meta</p> <div class="meta">Haruka Kiyohara, Mihaela Curmei, Ariel Evnine, Shankar Kalyanaraman, Israel Nir, Ana-Roxana Pop 等</div> <p class="one-liner">提出 CA-PG，通过对含目标项的候选集边际化概率求梯度，大幅降低方差，提升早期检索训练稳定性。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Two-Stage Ranking">Two-Stage Ranking</a><a class="tag" href="/DailyPaper/tag/Policy Gradient">Policy Gradient</a><a class="tag" href="/DailyPaper/tag/Credit Assignment">Credit Assignment</a><a class="tag" href="/DailyPaper/tag/Variance Reduction">Variance Reduction</a><a class="tag" href="/DailyPaper/tag/Plackett-Luce">Plackett-Luce</a><a class="tag" href="/DailyPaper/tag/Recommender Systems">Recommender Systems</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>ESR 训练避坑：不要直接用 V-PG。当候选集 K&gt;10 时，原始策略梯度因组合动作空间（|A|^K）导致梯度溢出和不稳定，实践中推荐切换到 CA-PG 或 TOP1-PG。</li><li>TOP1-PG 是高效默认选择：当 ESR 为单一 PL 模型（非 MoE）时，TOP1-PG 仅需 O(L) 计算，远低于 V-PG 的 O(K)，且实验收敛更快，可直接替代 V-PG-SwR。</li><li>MoE 场景用 CA-PG-SwR：若有多个专家子检索器，CA-PG-SwR 支持多 logit 模型，计算 O(ML)，比 CA-PG 的 O(KL) 更经济，且性能优于 V-PG-SwR，适合大规模电商多路召回。</li><li>LSR 对齐要求不苛刻：理论证明只要 LSR 排序“合理对齐”（如 ε-贪婪、随机策略），CA-PG 仍能学到最优分区（top-K 正确），因此现有业务精排模型可直接作为 LSR 使用，不必担心偏差过大。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：大模型搜索、推荐和 RAG 系统普遍采用两阶段架构：早期检索（ESR）生成候选集，晚期排序（LSR）重排。训练 ESR 的端到端策略梯度（V-PG）面临组合动作空间带来的方差爆炸，且存在信贷分配问题——V-PG 同等对待候选集内所有物品，无法区分具体贡献，导致训练不稳定、收敛慢。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出 <strong>CA-PG</strong>：对 ESR 的边际概率 <code>π(S_K(a)|x)</code> 求梯度，即目标物品 <code>a</code> 被包含在任何候选集的概率，而非具体候选集的联合概率。</li>
+<li>理论分析显示 CA-PG 是 V-PG 的方差缩减成分，消除了对特定候选集的依赖。</li>
+<li>给出 PL 策略下的有效计算：精确 CA-PG 复杂度 O(KL)，但通过采样有放回（SwR）近似得到 CA-PG-SwR（O(ML)），特别当 M=1 时退化为 <strong>TOP1-PG</strong>（只考虑物品被选为 top-1 的概率），复杂度 O(L)。</li>
+<li>证明只要 LSR 排序“合理对齐”（例如最优策略与均匀策略的插值），CA-PG 能学到正确的 top-K 分区。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>合成数据（1000 用户×1000 物品，向量内积奖励）和真实 KuaiRec 数据。</li>
+<li>对比 V-PG、V-PG-SwR、CA-PG、CA-PG-SwR（TOP1-PG）。</li>
+<li>结果：合成数据 K=20 时，V-PG 频繁梯度溢出，CA-PG 稳定训练且 5 万步内收敛速度比 V-PG-SwR 快约 3 倍；真实数据 K=50/100/200 时，TOP1-PG 在 5 万步已显著领先 V-PG-SwR。</li>
+<li>MoE 场景下（M=5），CA-PGs 性能优于 V-PG，展示了多专家探索的优势。</li>
+</ul>
+<p><strong>一句话精华</strong>：忽略候选集具体组成的边际化梯度，可以在实际可行的样本量下实现稳定快速的 ESR 在线学习。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26385&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26385" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26385" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26385" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在 GRPO 中增加对比上下文选择辅助损失，显著提升 Agent 与多模态 LLM 的证据接地能力"><meta property="og:title" content="Context-Aware RL for Agentic and Multimodal LLMs"><meta property="og:description" content="在 GRPO 中增加对比上下文选择辅助损失，显著提升 Agent 与多模态 LLM 的证据接地能力"><meta property="og:type" content="website"><title>Context-Aware RL for Agentic and Multimodal LLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-15">2026-06-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.17053" target="_blank" rel="noopener">2606.17053</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Context-Aware RL for Agentic and Multimodal LLMs</h1> <p class="title-zh">上下文感知RL：用辅助选择损失增强长序列与多模态证据接地</p> <div class="dir-row"> <span class="direction-chip">🧭 上下文感知强化学习 · 多模态与Agent</span> </div> <p class="affiliations">Princeton University · UC Davis</p> <div class="meta">Peiyang Xu, Bangzheng Li, Sijia Liu, Karthik R. Narasimhan, Pramod Viswanath, Prateek Mittal 等</div> <p class="one-liner">在 GRPO 中增加对比上下文选择辅助损失，显著提升 Agent 与多模态 LLM 的证据接地能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Context-Aware RL">Context-Aware RL</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Contrastive Context">Contrastive Context</a><a class="tag" href="/DailyPaper/tag/Agentic">Agentic</a><a class="tag" href="/DailyPaper/tag/Multimodal">Multimodal</a><a class="tag" href="/DailyPaper/tag/Grounding">Grounding</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>辅助上下文选择损失：在现有 RL（如 GRPO）训练中，同时训练一条「给定 query-answer，从一对相似但结论相反的上下文中选出支持该答案的正确上下文」的辅助任务，可作为轻量插件提升模型对关键证据的敏感度。</li><li>构造对比上下文对的工程方法：Agent 场景用轨迹过滤（同仓库、同文件、同函数、不同 issue + 答案掩码）构造 1k 高质量对，多模态用生成编辑+相似检索构造 7k 对，避免人工标注。业务中可类似挖掘正负用户行为序列、对比商品图文等。</li><li>避免将对比数据简单用于 SFT 或混入 RL 奖励：实验表明，用对比数据做 SFT 会严重破坏长序列策略（编码 Agent 任务 resolve rate 从 28% 跌至 1.3%），单纯作为二元奖励加入 RL 几乎无效；只有设计为辅助 logit 级损失并配合 GRPO 的 clip/KL 约束，才能稳定获益。</li><li>长序列推荐/Agent 的场景直接复用：在用户长行为序列、商品描述、多模态推荐中，可通过构造「仅关键一步不同」的正负上下文对，用相同辅助损失强化模型抓取关键信息，提升长程一致性和抗噪声能力。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>LLM 在长上下文（如 Agent 多轮轨迹）和多模态（图像细节）中常出现<strong>上下文不感知</strong>：关键证据明明在上下文中，却未能被模型抓取并用于决策。本文先用一个简单的对比上下文探测任务验证开源模型接近随机选择，与强闭源模型差距达 40 点，说明证据接地是普遍短板。</p>
+<h2 id="方法">方法</h2>
+<p>提出 <strong>CONTEXTRL</strong>，在 GRPO 基础上增加一个<strong>对比上下文选择辅助损失</strong>。</p>
+<h3 id="1-构造对比上下文对">1. 构造对比上下文对</h3>
+<ul>
+<li><strong>Agent 轨迹对</strong>：从 SWE‑smith 的 66k 轨迹中，通过「同仓库、同 commit、同文件、同函数、不同 issue」等严格级联过滤，并用 <code>&#x3C;PATCH_MASKED></code> 掩盖编辑指令，保留思考/工具输出，经 GPT‑5.4 验证和人工复审，获得 1k 高质量对。</li>
+<li><strong>多模态图像对</strong>：自然图像用生成编辑（指令生成→图像合成→人工/自动审核，过滤编辑痕迹和整体偏移），结构化图像用相似度检索（Qwen3‑VL‑Embedding，余弦≥0.85），合计 7k 对。</li>
+</ul>
+<h3 id="2-辅助损失设计">2. 辅助损失设计</h3>
+<p>给定 <code>(Q, A, C⁺, C⁻)</code>，将正负上下文作为选项 A/B 随机化，用 teacher forcing 计算模型在两个选项 token 上的 logits 差，经裁剪后做 sigmoid 交叉熵，鼓励模型选择支持答案的正确上下文。</p>
+<h3 id="3-联合训练">3. 联合训练</h3>
+<p><code>L = L_GRPO + λ·L_CA</code>，λ 取 0.001–0.005。</p>
+<h2 id="关键实验">关键实验</h2>
+<ul>
+<li><strong>Agent 评估</strong>：在 SWE‑Bench Verified/Lite 等 5 个基准上，Qwen3‑8B 平均 +1.5%，Klear‑AgentForge‑8B 平均 +3.2%，NIAH 长上下文检索从下降转为超越基准。</li>
+<li><strong>多模态评估</strong>：12 个 VQA 基准，Qwen2.5‑VL‑7B 平均 +2.0%，Qwen3‑VL‑8B 平均 +1.6%，所有子类别一致提升。</li>
+<li><strong>消融对比</strong>：同样对比数据用于 SFT 或混入 RL 奖励（DA‑SFT / DA‑RL）几乎不带来提升，甚至导致长序列任务崩溃（Agent resolve rate 直接掉至 0–1.3%）。只有辅助损失形式能稳定转化对比数据为性能增益。</li>
+</ul>
+<h2 id="核心结论">核心结论</h2>
+<p><strong>“对比数据本身不是关键，如何将上下文选择信号融入训练才是。”</strong> CONTEXTRL 提供了一种极简、模态无关的辅助训练方式，可广泛用于提升模型在长上下文与多模态场景中的证据接地能力。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.17053&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.17053" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.17053" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.17053" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

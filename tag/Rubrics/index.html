@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Rubrics - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Rubrics - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Rubrics</h2> <p style="color: var(--fg-muted); font-size: 14px;">2 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-06-10-dailyreport-ri-chang-sou-suo-ren-wu-shang-ping-gu-sou-suo-li-260612871">DailyReport: An Open-ended Benchmark for Evaluating Search Agents on Daily Search Tasks</a></h2> <p class="title-zh">DailyReport：日常搜索任务上评估搜索代理的开放式基准</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 评估基准 · 细粒度与可解释评估</span>  </div> <p class="affiliations">University of Science and Technology of China · Meituan</p> <p class="summary">构造包含150个日常搜索任务与3546条细粒度评分标准的基准，提供可解释的多维评估，揭示现有搜索代理普遍未达用户预期</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>任务分解与级联评分标准：借鉴其子任务分解和级联 rubric 设计，可在电商搜索/推荐代理评估中实现细粒度能力诊断（如商品推荐的准确性、解释质量、多源信息融合能力）。</li><li>用户中心聚合分数：提出的用户偏好分数可作为离线代理指标，近似真实用户满意度，用于 Agent 的迭代优化或线上 A/B 测试前的快速筛选。</li><li>17 个系统对比揭示的短板：时效性、多源合成等维度的普遍缺陷表明，在构建电商搜索代理时需特别强化实时信息的抓取与融合机制。</li><li>数据集与任务构造思路：可从真实用户讨论中挖掘任务，构建贴合电商场景（如比价、商品咨询）的评估集，复现其评估管线。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 7/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Search Agents">Search Agents</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/Evaluation">Evaluation</a><a class="tag" href="/DailyPaper/tag/Rubrics">Rubrics</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Daily Tasks">Daily Tasks</a> </div> </article><article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-26-rubric-arrow-jiao-ti-shi-ping-fen-zhun-ze-jiang-li-jian-mo-260529156">RUBRIC-ARROW: Alternating Pointwise Rubric Reward Modeling for LLM Post-training in Non-verifiable Domains</a></h2> <p class="title-zh">RUBRIC-ARROW：交替式评分准则奖励建模，提升非可验证领域LLM后训练</p> <div class="dir-row"> <span class="direction-chip">🧭 奖励建模与LLM后训练·评分准则的成对偏好优化</span>  </div> <p class="affiliations">University at Albany · Rutgers University · Purdue University · Emory University · Georgia Institute of Technology</p> <p class="summary">交替训练评分准则生成器与准则条件评判器，以概率评分与成对偏好数据训练点式奖励模型。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>在电商Agent或推荐解释生成中，可借鉴 rubrics 分解评估：将整体质量拆解为独立准则（如信息准确性、说服力、风格匹配），训练准则条件评判器获得细粒度奖励信号。</li><li>概率评分规则能减少平局，提供更光滑的奖励分布，适合作为排序或策略优化的目标，比硬布尔聚合更稳定。</li><li>交替训练生成器与评判器的架构可复用于自动评估流程：业务中可先有粗粒度准则，通过交替优化不断细化准则和评判能力。</li><li>仅用 pairwise 偏好数据训练 pointwise 奖励模型，降低人工标注绝对分数的成本；对于成对偏好易得的场景（如用户 A/B 选择），可直接复用此方法。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-26">2026-05-26</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 7/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Rubrics">Rubrics</a><a class="tag" href="/DailyPaper/tag/Reward Modeling">Reward Modeling</a><a class="tag" href="/DailyPaper/tag/LLM Alignment">LLM Alignment</a><a class="tag" href="/DailyPaper/tag/Pointwise Evaluation">Pointwise Evaluation</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Non-verifiable Domains">Non-verifiable Domains</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

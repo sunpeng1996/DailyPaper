@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过交替 GRPO 与离线自蒸馏，从同一问题的正负轨迹对中提取 token 级监督，无需外部教师或奖励模型"><meta property="og:title" content="Search-E1: Self-Distillation Drives Self-Evolution in Search-Augmented Reasoning"><meta property="og:description" content="通过交替 GRPO 与离线自蒸馏，从同一问题的正负轨迹对中提取 token 级监督，无需外部教师或奖励模型"><meta property="og:type" content="website"><title>Search-E1: Self-Distillation Drives Self-Evolution in Search-Augmented Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22511" target="_blank" rel="noopener">2605.22511</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Search-E1: Self-Distillation Drives Self-Evolution in Search-Augmented Reasoning</h1> <p class="title-zh">Search-E1：自蒸馏驱动搜索增强推理的自进化</p> <div class="dir-row"> <span class="direction-chip">🧭 搜索增强推理 Agent 自进化训练</span> </div>  <div class="meta">Zihan Liang, Yufei Ma, Ben Chen, Zhipeng Qian, Xuxin Zhang, Huangyu Dai 等</div> <p class="one-liner">通过交替 GRPO 与离线自蒸馏，从同一问题的正负轨迹对中提取 token 级监督，无需外部教师或奖励模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Self-Distillation">Self-Distillation</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Search-Augmented Reasoning">Search-Augmented Reasoning</a><a class="tag" href="/DailyPaper/tag/OFSD">OFSD</a><a class="tag" href="/DailyPaper/tag/Process Supervision">Process Supervision</a><a class="tag" href="/DailyPaper/tag/Multi-Hop QA">Multi-Hop QA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>从轨迹对中生成 token 级细粒度信号：在搜索、对话等多步 Agent 训练中，正例轨迹的某一步往往比负例轨迹的对应步更优。可以用离线自蒸馏从正负轨迹对中学习 step-wise 差异，无需额外训练过程奖励模型，降低工程成本。</li><li>GRPO 与自蒸馏交替训练，避免干扰在线探索：Search-E1 的离线自蒸馏轮次完全独立于 GRPO 的 rollout 采样，不改变 RL 的训练动态，可以作为现有 GRPO 训练流程的插件式增强，适用于电商搜索、推荐等场景中逐步提升 agent 的决策粒度。</li><li>利用同一模型的 privileged context 进行知识蒸馏：将更优轨迹作为 prompt 前缀送入同一模型，让学生分布逼近教师分布，不需额外存储或调用外部模型，适合线上模型迭代。</li><li>多轮自进化循环，适合持续优化：随着训练的进行，可以从日益稳定的 rollout 池中挖掘新的 pair 持续进行自蒸馏，适合推荐系统或搜索 Agent 在用户反馈闭环中在线持续学习。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+当前的搜索增强推理 Agent（如 Search-R1）通常用 GRPO 进行端到端强化学习，但仅基于最终答案的 outcome reward 会忽略中间搜索步骤的质量差异。许多工作通过外部强模型、过程奖励模型或手工奖励设计来提供步骤级监督，但引入了大量额外训练开销和资源依赖。本文观察到，在同一问题的多个 rollout 中，正例轨迹与负例轨迹在搜索步上存在天然对比，可以从中提取步骤级信号，无需外部监督即可驱动自进化。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>Search-E1 自进化管线</strong>：交替执行标准 GRPO 轮次和离线自蒸馏（OFSD）轮次。</li>
+<li><strong>OFSD 机制</strong>：从刚结束的 GRPO 轮次产出的 rollout 池中，为每个问题选择一对 (reference, student) 轨迹。reference 是正确且搜索次数最少的轨迹，student 是错误或与 reference 差异最大的轨迹。</li>
+<li><strong>非对称条件化</strong>：让学生仅以问题和指令为输入，教师则额外获得 reference 轨迹作为前缀（privileged context），两者共享模型参数，并在 student 生成的 token 序列上计算前向 KL 散度损失（带逐项截断）。</li>
+<li><strong>实现</strong>：OFSD 使用 LoRA adapter 在冻住的 GRPO checkpoint 上进行，student 为 LoRA 活跃模式，teacher 为禁用 LoRA 的基模型，蒸馏后合并权重。</li>
+<li><strong>离线设计</strong>：OFSD 完全在 GRPO 轮次结束后离线进行，不影响 RL 采样效率，且能反复迭代。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>使用 Qwen2.5-3B-Instruct 作为基座，在 7 个单跳/多跳 QA 基准上评估。</li>
+<li>与 outcome-reward RL（Search-R1, ReSearch, AutoRefine）、过程监督方法（StepSearch, GiGPO）等对比。</li>
+<li>Search-E1 达到平均 EM 0.440，超越所有开源基线，尤其多跳任务提升显著（2Wiki +4.3, MuSiQue +3.6, Bamboogle +12.0 vs. AutoRefine）。</li>
+<li>在与依赖 GPT-4o 标注的 StepSearch 和基于状态分组优势的 GiGPO 比较中，Search-E1 在大部分基准上领先，证明了从自身 rollout 提取的信号比手工或外部监督更有效。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：同一模型在给定更优兄弟轨迹作为上下文时能产生更准确的下一步分布，这个差异就是 free 的步骤级训练信号。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22511&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22511" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22511" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22511" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="为 LLM 推理的搜索痕迹添加父指针形成显式线性树结构，在 SFT+GRPO 下显著提升任务成功率和搜索效率"><meta property="og:title" content="LinTree: Improving LLM Reasoning with Explicitly Structured Search Histories"><meta property="og:description" content="为 LLM 推理的搜索痕迹添加父指针形成显式线性树结构，在 SFT+GRPO 下显著提升任务成功率和搜索效率"><meta property="og:type" content="website"><title>LinTree: Improving LLM Reasoning with Explicitly Structured Search Histories</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31492" target="_blank" rel="noopener">2605.31492</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>LinTree: Improving LLM Reasoning with Explicitly Structured Search Histories</h1> <p class="title-zh">LinTree：显式结构化搜索历史提升 LLM 推理</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 推理 · 搜索结构优化</span> </div> <p class="affiliations">National University of Singapore · University of Oxford</p> <div class="meta">Liwei Kang, Yee Whye Teh, Wee Sun Lee</div> <p class="one-liner">为 LLM 推理的搜索痕迹添加父指针形成显式线性树结构，在 SFT+GRPO 下显著提升任务成功率和搜索效率</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM Reasoning">LLM Reasoning</a><a class="tag" href="/DailyPaper/tag/Search Tree">Search Tree</a><a class="tag" href="/DailyPaper/tag/Parent Pointers">Parent Pointers</a><a class="tag" href="/DailyPaper/tag/Structured Trace">Structured Trace</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Search Efficiency">Search Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在需要多步推理与回溯的 Agent 场景（如电商客服、多轮任务规划）中，显式记录搜索树节点之间的父子关系（即使只是简单的 sid 编号）能大幅降低模型对搜索历史的混淆，提升正解率与规划效率，可直接嵌入现有 CoT 或反思式 prompt 设计中。</li><li>对于生成式推荐或查询改写中涉及“尝试-评估-回退”的多步生成，可采用类似的 LinTree 格式将生成路径结构化，方便 RL 训练时准确追踪路径与提取最终方案，避免因隐式结构导致的高错误率。</li><li>工程实现上，仅需在搜索痕迹的文本表示中加入 sid=X 与父状态引用，改动极小；在 SFT 后接 GRPO 的训练范式已被验证有效，可复用其效率奖励函数（式 (1)）来平衡正确性与搜索开销。</li><li>若业务中存在基于 LLM 的启发式搜索（如用 LLM 为 A* 打分），可参考将 LLM 从局部状态评估转为全轨迹条件化推理的策略，利用显式树结构帮助模型更有效地探索状态空间，减少无谓的局部重访。</li> </ul> </div> <div class="content"> <p>动机：LLM 的推理过程可视为隐式搜索树线性化，模型回退或切换分支时并不显式标识父状态，导致即使观察全部搜索历史也难以可靠超越仅观察局部状态的启发式搜索。受此启发，研究是否通过简单的父指针标记就能让搜索痕迹更易被利用。</p>
+<p>方法与关键点：</p>
+<ul>
+<li>在三个完全可观察的推理环境（积木世界、栅格导航、推箱子）上，用宽度 BFS 生成搜索痕迹，通过两种格式对比：隐式格式只记录动作与结果状态；显式格式在每次扩展时加入 <code>sid=X</code> 与前驱 sid，形成可追溯的线性树（LinTree）。</li>
+<li>使用 Qwen3-0.6B 作为基座，先监督微调（SFT）模仿规则启发式搜索，再通过 GRPO 强化学习优化正确性与搜索效率，奖励函数采用有界几何折扣惩罚鼓励短路径。</li>
+<li>同时训练仅依赖局部状态（当前状态+目标）的 LLM 启发式作为基线，对比全轨迹条件推理的优势。</li>
+</ul>
+<p>关键实验与结果：</p>
+<ul>
+<li>在积木世界、导航、推箱子三个域中，SFT 后显式痕迹即提升成功率（平均 +5 个百分点）；GRPO 后显式模型在积木世界和导航达到 100% 成功率，推箱子从 85.9% 提升至 89.6%（加生成约束后 98.9%），且搜索效率均优于隐式模型与局部启发式。</li>
+<li>分析显示，显式结构大幅减少计划提取失败（从搜索成功但输出错误计划的比例下降），并使模型在导航任务中探索更分散的状态空间（平均成对距离 4.19 > 4.11 > 3.99），表明树结构帮助模型更有效地利用历史避免重复搜索。</li>
+</ul>
+<p>核心启示：搜索历史的收益不取决于是否看到历史，而取决于历史是否以显式树结构呈现；简单父指针即可将非结构化的推理流变成便于学习与优化的表示，为 LLM 推理的结构感知训练提供了方向。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31492&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31492" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31492" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31492" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

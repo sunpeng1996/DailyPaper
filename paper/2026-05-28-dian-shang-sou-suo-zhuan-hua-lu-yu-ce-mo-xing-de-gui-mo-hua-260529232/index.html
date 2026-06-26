@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="系统研究搜索CVR模型在骨干、嵌入、数据三个维度的独立可加和缩放规律，并实现线上 +2.6% 转化提升"><meta property="og:title" content="On the Practice of Scaling Search Conversion Rate Prediction"><meta property="og:description" content="系统研究搜索CVR模型在骨干、嵌入、数据三个维度的独立可加和缩放规律，并实现线上 +2.6% 转化提升"><meta property="og:type" content="website"><title>On the Practice of Scaling Search Conversion Rate Prediction</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29232" target="_blank" rel="noopener">2605.29232</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>On the Practice of Scaling Search Conversion Rate Prediction</h1> <p class="title-zh">电商搜索转化率预测模型的规模化实践</p> <div class="dir-row"> <span class="direction-chip">🧭 搜索转化率预测 · 模型缩放与推理优化</span> </div> <p class="affiliations">Coupang</p> <div class="meta">James Pak, Jyun-Yu Jiang, Fan Zhang, Sen Wang, Taekmin Kim, Henry Tsai 等</div> <p class="one-liner">系统研究搜索CVR模型在骨干、嵌入、数据三个维度的独立可加和缩放规律，并实现线上 +2.6% 转化提升</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/CVR prediction">CVR prediction</a><a class="tag" href="/DailyPaper/tag/model scaling">model scaling</a><a class="tag" href="/DailyPaper/tag/MaskNet">MaskNet</a><a class="tag" href="/DailyPaper/tag/embedding scaling">embedding scaling</a><a class="tag" href="/DailyPaper/tag/inference optimization">inference optimization</a><a class="tag" href="/DailyPaper/tag/search ranking">search ranking</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>优先选用 MaskNet 配合交叉宽度缩放：相比 DCNv2 和序列模型，MaskNet 在相同 FLOPs 下具有更高的特征交叉效率，且内存占用更友好，适合在搜索 CVR 这类强调显式高阶交互的任务中构建 Pareto-optimal 骨干。</li><li>独立缩放实验可加速迭代：骨干、嵌入维度和训练数据量对离线 mAP 的提升效应接近线性可加，因此可以分别在子数据集上独立调参（如先在小数据上做架构搜索），再将组合方案直接迁移到全量数据训练，大幅降低探索成本。</li><li>数据缩放遵循对数线性，新特征不必全量回填：训练时长增加带来的收益递减明显，且近期 300 天行为序列就足够支撑个性化嵌入效果，历史特征缺失用 “unseen” 占位不会明显损伤指标，从而可以只对高价值特征做近期回填。</li><li>推理优化让大模型延迟持平：采用 CPU 特征预处理与 GPU 骨干推理分离、客户端预分组 + 服务端动态批处理的混合方案，可在 8 倍推理 FLOPs 下将 P99 延迟从 82ms 降至 32ms，峰值吞吐提升 4.4 倍，避免因延迟约束放弃大模型。</li><li>热启动训练策略显著缩短迭代周期：利用固定维度隐层作为输入投影，使得特征增减时只需重新初始化输入映射层，其余参数全部 warm-start，可将训练时间从冷启动的 +264% 压缩到仅 +36%，适合高频模型更新。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：在电商搜索高流量环境下，CVR 预测模型的规模化面临质量、训练成本与推理延迟的三角制约。现有缩放研究多聚焦推荐场景，且对搜索 CVR 中异构特征、大规模嵌入表及多维度缩放效应的理解不够系统。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>三维缩放框架</strong>：将模型放大分解为骨干计算量、嵌入参数量、训练数据量三个可独立控制的维度。</li>
+<li><strong>骨干评估</strong>：对比 DCNv2、MaskNet、Transformer、RankMixer 及其 DHEN 集成，发现 MaskNet 通过交叉宽度放大（projected cross-input dimension）能更高效地捕捉高阶特征交互，且在同等 FLOPs 下内存占用远低于序列模型（Transformer/RankMixer），避免 OOM。</li>
+<li><strong>嵌入缩放</strong>：增大 item 嵌入维度比增加词汇量（通过 hash modulo）更有效，两个方向收益可加和；query/text 嵌入缩放收益有限，原因在于文本 token 的通用语义难以通过维度提升获得额外表征能力。</li>
+<li><strong>数据缩放</strong>：训练时长增加遵循对数线性收益规律，利用“unseen”占位符处理历史缺失特征不会明显损害效果，验证了近期数据对新特征回填的足够性。</li>
+<li><strong>训练/推理加速</strong>：设计固定维度的输入投影层，实现特征变更时只需重初始化映射层其余参数全部 warm-start，大幅缩短迭代周期；推理端采用 CPU 预处理 + GPU 骨干分离以及客户端预组批 + 服务端动态批处理，峰值吞吐提升 4.4 倍，P99 延迟下降 62%。</li>
+</ul>
+<p><strong>关键实验与结果</strong></p>
+<ul>
+<li>数据集：电商平台超过一年的真实搜索交互日志。</li>
+<li>评估指标：未来七天购买的 mAP（近似 MRR），与线上 A/B 搜索转化率一致。</li>
+<li>主要数字：MaskNet 交叉宽度从 512 扩至 4096 带来 +0.64% mAP 且训练吞吐仅下降约 27%；嵌入维度翻倍比词汇量放大 10 倍更有效；数据从 35 天增至 300 天呈对数线性；三维叠加合计 +0.74% 离线 mAP；线上 8 倍 FLOPs 模型推出后搜索转化率提升 +2.6%，延迟与基线持平。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29232&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29232" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29232" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29232" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

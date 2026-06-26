@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#process supervision - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#process supervision - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#process supervision</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-06-24-duo-bu-gong-ju-shi-yong-qiang-hua-xue-xi-de-beng-kui-fen-xi-260626027">Why Multi-Step Tool-Use Reinforcement Learning Collapses and How Supervisory Signals Fix It</a></h2> <p class="title-zh">多步工具使用强化学习的崩溃分析与监督信号修复</p> <div class="dir-row"> <span class="direction-chip">🧭 多步工具调用 RL 的稳定化训练</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">中国科学院自动化研究所复杂系统认知与决策重点实验室 · 中国科学院大学人工智能学院</p> <p class="summary">揭示 RL 训练中控制 token 概率畸变导致的结构性崩溃，系统性对比 6 种监督信号并以交错训练实现稳定工具调用</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>RL 训练前务必先用 SFT 注入工具调用格式：直接对未见过工具调用格式的模型做 RL 极容易发生 tool_call 等控制 token 的概率膨胀，导致输出退化为 &lt;tool_call&gt;&lt;|im_end|&gt; 的空结构，需先用少量 SFT 数据建立格式基础。</li><li>交错训练（interleaved SFT-RL）比同步训练稳定得多：在 RL 探索过程中间歇插入基于失败样本的 SFT 校正，可大幅减少格式漂移，避免 KL 散度爆炸；尤其推荐 Erroneous Trajectory Supervision + Process Reflection Supervision，后者将中间步骤反思转化为文本监督信号，起到逻辑正则化作用。</li><li>纯 RL 的“崩溃”可能是格式伪影而非能力丧失：OOD 评估发现，单纯 GRPO 在分布外格式下反而稳定，说明崩溃主要集中在特定控制 token 的分布敏感区，真实工具调用能力仍然保留；因此线上部署时可考虑改变 prompt 模板来规避训练格式过拟合。</li><li>学习率对交错训练极为关键：错误轨迹监督 (ETS) 在较高学习率 (1e-5) 下提升显著，而同步方法常因共享学习率导致优化不稳定；可借鉴其逐步增加 RL 次数 + 错误 SFT 的调度策略。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-24">2026-06-24</time> <span class="sep">|</span> <span>cs.LG</span> <span class="sep">|</span> <span class="badge badge-score">score 8/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/RL collapse">RL collapse</a><a class="tag" href="/DailyPaper/tag/tool-use">tool-use</a><a class="tag" href="/DailyPaper/tag/interleaved SFT-RL">interleaved SFT-RL</a><a class="tag" href="/DailyPaper/tag/control token">control token</a><a class="tag" href="/DailyPaper/tag/process supervision">process supervision</a><a class="tag" href="/DailyPaper/tag/BFCL">BFCL</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

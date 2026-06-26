@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将冷启缺失模态视为序列证据路由问题，用PPO训练LLM Agent融合自动工具与检索分数进行候选重排"><meta property="og:title" content="Meta-Modal Agent: Sequential Evidence Routing for Missing-Modality Candidate Reranking"><meta property="og:description" content="将冷启缺失模态视为序列证据路由问题，用PPO训练LLM Agent融合自动工具与检索分数进行候选重排"><meta property="og:type" content="website"><title>Meta-Modal Agent: Sequential Evidence Routing for Missing-Modality Candidate Reranking</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-24">2026-05-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.25007" target="_blank" rel="noopener">2605.25007</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Meta-Modal Agent: Sequential Evidence Routing for Missing-Modality Candidate Reranking</h1> <p class="title-zh">元模态智能体：面向缺失模态候选重排的序列化证据路由</p> <div class="dir-row"> <span class="direction-chip">🧭 缺失模态推荐 · 序列证据路由与LLM Agent</span> </div> <p class="affiliations">Swinburne University of Technology · Southeast University · Tongji University · Chengdu University of Information Technology · Wuhan University of Technology</p> <div class="meta">Jinze Wang, Yangchen Zeng, Tiehua Zhang, Lu Zhang, Yuze Liu, Zhishu Shen 等</div> <p class="one-liner">将冷启缺失模态视为序列证据路由问题，用PPO训练LLM Agent融合自动工具与检索分数进行候选重排</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/missing modality">missing modality</a><a class="tag" href="/DailyPaper/tag/LLM agent">LLM agent</a><a class="tag" href="/DailyPaper/tag/candidate reranking">candidate reranking</a><a class="tag" href="/DailyPaper/tag/cold-start">cold-start</a><a class="tag" href="/DailyPaper/tag/evidence routing">evidence routing</a><a class="tag" href="/DailyPaper/tag/reinforcement learning">reinforcement learning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>缺失模态应对策略：将缺失模态视为 “Null 观察” 而非特征缺失，通过 agent 路由到可用证据源，避免了对不可靠补全的依赖。电商中新品冷启、用户无行为时可直接借鉴。</li><li>Agent 训练技巧：使用 PPO 训练时加入任务平衡采样（balanced missingness-task），确保极度缺失场景（如仅图像）获得与全观测场景相同训练暴露，防止策略偏向简单情况。可迁移至推荐 agent 的强化学习调优。</li><li>重排序与融合设计：Agent 只对上游检索返回的候选池打分，最终排序通过加权融合模型分数与原始检索分数（公式 (2)）。该“检索-重排”解耦架构允许灵活插入 LLM agent，且通过融合权重控制新旧信号比例，适合现有推荐管线改造。</li><li>路由机制验证：与固定规则路由器（RuleRouter-Fuse）对比，学习到的路由不仅提升 NDCG@10，还降低了无效工具调用率（47% vs 65.8%）和平均轮次（2.5 vs 3.8），说明 RL 训练出的策略更高效，可作为 agent 工具调用的优化范式。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+多模态推荐系统中，冷启场景下用户历史、商品文本、图像等模态频繁缺失，现有方法常通过补全或生成伪特征弥补，但在极端缺失时容易引入不可靠证据。本文将缺失模态问题重新定义为候选池重排过程中的序列化证据路由问题：agent 需要决定调用哪种证据工具，并将“Null”返回作为有效观察以切换路由，而非简单丢弃或补全。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>候选池重排协议</strong>：MMA 工作在上游检索器产出的固定候选池上，仅对候选打分并重排，不直接从全量目录召回。最终分数由 MMA 得分与一级检索得分加权融合（权重在验证集上选择）。</li>
+<li><strong>证据路由 Agent</strong>：基于 Llama-3-8B 的 POMDP 决策，动作空间包括分析文本、分析图像（通过 CLIP 标签）、检索图邻居以及可选的用户交互工具 Ask_User。工具返回 Null 时，agent 将其作为环境观察并调整后续工具选择。</li>
+<li><strong>平衡缺失任务训练</strong>：定义 7 种缺失模式任务族（如纯文本、纯图像、纯行为等），在 PPO 训练中均匀采样，确保 severe OOMA 场景不被简单模式淹没。奖励函数结合 NDCG 排序质量和调用成本惩罚（无效调用惩罚 −0.2，重复失败调用惩罚 −0.2）。</li>
+<li><strong>两个变体</strong>：MMA-Auto（仅自动化工具）为部署版本；MMA-Interactive（含 Ask_User）仅作为诊断上界。</li>
+</ul>
+<p><strong>关键结果</strong>
+在 Amazon-Baby、Sports 和 Yelp 三个数据集上，对比 DGMRec、GRE-MC 等静态补全基线，以及 ReAct、AgentCF 等 LLM agent 基线：</p>
+<ul>
+<li>目标正例 OOMA NDCG@10 平均提升 4.0%（0.1645→0.1711），所有 9 个模态-数据集组合均获胜。</li>
+<li>固定池全量重排场景下，平均相对提升 12.7%，且 Recall 保持不变，证明改善来源于池内排序。</li>
+<li>与确定性的 RuleRouter-Fuse 相比，MMA-Auto 将 OOMA NDCG@10 从 0.1578 提升至 0.1711，同时减少无效调用率 18.8 个百分点，轮次减少 1.3，表明学习到的路由策略更高效且收益非单纯来自工具融合。</li>
+</ul>
+<p><strong>核心结论</strong>
+学习到的证据路由能稳健处理缺失模态，其增益源于灵活的 Null 观察利用与任务平衡训练，而非大模型规模的突破。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.25007&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.25007" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.25007" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.25007" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

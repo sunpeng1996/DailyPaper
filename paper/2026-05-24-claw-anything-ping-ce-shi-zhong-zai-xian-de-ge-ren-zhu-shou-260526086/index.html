@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次构造涵盖长周期事件流、跨服务依存、多设备协同的个人助手基准，暴露当前模型仅34.5% pass@1的差距，并利用数据生成管道将基线提升23.7%。"><meta property="og:title" content="Claw-Anything: Benchmarking Always-On Personal Assistants with Broader Access to User's Digital World"><meta property="og:description" content="首次构造涵盖长周期事件流、跨服务依存、多设备协同的个人助手基准，暴露当前模型仅34.5% pass@1的差距，并利用数据生成管道将基线提升23.7%。"><meta property="og:type" content="website"><title>Claw-Anything: Benchmarking Always-On Personal Assistants with Broader Access to User&#39;s Digital World</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-24">2026-05-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26086" target="_blank" rel="noopener">2605.26086</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Claw-Anything: Benchmarking Always-On Personal Assistants with Broader Access to User&#39;s Digital World</h1> <p class="title-zh">Claw-Anything：评测始终在线的个人助手在全访问数字世界中的能力</p> <div class="dir-row"> <span class="direction-chip">🧭 个人助手评测 · 长周期上下文与主动式帮助</span> </div> <p class="affiliations">Beijing Institute of Technology · Huawei Technologies Co., Ltd · Peking University · Institute of Automation, Chinese Academy of Sciences</p> <div class="meta">Yusong Lin, Xinyuan Liang, Haiyang Wang, Qipeng Gu, Siqi Cheng, Jiangui Chen 等</div> <p class="one-liner">首次构造涵盖长周期事件流、跨服务依存、多设备协同的个人助手基准，暴露当前模型仅34.5% pass@1的差距，并利用数据生成管道将基线提升23.7%。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/personal assistant">personal assistant</a><a class="tag" href="/DailyPaper/tag/long-horizon event stream">long-horizon event stream</a><a class="tag" href="/DailyPaper/tag/cross-service coordination">cross-service coordination</a><a class="tag" href="/DailyPaper/tag/multi-device interaction">multi-device interaction</a><a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/data generation">data generation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>长周期事件流的模拟与注入：电商/推荐系统可借鉴该方法，通过多轮事件注入自动生成用户长期行为序列（浏览、购买、比价），构造带有噪声和冲突的真实上下文，训练具备长期记忆的推荐Agent。</li><li>跨服务信息协调与冲突消解：用户画像往往分散在搜索、邮件、日历等多源数据中，存在不一致。该基准中的冲突检测与推理机制可直接用于推荐场景，提升Agent对跨渠道信息的一致性判断。</li><li>自动化环境与任务生成管道：从种子 persona 开始迭代合成数字世界+可执行验证器的方案，可作为生成式推荐中构造多样化训练环境的脚手架，实现大规模自动标注与 curriculum 设计。</li><li>主动式推荐评测的设计：任务中包含无需显式请求的主动式协助，且当前模型在此项上得分很低（pass@1仅6.7%）。电商中可迁移其评估思路，衡量“何时推送推荐”的时机与上下文理解能力。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有个人助手评测仅暴露狭窄、静态的用户状态片段，忽略长周期活动历史、跨服务依赖和多设备交互，导致高估模型性能。为衡量始终在线的助手在真实数字世界中的能力，需要扩展上下文的广度与深度。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li>构建 <strong>Claw-Anything</strong> 基准，沿三个维度扩展Agent可感知与操作的范围：
+<ol>
+<li><strong>长周期事件流</strong>：模拟三个月的系统与服务日志，提供细粒度历史记录；</li>
+<li><strong>多后端服务</strong>：覆盖生活、工作等领域40+服务的持久状态与专用历史；</li>
+<li><strong>跨设备交互</strong>：结合 CLI 和 GUI（Android）界面，要求跨设备协同完成任务。</li>
+</ol>
+</li>
+<li>开发<strong>自动化数据生成管道</strong>：从稀疏 persona 出发，通过多轮事件注入（含任务种子与噪声模板）逐步演化为复杂数字世界，捕获不一致信号与无关事件；在指定轮次快照环境并生成自然语言查询、可执行验证器与参考解；经自动过滤与人工核验最终产出200个评测任务和2000个训练环境。</li>
+<li>评测同时覆盖<strong>反应式与主动式任务</strong>，后者要求Agent无明确请求时从上下文推断需求。</li>
+</ul>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>GPT-5.5 仅获 <strong>34.5% pass@1</strong>，Claude Opus 4.7 仅 <strong>31.8%</strong>，远低于此前基准上的表现，说明更广的操作范围暴露了根本性缺陷。</li>
+<li>用管道生成的1500条成功轨迹微调 Qwen3.5-27B，pass@1 从9.8%提升到 <strong>33.5%（+23.7%）</strong>，超越所有开源模型，证明管道具有可扩展的数据生产能力。</li>
+<li>消融实验：移除事件流后成功率归零；跨服务工具掩码后同样归零；跨设备协同任务在仅 CLI 时基本不可解。上下文中噪声比例、仿真轮数和冲突数量增加均导致性能持续下降，验证了场景的真实难度。</li>
+<li>主动任务 pass@1 仅 <strong>6.7%</strong>，表明时机判断与上下文推理仍是短板。</li>
+</ul>
+<p><strong>核心结论</strong><br>
+更广的数字世界访问虽能解锁更多任务，但也急剧提升了上下文信噪分离、跨服务协调与执行精度的要求，当前最前沿模型与理想个人助手间存在显著差距，且该差距随上下文尺度增大而加剧。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26086&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26086" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26086" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26086" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

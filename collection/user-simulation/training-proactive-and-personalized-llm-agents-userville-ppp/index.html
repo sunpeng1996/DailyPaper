@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="UserVille 把精确指令 &#34;打散&#34; 成模糊用户输入并配多种交互偏好的 simulator；PPP 是多目标 RL，联合优化 productivity（完成度）+ proactivity（主动澄清）+ personalization（适配偏好）。"><meta property="og:title" content="Training Proactive and Personalized LLM Agents (UserVille / PPP) · 论文沉淀"><meta property="og:description" content="UserVille 把精确指令 &#34;打散&#34; 成模糊用户输入并配多种交互偏好的 simulator；PPP 是多目标 RL，联合优化 productivity（完成度）+ proactivity（主动澄清）+ personalization（适配偏好）。"><meta property="og:type" content="website"><title>Training Proactive and Personalized LLM Agents (UserVille / PPP) · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>👥 User Simulator</span> <span class="sep">·</span><time>2025-11</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>Training Proactive and Personalized LLM Agents (UserVille / PPP)</h1> <p class="archive-authors">Weiwei Sun, Xuhui Zhou, Weihua Du, Xingyao Wang, Sean Welleck, Graham Neubig, Maarten Sap, Yiming Yang</p> <p class="affiliations">CMU × OpenHands</p> <p class="one-liner">UserVille 把精确指令 &quot;打散&quot; 成模糊用户输入并配多种交互偏好的 simulator；PPP 是多目标 RL，联合优化 productivity（完成度）+ proactivity（主动澄清）+ personalization（适配偏好）。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">User Simulator</span><span class="tag tag-static">Multi-objective RL</span><span class="tag tag-static">Proactive</span><span class="tag tag-static">Personalization</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>问题一句话</strong>：现实里用户给 Agent 的指令是欠规范（vague）的（“修一下这个 bug” 却不说环境/复现步骤），且每个人交互偏好各异（有人只答选择题、有人讨厌被反复打断、有人要求用意大利语提问）。但现有 Agent RL（SWE-Bench / Search-R1 / R1 那一脉）几乎只优化 <strong>task success</strong> 一个维度，训出来的模型在模糊指令下要么瞎猜导致失败、要么乱问问题惹烦用户、要么无视用户偏好。</p>
+<p><strong>关键 idea</strong>：把”有效的人机协作”显式拆成三个可优化维度 <strong>P×P×P</strong>——<strong>Productivity</strong>（把任务做对）、<strong>Proactivity</strong>（在真正缺信息时问出”低成本、命中真 blocker”的好问题，且不滥问）、<strong>Personalization</strong>（按用户偏好调整提问的措辞/格式/时机/语言）。为此构造 <strong>UserVille</strong> 交互环境（把已有 benchmark 的精确 prompt 自动”模糊化”+ 配备带偏好的 LLM 用户模拟器 + 用户中心评测），再用 <strong>PPP</strong>——一个 GRPO/DAPO 风格的多目标 RL，把三类 reward 求和成单一标量信号去训 Agent。结论：在 SWE-Bench 与 BrowseComp-Plus 上，PPP 相对 GPT-5 等强基线平均 <strong>+21.6</strong>（vague prompt 设定下三维度均分 +16.72 over Seed-OSS-36B 基座）。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline 由 <strong>UserVille 环境构造</strong> 和 <strong>PPP RL 训练</strong> 两部分组成：</p>
+<p><strong>UserVille 三阶段</strong>（图见下）：</p>
+<ol>
+<li><strong>Prompt Vaguenization</strong>：用一个 LLM 把数据集里原本精确、自包含的 user prompt 改写成”只含部分信息、泛化掉具体细节、但意图不变”的 vague prompt。这样在用户模拟器（持有精确 prompt）和 Agent（只看到 vague prompt）之间制造<strong>信息不对称</strong>——Agent 必须靠提问把缺失信息补回来，而模拟器能据精确 prompt 给出权威回答。</li>
+<li><strong>Preference-Aware User Simulator</strong>：用 LLM 模拟用户，行为由一组预定义 <strong>interaction preference</strong> 驱动（共 20 种，如”只答 A/B/C 选择题”、“不要问任何问题”、“先自己试再问真 blocker”、“用意大利语提问”等）。模拟器持有三层信息（精确 prompt=低成本可答 / Hint=高成本可答 / IDK=答不了）。</li>
+<li><strong>User-Centric Evaluation</strong>：任务结束后输出 <strong>Proactivity</strong>（基于 user-effort 估计：每轮问题被打成 low/medium/high-effort）和 <strong>Personalization</strong>（每种偏好一个 reward function 判 follow / not-follow）反馈。</li>
+</ol>
+<p><strong>PPP 训练</strong>：把任务建模为 <strong>multi-turn tool-call ReAct Agent</strong>——交互被抽象成一个 <code>ask_user</code> 工具，Agent 每步输出 reasoning + tool call（要么调任务工具如 search/view/edit，要么调 <code>ask_user</code> 找模拟器）。把三类 reward 加权求和成 <code>R = R_Prod + R_Proact + R_Pers</code>，用 GRPO（带 DAPO 的 Clip-Higher + token-level loss）优化。</p>
+<p><img src="/ai-papers-daily/figures/training-proactive-and-personalized-llm-agents-userville-ppp/fig1.png" alt="UserVille 三阶段：(1) Prompt 模糊化把精确 prompt 改写成 vague prompt；(2) 带偏好的 LLM 用户模拟器，持有精确/Hint/IDK 三层信息并据偏好响应；(3) 用户中心评测，输出 Proactivity（low/medium/high-effort）与 Personalization（follow/not-follow）反馈"></p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-问题形式化react-multi-turn-tool-agent">1. 问题形式化（ReAct multi-turn tool agent）</h3>
+<p>给定 user prompt $q$，Agent 生成多轮轨迹 $\tau := (a_1, o_1, a_2, o_2, \dots, a_T, o_T)$，其中 $a_i$ 是第 $i$ 步 LLM 输出（含 reasoning + tool call，tool 可以是任务工具或 <code>ask_user</code>），$o_i$ 是对应的工具观测。轨迹概率按 ReAct 自回归分解：</p>
+<p>$$p_\theta(\tau \mid q) = \prod_{i \in [T]} \pi_\theta\big(a_i \mid q, (a_1, o_1, \dots, a_{i-1}, o_{i-1})\big)$$</p>
+<p><code>ask_user</code> 把”向用户提问”也变成一个普通工具调用，于是人机交互和工具调用统一在同一个 RL 轨迹里。</p>
+<h3 id="2-prompt-vaguenization">2. Prompt Vaguenization</h3>
+<ul>
+<li><strong>输入</strong>：原数据集的精确 prompt（SWE issue 描述 / BrowseComp 问题）。</li>
+<li><strong>输出</strong>：vague prompt。</li>
+<li><strong>两条改写原则</strong>：(1) 保持与精确 prompt 相同 intent；(2) 只保留部分信息、泛化掉具体细节。</li>
+<li>例（论文 Fig 12）：精确 prompt 给出完整复现代码 <code>ts._required_columns=["time","flux"]; ts.remove_column("flux")</code> + 系统环境；vague 版只剩一句 <code>removing column gives confusing error "ValueError: ... expected 'time' as the first columns but found 'time'"</code>。Agent 必须靠提问才能拿到 <code>_required_columns</code> 这个关键复现细节。</li>
+</ul>
+<h3 id="3-preference-aware-user-simulator20-种偏好">3. Preference-Aware User Simulator（20 种偏好）</h3>
+<p>12 种用于训练（seen），8 种留作泛化评测（unseen）。每种偏好 = 一段自然语言描述 + 一个 reward criterion + 一个 reward function。摘录（完整见论文 Table 4/5）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型</th><th>偏好（部分）</th><th>Reward Function</th><th>罚的轻重</th></tr></thead><tbody><tr><td>seen</td><td><code>concise_question</code> 简短提问</td><td><code>-0.1 * stats['reward_0']</code></td><td>轻罚</td></tr><tr><td>seen</td><td><code>detail_question</code> 详细带上下文</td><td><code>-0.1 * stats['reward_0']</code></td><td>轻罚</td></tr><tr><td>seen</td><td><code>answer_more</code> 至少问 3 个</td><td><code>min(1*(ask_turn-3), 0)</code></td><td>问少了罚</td></tr><tr><td>seen</td><td><code>only_begin</code> 只在开头答</td><td><code>-int('ask_question' in messages[3:])</code></td><td>后续再问就罚</td></tr><tr><td>seen</td><td><code>no_ask</code> 不许问</td><td><code>-int(ask_turn > 0)</code></td><td>问就罚</td></tr><tr><td>seen</td><td><code>do_selection</code> 只答 A/B/C</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr><tr><td>seen</td><td><code>amateur</code> 只答简单问题</td><td><code>-0.1 * stats['reward_0']</code></td><td>轻罚</td></tr><tr><td>seen</td><td><code>ask_many</code> 一轮问完</td><td><code>-int(ask_turn > 1)</code></td><td>多轮就罚</td></tr><tr><td>seen</td><td><code>one_question</code> 一次只问一个</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr><tr><td>seen</td><td><code>first_try</code> 先自己试再问真 blocker</td><td><code>-0.1 * stats['reward_0']</code></td><td>轻罚</td></tr><tr><td>unseen</td><td><code>lang_ita</code> 必须意大利语</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr><tr><td>unseen</td><td><code>json</code> 提问须 JSON 包裹</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr><tr><td>unseen</td><td><code>capital</code> 全大写英文</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr><tr><td>unseen</td><td><code>commas</code> 不准有逗号</td><td><code>-0.5 * stats['reward_0']</code></td><td>中罚</td></tr></tbody></table>
+<p><code>stats['reward_0']</code> 即”违反该偏好准则”的指示量（LLM-as-judge 或硬编码规则给出 Reward 0/1）。<code>no_preference</code>/<code>professional</code> 无 reward function。</p>
+<h3 id="4-user-effort-估计proactivity-的判定核心">4. User-Effort 估计（Proactivity 的判定核心）</h3>
+<p>每当模拟器回答一个问题，把这次回答需要的 <strong>user-effort</strong> 打成三类：</p>
+<ul>
+<li><strong>Low-effort</strong>：问题可直接用原精确 prompt 里的信息回答（信息本就在用户初始意图里）。</li>
+<li><strong>Medium-effort</strong>：模拟器答不了/拒答（回 “I don’t know”）——即无效或措辞差的问题。</li>
+<li><strong>High-effort</strong>：模拟器得用精确 prompt 之外的信息才能答（模拟用户要去翻文档/读代码库），用任务特定 criteria 判定。</li>
+</ul>
+<p><strong>会话级 effort = 该 session 内任意单轮的最大 effort</strong>。另：若初始 prompt 是 vague 且 Agent 没问任何澄清就给出错误解，该 session 也直接判 high-effort（因为用户得花大力气去核验、纠错）。</p>
+<h3 id="5-三类-rewardppp-的核心">5. 三类 Reward（PPP 的核心）</h3>
+<p><strong>(i) Productivity Reward $R_{\text{Prod}}$</strong>：任务可验证 reward。SWE-Func-Loc 用预测函数列表 vs ground-truth 的 F1；Deep-Research 用官方判分器的 EM；SWE-Full 用官方单测通过率。</p>
+<p><strong>(ii) Proactivity Reward $R_{\text{Proact}}$</strong> = bonus + penalty：</p>
+<ul>
+<li>bonus：若所有 query 都是 low-effort，<strong>+0.05</strong>；</li>
+<li>penalty：每个 medium-effort query <strong>−0.1</strong>，每个 high-effort query <strong>−0.5</strong>；</li>
+<li>$R_{\text{Proact}}$ = bonus 与累计 penalty 之和。</li>
+</ul>
+<p><strong>(iii) Personalization Reward $R_{\text{Pers}}$</strong> = bonus + penalty：</p>
+<ul>
+<li>bonus：若完全符合用户偏好，<strong>+0.05</strong>；</li>
+<li>penalty：按该偏好的 reward function（非正标量，见上表）累计；</li>
+<li>$R_{\text{Pers}}$ = bonus 与累计 penalty 之和。</li>
+</ul>
+<p><strong>总 reward</strong>：</p>
+<p>$$R = R_{\text{Prod}} + R_{\text{Proact}} + R_{\text{Pers}} \tag{1}$$</p>
+<p>注意三个奖励是直接相加成单一标量，再喂给 GRPO，没有显式权重超参——靠 bonus(+0.05) 与 penalty(−0.1/−0.5) 的幅度隐式平衡。</p>
+<h3 id="6-rl-算法grpo--dapo">6. RL 算法（GRPO + DAPO）</h3>
+<p>对训练集中的 $q$，从旧策略 $\pi_{old}$ 采 $G$ 条轨迹 $(\tau_1, \dots, \tau_G)$，每条轨迹展平为 token 序列 $\tau_i = [\tau_{i,1}, \dots, \tau_{i,|\tau_i|}]$。目标（采用 DAPO 的 token-level loss，归一化分母是组内总 token 数 $\sum_i |\tau_i|$）：</p>
+<p>$$J = \mathbb{E}<em>{q\sim D,,{\tau_i}\sim\pi</em>{old}}\left[\frac{1}{\sum_{i=1}^{G}|\tau_i|}\sum_{i=1}^{G}\sum_{t=1}^{|\tau_i|}\min\Big{r_{i,t}(\theta)\hat{A}<em>{i,t},\ \text{clip}\big(r</em>{i,t}(\theta), 1-\epsilon, 1+\epsilon\big)\hat{A}_{i,t}\Big}\right]$$</p>
+<p>重要性比 与 组内相对优势：</p>
+<p>$$r_{i,t}(\theta) = \frac{\pi_\theta(\tau_{i,t}\mid q,\tau_{i,&#x3C;t})}{\pi_{\theta_{old}}(\tau_{i,t}\mid q,\tau_{i,&#x3C;t})}\cdot \mathbb{1}<em>{\tau</em>{i,t}}, \qquad \hat{A}_{i,t} = \frac{\text{clip}(R_i, 0, 1) - \text{mean}({R_i})}{\text{std}({R_i})}$$</p>
+<ul>
+<li>$\mathbb{1}<em>{\tau</em>{i,t}}$：只对 <strong>LLM 生成的 token</strong> 计 loss（屏蔽工具返回的 observation token）。</li>
+<li>优势用 GRPO 组内 z-score 归一；$R_i$ 先 clip 到 [0,1] 再标准化。</li>
+<li>采用 DAPO 的 <strong>Clip-Higher</strong>（$1+\epsilon$ 上界放宽）。</li>
+</ul>
+<h3 id="7-关键超参与数据构造">7. 关键超参与数据构造</h3>
+<ul>
+<li><strong>基座</strong>：Seed-OSS-36B-Instruct；<strong>训练期用户模拟器</strong>：GPT-5-Nano。</li>
+<li><strong>训练数据重复</strong>：均匀采 12 种偏好 × vague prompt + 1 种 precise prompt = <strong>13× 数据重复</strong>（12+1）。</li>
+<li><strong>RL 配置</strong>（Verl 框架）：lr <strong>1e-6</strong>，batch size <strong>64</strong>，group size <strong>8</strong>，<strong>200</strong> steps。</li>
+<li><strong>最大输出长度</strong>：SWE-Func-Loc <strong>32K</strong> / SWE-Full <strong>65K</strong> / Deep-Research <strong>41K</strong>。</li>
+<li><strong>Scaffold</strong>：SWE 基于 OpenHands；SWE-Func-Loc 用只读轻量模拟环境（只 localize 出需编辑的函数名列表），SWE-Full 用官方 Docker + 跑单测；Deep-Research 配 <code>search</code> + <code>open_page</code> 工具，retriever 用 Qwen3-Embed-8B。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据集</strong>：SWE = SWE-Gym 训练 / SWE-Bench-Verified 测试（过滤掉 ground-truth 全非 Python 实例后 <strong>488</strong> 条）；Deep-Research = BrowseComp-Plus（450 训练 / 100 测试）。<strong>评测在 vague prompt 设定、对 20 种偏好（12 seen + 8 unseen）取平均</strong>。</p>
+<p><strong>指标定义</strong>：Productivity = F1（SWE-Func-Loc）/ EM（BrowseComp+）/ 单测通过率（SWE-Full）；Proactivity Score = 会话级 effort 为 low-effort 则 1 否则 0；Personalization Score = follow 偏好则 1 否则 0（只在 Agent 至少问过 1 个问题的实例上平均）。</p>
+<h3 id="rq1交互对模糊指令至关重要swe-func-loc-f1">RQ1：交互对模糊指令至关重要（SWE-Func-Loc F1）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>设定</th><th>Before RL</th><th>+RL</th><th>增益</th></tr></thead><tbody><tr><td>Precise prompt（无交互）</td><td>64.50</td><td>—</td><td>+5.70</td></tr><tr><td>Vague prompt（无交互）</td><td>44.11</td><td>—</td><td>+7.52</td></tr><tr><td>Vague prompt（有交互, PPP）</td><td>44.11</td><td><strong>64.50</strong></td><td><strong>+21.66</strong></td></tr></tbody></table>
+<p>结论：vague 比 precise 直接掉 F1（64.50→44.11）；放开交互后基座模型并不会自己变好（交互策略差），但 <strong>RL 把 vague+交互拉回到 precise 水平</strong>，增益远大于另两个设定。</p>
+<h3 id="rq2三维度主结果vague-prompt20-偏好均值">RQ2：三维度主结果（vague prompt，20 偏好均值）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方法</th><th>Avg</th><th>SWE Prod</th><th>SWE Proact</th><th>SWE Pers</th><th>BC+ Prod</th><th>BC+ Proact</th><th>BC+ Pers</th></tr></thead><tbody><tr><td>GPT-5</td><td>40.40</td><td>55.83</td><td>36.60</td><td>12.96</td><td>22.50</td><td>43.15</td><td>71.36</td></tr><tr><td>GPT-5-Mini</td><td>35.82</td><td>35.00</td><td>15.90</td><td>24.82</td><td>22.75</td><td>45.50</td><td>70.97</td></tr><tr><td>GPT-4.1</td><td>38.86</td><td>25.08</td><td>11.35</td><td>53.04</td><td>22.50</td><td>41.40</td><td>79.77</td></tr><tr><td>Seed-OSS-36B（基座）</td><td>45.32</td><td>38.59</td><td>43.70</td><td>69.07</td><td>18.20</td><td>37.60</td><td>64.76</td></tr><tr><td><strong>PPP (Ours)</strong></td><td><strong>62.04</strong></td><td>56.26 (+17.67)</td><td>75.55 (+31.85)</td><td>89.26 (+20.19)</td><td>26.63 (+8.43)</td><td>47.69 (+10.09)</td><td>76.85 (+12.09)</td></tr><tr><td>w/o Proact.</td><td>55.05</td><td>53.35</td><td><strong>37.75 (−5.95)</strong></td><td>94.21</td><td>23.00</td><td>44.79</td><td>77.18</td></tr><tr><td>w/o Pers.</td><td>53.23</td><td>55.48</td><td>87.15</td><td><strong>47.25 (−21.82)</strong></td><td>26.60</td><td>47.42</td><td><strong>55.48 (−9.28)</strong></td></tr><tr><td>w/o Proact. &#x26; Pers.</td><td>44.98</td><td>56.77</td><td>42.45</td><td>57.43</td><td>25.45</td><td>39.60</td><td>48.21</td></tr></tbody></table>
+<p>关键观察：</p>
+<ol>
+<li><strong>前沿 LLM（GPT-5）productivity 高但 proactivity / personalization 差</strong>；personalization 排序还和 productivity 排序不一致（GPT-4.1 比 GPT-5 系还高）。</li>
+<li><strong>PPP 全维度提升，平均 +16.72</strong>（相对基座）。</li>
+<li><strong>消融证明每个目标都必要</strong>：去掉 Proact. 则 proactivity 掉（SWE −5.95），去掉 Pers. 则 personalization 暴跌（SWE −21.82 / BC+ −9.28），全去掉则两者都差。</li>
+<li><strong>多目标有 trade-off</strong>：单优化某一维的变体在该维上略高于 PPP（如 w/o Pers 的 SWE Proact 87.15 > PPP 75.55），但 PPP 的 <strong>task score 往往最高</strong>——因为没 proactivity reward 的模型会狂问 high-effort 问题、不打真 blocker，反而拖低任务分。</li>
+</ol>
+<p><img src="/ai-papers-daily/figures/training-proactive-and-personalized-llm-agents-userville-ppp/fig2.png" alt="RL 曲线：PPP（橙）让 productivity / proactivity / personalization 三条曲线同步上升；只用 task-success reward 的基线（蓝）在 proactivity 与 personalization 上随训练反而下降"></p>
+<h3 id="rq3学到策略性提问">RQ3：学到”策略性提问”</h3>
+<ul>
+<li><strong>Ask Ratio</strong>：PPP 训练后在 vague prompt 上 ask ratio 大涨（SWE-Func-Loc 50%→100%，Deep-Research 51%→85%），但在 precise prompt 上保持低 ask ratio——即<strong>会区分 precise vs vague，只在必要时问</strong>（minimally disruptive）。</li>
+<li><strong>increase-then-decrease 动态</strong>：PPP 的平均交互数从 ~0.5 升到 ~1.2，其中 low-effort 持续增多；medium-effort 先升后降；high-effort 始终很低。说明模型先学”多问”，再学”问得更好”。<strong>去掉 $R_{\text{Proact}}$ 的消融则相反</strong>：medium/high-effort 问题越训越多，模型变”懒”，越来越依赖用户喂信息。</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/training-proactive-and-personalized-llm-agents-userville-ppp/fig3.png" alt="交互质量对比：左 = PPP，low-effort（浅黄）随训练上升、medium/high-effort 受控很低；右 = 去掉 proactivity reward 的消融，medium-effort（蓝）与 high-effort（红）随训练持续膨胀，说明模型变懒、滥问"></p>
+<h3 id="rq4泛化性">RQ4：泛化性</h3>
+<ul>
+<li><strong>换用户模拟器</strong>：用 GPT-5-Nano 训出的模型换 GPT-5 / GPT-5-Mini / GPT-4.1 / GPT-4o 做评测，分数仅小幅波动（Productivity 54.66~58.06），更强的模拟器（GPT-5）评分略高——模型对模拟器鲁棒。</li>
+<li><strong>unseen 偏好</strong>：8 个未见偏好上 personalization 随训练一致提升；而去掉 $R_{\text{Pers}}$ 的消融 ~100 step 后开始无视偏好，连简单的 <code>JSON_Format</code> 都从 1.00 掉到 0.30。</li>
+<li><strong>迁移到更复杂任务</strong>：只在 SWE-Func-Loc（定位子任务）上训，迁到 SWE-Full（真改代码 + 跑单测），vague prompt 下成功率 <strong>0.29→~0.36</strong>，平均交互数 0.10→1.8（十倍以上），且复刻同样的 increase-then-decrease 模式。（注：precise prompt 下 SWE-Full 成功率从 0.558 微降到 ~0.530，是为提升 vague 场景付的小代价。）</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ol>
+<li>用户模拟器是 LLM 而非真人，缺真人 user study 验证（作者在 Limitations 明确承认）。</li>
+<li>20 种偏好是<strong>人工设计</strong>的、且偏好 reward 多为硬规则或 LLM-judge，可能过于规整，未从真实交互数据里学偏好。</li>
+<li>三 reward 直接相加、靠 bonus/penalty 幅度隐式平衡，没做权重敏感性实验；多目标 trade-off 客观存在（单维变体在该维更高）。</li>
+<li>precise/SWE-Full 上 productivity 有轻微回退，说明强化交互不是免费午餐。</li>
+</ol>
+<p><strong>对电商 / 搜索推荐 / Agent 方向的可借鉴点</strong>：</p>
+<ul>
+<li><strong>把”澄清”建成一个 <code>ask_user</code> 工具 + 多目标 reward</strong> 这套范式，几乎可直接搬到<strong>电商导购 / 客服 Agent</strong>：用户 query 天然 vague（“找个送男朋友的礼物”），Proactivity reward（low/medium/high-effort 分级）正好对应”问得准不准、烦不烦”，可量化”该问不问”（直接推错品）与”问太多”（流失）。</li>
+<li><strong>User-Effort 三分类</strong>是个很实用的、可工程化的交互质量信号：low=问题答案就在用户已有意图里、medium=用户答不了、high=逼用户额外劳动。比单纯”问了几轮”更贴近真实满意度，适合做<strong>对话推荐 / 搜索澄清</strong>的在线 reward 或离线评测。</li>
+<li><strong>Personalization 用”每偏好一个 reward function”</strong>：电商场景的”用户偏好”（简洁 vs 详细、要不要追问预算、语言/语气）可同构建模，且<strong>留 unseen 偏好测泛化</strong>这套协议值得复用。</li>
+<li><strong>Prompt Vaguenization 制造信息不对称</strong> 是低成本把现成精确 benchmark 改造成交互式 RL 环境的通用 trick——推荐/搜索的 query 改写、意图泛化天然契合。</li>
+<li><strong>only task-success reward 会让 Agent 变懒、滥问、无视偏好</strong>（图中蓝线一路下滑）这一负面发现，提醒做 Agent RL 时若只盯 GMV / CTR / 成功率，交互体验会被悄悄优化掉。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2511.02208" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/sunnweiwei/PPP-Agent" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

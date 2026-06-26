@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出CoRD框架，通过逐步多教师协作解码和预测困惑度指导，高效生成高质量长链推理数据，显著提升学生模型性能。"><meta property="og:title" content="Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding"><meta property="og:description" content="提出CoRD框架，通过逐步多教师协作解码和预测困惑度指导，高效生成高质量长链推理数据，显著提升学生模型性能。"><meta property="og:type" content="website"><title>Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-03">2026-05-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.02290" target="_blank" rel="noopener">2605.02290</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding</h1> <p class="title-zh">通过协作逐步多教师解码蒸馏长链推理</p> <div class="dir-row"> <span class="direction-chip">🧭 长链推理蒸馏 · 多教师协作解码</span> </div> <p class="affiliations">KAIST · UNIST</p> <div class="meta">Taewon Yun, Jisu Shin, Jeonghwan Choi, Seunghwan Bang, Hwanjun Song</div> <p class="one-liner">提出CoRD框架，通过逐步多教师协作解码和预测困惑度指导，高效生成高质量长链推理数据，显著提升学生模型性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Long-CoT Reasoning">Long-CoT Reasoning</a><a class="tag" href="/DailyPaper/tag/Knowledge Distillation">Knowledge Distillation</a><a class="tag" href="/DailyPaper/tag/Multi-Teacher Decoding">Multi-Teacher Decoding</a><a class="tag" href="/DailyPaper/tag/Step-wise Collaboration">Step-wise Collaboration</a><a class="tag" href="/DailyPaper/tag/Predictive Perplexity">Predictive Perplexity</a><a class="tag" href="/DailyPaper/tag/Beam Search">Beam Search</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>逐步多教师协作生成数据：让多个异构模型按步骤共同构建推理链，用预测性指标动态选择最优步骤，避免后验选择完整响应的浪费，可用于生成高质量的训练数据，如商品推荐解释或Agent决策推理。</li><li>预测困惑度作为步骤质量信号：利用元模型计算当前前缀下正确答案的概率来评估中间步骤，无需额外训练奖励模型，轻量且有效，适用于长序列生成中的中间步骤评估。</li><li>束搜索保持多样性：用多个并行轨迹保留有潜力的推理分支，防止过早贪婪选择，允许自我纠正和策略转换，在多智体交互中可保留多个方案，提升最终结果质量。</li><li>步骤分割一致性：通过提示工程（如“### Step”）强制不同模型输出结构统一的步骤，便于跨模型比较和组合，可迁移到生成式推荐中需要多模型协作生成推荐理由的场景。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：长链推理模型（LRM）计算成本高，蒸馏到小模型是关键。现有方法（如S1、LIMO）采用先整体生成后选优的“策展”模式，无法利用多个异构教师协同探索互补推理路径，浪费计算且缺乏动态调整。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>提示引导的步骤分割</strong>：在输入指令中嵌入“<think> ### Step”，引导不同教师生成结构统一、语义连贯的推理步骤，使跨模型比较可行。</think></li>
+<li><strong>预测困惑度评分</strong>：在每一步，用元证明器（如最强教师模型）计算当前推理前缀下真实答案的条件概率，作为步骤质量的连续性评估，直接反映推理朝正确答案推进的自然程度。</li>
+<li><strong>束搜索解码</strong>：维持多个高潜力部分推理轨迹，在每步扩展时从所有教师候选步骤中选择 top-B 更新，保留可自我纠正或策略转换的路径，兼顾局部质量和全局探索。</li>
+</ul>
+<p><strong>关键实验与结果</strong></p>
+<ul>
+<li>在 LIMO-v1 数据集上，用 QwQ-32B、R1-Qwen-32B、Phi4-Reasoning-Plus 为教师，CoRD 生成的推理数据答案准确率达93.1%，预测困惑度0.774，显著优于 Curation 和 Integration 基线。</li>
+<li>蒸馏出的 R1-Qwen-32B 学生模型在 AIME24/25 上 Pass@1 分别为79.6%/70.2%，超过所有单一教师表现（如 QwQ-32B 的 77.9%/66.7%）。</li>
+<li>在 MATH500、TaTQA、PubMedQA 等外推任务上也一致优于基线，显示了泛化性。</li>
+</ul>
+<p><strong>关键结论</strong>：逐步协作解码将推理蒸馏从一次性选择转变为增量构建，预测困惑度与束搜索结合能高效产出超越教师水平的训练信号，为长链推理迁移提供新范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.02290&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.02290" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.02290" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.02290" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

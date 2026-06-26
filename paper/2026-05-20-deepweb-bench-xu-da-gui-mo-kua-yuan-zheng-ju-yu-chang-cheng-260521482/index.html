@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出一个包含矩阵任务、溯源记录和校准维度的深度研究基准，揭示检索非瓶颈、推导与校准才是主要挑战。"><meta property="og:title" content="DeepWeb-Bench: A Deep Research Benchmark Demanding Massive Cross-Source Evidence and Long-Horizon Derivation"><meta property="og:description" content="提出一个包含矩阵任务、溯源记录和校准维度的深度研究基准，揭示检索非瓶颈、推导与校准才是主要挑战。"><meta property="og:type" content="website"><title>DeepWeb-Bench: A Deep Research Benchmark Demanding Massive Cross-Source Evidence and Long-Horizon Derivation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21482" target="_blank" rel="noopener">2605.21482</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DeepWeb-Bench: A Deep Research Benchmark Demanding Massive Cross-Source Evidence and Long-Horizon Derivation</h1> <p class="title-zh">DeepWeb-Bench：需大规模跨源证据与长程推导的深度研究基准</p> <div class="dir-row"> <span class="direction-chip">🧭 深度研究智能体评估与诊断</span> </div> <p class="affiliations">Peking University</p> <div class="meta">Sixiong Xie, Zhuofan Shi, Haiyang Shen, Jiuzheng Wang, Siqi Zhong, Mugeng Liu 等</div> <p class="one-liner">提出一个包含矩阵任务、溯源记录和校准维度的深度研究基准，揭示检索非瓶颈、推导与校准才是主要挑战。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Deep Research">Deep Research</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/Agent Evaluation">Agent Evaluation</a><a class="tag" href="/DailyPaper/tag/Multi-step Derivation">Multi-step Derivation</a><a class="tag" href="/DailyPaper/tag/Source Provenance">Source Provenance</a><a class="tag" href="/DailyPaper/tag/Calibration">Calibration</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商/市场分析Agent构建：可复用矩阵任务格式（实体×分析维度）和四能力（检索、推导、推理、校准）设计，用于自动生成竞品报告或行业分析。</li><li>信息抽取可靠性：引入源溯源等级（T1-T4）和跨源一致性检查，可作为电商知识库或RAG系统的证据可信度评估模板，减少幻觉。</li><li>工程实现启发：发现检索并非瓶颈，应重点投入多步数值组合与校准逻辑，例如在推荐系统的归因分析或财务推演Agent中显式要求推导步骤。</li><li>领域专长差异：模型在不同品类表现差异大（相关仅0.61），提示为细分场景（如新能源车、芯片）定制微调或专用提示链，而非通用方案。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：前沿深度研究产品（如OpenAI Deep Research、Claude Research）在现有基准上已接近饱和，难以区分真实能力。真实深度研究任务需要的不是单页查找，而是同时处理大量证据、跨源核对不一致数据，并进行多步定量推导。现有基准往往只覆盖其中一两个侧面，为此需要更综合、更难的新基准。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>任务设计：100个深度研究任务，覆盖科技、能源、消费等六个领域。每个任务以一个8×8矩阵呈现（8个可比实体 × 8个分析维度），要求智能体填充每个单元格的定量答案（精确值/范围/不可得）。</li>
+<li>能力覆盖：8个维度按四类能力固定分配：1个检索（直接查找披露值）、4个推导（需多步组合计算，如营收分拆）、1个校准（跨源冲突处理与幻觉抗拒）、2个推理（情景外推/预期分析），推动难度超越单纯检索。</li>
+<li>审计性保障：每个单元格配有参考答案、来源溯源等级（T1至T4，从正式监管文件到非正式来源）、跨源一致性标签（一致/分歧/单一），使评分可回溯至原始证据。</li>
+<li>评估协议：9个前沿模型（包括GPT-5.5、Claude Opus 4.7、DeepSeek V4等）通过统一web搜索/浏览工具完成任务，每个任务限200次工具调用及30分钟。评分采用四级规则（1/0.5/0.25/0），自动评分器与人类标注一致性κ=0.82。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>最强模型Codex CLI+GPT-5.5综合得分仅33.37%，最弱Kimi K2.6为16.79%，留有充足区分空间。</li>
+<li>人工注释500个错误单元格发现：检索失败仅占12–14%，而推导不完整（31%强模型 / 24%弱模型）和幻觉精度（22%强 / 38%弱）占据超过70%。强模型更多在组合步骤出错，弱模型倾向臆造精确值。</li>
+<li>模型间任务得分Spearman相关均值仅0.61，单任务得分标准差最高达18.8个百分点，显示明显的领域专长分化。</li>
+</ul>
+<p><strong>核心发现</strong>：深度研究能力的瓶颈不在检索，而在多步数值推导的准确性和面对信息缺失时的校准行为，为智能体优化指明了着力点。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21482&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21482" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21482" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21482" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

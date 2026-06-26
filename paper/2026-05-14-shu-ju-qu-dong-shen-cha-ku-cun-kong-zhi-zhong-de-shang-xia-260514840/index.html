@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出上下文生成式后验采样，用离线元训练+在线自回归生成解决审查需求下的库存决策"><meta property="og:title" content="In-Context Learning for Data-Driven Censored Inventory Control"><meta property="og:description" content="提出上下文生成式后验采样，用离线元训练+在线自回归生成解决审查需求下的库存决策"><meta property="og:type" content="website"><title>In-Context Learning for Data-Driven Censored Inventory Control</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14840" target="_blank" rel="noopener">2605.14840</a>  </div> <h1>In-Context Learning for Data-Driven Censored Inventory Control</h1> <p class="title-zh">数据驱动审查库存控制中的上下文学习</p> <div class="dir-row"> <span class="direction-chip">🧭 库存控制 · 上下文生成式决策</span> </div> <p class="affiliations">Julius-Maximilians-Universität Würzburg · Zaragoza Logistics Center · National University of Singapore</p> <div class="meta">Sohom Mukherjee, Anh-Duy Pham, Richard Pibernik, Yunbei Xu</div> <p class="one-liner">提出上下文生成式后验采样，用离线元训练+在线自回归生成解决审查需求下的库存决策</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/in-context learning">in-context learning</a><a class="tag" href="/DailyPaper/tag/generative model">generative model</a><a class="tag" href="/DailyPaper/tag/inventory control">inventory control</a><a class="tag" href="/DailyPaper/tag/censored demand">censored demand</a><a class="tag" href="/DailyPaper/tag/Bayesian regret">Bayesian regret</a><a class="tag" href="/DailyPaper/tag/normalizing flow">normalizing flow</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商库存管理中常面临需求审查（缺货后未知真实需求），可借鉴ICGPS范式：离线用历史数据训练生成模型（如Time Series Transformer），在线进行上下文条件采样，实现稳健订货决策。</li><li>ChronosFlow的架构设计值得关注：冻结预训练时序Transformer作为主干，仅训练轻量归一化流头，既保留预训练知识又实现快速审查一致性采样；类似思路可用于推荐系统中缺失反馈的生成（如未曝光样本的CTR补全）。</li><li>理论表明，只要覆盖性假设成立，离线预测质量能保证在线性能，为用离线数据训练生成模型并安全部署到在线决策提供了依据，可推广到其他受审查反馈影响的运营优化问题。</li><li>对于推荐场景中的决策依赖审查（如用户只看到且点击被推荐物品），可将未观测反馈视为审查问题，用上下文生成模型补全后做bandit优化，替代传统Thompson Sampling或UCB。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：库存控制中需求审查（如报童问题，订单量限制需求观测）使传统参数化Thompson Sampling在先验失配时脆弱，而离线插补方法难以迁移到在线学习。需一种结合离线训练与在线适应的方法。</p>
+<p><strong>方法</strong>：提出In-Context Generative Posterior Sampling (ICGPS)，利用现代生成模型：离线元训练学习潜在需求完成核，在线部署时通过上下文自回归生成后验样本，做出决策。理论上，ICGPS的贝叶斯后悔 ≤ 理想TS后悔 + O(√T·完成不匹配的平方根)，且完成不匹配受控于离线预测质量，实现离线到在线的性能迁移。针对报童问题，将审查反馈约化为bandit凸优化反馈，得到次线性贝叶斯后悔。实践上实现ChronosFlow架构：冻结预训练时序Transformer主干，附加可训练条件归一化流头，实现快速审查一致性采样。</p>
+<p><strong>关键结果</strong>：ChronosFlow-ICGPS在基准实验中与正确指定TS表现相当，显著优于Myopic和UCB式基线，对先验失配和分布偏移鲁棒；在真实SuperStore数据集上，特别是重审查条件下表现突出。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14840&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14840" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14840" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14840" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

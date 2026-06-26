@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将知识注入视为干预层问题，提出表面、轨迹、潜在、参数四层框架，多层组合可互补降低70.97%的知识违规。"><meta property="og:title" content="Where Should Knowledge Enter? A Layered Framework for Knowledge Infusion in Multimodal Iterative Generative Mo"><meta property="og:description" content="将知识注入视为干预层问题，提出表面、轨迹、潜在、参数四层框架，多层组合可互补降低70.97%的知识违规。"><meta property="og:type" content="website"><title>Where Should Knowledge Enter? A Layered Framework for Knowledge Infusion in Multimodal Iterative Generative Mo</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06356" target="_blank" rel="noopener">2606.06356</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Where Should Knowledge Enter? A Layered Framework for Knowledge Infusion in Multimodal Iterative Generative Mo</h1> <p class="title-zh">知识应在何处介入？多模态迭代生成模型的知识注入分层框架</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态生成模型的知识注入与安全对齐</span> </div> <p class="affiliations">University of South Carolina · Indian AI Research Organization</p> <div class="meta">Renjith Prasad, Chathurangi Shyalika, Anushka Pawar, Amit Sheth</div> <p class="one-liner">将知识注入视为干预层问题，提出表面、轨迹、潜在、参数四层框架，多层组合可互补降低70.97%的知识违规。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Knowledge Infusion">Knowledge Infusion</a><a class="tag" href="/DailyPaper/tag/Diffusion Models">Diffusion Models</a><a class="tag" href="/DailyPaper/tag/Layered Intervention">Layered Intervention</a><a class="tag" href="/DailyPaper/tag/Safety Alignment">Safety Alignment</a><a class="tag" href="/DailyPaper/tag/Multimodal Knowledge Graph">Multimodal Knowledge Graph</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>按失败类型分层干预：输入侧知识改写解决 prompt 级问题，生成中轨迹/潜在干预修正结构违规，输出侧过滤残留 artifact，可借鉴到生成式推荐的结果后校验与中间状态调控。</li><li>共享知识源统一控制：所有层查询同一个知识图谱，避免冲突，在推荐系统里可作为统一的事实约束源，用于物品属性合规、敏感概念过滤。</li><li>训练自由的推理时堆叠：所有干预均不修改扩散 backbone，适合冻结大模型快速上线，推荐场景下可对已有生成模型叠加业务规则而无需重训。</li><li>组合互补优于单层：实验表明单层输入端只能降部分违规，叠加中间层和输出层能持续提升，推荐安全对齐可采纳类似堆叠策略。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多模态生成模型虽流畅但难以遵循领域知识（如安全、结构约束），现有知识注入方法按技术分类（prompt、引导、潜变量编辑、微调），而非按其作用于生成过程的哪个组件，导致设计选择缺乏原则。本文提出应将知识注入看作“干预层”问题，因为迭代生成过程可分解为输入/输出边界、转移函数、中间状态和模型参数四个形式组件，对应四种干预层：表面、轨迹、潜在、参数。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>形式化定义四层及其作用点：表面修改输入或后处理输出；轨迹在推理时改变转移函数；潜在直接编辑中间状态；参数内化知识到权重。</li>
+<li>在扩散模型中实例化，映射现有方法（如 RAG、无分类器引导、Prompt-to-Prompt、DreamBooth）到各层，并分析五维特性（可控性、可解释性、持久性、成本、失败覆盖）。</li>
+<li>提出多层组合原则：按失败类别匹配层、组合以互补覆盖、使用共享知识源避免冲突。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>任务：安全对齐，使用多模态知识图谱（MMKG）控制文本到图像扩散模型（SDXL、SD-v1.5），冻结骨干网络。</li>
+<li>逐层添加：表面输入（prompt 中性化）、轨迹-潜在（检测仇恨激活并回退修复）、表面输出（局部修复）。</li>
+<li>在 Detonate 基准（25K 提示）上，毒性从原始 0.31 降至 0.09（SDXL），降幅 70.97%，且每增一层毒性单调下降，CLIP 和美学质量保持提升，超越 SAFREE、SLD 基线。</li>
+<li>验证了不同层纠正不同失败类别，组合产生互补收益。</li>
+</ul>
+<p><strong>一句话关键</strong>：知识注入应针对生成轨迹的不同组件分层干预，多层组合能互相补充，大幅提升生成的一致性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06356&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06356" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06356" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06356" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

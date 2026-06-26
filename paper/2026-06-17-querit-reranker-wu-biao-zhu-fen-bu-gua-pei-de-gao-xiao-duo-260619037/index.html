@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过合成query mining与teacher软标签实现无标注目标适配，结合SLERP合并checkpoint，产出紧凑且强劲的多语言重排序模型"><meta property="og:title" content="Querit-Reranker: Training Compact Multilingual Rerankers via Efficient Label-Free Distribution Adaptation"><meta property="og:description" content="通过合成query mining与teacher软标签实现无标注目标适配，结合SLERP合并checkpoint，产出紧凑且强劲的多语言重排序模型"><meta property="og:type" content="website"><title>Querit-Reranker: Training Compact Multilingual Rerankers via Efficient Label-Free Distribution Adaptation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-17">2026-06-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.19037" target="_blank" rel="noopener">2606.19037</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Querit-Reranker: Training Compact Multilingual Rerankers via Efficient Label-Free Distribution Adaptation</h1> <p class="title-zh">Querit-Reranker：无标注分布适配的高效多语言重排序器训练</p> <div class="dir-row"> <span class="direction-chip">🧭 多语言重排序器训练与分布适配</span> </div> <p class="affiliations">Institute of Computing Technology, Chinese Academy of Sciences · University of Chinese Academy of Sciences · Baidu Inc.</p> <div class="meta">Yunfei Zhong, Jun Yang, Wei Huang, Yinqiong Cai, Haosheng Qian, Yixing Fan 等</div> <p class="one-liner">通过合成query mining与teacher软标签实现无标注目标适配，结合SLERP合并checkpoint，产出紧凑且强劲的多语言重排序模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Reranker">Reranker</a><a class="tag" href="/DailyPaper/tag/Multilingual">Multilingual</a><a class="tag" href="/DailyPaper/tag/Cross-Encoder">Cross-Encoder</a><a class="tag" href="/DailyPaper/tag/Distribution Adaptation">Distribution Adaptation</a><a class="tag" href="/DailyPaper/tag/SLERP">SLERP</a><a class="tag" href="/DailyPaper/tag/Synthetic Query">Synthetic Query</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>无标注分布适配：用目标语料库中的文档通过LLM生成合成query，并由teacher模型（如Llama-Embed-Nemotron-8B）打分作为连续软标签，代替昂贵的人工标注，可迁移用于电商搜索中的新行业/小语种适配。</li><li>SLERP单模型合并：将多个针对不同任务/数据分布训练的checkpoint用球面线性插值融合为一个模型，避免多模型部署的推理开销，适合线上低延迟重排序。</li><li>紧凑MoE架构：Querit-Reranker-A0.4B使用0.4B激活参数的MoE骨干，在保证效果的同时大幅降低推理成本，适合搜索重排序等高性能要求场景。</li><li>多阶段数据配比：一阶段用大规模开源+业务数据构建通用相关性，二阶段用少量目标分布合成数据精调；可迁移到电商多国家站点/多品类的重排序模型训练。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+在检索增强生成、多语言搜索等场景，需将粗召回结果进行重排序，而强多语言骨干模型直接用于重排序效果有限。为目标分布收集大量相关性标注成本高昂，尤其在多语言场景下。同时，针对不同任务微调的模型若分别部署会增加延迟与资源消耗。因此，如何在有限人工标注下高效地让通用骨干模型适配目标排名分布并合并为一个高效模型是核心问题。</p>
+<p><strong>方法</strong><br>
+Querit-Reranker采用三阶段数据驱动训练流水线：</p>
+<ol>
+<li><strong>大容量排序数据预训练</strong>：混合开源检索/重排序数据集（MS MARCO、MLDR、T2Ranking等）与脱敏的真实业务数据，用teacher模型（Llama-Embed-Nemotron-8B）为query召回top-100文档并打分，按分数分层采样构建排序对，训练pairwise hinge loss。</li>
+<li><strong>目标分布无标注适配</strong>：针对四个不同的多语言重排序任务（法语、俄语、中文、日文），用DeepSeek-R1根据目标库文档生成合成查询，复用teacher模型打分作为连续软标签，实现无需额外人工评判的分布适配。</li>
+<li><strong>SLERP模型合并</strong>：将不同数据混合或训练运行的checkpoint通过球面线性插值合并为一，消除多模型集成的推理开销。<br>
+模型采用cross-encoder架构，将query和document拼接后经骨干网络输出相关性得分。提供了基于MoE的0.4B版本和基于Qwen3-Embedding的4B版本。</li>
+</ol>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>在MTEB-multilingual-v2的6个重排序任务上，Querit-Reranker-4B平均分71.08，达到公开模型SOTA；Querit-Reranker-A0.4B平均65.84，超越多款更大参数模型。</li>
+<li>在BEIR通用英文检索重排序上，A0.4B将Qwen3-Embedding-0.6B第一阶段的nDCG@10从54.11提升至59.28；4B版本进一步提升至62.29。</li>
+<li>在MIRACL多语言检索上，A0.4B将第一阶段nDCG@10从59.87提升至67.70；4B版本达到71.13，显著优于对比的8B重排序器。</li>
+</ul>
+<p>一句值得记住的话：<strong>“用合成query配合teacher打分作为软标签，无需任务标注即可适配新分布，再通过SLERP合并得到一个高效的单模型重排序器。”</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.19037&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.19037" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.19037" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.19037" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

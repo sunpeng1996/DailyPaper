@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="以仅 9.8B 激活参数的 MoE 架构，通过 agent 原生数据管道和 RL 系统达到 agentic 前沿性能，并初步实现自进化。"><meta property="og:title" content="The MiniMax-M2 Series: Mini Activations Unleashing Max Real-World Intelligence"><meta property="og:description" content="以仅 9.8B 激活参数的 MoE 架构，通过 agent 原生数据管道和 RL 系统达到 agentic 前沿性能，并初步实现自进化。"><meta property="og:type" content="website"><title>The MiniMax-M2 Series: Mini Activations Unleashing Max Real-World Intelligence</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26494" target="_blank" rel="noopener">2605.26494</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>The MiniMax-M2 Series: Mini Activations Unleashing Max Real-World Intelligence</h1> <p class="title-zh">MiniMax-M2 系列：以小激活释放最大真实世界智能</p> <div class="dir-row"> <span class="direction-chip">🧭 MoE 架构与 Agent RL 训练协同设计</span> </div> <p class="affiliations">MiniMax</p> <div class="meta">MiniMax, Aili Chen, Aonian Li, Baichuan Zhou, Bangwei Gong, Binyang Jiang 等</div> <p class="one-liner">以仅 9.8B 激活参数的 MoE 架构，通过 agent 原生数据管道和 RL 系统达到 agentic 前沿性能，并初步实现自进化。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/MoE">MoE</a><a class="tag" href="/DailyPaper/tag/Agentic RL">Agentic RL</a><a class="tag" href="/DailyPaper/tag/Self-evolution">Self-evolution</a><a class="tag" href="/DailyPaper/tag/Multi-Token Prediction">Multi-Token Prediction</a><a class="tag" href="/DailyPaper/tag/SWE-bench">SWE-bench</a><a class="tag" href="/DailyPaper/tag/AppDev">AppDev</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>稀疏 MoE 设计：256 细粒度专家，sigmoid gating 和可学习偏置大幅降低辅助损失，每 token 仅激活 8 个专家。在电商推荐中可用于生成式模型，兼顾大容量与低推理成本，其负载均衡策略可迁移到多任务学习。</li><li>Agent RL 训练系统 Forge：训练-推理-agent 解耦，支持白盒/黑盒 agent，用窗口化 FIFO 和前缀树合并吸收长短轨迹差异。可直接复用到多智能体推荐系统的强化学习组件，提升离线策略优化效率。</li><li>可验证轨迹数据合成：用 GitHub PR 构造 SWE 任务，Docker + 测试用例提供硬奖励；AppDev 采用专家 meta query + Agent-as-a-Verifier 三层验证。推荐系统可借鉴“可执行验证”思想，为商品文案生成等任务自动合成带奖励的高质量数据。</li><li>自进化能力：M2.7 能自主调试训练、修改自身 scaffold，展示从训练到部署的自动化闭环。可用于推荐模型的在线自动纠错、特征自动更新等运维场景，减少人工介入。</li> </ul> </div> <div class="content"> <h4 id="动机">动机</h4>
+<p>大语言模型正从短对话转向长周期 agentic 工作流（如软件工程、办公自动化），这带来两个矛盾：超长上下文造成的训练/推理成本瓶颈，以及生产级任务对模型复杂能力的极高要求。为此，MiniMax-M2 系列以 <strong>“小激活释放最大真实世界智能”</strong> 为核心理念，追求用极少激活参数（9.8B）匹敌前沿闭源系统。</p>
+<h4 id="方法关键点">方法关键点</h4>
+<ul>
+<li><strong>稀疏 MoE 架构</strong>：62 层 decoder-only Transformer，256 个细粒度专家，每 token 激活 8 个（sigmoid 门控 + 可学习偏置），辅助负载平衡损失近乎归零；全注意力 GQA（48Q/8KV），192K 上下文。</li>
+<li><strong>多令牌预测 (MTP) 与推测解码</strong>：预训练中增加 MTP 模块，后续通过权重复制扩张至 3 个，作为推测解码的 draft 通路，提升推理吞吐。</li>
+<li><strong>Agent 原生数据管道</strong>：针对 agentic coding 构建 SWE-scaling 管道（从 GitHub PR 提取可验证任务并合成 Docker 环境）、AppDev 管道（专家 meta query + Agent-as-a-Verifier 三层验证）和 Terminal-Gym；针对 agentic cowork 覆盖深度搜索、办公任务、金融分析、幻灯片生成，全部基于真实可运行工作空间，轨迹蒸馏自强教师并经过多轴评估。</li>
+<li><strong>Agent RL 系统 Forge</strong>：采用 CISPO 算法，将训练、推理、agent 解耦，统一支持白盒和黑盒 agent；配套窗口化 FIFO 调度、前缀树合并、定制推理内核，大幅提升训练效率和稳定性。</li>
+<li><strong>自进化探索</strong>：M2.7 可自主诊断失败训练、修改自身 agent scaffold，在多轮 ML 工程任务上实现闭环自改进。</li>
+</ul>
+<h4 id="关键结果">关键结果</h4>
+<ul>
+<li>M2.7 仅用 ~10B 激活参数，在 agentic coding 上达到 SWE-bench Pro 56.2，Multi-SWE-bench 52.7；在 agentic cowork 上 GDPval-AA 50.0，MM-Claw 62.7；在推理上 AIME 2026 94.2，GPQA-Diamond 89.8。与闭源旗舰（如 GPT-5.4、Opus 4.6）竞争。</li>
+<li>消融实验证实：细粒度专家和 MTP 显著提升推理能力；全注意力在长上下文 agent 任务上大幅优于滑动窗口注意力；自进化使系列内基准持续提升（M2 → M2.5 → M2.7）。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：mini activations can unleash maximum real-world intelligence——通过精细化稀疏激活与原生 agent 训练体系，小模型也能在真实世界任务中释放前沿智能。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26494&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26494" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26494" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26494" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="离线RL从真实市场延迟反馈中学习调整调度优化器的目标权重，实现效率提升而不损害质量"><meta property="og:title" content="Multi-Agent Reinforcement Learning from Delayed Marketplace Feedback for Objective-Weight Adaptation in Three-Sided Dispatch"><meta property="og:description" content="离线RL从真实市场延迟反馈中学习调整调度优化器的目标权重，实现效率提升而不损害质量"><meta property="og:type" content="website"><title>Multi-Agent Reinforcement Learning from Delayed Marketplace Feedback for Objective-Weight Adaptation in Three-Sided Dispatch</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13604" target="_blank" rel="noopener">2606.13604</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Multi-Agent Reinforcement Learning from Delayed Marketplace Feedback for Objective-Weight Adaptation in Three-Sided Dispatch</h1> <p class="title-zh">基于延迟市场反馈的多智能体强化学习目标权重自适应三方调度</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体调度优化 · 离线强化学习</span> </div> <p class="affiliations">DoorDash Inc.</p> <div class="meta">Haochen Wu, Yi Hou, Shiguang Xie</div> <p class="one-liner">离线RL从真实市场延迟反馈中学习调整调度优化器的目标权重，实现效率提升而不损害质量</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent RL">Multi-Agent RL</a><a class="tag" href="/DailyPaper/tag/Offline RL">Offline RL</a><a class="tag" href="/DailyPaper/tag/Dispatch">Dispatch</a><a class="tag" href="/DailyPaper/tag/Objective-Weight Adaptation">Objective-Weight Adaptation</a><a class="tag" href="/DailyPaper/tag/Delayed Feedback">Delayed Feedback</a><a class="tag" href="/DailyPaper/tag/Marketplace">Marketplace</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>通过低维目标权重接口控制现有优化器，避免直接替换，既保留约束与安全，又实现自适应调节；电商推荐中可类比为调节召回/排序目标权重的外部Agent。</li><li>利用离线RL从延迟且耦合的市场反馈中学习，采用 Double DQN 与 Conservative Q-Learning 惩罚未充分支持的动作，减少外推误差，适合业务中无法实时交互的场景。</li><li>多智能体完全去中心化执行、集中训练，并利用区域级奖励捕捉网络效应，对电商中多地区/多仓库协同决策具有借鉴意义。</li><li>上线前通过离线奖励重加权诊断策略行为的方向灵敏度，确保策略按预期权衡速度与效率，可作为推荐Agent上线前的安全检验方法。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+外卖调度需在配送质量与批量效率间权衡，传统静态权重无法适应局部时变条件。本文利用DoorDash真实市场延迟反馈，让RL智能体在优化器上游自适应调整目标权重，在不改动生产约束下实现动态优化。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li>将问题建模为去中心化多智能体MDP，每个门店视为一个Agent，选择ASAP权重乘子（5个离散值0.8~1.2），控制底层组合优化器的速度-批量化倾向。</li>
+<li>状态包含待配送订单数、中位快递等待时间及局部供给压力特征（按门店有效快递员数调整区域供给信号）。</li>
+<li>奖励由延迟的ASAP（顾客侧时效）与XCAT（快递员额外耗时）加权求和并按区域聚合，反映网络效应。</li>
+<li>训练采用集中离线数据 + Double DQN + Conservative Q-Learning (CQL) 正则化，以抑制未见动作的价值高估，提高离线部署稳定性。</li>
+<li>数据采集分两轮受控上线：先随机探索，再混合50%利用 + 50%探索的策略；共约346万条转移样本。</li>
+</ul>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>生产环境全局切换实验覆盖约4000个地理区域，两小时随机切换。</li>
+<li>全时段结果：快递活跃时间（CAT）减少1.26秒（p=0.019），快递等待时间（CWT）减少0.86秒（p=0.004），批量化率提升0.495个百分点（p&#x3C;0.001）；顾客侧ASAP和20分钟迟到率无显著变化。</li>
+<li>晚餐时段效果更显著，迟到率改善0.037个百分点（p=0.040）。</li>
+<li>策略行为检查显示，在高积压与低供给压力下倾向于选择更低乘子（鼓励批量化），证实策略依赖状态自适应。</li>
+</ul>
+<p><strong>核心结论</strong>
+通过对现有优化器施加低维目标权重接口，并利用离线RL从延迟市场反馈中学习，可以在生产规模安全地提升效率，同时保持顾客体验和操作安全。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13604&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13604" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13604" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13604" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

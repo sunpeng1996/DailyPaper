@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用 LLM 对查询意图和文档时间上下文进行语义推理，动态判定内容有效期，取代静态时间窗口规则"><meta property="og:title" content="RAG-Enhanced Large Language Models for Dynamic Content Expiration Prediction in Web Search"><meta property="og:description" content="利用 LLM 对查询意图和文档时间上下文进行语义推理，动态判定内容有效期，取代静态时间窗口规则"><meta property="og:type" content="website"><title>RAG-Enhanced Large Language Models for Dynamic Content Expiration Prediction in Web Search</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-05-13">2026-05-13</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.13052" target="_blank" rel="noopener">2605.13052</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>RAG-Enhanced Large Language Models for Dynamic Content Expiration Prediction in Web Search</h1> <p class="title-zh">RAG 增强的大语言模型用于 Web 搜索中的动态内容过期预测</p> <div class="dir-row"> <span class="direction-chip">🧭 Reasoning</span> </div> <p class="affiliations">Baidu Inc.</p> <div class="meta">Tingyu Chen, Wenkai Zhang, Li Gao, Lixin Su, Ge Chen, Dawei Yin 等</div> <p class="one-liner">利用 LLM 对查询意图和文档时间上下文进行语义推理，动态判定内容有效期，取代静态时间窗口规则</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Temporal Reasoning">Temporal Reasoning</a><a class="tag" href="/DailyPaper/tag/RAG">RAG</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Web Search">Web Search</a><a class="tag" href="/DailyPaper/tag/Content Freshness">Content Freshness</a><a class="tag" href="/DailyPaper/tag/Expiration Prediction">Expiration Prediction</a> </div>  <div class="content"> <p><strong>动机</strong>：商业搜索引擎中，传统“一刀切”的时效性排序策略（例如固定 30 天的新鲜度提升）无法捕捉不同查询意图下信息有效期的巨大差异。一篇关于“香港火灾”的新闻可能两天后已过期，而“交通法规”文档多年后仍有效。这种粒度错配导致搜索结果要么错误地推广已失效内容，要么过早压制仍具价值的权威信息。为此，百度提出将时效性重新定义为查询感知的动态语义有效期推理任务，用大语言模型判断内容在语义层面何时过时。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>时间信息提取模块</strong>：从检索到的文档中定位时间锚点，基于查询关键词和时间实体进行上下文分块评分，提取聚焦的时间语义块集 (S_{focus})，抑制噪声。</li>
+<li><strong>结构化提示与时间推理</strong>：设计结合查询意图、(S_{focus})、搜索时间的提示模板，通过少量样本示范和负约束引导 LLM 进行链式思维推理，预测查询特定的过期阈值 (t^*_{exp})。同时定义时间对齐联合优化目标，包含时间距离、粒度偏差和逻辑一致性惩罚。</li>
+<li><strong>时间一致性验证模块</strong>：采用对比前向‐后向链式思维（Forward-Backward CoT）对初始候选时间戳进行反向压力测试，计算一致性惩罚与粒度惩罚；并融合文档权威度与相关性权重，通过证据投票选取最优 (t^*_{exp})，压制幻觉。</li>
+<li><strong>在线特征转换与集成</strong>：将 (t^*_{exp}) 与文档时间因子比较，生成 0/1 过期信号，注入百度 Aurora 排序模型的新鲜度子网络，进行多阶特征交叉，实现软约束。系统设有失效保护，在缓存缺失或超时时退化为基线。</li>
+</ul>
+<p><strong>关键实验</strong>：在百度搜索真实流量上进行离线评估和 14 天在线 A/B 测试，基线为无过期信号的 Aurora 模型。离线结果显示，全局满意度分数提升 0.52%，高新鲜度查询的正导航率（PNR）在 ≤1 周和 ≤1 月区间分别提升 7.36% 和 5.21%，同时 top-4 和 top-10 结果的中位文档年龄（day_away）分别下降 2.44% 和 3.19%。在线 A/B 测试中，高新鲜度查询的 day_away 中位数降幅达 12.81%，满意度消费提升 0.78%，点击率提升 0.41%，搜索回访率也正向增长。人工评估显示，长尾/冷需求场景的好/坏比高达 12:2，时间敏感场景为 6:1，随机查询场景仍保持 5:2 的正向优势。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.13052&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.13052" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.13052" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.13052" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

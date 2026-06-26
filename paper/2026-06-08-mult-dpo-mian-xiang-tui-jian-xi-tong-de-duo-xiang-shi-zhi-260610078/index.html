@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多项式替代似然，将 DPO 扩展到多正例集合式偏好对齐，并证明其为 marginalized PL 损失的上界"><meta property="og:title" content="Mult-DPO: Multinomial Direct Preference Optimization for Recommender Systems"><meta property="og:description" content="提出多项式替代似然，将 DPO 扩展到多正例集合式偏好对齐，并证明其为 marginalized PL 损失的上界"><meta property="og:type" content="website"><title>Mult-DPO: Multinomial Direct Preference Optimization for Recommender Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-08">2026-06-08</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.10078" target="_blank" rel="noopener">2606.10078</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Mult-DPO: Multinomial Direct Preference Optimization for Recommender Systems</h1> <p class="title-zh">Mult-DPO：面向推荐系统的多项式直接偏好优化</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 多正例偏好优化</span> </div> <p class="affiliations">University of Virginia · Netflix · Cornell University</p> <div class="meta">Yaochen Zhu, Harald Steck, James McInerney, Aditya Sinha, Yinhan He, Nathan Kallus 等</div> <p class="one-liner">提出多项式替代似然，将 DPO 扩展到多正例集合式偏好对齐，并证明其为 marginalized PL 损失的上界</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/DPO">DPO</a><a class="tag" href="/DailyPaper/tag/Set-wise preferences">Set-wise preferences</a><a class="tag" href="/DailyPaper/tag/LLM alignment">LLM alignment</a><a class="tag" href="/DailyPaper/tag/Recommender Systems">Recommender Systems</a><a class="tag" href="/DailyPaper/tag/Plackett-Luce">Plackett-Luce</a><a class="tag" href="/DailyPaper/tag/Multinomial surrogate">Multinomial surrogate</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对于包含会话、行为序列等场景，用户通常有多个正反馈（点击/喜欢），可直接用 Mult-DPO 同时建模多个正例与负例，无需成对损失，时间复杂度从 O(K^2) 降至 O(K)。</li><li>训练时利用 KV-cache 复用 prompt 部分，使得单步计算开销与 vanilla DPO 相当，适合部署在电商/对话推荐中序列较长、候选物品较多的场景。</li><li>硬负例采样能收紧损失上界，可借鉴 SPRec 风格按 epoch 动态采样高权重负例，进一步强化对齐效果。</li><li>若存在多级偏好（如评分 1-5），可直接用 Mult2-DPO 保留精细偏好结构，提升排序质量，适合替换传统 BPR 损失。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+推荐系统的用户反馈往往是集合式的：一个上下文（用户、会话、对话）对应多个正例和多个负例，任何正例应优于任何负例，但正/负例内部无顺序。传统 DPO 仅支持成对偏好，直接扩展至集合式偏好需在 Plackett-Luce（PL）模型上对正例所有顺序进行边际化，复杂度为指数级。已有方法或仅用单个正例，或损失函数缺乏严谨排序解释。为此，本文提出多项式替代模型，将集合式偏好对齐转化为可处理的多项式似然，并推导出 DPO 风格的损失函数。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>将集合式偏好事件定义为一个多项式替代似然：从正/负例总权重归一化的类别分布中独立抽取 k 次，要求每个正例恰好出现一次且无负例出现。该似然计算复杂度为 O(k)。</li>
+<li>证明该多项式似然是 marginalized PL 似然的下界（即 Mult-DPO 损失是精确 PL-DPO 损失的上界），并给出紧度分析：边界紧度由正例总权重 A 与负例总权重 B 的比值 (1 + A/B)^{k-1} 控制，负例越“硬”（B 越大）边界越紧。</li>
+<li>通过 RLHF 奖励-策略重参数化，将多项式替代模型转化为 DPO 风格的目标函数（Mult-DPO 损失），避免显式奖励模型训练。</li>
+<li>进一步扩展至多级偏好（如 1-5 星评分），将多个等级拆分为序列化的集合式偏好事件，提出 Mult2-DPO，在每个边界上应用多项式替代，直接利用细粒度反馈。</li>
+</ul>
+<p><strong>关键实验</strong>
+在 Goodreads、MovieLens-10M 和 Reddit-V2（对话推荐）数据集上，以 Qwen2.5 模型为骨干，对比 SFT（BigRec, D3）及多种 DPO 变体（vanilla DPO, DMPO, S-DPO, LiPO）。主要结果：</p>
+<ul>
+<li>Mult-DPO 在所有基准上全面领先最强基线，尤其在多正例密集的 Reddit-V2 上，NDCG@5 相对 LiPO 提升超 10%（0.5B 模型 0.1097 vs 0.0963，3B 模型 0.1369 vs 0.1147）。</li>
+<li>动态硬负例采样（SPRec 式）进一步改善 NDCG，验证了紧度理论的实用价值。</li>
+<li>Mult2-DPO 在 MovieLens 四等级偏好设置下比 binary Mult-DPO 提升 NDCG@5 约 12%（0.5B: 0.0732 vs 0.0650），且大模型下收益依然存在。</li>
+</ul>
+<p><strong>一句值得记住的话</strong>
+多项式替代让多正例对齐可处理，且是一种有理论上界 guarantee 的保守替代，硬负例能让这个上界更紧，是实践中的低成本提效手段。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.10078&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.10078" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.10078" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.10078" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

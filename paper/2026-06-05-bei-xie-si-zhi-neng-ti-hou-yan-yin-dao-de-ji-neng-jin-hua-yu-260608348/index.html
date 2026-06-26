@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将代理技能视为贝叶斯假设，基于验证轨迹后验指导技能修补、压缩与退役，实现无需改权重的可靠进化。"><meta property="og:title" content="Bayesian-Agent: Posterior-Guided Skill Evolution for LLM Agent Harnesses"><meta property="og:description" content="将代理技能视为贝叶斯假设，基于验证轨迹后验指导技能修补、压缩与退役，实现无需改权重的可靠进化。"><meta property="og:type" content="website"><title>Bayesian-Agent: Posterior-Guided Skill Evolution for LLM Agent Harnesses</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.08348" target="_blank" rel="noopener">2606.08348</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Bayesian-Agent: Posterior-Guided Skill Evolution for LLM Agent Harnesses</h1> <p class="title-zh">贝叶斯智能体：后验引导的技能进化驾驭LLM代理</p> <div class="dir-row"> <span class="direction-chip">🧭 贝叶斯证据驱动的代理技能进化</span> </div> <p class="affiliations">IDEA Research · The Hong Kong University of Science and Technology (Guangzhou) · DataArcTech Ltd.</p> <div class="meta">Xiaojun Wu, Cehao Yang, Honghao Liu, Xueyuan Lin, Wenjie Zhang, Zhichao Shi 等</div> <p class="one-liner">将代理技能视为贝叶斯假设，基于验证轨迹后验指导技能修补、压缩与退役，实现无需改权重的可靠进化。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Bayesian Agent">Bayesian Agent</a><a class="tag" href="/DailyPaper/tag/Skill Evolution">Skill Evolution</a><a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a><a class="tag" href="/DailyPaper/tag/Posterior-Guided">Posterior-Guided</a><a class="tag" href="/DailyPaper/tag/Harness Optimization">Harness Optimization</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>技能维护引入贝叶斯后验：不要仅凭成功/失败次数决定是否保留技能，使用特征条件后验（如失败模式、上下文）估计技能可靠性，避免小样本下的决策噪声。</li><li>分离审计与执行：后验诊断信息只留给开发者，模型提示仅注入确定的失败补丁与 guardrail，避免 LLM 直接处理概率数字，提升 prompt 稳定性。</li><li>增量修复模式：对已完成的代理运行，仅重跑失败任务并基于证据修补技能，可用较低 token 成本提升整体成功率（如 RealFin 从 45% 修到 65%）。</li><li>轨迹特征离散化：将失败模式、token 数、回合数等桶化编码为离散特征，适合小样本技能效果推断，可借鉴至电商多轮代理的失败模式分析与自动护盾生成。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+LLM 代理的能力越来越依赖外部推理环境——即 prompts、工具、记忆、SOP 和可复用技能，这些资产无需修改模型权重即可改变任务成功率。但现有方法大多通过启发式反思或单纯累积成功/失败频率来修订技能，容易引入噪声或忽视上下文影响。当代理轨迹稀疏且非独立同分布时，频率估计不可靠，需要更明确的证据模型来管理技能演化。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>技能作为贝叶斯假设</strong>：每个技能 k 在一个冻结模型和环境条件下，根据验证轨迹更新成功信念 p(y=1|θ, hk, zt)，其中 zt 为离散特征（上下文、失败模式、token 桶等）。</li>
+<li><strong>因子化分类证据模型</strong>：采用拉普拉斯平滑的类先验与条件似然乘积计算后验，并维护 Beta-Bernoulli 共轭概要，支持低证据下的保守决策。</li>
+<li><strong>后验驱动五类动作</strong>：根据后验状态触发探索（无证据）、修补（同一失败模式出现≥2次即生成可执行补丁）、分割（跨上下文异质时拆分技能）、压缩（估计成功率≥0.72 时压缩文本以释放上下文）或退役（失败证据占优时移除技能）。</li>
+<li><strong>审计与执行分离</strong>：模型上下文仅接收可执行补丁和 guardrail，后验摘要保留给开发者调试；通过适配器边界可接入 GenericAgent、mini-swe-agent、Claude Code 等外部 harress。</li>
+<li><strong>双模式运行</strong>：Full 模式从空注册表在线进化，Incremental 模式基于已有运行轨迹仅修复失败任务。</li>
+</ul>
+<p><strong>关键实验</strong>
+使用 deepseek-v4-flash/pro，在 SOP-Bench、Lifelong AgentBench、RealFin-Bench 上评估。与 GenericAgent 基线相比，Incremental 修复将 SOP-Bench 准确率从 80% 提升至 95%，Lifelong AgentBench 从 90% 提升至 100%，RealFin-Bench 从 45% 提升至 65%，且修复仅消耗失败任务的 token。后端消融实验表明，Bayesian-Agent 在原生后端、mini-swe-agent、Claude Code 上均能实现一致的改进。但也有负面案例：Lifelong AgentBench 上 Full 模式出现 85% vs 90% 的下降，说明在线进化对稀疏证据敏感。</p>
+<p><strong>最值得记的一句话</strong>
+“代理技能进化应被视为一种证据校准、可审计且对不确定性明确的贝叶斯后验优化过程，而非不加校准的提示积累。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.08348&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.08348" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.08348" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.08348" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用精心设计提示词的LLM代替传统NER，在巴西葡语商品属性提取上F1提升约15个百分点"><meta property="og:title" content="AI-PAVE-Br: Leveraging Large Language Models for Enhanced Product Attribute Value Extraction through a Golden Set Approach"><meta property="og:description" content="用精心设计提示词的LLM代替传统NER，在巴西葡语商品属性提取上F1提升约15个百分点"><meta property="og:type" content="website"><title>AI-PAVE-Br: Leveraging Large Language Models for Enhanced Product Attribute Value Extraction through a Golden Set Approach</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-23">2026-06-23</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.24655" target="_blank" rel="noopener">2606.24655</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>AI-PAVE-Br: Leveraging Large Language Models for Enhanced Product Attribute Value Extraction through a Golden Set Approach</h1> <p class="title-zh">巴西电商产品属性值提取：基于LLM与黄金标注集的方法</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM赋能属性提取 · 巴西电商</span> </div> <p class="affiliations">LuizaLabs · Mackenzie Presbyterian University · University of São Paulo</p> <div class="meta">Murilo Gazzola, Hugo Gobato Souto, Samuel Silva, Júlia Schubert Peixoto, Felipe Siqueira, André Luis Pedroso de Morais 等</div> <p class="one-liner">用精心设计提示词的LLM代替传统NER，在巴西葡语商品属性提取上F1提升约15个百分点</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/PAVE">PAVE</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Prompt Engineering">Prompt Engineering</a><a class="tag" href="/DailyPaper/tag/Golden Set">Golden Set</a><a class="tag" href="/DailyPaper/tag/Brazilian Portuguese">Brazilian Portuguese</a><a class="tag" href="/DailyPaper/tag/E-commerce">E-commerce</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用LLM+提示工程直接做商品属性提取：无需微调，为每个品类定制提示词（任务说明、上下文、输出JSON格式、few-shot示例），可快速替换传统NER，特别适合多品类、多语种电商快速迭代。</li><li>构建黄金标注集的方法论：使用Cochran公式确定每类产品的样本量（95%置信度、5%误差，约385条），20个品类共覆盖数十万产品，可作为评估模型质量的无偏基准，也适合作为业务内部模型评测的固定验证集。</li><li>结构化输出设计：提示词中明确要求JSON输出，下游可直接解析入属性库、供搜索/推荐使用；对电压、尺寸等多值或歧义属性，提示词中需提供具体格式和示例，可大幅减少后处理。</li><li>工程部署考量：文中对比了自托管开源模型（VM部署，可预见延迟和成本）与闭源API（Gemini 2.5 Flash-Lite，1000并发请求平均1.3s但偶发30s）。推荐高吞吐场景优先自托管，避免API延迟波动和rate limit。</li><li>属性标准化仍是痛点：同一属性存在多种写法（“bivolt”“110/220V”），LLM虽能提取但一致性不足，建议后续增加规则或正则规范化层，或对LLM施加更严格的输出格式约束。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：巴西电商产品描述语言多样、不规范，传统NER或规则系统难以应对新品类和口语化表达，导致搜索、推荐、分类等下游任务数据质量差。急需一种可泛化、高精度的属性值提取方案，同时需要可复用的评测基准。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>Golden Set构建</strong>：12人团队手动标注20个品类，每个品类按Cochran公式计算样本量（约385条），形成高置信度、低偏差的标注数据集，公开在GitHub。</li>
+<li><strong>LLM方案</strong>：选用Gemini 1.5 Flash，为每个实体设计定制提示词，包含任务指令、输入字段（标题、描述、规格等）、期望输出（JSON形式）和few-shot示例，直接完成属性key-value抽取。</li>
+<li><strong>对比基线</strong>：传统内部NER系统，在同一Golden Set上评估。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>平均F1：传统基线59.79% → LLM方案74.68%，提升约15个百分点。</li>
+<li>平均覆盖率：传统基线46.71% → LLM方案71.96%，表明LLM更少出现空预测。</li>
+<li>仍低于理想覆盖率83.96%，主要因属性格式不统一（电压、尺寸等）和歧义导致提取困难。</li>
+</ul>
+<p><strong>核心结论</strong>：针对巴西葡语电商，用LLM加精心设计的提示词可大幅超越传统NER方法，但属性值标准化仍是实用化关键瓶颈。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.24655&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.24655" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.24655" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.24655" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

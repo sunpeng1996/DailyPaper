@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过提议者引导的合成实践与验证过滤，在部署前无需任何目标环境任务即可构建可复用程序性记忆"><meta property="og:title" content="PREPING: Building Agent Memory without Tasks"><meta property="og:description" content="通过提议者引导的合成实践与验证过滤，在部署前无需任何目标环境任务即可构建可复用程序性记忆"><meta property="og:type" content="website"><title>PREPING: Building Agent Memory without Tasks</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-10">2026-05-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.13880" target="_blank" rel="noopener">2605.13880</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>PREPING: Building Agent Memory without Tasks</h1> <p class="title-zh">PREPING：无需目标任务的智能体记忆构建</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent</span> </div> <p class="affiliations">KAIST · DeepAuto.ai</p> <div class="meta">Yumin Choi, Sangwoo Park, Minki Kang, Jinheon Baek, Sung Ju Hwang</div> <p class="one-liner">通过提议者引导的合成实践与验证过滤，在部署前无需任何目标环境任务即可构建可复用程序性记忆</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent Memory">Agent Memory</a><a class="tag" href="/DailyPaper/tag/Pre-Task">Pre-Task</a><a class="tag" href="/DailyPaper/tag/Synthetic Practice">Synthetic Practice</a><a class="tag" href="/DailyPaper/tag/Procedural Memory">Procedural Memory</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Tool Use">Tool Use</a> </div>  <div class="content"> <p><strong>动机</strong>：LLM agent 在接入新工具环境时，常因缺少环境特定的程序性知识（如工具组合、前置条件、故障恢复策略）而表现不佳。现有记忆构建方法要么依赖离线人工标注任务，要么从部署后的用户交互中在线积累，两者在新环境都会遭遇“冷启动”问题。为此，该工作研究<strong>预任务记忆构建</strong>：在没有见过任何目标环境任务（如人类演示、部署交互）的情况下，仅利用环境文档和工具调用反馈，提前构建可复用的程序性记忆。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出 <strong>PREPING</strong>（Pre-Task REusable Playbook makING）框架，将构建过程解耦为 <strong>提议者记忆（M_prop）</strong> 与 <strong>求解器记忆（M_sol）</strong> 两部分。提议者记忆用于控制合成实践的分布，求解器记忆是最终提供给 agent 部署使用的程序性记忆。</li>
+<li>迭代循环中，<strong>Proposer</strong> 依据 M_prop 和环境文档生成一批合成任务；<strong>Solver</strong> 执行任务并产生轨迹；<strong>Validator</strong> 对每个任务-轨迹对进行可行性和完成度评分，只有可行性判为“完全可行”（5分）的轨迹才被允许更新求解器记忆。</li>
+<li>M_prop 同时记录实践历史（工具使用频次、失败原因）与<strong>接地环境信息</strong>（从执行中提取的实体、约束），从而引导 Proposer 生成覆盖不足、避免冗余、且可行接地的新任务。求解器记忆更新采用 ACE 的 reflector-curator 蒸馏管道，将轨迹提炼为简明的策略与陷阱要点，避免直接存储原始交互日志。</li>
+<li>通过联合控制“练习什么”与“存储什么”，PREPING 从自生成实践中过滤掉不可行、冗余的合成任务，仅保留对下游有指导价值的程序性知识。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 <strong>AppWorld</strong>（有状态应用）、<strong>BFCL v3</strong>（函数调用）和 <strong>MCP-Universe</strong>（MCP 服务器）三个基准上，PREPING 显著超过所有无任务经验的记忆构建方法，相比无记忆基线平均得分提升 <strong>17.1 / 19.3 / 5.4</strong> 点，且性能与使用离线或在线任务数据的 <strong>ACE-Offline/Online</strong> 相当甚至更优。</li>
+<li>消融实验表明，<strong>验证器门控</strong> 是防止记忆污染的关键；<strong>实践历史</strong> 扩大了工具覆盖率（AppWorld 唯一 API 数从 69.0 升至 81.7），<strong>环境信息</strong> 确保任务接地可行，三者组合达到最佳。</li>
+<li>将 PREPING 作为在线记忆构建的初始化（PREPING+ACE），进一步将 AppWorld 平均分从 71.3 提至 76.3，并大幅缓解了冷启动早期的失败率。</li>
+<li>部署成本角度，PREPING 通过冻结的预构建记忆避免了在线更新调用，比 <strong>ACE-Online</strong> 的部署成本降低 <strong>2.99×</strong>（AppWorld）和 <strong>2.23×</strong>（BFCL v3），且只需约 30~50 个合成任务即可逼近在线方法的性能。</li>
+</ul>
+<p><strong>核心洞见</strong>：智能体记忆可以从被动等待部署交互转向主动的、受控的环境实践，通过联合优化练习分布与记忆质量，在无任务经验的情况下显著缓解冷启动问题。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.13880&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.13880" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.13880" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.13880" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用鼠标轨迹与眼动追踪等隐式用户信号，显著提升LLM对齐的奖励模型准确率与DPO优化效果"><meta property="og:title" content="Your Mouse and Eyes Secretly Leak Your Preference: LLM Alignment using Implicit Feedback from Users"><meta property="og:description" content="利用鼠标轨迹与眼动追踪等隐式用户信号，显著提升LLM对齐的奖励模型准确率与DPO优化效果"><meta property="og:type" content="website"><title>Your Mouse and Eyes Secretly Leak Your Preference: LLM Alignment using Implicit Feedback from Users</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20482" target="_blank" rel="noopener">2606.20482</a>  </div> <h1>Your Mouse and Eyes Secretly Leak Your Preference: LLM Alignment using Implicit Feedback from Users</h1> <p class="title-zh">你的鼠标和眼睛悄悄泄露偏好：基于隐式反馈的LLM对齐</p> <div class="dir-row"> <span class="direction-chip">🧭 隐式反馈LLM对齐 · 多模态行为信号</span> </div> <p class="affiliations">University of Massachusetts, Amherst · York University</p> <div class="meta">Haw-Shiuan Chang, Jeffrey Gomez, Mehul Patwari, Aryan Sajith, Hamed Zamani</div> <p class="one-liner">利用鼠标轨迹与眼动追踪等隐式用户信号，显著提升LLM对齐的奖励模型准确率与DPO优化效果</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/implicit feedback">implicit feedback</a><a class="tag" href="/DailyPaper/tag/LLM alignment">LLM alignment</a><a class="tag" href="/DailyPaper/tag/reward modeling">reward modeling</a><a class="tag" href="/DailyPaper/tag/eye tracking">eye tracking</a><a class="tag" href="/DailyPaper/tag/mouse trajectory">mouse trajectory</a><a class="tag" href="/DailyPaper/tag/DPO">DPO</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对话式推荐/Agent交互中植入隐式信号收集：在电商导购Agent或搜索推荐对话界面中，可低成本采集鼠标悬停、停留时长、滚动行为、甚至眼动数据（如用户授权），作为比显式点击/购买更稠密的偏好信号，用于细粒度reward建模。</li><li>奖励模型融合trick：使用随机森林等非线性模型融合隐式行为特征与文本特征，比纯文本reward模型提升9个百分点，可直接迁移到推荐系统中的用户意向打分或排序融合。</li><li>DPO训练中注入隐式反馈权重：将基于鼠标/眼动的偏好得分作为DPO优化中的似然权重或对比对的选择依据，类似rDPO with NLL，可让生成结果更贴合真实用户关注模式。</li><li>数据收集与隐私平衡：论文所用Mechanical Turk的webcam眼动方案成本较低，电商搜索/Agent产品可考虑在用户知情同意下进行小规模采集，用于对齐模型的持续优化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM对齐严重依赖显式人类反馈，但用户极少主动提供偏好标注，高质量数据昂贵；互联网巨头常用隐式行为信号构建经济护城河，而LLM对齐尚未有效利用。本文旨在量化鼠标轨迹、眼动注视等隐式反馈对LLM对齐的价值。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>构建新数据集 <strong>IFLLM</strong>，包含59名众包工人在多轮对话中的1336个问题、完整鼠标轨迹和通过Webcam采集的眼动注视点序列，揭示用户行为多样性。</li>
+<li>设计基于<strong>隐式反馈的奖励模型</strong>：从鼠标坐标序列、眼动扫视路径中提取统计特征（如停留时长、扫视长度），用随机森林融合文本特征与现代BERT的隐层输出，预测用户偏好。</li>
+<li>将隐式奖励得分融入DPO对齐流程，以<strong>rDPO with NLL</strong>形式增强多个LLM的响应质量。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>隐式奖励模型将纯文本奖励模型的偏好预测准确率从<strong>55%提升至64%</strong>。</li>
+<li>在对8个LLM进行DPO对齐后，响应质量的相对提升<strong>接近原来的三倍</strong>。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20482&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20482" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20482" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20482" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

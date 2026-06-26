@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过查询监控、工具监控与级联法官在代理执行中注入安全证据，在保持业务批准率的同时降低攻击成功率并大幅减少高级模型调用。"><meta property="og:title" content="FinHarness: An Inline Lifecycle Safety Harness for Finance LLM Agents"><meta property="og:description" content="通过查询监控、工具监控与级联法官在代理执行中注入安全证据，在保持业务批准率的同时降低攻击成功率并大幅减少高级模型调用。"><meta property="og:type" content="website"><title>FinHarness: An Inline Lifecycle Safety Harness for Finance LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-26">2026-05-26</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.27333" target="_blank" rel="noopener">2605.27333</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>FinHarness: An Inline Lifecycle Safety Harness for Finance LLM Agents</h1> <p class="title-zh">面向金融LLM代理的内联生命周期安全栅栏</p> <div class="dir-row"> <span class="direction-chip">🧭 金融代理安全 · 内联安全栅栏</span> </div> <p class="affiliations">Peking University · Nanyang Technological University · Tsinghua University · University of Science and Technology of China · University of Illinois Chicago</p> <div class="meta">Haoxuan Jia, Yang Liu, Bin Chong, Yingguang Yang, Yancheng Chen, Jiayu Liang 等</div> <p class="one-liner">通过查询监控、工具监控与级联法官在代理执行中注入安全证据，在保持业务批准率的同时降低攻击成功率并大幅减少高级模型调用。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Finance LLM Agent">Finance LLM Agent</a><a class="tag" href="/DailyPaper/tag/Safety Harness">Safety Harness</a><a class="tag" href="/DailyPaper/tag/Prompt Injection">Prompt Injection</a><a class="tag" href="/DailyPaper/tag/Tool Monitoring">Tool Monitoring</a><a class="tag" href="/DailyPaper/tag/Cascade Judge">Cascade Judge</a><a class="tag" href="/DailyPaper/tag/Inline Lifecycle">Inline Lifecycle</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>内联安全监控架构：在Agent执行循环中嵌入查询监控(Query Monitor)与工具监控(Tool Monitor)，用确定性合规先验对每一步打分，防范中间步骤的提示注入攻击，比边界过滤更可靠。</li><li>风险窗口级联路由：通过累加最近5步风险分数 (W=5, θ=1.0) 决定是否调用高级法官，普通步骤仅用轻量法官 (gpt-4o-mini)，高级调用减少4.7倍，平衡安全与成本。电商对话中高风险操作（如大额下单）可借鉴此路由策略。</li><li>证据注入促代理自主：将触发风险的规则信号（如强制词、数量异常、序列违规）作为结构化证据注入Agent输入，让Agent自主选择拒绝、重规划或升级，而非硬阻断，保持流程灵活且不牺牲业务审批率。</li><li>双信号有限记忆回顾：通过风险显著性和共谋（语义相似+实体重叠+信息提供者）召回最多2个历史步骤，法官上下文长度恒定O(1)，避免长轨迹下成本爆炸，适用于多轮对话状态追踪。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+金融LLM代理面临提示注入攻击，攻击常分散在多轮中并隐藏在工具调用之间，现有的边界过滤器无视中间步骤，事后LLM法官介入太晚且成本随轨迹长度线性增长。必须在代理执行循环中嵌入内联安全监控，实时评估每一步并反馈安全信号。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>查询监控</strong>：对用户输入融合单轮意图（如动词层级、金额大小、风险产品标记）和跨轮漂移（如虚假引用、权限跳跃），计算会话级风险累计，带衰减记忆。</li>
+<li><strong>工具监控</strong>：对即将执行的工具调用评估权限层级、危险参数、参数范围异常、业务事实矛盾和序列违规（如未经验证的关键写入）。</li>
+<li><strong>级联</strong>：累加最近W=5步风险分数，超过阈值θ=1.0则路由至高级法官（gpt-4o），否则用轻量法官（gpt-4o-mini）；同时通过双信号记忆召回最多2个历史步骤，保证上下文大小恒定。</li>
+<li><strong>证据动态注入</strong>：所有触发风险的规则头作为结构化证据插入Agent输入，支持代理自主拒绝、重规划或升级，而非外部粗暴阻断。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>在FINVAULT基准（107良性/107攻击）上，路由版FINHARNESS将攻击成功率(ASR)从38.3%降至15.0%，良性审批率仅微降2pp至39.3%，高级法官调用减少4.7倍。</li>
+<li>与GuardAgent/InferAct等外部护栏相比，后者ASR极低但审批率崩溃（8.4%），FINHARNESS在安全与业务间取得更优平衡。</li>
+<li>在856条合成攻击集上，主动拦截（硬停+自我拒绝+升级）提升6.7pp，自我拒绝率上升15.7pp，体现证据注入的有效性。</li>
+</ul>
+<p><strong>一句话记住</strong><br>
+FINHARNESS将安全信号作为证据动态注入代理决策循环，让代理自主权衡安全与业务，兼顾拦截率、审批率与高级模型成本。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.27333&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.27333" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.27333" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.27333" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

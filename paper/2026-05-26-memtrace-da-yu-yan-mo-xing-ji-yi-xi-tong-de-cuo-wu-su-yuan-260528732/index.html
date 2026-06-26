@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将记忆流水线转化为执行图，通过图遍历定位最早故障操作，实现跨会话错误自动诊断与自动提示优化"><meta property="og:title" content="MemTrace: Tracing and Attributing Errors in Large Language Model Memory Systems"><meta property="og:description" content="将记忆流水线转化为执行图，通过图遍历定位最早故障操作，实现跨会话错误自动诊断与自动提示优化"><meta property="og:type" content="website"><title>MemTrace: Tracing and Attributing Errors in Large Language Model Memory Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-26">2026-05-26</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.28732" target="_blank" rel="noopener">2605.28732</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>MemTrace: Tracing and Attributing Errors in Large Language Model Memory Systems</h1> <p class="title-zh">MemTrace：大语言模型记忆系统的错误溯源与归因</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 记忆系统错误诊断 · 执行图归因</span> </div> <p class="affiliations">Zhejiang University · Alibaba Group</p> <div class="meta">Xinle Deng, Ruobin Zhong, Hujin Peng, Xiaoben Lu, Yanzhe Wu, Guang Li 等</div> <p class="one-liner">将记忆流水线转化为执行图，通过图遍历定位最早故障操作，实现跨会话错误自动诊断与自动提示优化</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/error tracing">error tracing</a><a class="tag" href="/DailyPaper/tag/execution graph">execution graph</a><a class="tag" href="/DailyPaper/tag/memory systems">memory systems</a><a class="tag" href="/DailyPaper/tag/failure attribution">failure attribution</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/prompt optimization">prompt optimization</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆系统可观测性：通过 smartcomment 工具将任意记忆流水线的变量与操作依赖记录为执行图，可在电商对话 Agent 中定位记忆丢失、错误更新等故障。</li><li>细粒度错误归因：MemTrace 的图遍历优先检查早期操作，避免在长程交互中盲目搜索；引入源证据和系统先验知识能显著提高操作定位准确率（+12% OIA），适用于推荐系统的对话记忆调试。</li><li>自动提示优化闭环：将错误归因作为 credit assignment，只对故障操作涉及的局部 prompt 进行优化，避免在长轨迹上做全局优化；即使归因不完美（72.5% OIA），仍能带来 7.62% 的端到端性能提升，适合在线自动修复。</li><li>执行图的结构化诊断：生成的诊断报告可汇总不同记忆系统（RAG、Mem0、EverMemOS）的薄弱点，例如提取模块丢失细粒度信息、重排序模块失效等，可指导电商记忆架构选型与迭代。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+记忆系统是 LLM Agent 支撑长期交互的核心组件，但错误常源于数轮之前的记忆更新、覆盖或检索偏差，难以从扁平日志中定位。现有记忆评测仅给出整体成败，无法还原故障因果链。因此，急需一种可追溯信息跨会话传播路径的自动化归因方法。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>执行图建模</strong>：自研 <code>smartcomment</code> 工具包在代码关键操作处插桩，将记忆流水线记录为变量-操作有向无环图，清晰显示记忆的创建、修改、传播与最终使用。</li>
+<li><strong>MemTraceBench</strong>：基于 LoCoMo、LongMemEval、RealMem 数据集，覆盖长上下文、RAG、Mem0、EverMemOS 四种记忆系统，收集 160 个带人工标注的失败 case（含故障操作 ID、错误类型及解释）。</li>
+<li><strong>MemTrace 归因算法</strong>：以失败案例的问题和答案进行混合检索初始化搜索起点，按时间戳优先级遍历操作子图，通过局部正确性判断向下传播，直至定位最早的最小故障操作集（Decisive Error Set）。同时提供 MemTrace-OBS 变体，将操作块排序后支持全局正则搜索，大幅降低 token 开销。</li>
+<li><strong>闭环优化</strong>：利用 MemTrace 归因的输出操作，仅对该操作涉及的 prompt 调用现成优化器，避免长轨迹上下文爆炸，实现多轮自动调优。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+用 GPT-4.1 mini 和 GPT-5.4 作为 agent backbone 在 MemTraceBench 上评测。错误类型预测准确率（ETA）：GPT-5.4 + MemTrace 达 54.38%；故障操作识别准确率（OIA）：GPT-5.4 + MemTrace + 源证据 + 先验知识达 58.33%。MemTrace-OBS 大幅降低成本，长上下文场景 token 用量仅为 MemTrace 的 15.25%。在 Mem0 上应用闭环优化，3 轮迭代后测试集性能提升 7.62%，即使 OIA 仅有 72.5% 仍有效。</p>
+<p><strong>最值得记忆的一句话</strong><br>
+即使不完美的操作级归因信号，也能有效指导记忆系统的提示优化，为自动修复长程对话错误提供实用路径。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.28732&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.28732" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.28732" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.28732" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

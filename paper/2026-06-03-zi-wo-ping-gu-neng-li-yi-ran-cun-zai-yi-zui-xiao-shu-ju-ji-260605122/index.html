@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="发现基座LLM已能预测外部多属性评分，提出SEE通过小样本交替RL与屏蔽蒸馏高效激发校准能力"><meta property="og:title" content="Self-Evaluation Is Already There: Eliciting Latent Judge Calibration in Base LLMs with Minimal Data"><meta property="og:description" content="发现基座LLM已能预测外部多属性评分，提出SEE通过小样本交替RL与屏蔽蒸馏高效激发校准能力"><meta property="og:type" content="website"><title>Self-Evaluation Is Already There: Eliciting Latent Judge Calibration in Base LLMs with Minimal Data</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05122" target="_blank" rel="noopener">2606.05122</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Self-Evaluation Is Already There: Eliciting Latent Judge Calibration in Base LLMs with Minimal Data</h1> <p class="title-zh">自我评估能力已然存在：以最小数据激发基座LLM的潜在评判校准</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM自评估能力激发</span> </div> <p class="affiliations">National University of Singapore · Beijing University of Technology</p> <div class="meta">XiuYu Zhang, Yi Shan, Junfeng Fang, Zhenkai Liang</div> <p class="one-liner">发现基座LLM已能预测外部多属性评分，提出SEE通过小样本交替RL与屏蔽蒸馏高效激发校准能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/self-evaluation">self-evaluation</a><a class="tag" href="/DailyPaper/tag/reinforcement learning">reinforcement learning</a><a class="tag" href="/DailyPaper/tag/calibration">calibration</a><a class="tag" href="/DailyPaper/tag/LLM judge">LLM judge</a><a class="tag" href="/DailyPaper/tag/few-shot">few-shot</a><a class="tag" href="/DailyPaper/tag/elicitation">elicitation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>小样本激发评估能力：仅需约160条样本的交替训练即可显著提升模型对自身输出质量的预测校准，对于电商内容生成、对话Agent的回复自我判断可直接借鉴，无需大量标注即可获得可信度评分。</li><li>解耦训练避免质量退化：采用屏蔽蒸馏（只在自评token上训练），保持回答主体参数不动，避免了校准提升时损害生成质量。在推荐文案生成、Agent多轮对话中，可将自评模块作为插件训练而不干扰主任务性能。</li><li>利用自评进行结果筛选与路由：模型产出自我评估后，可依此分数对候选生成结果进行重排序，或在低置信时自动拒答、转接更强模型，降低线上调用外部评判器的成本。在搜索问答、客服Agent中，该机制可直接提升系统可靠性和效率。</li><li>非线性校准奖励设计：训练中采用指数γ&gt;1放大预测与真实评分的大偏差，强制模型学习极端分数分布，避免预测趋向均值，这对推荐系统的评分预测训练或强化学习中的奖励校准具有通用启发。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM评判已成为评估与训练的主流，若模型能预测外部评判器给自己的评分，便可在推理时自主进行自我筛选、拒答或路由，节省成本并提升可靠性。现有自我评估工作局限于可验证任务，开放域多属性评分能力未知，且通常依赖大规模训练。本文从基座模型直接测量出发，发现其已具备显著预测能力，从而将问题从能力获取转化为能力激发。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>Self-Evaluation Elicitation (SEE) 循环</strong>：交替进行 Calibration-Coupled RL 与 Masked Judge Distillation 两阶段。</li>
+<li><strong>Calibration-Coupled RL</strong>：模型生成答案后附加 <code>[SELF_EVAL]</code> 块预测五大属性（helpfulness, correctness, coherence, complexity, verbosity）的0-9分；奖励由回答质量（前三属性均值）和校准项 <code>(1 - MAE/9)^γ</code> 加权组成，γ>1 惩罚大偏差；使用GRPO优化整个输出，同时写入有效 rollout 至缓冲。</li>
+<li><strong>Masked Judge Distillation</strong>：从缓冲中以分层轮询策略选取均衡覆盖各属性与分值区间的 rollout，将自评块替换为法官真实分数，仅对分数token进行微调，答案token不参与损失，从而在保持回答质量的同时准确校准自评。</li>
+<li><strong>极低数据需求</strong>：循环运行15轮，仅用160条独特样本（约2.4k样本通过），约为纯RL基线（5k条）的1/31。</li>
+</ul>
+<p><strong>关键实验与结果</strong>：</p>
+<ul>
+<li>基座模型 Qwen3-4B-Base 在 HelpSteer2 验证集上的校准已达0.632，top-5 token准确率77.07%，远高于随机。</li>
+<li>在 HelpSteer2 及三个开放基准（AlpacaEval 2.0, Arena-Hard v2.0, WildBench v2）上，SEE 显著提升校准（如 WildBench 从0.504到0.609），且回答质量未受损甚至微升，全面超越 Adapted RLCR (5k数据)。</li>
+<li>样本效率：SEE 仅需约0.8k样本通过即可达到基线在10k处的质量与校准水平。</li>
+<li>跨评判器泛化：使用 GPT-5.4 训练后，模型在 Claude Sonnet 4.6 和 Gemini 3.1 Flash-Lite 上的校准提升同样保持，表明学习的是可迁移的”质量概念”。</li>
+<li>自评极度局部化：法官分数在模型 top-5 token 中的概率高达87.76%（HelpSteer2）至90.78%（AlpacaEval），证明预测确定且可直接用于下游决策。</li>
+</ul>
+<p><strong>核心认识</strong>：面向评判器的自我评估能力在预训练中已大体形成，后训练的作用在于激发与校准而非从头安装，这改写了任务范式，使得用一个极简的双阶段循环+极小数据即可达到高效能。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05122&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05122" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05122" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05122" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

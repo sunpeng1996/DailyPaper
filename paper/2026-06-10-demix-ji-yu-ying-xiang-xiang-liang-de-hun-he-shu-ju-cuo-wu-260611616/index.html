@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用完整的影响向量代替标量分数，通过多标签分类同步检测训练数据中的标签错误、特征错误和虚假相关三类问题。"><meta property="og:title" content="DeMix: Debugging Training Data with Mixed Data Error Types by Investigating Influence Vectors"><meta property="og:description" content="利用完整的影响向量代替标量分数，通过多标签分类同步检测训练数据中的标签错误、特征错误和虚假相关三类问题。"><meta property="og:type" content="website"><title>DeMix: Debugging Training Data with Mixed Data Error Types by Investigating Influence Vectors</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.11616" target="_blank" rel="noopener">2606.11616</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DeMix: Debugging Training Data with Mixed Data Error Types by Investigating Influence Vectors</h1> <p class="title-zh">DeMix：基于影响向量的混合数据错误类型调试框架</p> <div class="dir-row"> <span class="direction-chip">🧭 基于影响向量的训练数据调试</span> </div> <p class="affiliations">Shanghai Jiao Tong University · ByteDance Inc. · Tiktok</p> <div class="meta">Jiale Deng, Yanyan Shen, Xiaogang Shi, Chai Junjun</div> <p class="one-liner">利用完整的影响向量代替标量分数，通过多标签分类同步检测训练数据中的标签错误、特征错误和虚假相关三类问题。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Data Debugging">Data Debugging</a><a class="tag" href="/DailyPaper/tag/Influence Function">Influence Function</a><a class="tag" href="/DailyPaper/tag/Multi-Label Classification">Multi-Label Classification</a><a class="tag" href="/DailyPaper/tag/Invariant Learning">Invariant Learning</a><a class="tag" href="/DailyPaper/tag/Set Transformer">Set Transformer</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>影响向量替代标量影响分数：在推荐或电商数据中直接对标量影响力（如留一法影响值）聚合会掩盖错误类型特异性。保留完整验证样本上的影响分布，再用 Set Transformer 编码，能更好捕获标签噪声、特征异常和虚假相关等细粒度错误模式。</li><li>无需完全干净的验证集：DeMix 通过干预不同的验证子集和模型架构，强制学到对验证集噪声、模型选择鲁棒的错误表征，适合推荐系统等验证集本身可能受系统性偏差污染的场景。</li><li>部署时采用验证集采样与模型集成：大规模推荐数据上计算完整影响向量开销大，可参照文中仅用 10% 验证子集和轻量模型集成（如 2~3 个不同架构），在保持调试 F1 几乎不降的情况下将运行时和显存大幅降低。</li><li>错误类型驱动的定向修复：识别出的标签错误、特征错误、虚假相关可分别应用重标注、Z-score 特征补全、少数群体重加权等修复策略，直接作用于召回/排序数据，提升后续模型 AUC。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+实际训练数据常同时混有标签错误（LE）、特征错误（FE）和虚假相关（SC），不同错误类型对模型预测的影响机制不同，但现有数据清洗和归因方法只能检测错误样本，无法区分错误类型，导致修复盲目。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>影响向量</strong>：对每个训练样本，计算其对全验证集每个样本的影响函数，形成高维影响向量（而非仅用一个标量值），不同错误类型在向量上呈现可分离的分布模式。</li>
+<li><strong>多标签分类器</strong>：用 Set Transformer 编码影响向量（保持置换不变性，捕获元素间交互），再接 MLP 头预测每个样本的 LE / FE / SC 标签。训练样本通过可控错误注入（翻转标签、破坏特征、操控群体比例）合成，并允许错误共现。</li>
+<li><strong>干预式不变表示学习</strong>：为提升泛化，随机采样不同验证子集和构造不同架构的模型集成，分别用对比损失和 L2 对齐损失约束编码器，迫使所学表征对验证集选择和模型架构不敏感，聚焦于错误类型本质模式。</li>
+</ul>
+<p><strong>实验与结果</strong><br>
+在 6 个表格预测、3 个推荐系统（Amazon, MovieLens, Yelp）和 2 个 LLM 对齐（UltraFeedback, Capybara）共 11 个任务上，与 Cleanlab 数据清洗流水线（DDC）、基于标量影响的 DDA-repair 等基线相比：</p>
+<ul>
+<li>调试 F1 平均提升 <strong>22.61%</strong>，在自定义的混合错误数据上尤为稳定，对错误比例变化不敏感。</li>
+<li>经类型定向修复后重训的模型性能平均提升 <strong>9.32%</strong>，在推荐任务中 AUC 明显回升。</li>
+<li>消融实验表明，移除验证集或模型干预正则项会引发约 3.5%~3.0% 的 F1 下降，且在跨验证集、跨模型架构的泛化测试中退化明显。</li>
+<li>在 MovieLens 上，仅用 10% 验证样本即可将调试时间从 35.4 分钟降至 6.6 分钟，F1 仅下降 0.2%。</li>
+</ul>
+<p><strong>核心结论</strong><br>
+保留完整影响向量并对其建模，辅以跨配置不变性训练，能够在混合错误场景下实现精准且鲁棒的错误类型识别，结合针对性修复可有效恢复模型性能。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.11616&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.11616" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.11616" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.11616" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

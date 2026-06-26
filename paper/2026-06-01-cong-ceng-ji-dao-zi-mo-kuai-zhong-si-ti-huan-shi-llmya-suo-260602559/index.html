@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出子模块级非连续替换方法 SUBFIT，利用残差旁路拟合，在困惑度与准确率折衷上显著优于层级替换基线。"><meta property="og:title" content="From Layers to Submodules: Rethinking Granularity in Replacement-Based LLM Compression"><meta property="og:description" content="提出子模块级非连续替换方法 SUBFIT，利用残差旁路拟合，在困惑度与准确率折衷上显著优于层级替换基线。"><meta property="og:type" content="website"><title>From Layers to Submodules: Rethinking Granularity in Replacement-Based LLM Compression</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-01">2026-06-01</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.02559" target="_blank" rel="noopener">2606.02559</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>From Layers to Submodules: Rethinking Granularity in Replacement-Based LLM Compression</h1> <p class="title-zh">从层级到子模块：重思替换式LLM压缩的粒度</p> <div class="dir-row"> <span class="direction-chip">🧭 后训练压缩 · 子模块级残差替换</span> </div> <p class="affiliations">University of Trento</p> <div class="meta">Elia Cunegatti, Marcus Vukojevic, Erik Nielsen, Giovanni Iacca</div> <p class="one-liner">提出子模块级非连续替换方法 SUBFIT，利用残差旁路拟合，在困惑度与准确率折衷上显著优于层级替换基线。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM Compression">LLM Compression</a><a class="tag" href="/DailyPaper/tag/Submodule Replacement">Submodule Replacement</a><a class="tag" href="/DailyPaper/tag/Residual Bypass">Residual Bypass</a><a class="tag" href="/DailyPaper/tag/Post-training">Post-training</a><a class="tag" href="/DailyPaper/tag/Structured Pruning">Structured Pruning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对 LLM 部署中的推理加速有直接帮助：25% 稀疏度下可实现 1.12×~1.17× 的解码加速和 25% 的 KV 缓存节省，适合电商应用中需要低延迟、高并发的 agent 或推荐服务。</li><li>子模块级非连续选择策略可推广到其他模型的细粒度压缩，例如在生成式推荐或 agent 的多组件 Transformer 中，可独立对 Attention/FFN 进行按需裁剪，而非粗暴删除整个层。</li><li>闭式残差旁路拟合（利用特征协方差和低秩近似）仅需数千条校准样本，无需反向传播，这可以作为一种“剪枝后快速恢复”的手段嵌入到现有的 post-training 流水线中，降低压缩成本。</li><li>共享 FFN 输入基的设计在保持质量的同时大幅减少额外参数（约为原 FFN 参数的 1/10），类似 LoRA 的思路但应用于压缩，可参考其跨层参数共享方式以降低多任务或大模型的部署显存。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>后训练压缩是缩小 LLM 部署成本的主要途径，已有的替换式方法（如 Streamline、ReplaceMe）都在<strong>层粒度</strong>上移除连续的 Transformer 层，并用轻量模块替换。作者指出这种设计过于僵化：预训练 Transformer 中的冗余并不局限于连续区域，Attention 与 FFN 子模块的冗余分布也不同，因此不同子模块类型应使用不同的近似策略，且可移除的子模块无需聚集在连续深度上。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>子模块级替换</strong>：SUBFIT 在 <strong>Attention 和 FFN 子模块</strong>粒度上做非连续选择，独立决定每个子模块的去留，不再要求整层或连续块。</li>
+<li><strong>顺序评分与选择</strong>：先计算 Attention 子模块的“影响度得分”（结合残差旋转幅值与大小时评估），选最低分的模块移除；再在部分压缩后的模型上，对 FFN 采用“替换感知得分”（基座模型）或仅依赖余弦相似度（指令微调模型）。</li>
+<li><strong>统一残差旁路结构</strong>：对每个移除的子模块，拟合一个同形式的轻量旁路 <code>g⊙x + b + (x-μ)U</code>，其中 <code>U</code> 为低秩矩阵。Attention 的旁路 U 为每个子模块独立；FFN 则共享一个低秩输入基 <code>V</code>，仅保留层特定的投影 <code>Wℓ</code> 和仿射项，大幅减少参数。</li>
+<li><strong>闭式解拟合</strong>：旁路参数通过校准数据的统计量直接解出，无需梯度优化：仿射项由经验均值确定，门控系数由岭回归得到，低秩基取输入协方差的 top-r 特征向量，输出系数再用岭回归求解。</li>
+</ul>
+<h2 id="关键结果">关键结果</h2>
+<ul>
+<li>在 5 个基座模型、5 个指令微调模型、5 个稀疏度（12.5% 至 37.5%）上对比 Streamline 和 ReplaceMe 的四种变体，SUBFIT 在 <strong>困惑度–准确率折衷上整体最优</strong>：25% 稀疏度时，平均保留 84.6% 的下游准确率，而最强基线仅 81.6%；PPL 劣化因子 2.42× vs 4.34×。</li>
+<li>压缩越激进优势越大：37.5% 稀疏度下 PPL 劣化 5.76×，远低于基线（22.28×–339.31×）。</li>
+<li>推理加速：25% 稀疏度下 TTFT 加速 1.18<del>1.40×，解码加速 1.12</del>1.17×，KV 缓存使用按比例下降（如 DeepSeek-7B 从 240MB 降至 176MB）。</li>
+<li>消融表明：FFN 补偿对稳定性起主导作用，Attention 旁路仅需极低秩（256），而 FFN 需要更高秩（4096）；替换感知选择优于纯掩码评分；共享 FFN 基与逐层基质量接近，但参数大幅减少。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.02559&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.02559" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.02559" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.02559" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

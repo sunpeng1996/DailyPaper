@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="从真实企业Agent日志构建852个可复现任务的基准，揭示评估必须报告多维度指标而非单一得分"><meta property="og:title" content="EnterpriseClawBench: Benchmarking Agents from Real Workplace Sessions"><meta property="og:description" content="从真实企业Agent日志构建852个可复现任务的基准，揭示评估必须报告多维度指标而非单一得分"><meta property="og:type" content="website"><title>EnterpriseClawBench: Benchmarking Agents from Real Workplace Sessions</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-21">2026-06-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.23654" target="_blank" rel="noopener">2606.23654</a>  </div> <h1>EnterpriseClawBench: Benchmarking Agents from Real Workplace Sessions</h1> <p class="title-zh">EnterpriseClawBench: 基于真实工作会话的企业智能体基准</p> <div class="dir-row"> <span class="direction-chip">🧭 企业智能体评估 · 多维度基准</span> </div> <p class="affiliations">Horizon Research · Frontis.AI</p> <div class="meta">Jincheng Zhong, Weizhi Wang, Che Jiang, Kai Tian, Zhenzhao Yuan, Junlin Yang 等</div> <p class="one-liner">从真实企业Agent日志构建852个可复现任务的基准，揭示评估必须报告多维度指标而非单一得分</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent Benchmark">Agent Benchmark</a><a class="tag" href="/DailyPaper/tag/Enterprise Agent">Enterprise Agent</a><a class="tag" href="/DailyPaper/tag/Multi-dimensional Evaluation">Multi-dimensional Evaluation</a><a class="tag" href="/DailyPaper/tag/Real-world Sessions">Real-world Sessions</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Harness-Model Combination">Harness-Model Combination</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>评估生产环境Agent时，必须同时上报成本、运行时间、产物交付质量、视觉质量等，不能只依赖文本匹配得分，这在推荐系统Agent评估（如自动素材生成、文案产出）中同理。</li><li>基准构建采用从真实日志恢复任务的方式，可以借鉴到电商/广告Agent的离线评估：从历史操作会话中抽取场景，脱敏后重构可复现的测试集，防止数据泄露。</li><li>硬规则（hard rules）与技能子类（skill subclasses）的标注思路，可用于业务Agent的细分能力诊断，例如区分“商品标题生成”与“广告文案创意”的不同技能域，针对性优化。</li><li>工具-模型组合（harness–model combination）的评测模式提醒我们：Agent框架选择（类似推荐系统中的召回/排序通道）对最终效果影响显著，需要联合调优而非单独比拼模型。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有Agent评测常在简化基准上进行，无法反映真实企业场景中需要处理异构文件、调用工具、交付业务成果的复杂要求。企业Agent实际运行数据丰富但未被系统利用。</p>
+<p><strong>方法</strong>：收集真实工作场所Agent会话日志，经过清洗、复原环境 fixture、改写提示并标注角色类别、技能子类、硬性规则和语义评分标准，构建包含852个任务的EnterpriseClawBench基准。因涉及企业内部数据，不公开基准本身，而是贡献构造流程与评估协议。评估时采用多种 harness（Codex、ClaudeCode等）与模型（GPT-5.5、Sonnet 4.6等）组合，测量得分、成本、运行时间等维度。</p>
+<p><strong>结果</strong>：在120个任务的Lite子集上，最佳组合（Codex + GPT-5.5）仅获0.663分，平均分48.6%。成本差异巨大（最便宜组合¥14/任务，最贵¥701/任务），运行时间也从1.0分钟到14.0分钟不等。排名显示，提升得分往往伴随高成本，且不同harness对同一模型影响显著，强调多维评估的必要性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.23654&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.23654" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.23654" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.23654" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

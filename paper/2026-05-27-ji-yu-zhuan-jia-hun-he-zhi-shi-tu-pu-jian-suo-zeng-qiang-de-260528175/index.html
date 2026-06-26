@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多智能体框架 MixRAGRec，通过查询感知的多粒度 KG 检索与联合优化，实现高效知识增强推荐"><meta property="og:title" content="Mixture-of-Experts Knowledge Graph Retrieval-Augmented Generation for Multi-Agent LLM-based Recommendation"><meta property="og:description" content="提出多智能体框架 MixRAGRec，通过查询感知的多粒度 KG 检索与联合优化，实现高效知识增强推荐"><meta property="og:type" content="website"><title>Mixture-of-Experts Knowledge Graph Retrieval-Augmented Generation for Multi-Agent LLM-based Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.28175" target="_blank" rel="noopener">2605.28175</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Mixture-of-Experts Knowledge Graph Retrieval-Augmented Generation for Multi-Agent LLM-based Recommendation</h1> <p class="title-zh">基于专家混合知识图谱检索增强的多智能体 LLM 推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体 KG-RAG 推荐 · 查询感知检索与对齐优化</span> </div> <p class="affiliations">The Hong Kong Polytechnic University · City University of Hong Kong · National University of Singapore</p> <div class="meta">Shijie Wang, Chengyi Liu, Yujuan Ding, Shanru Lin, See-Kiong Ng, Xu Xin 等</div> <p class="one-liner">提出多智能体框架 MixRAGRec，通过查询感知的多粒度 KG 检索与联合优化，实现高效知识增强推荐</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/KG-RAG">KG-RAG</a><a class="tag" href="/DailyPaper/tag/Mixture-of-Experts">Mixture-of-Experts</a><a class="tag" href="/DailyPaper/tag/LLM-based Recommendation">LLM-based Recommendation</a><a class="tag" href="/DailyPaper/tag/Contrastive Learning">Contrastive Learning</a><a class="tag" href="/DailyPaper/tag/Policy Optimization">Policy Optimization</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>查询感知的多粒度检索：根据用户查询复杂程度动态选择 KG 检索粒度（无检索/三元组/子图/连通图），避免简单查询过度检索、复杂查询检索不足，平衡成本与效果。电商搜索中可借鉴类似 MoE 路由，针对不同意图（属性筛选 vs. 宽泛需求）切换知识源。</li><li>结构化知识对齐 Agent：用专门的小型 LLM 将图结构知识转为自然语言摘要，减少噪声、保留推荐相关结构信息。在商品知识图谱场景下，可先用模板初转再让 Agent 精炼，作为 LLM 上下文注入。</li><li>多智能体联合优化（MMAPO）：使用共享奖励函数（推荐准确性 + 边际信息增益）并通过 GAE 估计优势，实现检索决策与内容生成的端到端训练。此框架可推广到需要协调离散选择（检索策略/API 调用）与连续生成（文案/推荐列表）的 Agent 系统。</li><li>对比偏好学习与硬负挖掘：在推荐模型中引入对比损失，自动挖掘困难负样本，能有效区分高度相似的候选物品。该方法可直接用于商品推荐排名模型的 fine-tune，提升 Top-K 精度。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+LLM 推荐易受幻觉和知识过时影响，KG-RAG 虽能提供结构化知识，但现有方法对所有查询使用固定检索粒度，导致简单查询引入噪声、复杂查询知识不足；图结构到文本的转换也常丢失结构信息。检索粒度的选择缺乏直接监督，难以端到端优化。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>多智能体框架</strong>：包含三个 Agent——Mixture-of-Experts 检索 Agent、知识偏好对齐 Agent、对比学习推荐 Agent。</li>
+<li><strong>检索 Agent</strong>：四种专家（不检索、三元组、k-hop 子图、连通子图），通过 MoE 路由根据查询语义动态选择粒度。连通子图采用 Personalized PageRank + 最小生成树保留全局相关性。</li>
+<li><strong>对齐 Agent</strong>：将检索到的结构化知识先用模板线性化，再用小型 LLM 精炼为自然语言片段，桥接图-文鸿沟。</li>
+<li><strong>推荐 Agent</strong>：基于对齐知识生成推荐，使用对比偏好反馈（类似 DPO）训练，通过硬负采样强化区分相似物品的能力。</li>
+<li><strong>优化方案 MMAPO</strong>：用 GAE 估计优势回传奖励，共享奖励由推荐准确性和边际信息增益（KL 散度减计算成本）组成，鼓励成本敏感的检索选择。</li>
+</ul>
+<p><strong>关键实验</strong>
+在 MovieLens-1M/20M 和 LastFM-1K 上，以 LLaMA3-8B 和 Mistral-7B 为基座，对比零样本、LLM 微调、固定粒度 KG-RAG 基线。MixRAGRec 在三个数据集上均达最优，相对最强基线 K-RagRec，Accuracy 最高提升 13.8%（ML-20M），Recall@5 提升 8.3%–13.2%。消融证明对齐 Agent 贡献最大；效率上，MixRAGRec 检索时间接近轻量级三元组方法，远快于同性能的图检索基线。</p>
+<p><strong>最值得记住的一句话</strong>
+MixRAGRec 证明，通过显式建模检索粒度的选择并进行成本感知的多智能体联合优化，能让 LLM 推荐同时获得高准确率和低检索开销。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.28175&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.28175" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.28175" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.28175" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

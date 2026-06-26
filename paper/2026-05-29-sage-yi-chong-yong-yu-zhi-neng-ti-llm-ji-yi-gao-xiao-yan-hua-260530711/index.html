@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用 von Mises-Fisher 密度估计为智能体记忆演化构建轻量新颖性门控，仅将不确定案例交给 LLM 合并，显著降低写入成本。"><meta property="og:title" content="SAGE: A Novelty Gate for Efficient Memory Evolution in Agentic LLMs"><meta property="og:description" content="用 von Mises-Fisher 密度估计为智能体记忆演化构建轻量新颖性门控，仅将不确定案例交给 LLM 合并，显著降低写入成本。"><meta property="og:type" content="website"><title>SAGE: A Novelty Gate for Efficient Memory Evolution in Agentic LLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.30711" target="_blank" rel="noopener">2605.30711</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SAGE: A Novelty Gate for Efficient Memory Evolution in Agentic LLMs</h1> <p class="title-zh">SAGE：一种用于智能体 LLM 记忆高效演化的新颖性门控</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 记忆写端控制 · 新颖性检测</span> </div> <p class="affiliations">Duke University</p> <div class="meta">Sijia Wang, Dhanajit Brahma, Ricardo Henao</div> <p class="one-liner">用 von Mises-Fisher 密度估计为智能体记忆演化构建轻量新颖性门控，仅将不确定案例交给 LLM 合并，显著降低写入成本。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Memory Evolution">Memory Evolution</a><a class="tag" href="/DailyPaper/tag/Novelty Detection">Novelty Detection</a><a class="tag" href="/DailyPaper/tag/Agentic LLM">Agentic LLM</a><a class="tag" href="/DailyPaper/tag/vMF">vMF</a><a class="tag" href="/DailyPaper/tag/Write-side Control">Write-side Control</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆写入的轻量决策层：电商 Agent 需要持续更新用户偏好、商品特征等长期记忆，可以借鉴 SAGE 的 vMF 密度估计门控，用闭式得分快速判定新信息是 ADD / NOOP，仅对边界案例调用 LLM，大幅降低在线写入成本。</li><li>自适应阈值跟踪存储密度：推荐系统的知识库（如用户兴趣表示）会动态增长，可采用基于 PCA 投影体积的密度代理自动调整阈值，避免固定阈值在稀疏/密集状态下过松或过严，该方法无需后端大模型即可实现。</li><li>模块化预过滤插件：SAGE 展示的二进制 NOOP 门可作为现有记忆框架（如 A-Mem、Mem0）或通用 RAG 写入路径的前置过滤器，只需标定一个阈值即可跳过 16–18% 的冗余 LLM 调用，且质量损失可忽略，适合在现有 Agent 架构中快速部署。</li><li>利用嵌入几何替代语义判断：在检索/推荐场景中，类似的思想可用于候选物品的新颖性检测（如是否已存在于某集合中），用角相似度聚合取代单个最近邻比较，提高对密集区域的区分能力。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：智能体 LLM 在长期交互中需要不断将新事实写入记忆，现有系统（Mem0、A-Mem 等）将其全部委托给 LLM 进行路由决策，导致写入路径成本极高。作者认为，记忆演化本质上是一个新颖性检测问题——应当通过轻量计算分辨明显新事实、明显冗余事实，仅让不确定性案例触发昂贵的 LLM 合并。</p>
+<p><strong>方法</strong>：提出 SAGE（Spherical Adaptive Gate for memory Evolution）。对每个候选事实，基于当前记忆嵌入在单位超球面上的 von Mises-Fisher 核密度估计计算支持度，转换为新颖性得分。采用自适应阈值：以 PCA 投影后坐标范围乘积估计存储体积，结合记忆数量形成密度代理 ρ_t，阈值 τ_t = τ_min + τ_0 e^{-λρ_t} 随密度升高而下降，并做 EMA 平滑。根据阈值和边距 δ，将候选路由到三种动作：新颖得分高于 τ_t+δ 直接 ADD，低于 τ_t 直接 NOOP，落入区间则触发 LLM UPDATE。此外还提供可插入现有写入路径的二进制 NOOP 门，仅用固定阈值决定是否跳过写入。</p>
+<p><strong>关键结果</strong>：在 LoCoMo 长期对话记忆基准上，SAGE 对比 Mem0 在全部 7 个开源主干上取得平均 token-F1 最优；在 GPT-4o-mini 上添加阶段成本降低 3.4 倍，延迟降低 2.5 倍，且 judge 得分仅微弱下降（平均 -1.3 分）。作为 A-Mem 的预过滤器，固定阈值门在 5 个模型中跳过 16–18% 的 LLM 写调用，token-F1 变化 ≤ 0.5%。<strong>核心一句话：将记忆演化重铸为新颖性检测，用几何门控替代大部分 LLM 决策，在几乎不损质量的前提下大幅降低写入开销。</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.30711&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.30711" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.30711" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.30711" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用联合乘积量化将用户/物品ID与多模态特征压缩为共享子嵌入拼接，在参数量减少98%+的同时保持推荐精度"><meta property="og:title" content="URecJPQ: Memory-efficient Multimodal Recommendation Models through RecJPQ in Large-Scale Scenarios"><meta property="og:description" content="用联合乘积量化将用户/物品ID与多模态特征压缩为共享子嵌入拼接，在参数量减少98%+的同时保持推荐精度"><meta property="og:type" content="website"><title>URecJPQ: Memory-efficient Multimodal Recommendation Models through RecJPQ in Large-Scale Scenarios</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-22">2026-06-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.23291" target="_blank" rel="noopener">2606.23291</a>  </div> <h1>URecJPQ: Memory-efficient Multimodal Recommendation Models through RecJPQ in Large-Scale Scenarios</h1> <p class="title-zh">大规模多模态推荐的URecJPQ：联合乘积量化实现内存高效模型</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态推荐模型压缩 · 联合乘积量化</span> </div> <p class="affiliations">University of Bari Aldo Moro · University of Glasgow · Spotify</p> <div class="meta">Giuseppe Spillo, Zixuan Yi, Aleksandr Petrov, Cataldo Musto, Craig Macdonald, Iadh Ounis</div> <p class="one-liner">用联合乘积量化将用户/物品ID与多模态特征压缩为共享子嵌入拼接，在参数量减少98%+的同时保持推荐精度</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Recommendation">Multimodal Recommendation</a><a class="tag" href="/DailyPaper/tag/Product Quantization">Product Quantization</a><a class="tag" href="/DailyPaper/tag/Memory Efficiency">Memory Efficiency</a><a class="tag" href="/DailyPaper/tag/Large-scale RecSys">Large-scale RecSys</a><a class="tag" href="/DailyPaper/tag/Embedding Compression">Embedding Compression</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商/广告等大规模多模态推荐场景，可直接采用 联合乘积量化（JPQ） 替换全量 ID 嵌入表：为每个 user/item 分配多组码本中的码字索引，拼接得到嵌入向量，将参数量压缩 98%–99%，大幅降低 GPU 显存占用和检查点大小。</li><li>多模态侧，可将预训练的模态特征（文本、图像等）也纳入量化框架，例如对模态编码器输出做分桶或学习离散码本，避免存储每个 item 的完整 dense 向量，特别适合物品库频繁更新的广告系统。</li><li>实验发现，在婴童产品等某些品类上，量化后模型 Recall 反而提升 85%，暗示嵌入压缩带来的正则化效应能缓解稀疏数据下的过拟合，可尝试在 cold-start 或长尾 item 上刻意使用更高压缩比。</li><li>工程落地几乎零成本：URecJPQ 仅修改嵌入查找层，不改变模型主干架构，可以直接嫁接到现有双塔、DIN 等模型上，快速上线测试。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：工业级多模态推荐系统中，用户和物品的 ID 嵌入表以及多模态特征存储消耗大量显存，限制了大模型训练和部署。现有压缩方法往往忽略多模态特征的存储瓶颈，导致整体内存压力依然巨大。</p>
+<p><strong>方法</strong>：提出 URecJPQ，将 Joint Product Quantization 扩展到多模态推荐。核心做法是：不再为每个 user/item 学习独立的 dense embedding，而是构建多个共享的 <strong>子嵌入码本</strong>（sub-embedding codebooks）；每个 user/item 的最终表示为从各个码本中选取对应行的向量拼接。对于多模态特征，同样可量化或采用同结构压缩。训练时只学习这些共享码本，参数量与 user/item 数量解耦。</p>
+<p><strong>结果</strong>：在 MovieLens（电影）、Amazon Baby（婴童）、Amazon Sports（体育）三个数据集上评估。大规模设置下，检查点大小缩减 86%–98%，可训练参数量缩减 98%–99%；平均召回下降仅 8.5%，NDCG 下降 16%；在婴童品类上，Recall 甚至提升 85%，说明量化正则化对稀疏场景有益。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.23291&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.23291" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.23291" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.23291" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过梯度分析揭示GRPO崩溃机制，提出仅对正优势序列更新的WAPO，提升训练稳定性与性能。"><meta property="og:title" content="A Gradient Perspective on RLVR Stability and Winner Advantage Policy Optimization"><meta property="og:description" content="通过梯度分析揭示GRPO崩溃机制，提出仅对正优势序列更新的WAPO，提升训练稳定性与性能。"><meta property="og:type" content="website"><title>A Gradient Perspective on RLVR Stability and Winner Advantage Policy Optimization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-14">2026-06-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.16154" target="_blank" rel="noopener">2606.16154</a>  </div> <h1>A Gradient Perspective on RLVR Stability and Winner Advantage Policy Optimization</h1> <p class="title-zh">RLVR稳定性梯度分析与赢家优势策略优化</p> <div class="dir-row"> <span class="direction-chip">🧭 RL训练稳定性分析与策略优化</span> </div> <p class="affiliations">Layer 6 AI</p> <div class="meta">Prasanth YSS, Zhichen Ren, Rasa Hosseinzadeh, Ilan Gofman, Yuqi Chen, Zhaoyan Liu 等</div> <p class="one-liner">通过梯度分析揭示GRPO崩溃机制，提出仅对正优势序列更新的WAPO，提升训练稳定性与性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Policy Gradient">Policy Gradient</a><a class="tag" href="/DailyPaper/tag/Training Stability">Training Stability</a><a class="tag" href="/DailyPaper/tag/WAPO">WAPO</a><a class="tag" href="/DailyPaper/tag/Reasoning">Reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在RL微调推荐/Agent模型时，只对奖励高于平均的生成结果（正优势）进行策略更新，可避免负优势样本导致熵增和输出崩溃，是一种简单的实现 trick。</li><li>裁剪策略梯度更新幅度（类似 PPO 的 clipping），防止梯度爆炸，保持训练稳定，可直接集成到现有 RL 训练流程。</li><li>论文提出的 token 级梯度分解与稳定性分类法可用于分析推荐模型的 RL 微调行为，诊断训练不稳定是由哪些 token 分布引起，指导超参调整。</li><li>使用在线采样（on-policy）而非重用旧策略样本（off-policy），可减少策略漂移带来的问题，在推荐系统的多步 Agent 训练中值得尝试。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：GRPO 等 RLVR 方法在微调 LLM 推理时容易发生崩溃（输出高熵噪声或重复），但原因不明。本文从梯度层面分析该现象，旨在理解并解决不稳定性。</p>
+<p><strong>方法关键点</strong>：</p>
+<ol>
+<li>对 GRPO 的 token 级梯度进行分解，推导出一个分类法：根据当前 token 概率、优势符号以及是否被采样，预测更新后下一 token 概率和熵的变化方向。发现当负优势序列中出现低概率 token 时，梯度倾向于提升其概率，可能引发熵失控。</li>
+<li>基于此分析，提出 <strong>WAPO（Winner Advantage Policy Optimization）</strong>：一种在线的裁剪策略梯度算法，仅对正优势（赢家）的完成序列进行更新，并直接使用当前策略的采样结果（on-policy），避免 off-policy 漂移。</li>
+<li>WAPO 通过 clip 控制更新幅度，消除负优势样本的影响，保持策略熵稳定。</li>
+</ol>
+<p><strong>关键结果</strong>：在数学推理（MATH、GSM8K）和多跳问答（HotpotQA）基准上，WAPO 在 SmolLM、Qwen 等多个模型家族上匹配或超越 GRPO、RLOO 等基线，且训练过程无崩溃，熵值平稳。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.16154&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.16154" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.16154" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.16154" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

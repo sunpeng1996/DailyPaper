@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="全自动构建有状态可执行工具环境并生成自然多轮隐式意图轨迹，高效训练工具使用Agent"><meta property="og:title" content="EnvFactory: Scaling Tool-Use Agents via Executable Environments Synthesis and Robust RL"><meta property="og:description" content="全自动构建有状态可执行工具环境并生成自然多轮隐式意图轨迹，高效训练工具使用Agent"><meta property="og:type" content="website"><title>EnvFactory: Scaling Tool-Use Agents via Executable Environments Synthesis and Robust RL</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.18703" target="_blank" rel="noopener">2605.18703</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>EnvFactory: Scaling Tool-Use Agents via Executable Environments Synthesis and Robust RL</h1> <p class="title-zh">EnvFactory：通过可执行环境合成与鲁棒RL扩展工具使用智能体</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 工具使用训练环境与数据合成</span> </div> <p class="affiliations">LARK, HKUST (GZ) · Huawei Technologies Co., Ltd · University of Cambridge · UCL · HKUST</p> <div class="meta">Minrui Xu, Zilin Wang, Mengyi DENG, Zhiwei Li, Zhicheng Yang, Xiao Zhu 等</div> <p class="one-liner">全自动构建有状态可执行工具环境并生成自然多轮隐式意图轨迹，高效训练工具使用Agent</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Environment Synthesis">Environment Synthesis</a><a class="tag" href="/DailyPaper/tag/Agentic RL">Agentic RL</a><a class="tag" href="/DailyPaper/tag/Tool-Use">Tool-Use</a><a class="tag" href="/DailyPaper/tag/Trajectory Generation">Trajectory Generation</a><a class="tag" href="/DailyPaper/tag/MCP">MCP</a><a class="tag" href="/DailyPaper/tag/Topology-aware Sampling">Topology-aware Sampling</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商代码沙盒环境自动化构建：借鉴EnvFactory的Search-Code-Test多Agent协作，可针对电商核心API（商品搜索、下单、物流查询等）自动生成可执行的MCP服务器，用于训练智能客服或购物助手，确保执行可靠且状态隔离。</li><li>自然隐式意图的多轮数据合成：拓扑感知采样与校准细化策略可将多个API调用链转换为含歧义、省略参数的真实用户请求，例如“帮我查一下最近那个订单”，要求Agent自行推断订单ID。这种数据对训练Agent的上下文推理能力十分有效，可直接用于电商场景SFT数据增强。</li><li>复合奖励函数设计：论文提出的轨迹匹配奖励 + 最终状态等价奖励 + 长度惩罚的复合RL奖励框架，可避免单一奖励偏差。在电商智能体中训练工具调用策略时，可保证正确执行的同时控制冗余工具调用。</li><li>资源高效训练范式：仅用85个环境、2500+条轨迹即可大幅提升小模型（1.7B/4B）的多轮工具使用能力，为电商业务中快速迭代、低成本训练提供参考：优先保证环境验证质量与轨迹自然度，而非盲目追求数量。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>当前基于强化学习（Agentic RL）训练工具使用Agent面临两大瓶颈：一是缺乏可扩展、稳定且执行正确的交互环境，现有方案要么依赖昂贵、高延迟的真实API，要么使用易产生幻觉的LLM模拟器；二是合成训练轨迹往往过度指定，像“指令清单”而缺乏人类请求中常见的隐式意图、指代歧义等自然沟通特征，导致训练出的Agent推理能力受限。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>EnvGen全自动环境构建</strong>：由Search Agent从真实网络资源挖掘工具概念并生成蓝图，Code Agent实现Pydantic模式的状态数据库和可执行Python代码，Test Agent迭代验证并生成修正报告，最终产出稳定、可会话隔离的MCP工具服务器。</li>
+<li><strong>依赖工具图与拓扑感知采样</strong>：通过语义嵌入匹配输入输出参数构建工具间依赖图，并引入LLM精炼逻辑关系。采样时递归解析工具必需的内部依赖（如<code>hotel_id</code>来自前一步输出），并支持随机分支实现非线性工具链，确保生成的多步逻辑连贯。</li>
+<li><strong>自然查询合成与校准细化</strong>：QueryGen先规划情景、生成初始状态，再将工具链切分为多轮对话。通过子目标分解、意图表达后，施加隐性指代、动作压缩、歧义引入、目标扩展四种校准操作，将生硬指令转化为自然、隐晦的用户请求。随后在沙盒中执行并筛选出可通过工具正确解决的轨迹作为监督信号。</li>
+<li><strong>两阶段训练与复合奖励</strong>：首先用细化的SFT轨迹进行监督微调冷启动，然后使用GRPO进行RL，奖励函数融合轨迹级动作匹配、最终数据库状态等价以及长度惩罚，权重均衡（α=0.5）效果最佳。</li>
+</ul>
+<h3 id="关键实验">关键实验</h3>
+<p>EnvFactory仅用85个环境、842个工具，生成1622条SFT和953条RL轨迹，显著少于对比方法AWM和EnvScaler（环境多5倍以上）。在Qwen3-1.7B/4B/8B上，SFT后BFCL多轮得分分别提升至23.25、44.25、46.50，MCP-Atlas pass率提升近一倍；RL进一步拉高至28.38、48.50、49.00，并在对话式基准τ2-Bench和VitaBench上带来稳定增益。消融实验证实RL前SFT冷启动不可或缺，校准细化提升了长上下文和缺失功能场景下的泛化，而复合奖励中的轨迹与状态信号需平衡配合。</p>
+<h3 id="核心洞见">核心洞见</h3>
+<p><strong>即使训练环境与数据量远少于先前工作，通过自动构建可验证的有状态环境并合成自然隐式意图轨迹，仍能高效训练出具有强工具调用能力的Agent。</strong></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.18703&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.18703" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.18703" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.18703" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

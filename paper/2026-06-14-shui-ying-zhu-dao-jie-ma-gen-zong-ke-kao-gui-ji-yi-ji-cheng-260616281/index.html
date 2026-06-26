@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出TIE框架，通过跟踪解码轨迹置信度动态，实现MDLM的迭代知识融合，提升推理性能"><meta property="og:title" content="Who Should Lead Decoding Now? Tracking Reliable Trajectories for Ensembling Masked Diffusion Language Models"><meta property="og:description" content="提出TIE框架，通过跟踪解码轨迹置信度动态，实现MDLM的迭代知识融合，提升推理性能"><meta property="og:type" content="website"><title>Who Should Lead Decoding Now? Tracking Reliable Trajectories for Ensembling Masked Diffusion Language Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-14">2026-06-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.16281" target="_blank" rel="noopener">2606.16281</a>  </div> <h1>Who Should Lead Decoding Now? Tracking Reliable Trajectories for Ensembling Masked Diffusion Language Models</h1> <p class="title-zh">谁应主导解码？跟踪可靠轨迹以集成掩码扩散语言模型</p> <div class="dir-row"> <span class="direction-chip">🧭 掩码扩散语言模型集成与解码动态</span> </div> <p class="affiliations">KAIST · AITRICS</p> <div class="meta">Heecheol Yun, Joonhyung Park, Joowon Kim, Eunho Yang</div> <p class="one-liner">提出TIE框架，通过跟踪解码轨迹置信度动态，实现MDLM的迭代知识融合，提升推理性能</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Masked Diffusion">Masked Diffusion</a><a class="tag" href="/DailyPaper/tag/Ensembling">Ensembling</a><a class="tag" href="/DailyPaper/tag/Decoding Dynamics">Decoding Dynamics</a><a class="tag" href="/DailyPaper/tag/Knowledge Fusion">Knowledge Fusion</a><a class="tag" href="/DailyPaper/tag/Iterative Decoding">Iterative Decoding</a><a class="tag" href="/DailyPaper/tag/Reasoning">Reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多Agent协作推理可借鉴：跟踪各Agent中间解码状态的置信度，动态选择轨迹更可靠的Agent主导生成，提升复杂推理准确性，适用于搜索推荐中的多步推理场景。</li><li>生成式推荐（如Semantic ID生成）可采用类似融合策略：集成多个生成模型，在每一步去噪或解码时评估中间状态质量，由当前最优模型接管，纠正其他模型的不可靠方向。</li><li>搜索查询改写或广告文案生成中，可交替利用不同LLM的互补优势：当某个模型生成过程中出现低置信度区域，注入其他模型的中间状态以稳定生成轨迹。</li><li>该方法强调在生成过程而非结果层面融合，为电商场景中多模型协同（如多路召回融合、多生成器投票）提供新思路：关注中间表示的置信度动态而非最终输出概率。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：掩码扩散语言模型（MDLMs）多样性强但缺乏有效的集成手段。观察发现，成功生成中答案相关位置的置信度轨迹稳定，不可靠轨迹可通过注入其他模型中间状态纠正。</p>
+<p><strong>方法</strong>：提出TIE（Trajectory-based Iterative Ensembling），一种迭代式知识融合框架。在联合去噪过程中，TIE实时监控各模型在答案相关位置的置信度动态，判断哪一模型当前轨迹更可靠，然后将该模型的部分去噪序列（即中间状态）传递给其他模型作为起点。这种“接力”机制允许在解码不同阶段由最具优势的模型主导，充分发挥互补性。</p>
+<p><strong>结果</strong>：在多个推理任务上，TIE一致地优于单模型和常规集成基线，验证了轨迹跟踪与动态切换的有效性。分析表明，不同模型在去噪步中贡献度变化显著，TIE能自适应捕捉这些变化。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.16281&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.16281" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.16281" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.16281" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

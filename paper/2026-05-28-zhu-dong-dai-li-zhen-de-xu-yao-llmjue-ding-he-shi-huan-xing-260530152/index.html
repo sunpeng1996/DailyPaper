@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用小型时间图学习模型代替LLM做触发决策，显著提升效率与准确性"><meta property="og:title" content="Do Proactive Agents Really Need an LLM to Decide When to Wake and What to Anchor?"><meta property="og:description" content="用小型时间图学习模型代替LLM做触发决策，显著提升效率与准确性"><meta property="og:type" content="website"><title>Do Proactive Agents Really Need an LLM to Decide When to Wake and What to Anchor?</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.30152" target="_blank" rel="noopener">2605.30152</a>  </div> <h1>Do Proactive Agents Really Need an LLM to Decide When to Wake and What to Anchor?</h1> <p class="title-zh">主动代理真的需要LLM决定何时唤醒与锚定吗？</p> <div class="dir-row"> <span class="direction-chip">🧭 主动代理的触发决策优化</span> </div> <p class="affiliations">Purdue University · Microsoft · Michigan State University · Georgia Institute of Technology</p> <div class="meta">Xiaoze Liu, Ruowang Zhang, Amir H. Abdi, Michel Galley, Zhikai Chen, Siheng Xiong 等</div> <p class="one-liner">用小型时间图学习模型代替LLM做触发决策，显著提升效率与准确性</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Proactive Agents">Proactive Agents</a><a class="tag" href="/DailyPaper/tag/Temporal Graph Learning">Temporal Graph Learning</a><a class="tag" href="/DailyPaper/tag/Trigger Detection">Trigger Detection</a><a class="tag" href="/DailyPaper/tag/On-device Deployment">On-device Deployment</a><a class="tag" href="/DailyPaper/tag/LLM Efficiency">LLM Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商智能助手的主动推送场景：将用户行为事件转化为动态图，用TGL模型实时计算触发概率和实体重要性，只在概率超过阈值时才调用LLM生成文案，大幅降低推理成本。</li><li>推荐系统召回/排序的触发环节：借鉴TGL的图结构建模用户实时行为演化，生成触发信号与路由分数，可实现低延迟的个性化触发，适合部署在移动设备边缘端。</li><li>隐私敏感场景的设备端部署：220MiB BF16的极低内存占用和13.99ms的端侧推理速度，适合在用户设备本地处理活动流，避免原始数据上传，保护隐私。</li><li>架构设计思路：将原生的结构化事件流直接作为图输入，避免“结构化→文本→结构化”的冗余转换，可以用GNN替代LLM做事件的语义理解与重要性评估，业务中类似的结构化日志场景可复用此范式。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有主动代理（proactive agents）将用户活动文本化，并在每个事件上调用LLM判断是否干预，但用户活动本身是操作系统以图形式维护的(actor, verb, object, timestamp)结构化事件流，转为文本再让LLM解析是一种冗余的往返。<strong>方法</strong>：提出将事件流视为动态图更新，采用小型时间图学习（TGL）模型作为编码器，通过时序图神经网络（如TGAT、TGN）建模事件序列，一次前向传播直接输出每个事件的触发概率和涉及实体的路由分数；只有触发概率超过阈值时，才调用下游LLM将结构化交接转换为面向用户的流畅语句。<strong>关键结果</strong>：在14个基线模型上（包括LLM触发方案），TGL将F1平均提升16.7，最高提升46.0；在触发架构对比中，单个TGL检查点取得最高的触发AUC，且部署阈值稳定性最优；推理速度在GPU上为11.13ms/事件，在消费级笔记本上为13.99ms/事件，比所有单次LLM触发方案快4–7倍（服务器）和12–83倍（笔记本）；模型BF16驻留内存约220MiB，可设备端部署并与隐私敏感的活动流共同运行。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.30152&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.30152" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.30152" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.30152" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

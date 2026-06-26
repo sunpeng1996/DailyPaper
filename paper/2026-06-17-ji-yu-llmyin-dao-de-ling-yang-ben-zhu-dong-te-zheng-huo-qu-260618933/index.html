@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="仅从LLM获取判别性统计量，用最大熵闭合构建MRF，实现零样本主动特征获取，性能超越LLM直接决策"><meta property="og:title" content="Zero-Shot Active Feature Acquisition via LLM-Elicitation"><meta property="og:description" content="仅从LLM获取判别性统计量，用最大熵闭合构建MRF，实现零样本主动特征获取，性能超越LLM直接决策"><meta property="og:type" content="website"><title>Zero-Shot Active Feature Acquisition via LLM-Elicitation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-17">2026-06-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.18933" target="_blank" rel="noopener">2606.18933</a>  </div> <h1>Zero-Shot Active Feature Acquisition via LLM-Elicitation</h1> <p class="title-zh">基于LLM引导的零样本主动特征获取</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM-引导的零样本主动特征获取</span> </div> <p class="affiliations">Technion · CytoReason · NVIDIA</p> <div class="meta">Binyamin Perets, Natalie Mendelson, Shiran Vainberg, Yehuda Chowers, Shai Shen-Orr, Shie Mannor</div> <p class="one-liner">仅从LLM获取判别性统计量，用最大熵闭合构建MRF，实现零样本主动特征获取，性能超越LLM直接决策</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Active Feature Acquisition">Active Feature Acquisition</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Markov Random Field">Markov Random Field</a><a class="tag" href="/DailyPaper/tag/Maximum Entropy">Maximum Entropy</a><a class="tag" href="/DailyPaper/tag/Zero-shot">Zero-shot</a><a class="tag" href="/DailyPaper/tag/Decision Making">Decision Making</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>交互式推荐冷启动：利用LLM提取用户/物品特征之间的判别性共变关系构建MRF，指导对话式推荐中下一个最优问题的选择，零样本适配新领域。</li><li>最大熵闭合技巧：当LLM只返回类间区分信息而忽略类内分布时，可通过最大熵原则补全缺失统计量，使概率模型可用于规划，解决LLM输出偏差。</li><li>规划与知识分离架构：不让LLM直接做序列决策，而是仅提供特征依赖的统计量，再用MRF进行精确推理，规避LLM规划不可靠的问题，可复用于Agent主动信息获取任务。</li><li>预算受限下的top-k识别：在电商搜索或推荐中，需从大量候选中快速锁定少量目标时，可借鉴top-k主动特征获取策略，动态选择最具区分力的特征询问用户，降低交互成本。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：主动特征获取（AFA）依赖大量标注数据训练概率模型，难以零样本迁移。LLM拥有无监督领域知识，但直接用于序列规划表现不佳。如何将LLM的知识安全地注入AFA，避免其规划弱点？</p>
+<p><strong>方法关键点</strong>：提出受规约的启发框架：仅向LLM索取它能可靠返回的信息——特征的一元偏差和成对共变，即马尔可夫随机场（MRF）的充分统计量。实际中LLM倾向于返回判别性统计量（区分不同类别的差异），而非每个类别内的完整分布，导致经典AFA无法直接使用。作者通过<strong>最大熵闭包</strong>解决这一规范歧义：基于已获取的判别性信息，在满足约束的条件下构造熵最大的概率分布，补全类内缺失统计量，形成完整的MRF。用此MRF指导下一步的特征选择，实现了零样本AFA。框架同时支持二分类和top-k识别两种设定。</p>
+<p><strong>关键结果</strong>：在炎症性肠病（IBD）患者诊断数据集上，该方法在真实标签和LLM自身信念上均优于LLM直接决策；尤其在困难病例上，top-k获取策略显著超越所有对比方法，证明了分离知识提供与规划决策的有效性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.18933&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.18933" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.18933" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.18933" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

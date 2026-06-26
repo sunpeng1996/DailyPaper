@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="融合个性化动态超图与KAN-Transformer，同时捕捉行为异质高阶关系和细粒度非线性模式"><meta property="og:title" content="PHKT:Personalized Dynamic Hypergraph-enhanced KAN-Transformer for Multi-behavior Sequential Recommendation"><meta property="og:description" content="融合个性化动态超图与KAN-Transformer，同时捕捉行为异质高阶关系和细粒度非线性模式"><meta property="og:type" content="website"><title>PHKT:Personalized Dynamic Hypergraph-enhanced KAN-Transformer for Multi-behavior Sequential Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05537" target="_blank" rel="noopener">2606.05537</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>PHKT:Personalized Dynamic Hypergraph-enhanced KAN-Transformer for Multi-behavior Sequential Recommendation</h1> <p class="title-zh">个性化动态超图增强的KAN-Transformer多行为序列推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 多行为序列推荐 · 超图与KAN</span> </div> <p class="affiliations">Hangzhou Dianzi University · Sanya Traditional Chinese Medicine Hospital · Rocket Force University of Engineering · NetEase Inc.</p> <div class="meta">Ruijie Du, Hao Chen, Xin Zhang, Dongjing Wang, Ze Zhang, Xudong Shen 等</div> <p class="one-liner">融合个性化动态超图与KAN-Transformer，同时捕捉行为异质高阶关系和细粒度非线性模式</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-behavior Recommendation">Multi-behavior Recommendation</a><a class="tag" href="/DailyPaper/tag/Hypergraph">Hypergraph</a><a class="tag" href="/DailyPaper/tag/KAN">KAN</a><a class="tag" href="/DailyPaper/tag/Transformer">Transformer</a><a class="tag" href="/DailyPaper/tag/Sequential Recommendation">Sequential Recommendation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>动态行为权重超图：针对电商多行为（浏览、加购、购买），根据用户历史行为计算个性化权重，加权 item 相似度矩阵构建动态超边，有效捕捉用户特定的高阶行为关系，可直接增强推荐系统中辅助行为的利用效率。</li><li>KAN 替换 FFN：用 Kolmogorov-Arnold Network 替代 Transformer 中的前馈网络，按输入维度学习独立的径向基函数组合，为不同潜在行为模式提供专用响应函数，解决标准 FFN 的“共享映射”问题，在行为序列建模中可提升细粒度拟合能力。</li><li>双分支融合架构：超图分支捕获结构与共现关系，KAN-Transformer 分支建模时序与非线性偏好演化，通过可学习的融合系数平衡两者，适用于电商场景中复杂行为序列的联合建模。</li><li>行为权重先验：对各行为类型预设差异化初始权重（如购买=1，加购=0.7，浏览=0.3），与数据集动态匹配，可作为工业级多行为推荐的基础配置，降低噪声行为干扰。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多行为序列推荐利用用户多种行为（浏览、加购、购买）的时序交互预测目标行为，但现有方法存在两个关键局限：一是静态超图无法根据用户个性化语义动态加权高阶关系；二是标准 Transformer 的统一前馈网络强制所有潜在行为模式共享相同的非线性激活模板，难以适应不同模式对目标行为的差异化贡献函数。因此，需要一种同时建模个性化异质高阶关系与模式专属非线性响应的架构。</p>
+<p><strong>方法</strong>：提出 PHKT，包含两个核心模块。</p>
+<ul>
+<li><strong>个性化动态超图（PHDW）</strong>：根据用户历史行为计算行为类型权重，动态重加权 item 余弦相似度矩阵，从加权矩阵中为每个 item 选择 k 个最相似 item 构建超边，形成用户级个性化超图。通过超图卷积传播，聚合行为感知的高阶共现关系。</li>
+<li><strong>KAN-Transformer</strong>：将 Transformer 的 FFN 替换为 KAN 层，对每个输入维度独立生成若干径向基函数，并用可学习权重组合它们，使不同维度可以学习各自的非线性响应函数，从而对不同的潜在行为模式实现细粒度的贡献建模。最终通过可学习系数融合超图输出与 KAN-Transformer 输出，用于掩码物品预测。</li>
+</ul>
+<p><strong>实验</strong>：在 RetailRocket、Tmall、IJCAI 三个真实多行为数据集上，与 9 个基线（包括 FEARec、SASRecCPR、MBHT、MBSRec 等）对比。PHKT 在所有指标（HR@5/10、NDCG@5/10、MRR@5）上均取得最优。例如，在 IJCAI 上 HR@10 达到 0.583，比第二名 MBHT 提升 49.9%；在 Tmall 上 MRR@5 达到 0.326，比 MBSRec 提升 50.2%。消融实验验证了 KAN 层和动态超图模块的各自增益，参数分析给出最优特征维度与 KAN 层数的建议。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05537&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05537" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05537" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05537" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

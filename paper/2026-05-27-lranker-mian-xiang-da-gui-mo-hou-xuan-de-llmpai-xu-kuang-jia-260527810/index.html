@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过聚合候选全局信息和多嵌入集成，使LLM排序扩展到百万级候选并大幅提升效果"><meta property="og:title" content="LRanker: LLM Ranker for Massive Candidates"><meta property="og:description" content="通过聚合候选全局信息和多嵌入集成，使LLM排序扩展到百万级候选并大幅提升效果"><meta property="og:type" content="website"><title>LRanker: LLM Ranker for Massive Candidates</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.27810" target="_blank" rel="noopener">2605.27810</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>LRanker: LLM Ranker for Massive Candidates</h1> <p class="title-zh">LRanker：面向大规模候选的LLM排序框架</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM驱动的超大规模候选排序</span> </div> <p class="affiliations">University of Illinois Urbana-Champaign · Meta Monetization AI</p> <div class="meta">Tao Feng, Zijie Lei, Zhigang Hua, Yan Xie, Shuang Yang, Ge Liu 等</div> <p class="one-liner">通过聚合候选全局信息和多嵌入集成，使LLM排序扩展到百万级候选并大幅提升效果</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM Ranker">LLM Ranker</a><a class="tag" href="/DailyPaper/tag/K-means Clustering">K-means Clustering</a><a class="tag" href="/DailyPaper/tag/Test-time Scaling">Test-time Scaling</a><a class="tag" href="/DailyPaper/tag/Embedding-based Ranking">Embedding-based Ranking</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>全局候选信息注入：利用K-means对候选嵌入聚类，将质心通过可学习投影器注入LLM作为软提示，使查询表示条件于全局候选分布，适合电商/推荐中候选集巨大的场景，可提升粗排/精排的相关性。</li><li>图测试时缩放：在推理时迭代分区候选集、保留高分段、重新计算查询嵌入并平均集成，以多视角增强排序鲁棒性；该方法轻量、可插拔，能与现有嵌入排序模型结合，用于线上打分增强。</li><li>训练鲁棒性强化：训练时随机分区采样不同候选子集计算损失，使查询表示对不同候选规模不敏感，适合动态候选池或A/B测试环境。</li><li>LoRA高效微调：只对注意力层和FFN添加低秩适配，保持LLM基础能力的同时快速适应排序任务，便于在已有基座模型上构建推荐/搜索排序器。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有LLM排序受限于上下文长度和计算成本，无法处理百万级候选的真实场景，且多忽略全局候选信息。需要一种能显式建模全局候选分布且支持大规模推理的框架。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>候选聚合编码器</strong>：离线对候选嵌入做K-means聚类，将质心通过MLP投影器注入LLM prompt的占位符，作为全局候选信息软提示。</li>
+<li><strong>LLM解码器</strong>：基于融合提示生成查询嵌入（平均所有query token和<eos>的隐藏状态），候选嵌入同理，内积计算相关性分数。</eos></li>
+<li><strong>图测试时缩放</strong>：推理时迭代式分区候选集，每轮用当前查询嵌入保留top项，为各分区重新计算查询嵌入并平均更新，最后集成所有轮次的得分排序，提升鲁棒性。</li>
+<li><strong>训练技巧</strong>：随机分区采样不同候选子集计算InfoNCE损失，使查询表示对不同候选规模鲁棒；使用LoRA微调LLM（仅更新注意力和FFN的低秩适配层）。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>RBench-Small（推荐/路由，候选20）：相对提升超30%（Rec-Music 37%，Routing-Balance 31%）。</li>
+<li>RBench-Large（推荐/检索，候选数千～数万）：MRR提升3–9%，在ESCI商品搜索上提升9%+。</li>
+<li>RBench-Ultra（服装推荐，候选680万）：相对提升20–30%。</li>
+<li>消融：移除全局信息、测试时集成或LoRA训练均导致性能下降，验证各组件的必要性。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.27810&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.27810" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.27810" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.27810" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

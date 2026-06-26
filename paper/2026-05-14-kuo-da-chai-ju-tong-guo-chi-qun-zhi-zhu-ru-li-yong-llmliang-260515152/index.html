@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次通过注入离群值让LLM在量化后触发恶意行为，成功攻破GPTQ、AWQ等优化型量化"><meta property="og:title" content="Widening the Gap: Exploiting LLM Quantization via Outlier Injection"><meta property="og:description" content="首次通过注入离群值让LLM在量化后触发恶意行为，成功攻破GPTQ、AWQ等优化型量化"><meta property="og:type" content="website"><title>Widening the Gap: Exploiting LLM Quantization via Outlier Injection</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.15152" target="_blank" rel="noopener">2605.15152</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Widening the Gap: Exploiting LLM Quantization via Outlier Injection</h1> <p class="title-zh">扩大差距：通过离群值注入利用LLM量化</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM</span> </div> <p class="affiliations">ETH Zurich</p> <div class="meta">Xiaohua Zhan, Kazuki Egashira, Robin Staab, Mark Vero, Martin Vechev</div> <p class="one-liner">首次通过注入离群值让LLM在量化后触发恶意行为，成功攻破GPTQ、AWQ等优化型量化</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Quantization">Quantization</a><a class="tag" href="/DailyPaper/tag/Security">Security</a><a class="tag" href="/DailyPaper/tag/Outlier">Outlier</a><a class="tag" href="/DailyPaper/tag/AWQ">AWQ</a><a class="tag" href="/DailyPaper/tag/GPTQ">GPTQ</a> </div>  <div class="content"> <p><strong>动机</strong>
+LLM量化已成为高效部署的标准手段，但现有量化条件攻击局限于简单的零量化方法（如LLM.int8()、NF4），对GPTQ、AWQ等优化型方法无效。而实际部署中，优化型量化因其更好的性能保留而被广泛采用，这为攻击者留下了可利用的真空地带。本文首次揭示了通过注入离群值可以广泛攻击多种量化方法，显著扩大了量化安全威胁的范围。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>攻击思路</strong>：利用量化算法对离群值敏感的特性——当一个量化组内存在极大离群值时，其余权重会被迫归零，导致量化后矩阵极度稀疏。攻击者通过设计双目标训练，在全精度下抑制恶意行为，在量化后激活攻击。</li>
+<li><strong>四步攻击流程</strong>：(1) 零初始化：选取某一层FFN块，用近零噪声重新初始化，利用残差连接保持前向传播。(2) 启动双目标微调：训练模型使切换块外学习恶意行为，切换块内学习抑制；引入KL正则保持原始效用。(3) 注入离群值：在选定的权重矩阵中，按每组32个权重注入一个极大离群值，迫使量化后其余权重归零。(4) 精调用量化代理：构建仅保留离群值的代理模型，精调强化量化后恶意行为；对Mistral模型额外添加激活噪声以弥补代理与真实量化器的差异。</li>
+<li><strong>可攻击的量化方法</strong>：覆盖零量化（LLM.int8()、NF4、FP4、GGUF 0-quant）、数据无关优化型（GGUF k-quant、HQQ、SINQ）和数据依赖优化型（GPTQ、AWQ、AutoRound、GGUF i-quant）。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li><strong>设定</strong>：三种攻击场景（Jailbreak、Over Refusal、Content Injection），三个模型（Qwen2.5-7B、Llama3.1-8B、Mistral-7B），多种量化方法。</li>
+<li><strong>攻击成功率</strong>：量化后ASR普遍>90%，而全精度版本ASR被压制到5%以下。首次成功攻破GPTQ 4-bit（ASR 89.7%–95.7%）、AWQ（87.3%–95.0%）等优化型量化。</li>
+<li><strong>效用保留</strong>：平均基准得分相对原始模型保留90%以上（Llama3.1与Qwen2.5）或80%以上（Mistral）。</li>
+<li><strong>防御有效性</strong>：高斯噪声防御无效；层内权重分布异常可被KS检验检测；但直接剔除或缩放离群值的防御在攻击尺度较大时失效。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>
+首次表明LLM量化的安全风险不局限于简单方案，而是广泛存在于当前主流、复杂的量化方法中。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.15152&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.15152" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.15152" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.15152" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

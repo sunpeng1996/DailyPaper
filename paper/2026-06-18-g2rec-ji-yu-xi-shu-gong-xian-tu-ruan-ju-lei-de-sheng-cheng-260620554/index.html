@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过稀疏共现图软聚类提取物品多兴趣原型并转化为连续 token，结合生成式推荐实现工业级全局行为建模"><meta property="og:title" content="Structuring and Tokenizing Distributed User Interest Context for Generative Recommendation"><meta property="og:description" content="通过稀疏共现图软聚类提取物品多兴趣原型并转化为连续 token，结合生成式推荐实现工业级全局行为建模"><meta property="og:type" content="website"><title>Structuring and Tokenizing Distributed User Interest Context for Generative Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20554" target="_blank" rel="noopener">2606.20554</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Structuring and Tokenizing Distributed User Interest Context for Generative Recommendation</h1> <p class="title-zh">G2Rec：基于稀疏共现图软聚类的生成式推荐结构化分词</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 软聚类共现图 tokenization</span> </div> <p class="affiliations">University of Illinois Urbana-Champaign · Meta MRS</p> <div class="meta">Ruizhong Qiu, Yinglong Xia, Dongqi Fu, Hanqing Zeng, Ren Chen, Xiangjun Fan 等</div> <p class="one-liner">通过稀疏共现图软聚类提取物品多兴趣原型并转化为连续 token，结合生成式推荐实现工业级全局行为建模</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Graph Clustering">Graph Clustering</a><a class="tag" href="/DailyPaper/tag/Tokenization">Tokenization</a><a class="tag" href="/DailyPaper/tag/Co-engagement Graph">Co-engagement Graph</a><a class="tag" href="/DailyPaper/tag/Soft Modularity">Soft Modularity</a><a class="tag" href="/DailyPaper/tag/Scalable">Scalable</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>共现图稀疏化：用 O(M log M) 采样子图替代全量共现图，借助图拉普拉斯近似理论保证结构信息，可直接迁移到电商/广告场景的用户行为图构建，减小工程开销。</li><li>软聚类与多兴趣原型：采用可微 soft modularity，在 GPU 上优化，得到每个物品的多兴趣分布，而非硬聚类；适合电商商品多用途属性（如一件商品同时属于“性价比”、“送礼”等）。</li><li>交替 token 化序列：将兴趣 profile 连续 token 与物品 token 交替输入生成式序列模型，并同时用交叉熵预测下一物品和兴趣软标签，可复现到推荐 Agent 的上下文表示中。</li><li>离线计算在线使用：兴趣原型和物品兴趣 token 离线周期性更新，推理时仅需查表拼接，额外耗时可忽略，适合工业低延迟推荐服务。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有生成式推荐在融合用户行为图结构和物品语义 token 时面临两大难题：图方法（如序列化、GNN）不可扩展或仅利用局部信息；语义 tokenization 通常缺乏监督信号，易产生次优表示。为此，需要一种既能捕获全局共现模式，又能以可扩展语义 token 注入推荐模型的方法。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>稀疏共现图</strong>：从全量用户行为构建物品-物品共现图，采样 O(M log M) 条边，理论上近似保留图拉普拉斯（Theorem 2），避免 O(M²) 复杂度。</li>
+<li><strong>可扩展软聚类</strong>：设计可微的 soft modularity 目标（Closed form），在 GPU 上以 O(ρ M log M) 复杂度优化，得到每个物品的软成员分布（兴趣画像），形成多个兴趣原型（簇）。</li>
+<li><strong>兴趣 profile 分词</strong>：由软分布计算兴趣原型嵌入和物品兴趣 token（加权均值），将原始交互序列重构为「〈BOS〉，物品向量，兴趣 token，…」的交替序列，同时用下一物品预测损失和兴趣分布交叉熵损失联合训练生成式模型。</li>
+<li><strong>无监督语义增强</strong>：无需真实用户兴趣标签，利用图结构作为软监督信号，使模型学习兴趣转移模式。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>公开数据集（Beauty、Sports、Toys、Yelp）上，G2Rec 在所有指标上均优于经典（POP/MF）、序列（GRU4Rec/SASRec/BERT4Rec/Caser/EAGER）和图方法（LightGCN/HeLLM），平均排名 1.04，Sports 上 NDCG@5 提升 14.9%。</li>
+<li>在线 A/B 实验：在 Meta 产品表面，session 层面提升 >0.03%，总时长、点赞、分享等指标提升 0.06%-0.19%。</li>
+<li>消融实验：软聚类 modularity 比 Leiden 硬聚类高 8%（Sports），兴趣 profile loss 有效提升 MRR；训练/推理额外耗时仅 0.043s/0.0027s 每批。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20554&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20554" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20554" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20554" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

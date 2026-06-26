@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出MRAgent，将记忆组织为Cue–Tag–Content图，通过LLM推理驱动的主动重建替代被动检索，长时记忆推理性能提升23%并大幅降低Token消耗。"><meta property="og:title" content="Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents"><meta property="og:description" content="提出MRAgent，将记忆组织为Cue–Tag–Content图，通过LLM推理驱动的主动重建替代被动检索，长时记忆推理性能提升23%并大幅降低Token消耗。"><meta property="og:type" content="website"><title>Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06036" target="_blank" rel="noopener">2606.06036</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents</h1> <p class="title-zh">记忆重构而非检索：面向LLM Agent的图记忆</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent 记忆重建 · Cue-Tag-Content 图</span> </div> <p class="affiliations">National University of Singapore</p> <div class="meta">Shuo Ji, Yibo Li, Bryan Hooi</div> <p class="one-liner">提出MRAgent，将记忆组织为Cue–Tag–Content图，通过LLM推理驱动的主动重建替代被动检索，长时记忆推理性能提升23%并大幅降低Token消耗。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/memory reconstruction">memory reconstruction</a><a class="tag" href="/DailyPaper/tag/graph memory">graph memory</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/associative memory">associative memory</a><a class="tag" href="/DailyPaper/tag/active retrieval">active retrieval</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>记忆图设计：Cue–Tag–Content结构以Tag作为语义中间层，可复用到电商客服Agent的长期交互记忆，支持多跳关联检索，避免一次性全图遍历的噪声和成本。</li><li>主动重建机制：将LLM推理嵌入记忆访问循环，允许Agent根据中间证据动态调整检索路径，适合处理复杂查询或多轮对话中的上下文积累，避免被动检索的一次性固化缺陷。</li><li>按需检索降低成本：通过Tag先筛选再访问具体内容，显著减少Token消耗（实验中仅118k，对比A-Mem的632k），适合需要控制推理开销的生产环境。</li><li>多层记忆分层：融合场景记忆、语义记忆与话题抽象，可用于构建用户长期画像和交互历史存储，支持个性化推荐或服务中的稳定知识抽取与事件回溯。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+LLM Agent在长期交互中的记忆推理能力受限于被动检索范式：现有RAG或图记忆方法一次性固定检索内容，无法根据推理过程中的中间证据动态调整，导致噪声积累和多跳推理失败。认知神经科学表明人类记忆是一个主动、关联的重构过程，这启发我们将记忆访问从“检索”转变为“重建”。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>Cue–Tag–Content记忆图</strong>：将记忆组织为异构图，其中Cue是细粒度关键词，Content是具体记忆单元，Tag作为两者之间的语义桥梁，编码关联关系。</li>
+<li><strong>多层记忆</strong>：包含Episodic（事件）、Semantic（稳定知识）和Topic（话题抽象）三个层次，支持不同粒度的推理。</li>
+<li><strong>主动重建过程</strong>：LLM在每步根据当前重建状态（已积累的证据）选择前向或反向遍历动作，动态探索记忆图并剪枝无关路径，逐步重构出可回答问题的最小证据集。</li>
+<li><strong>理论保证</strong>：证明了给定检索预算下，主动策略的表达能力严格强于被动策略。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>数据集：长对话记忆基准LOCOMO和LONGMEMEVAL。</li>
+<li>基线：RAG、A-Mem、MemoryOS、LangMem、Mem0等。</li>
+<li>结果：在Gemini骨干下，MRAgent的LLM-Judge分数达到84.21（相对提升23.3%），全面超越基线；Token消耗仅118k，远低于A-Mem的632k；消融实验证实多步推理和Tag引导是主要增益来源。</li>
+</ul>
+<p><strong>一句话</strong>：记忆不是一次检索的静态结果，而是基于中间证据的迭代重构过程。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06036&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06036" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06036" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06036" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

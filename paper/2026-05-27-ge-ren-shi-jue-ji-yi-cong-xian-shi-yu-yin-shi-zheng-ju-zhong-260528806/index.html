@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出首个面向个性化AI助手的视觉记忆基准，并设计混合视觉-文本记忆架构显式保留身份与所有权"><meta property="og:title" content="Personal Visual Memory from Explicit and Implicit Evidence"><meta property="og:description" content="提出首个面向个性化AI助手的视觉记忆基准，并设计混合视觉-文本记忆架构显式保留身份与所有权"><meta property="og:type" content="website"><title>Personal Visual Memory from Explicit and Implicit Evidence</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.28806" target="_blank" rel="noopener">2605.28806</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Personal Visual Memory from Explicit and Implicit Evidence</h1> <p class="title-zh">个人视觉记忆：从显式与隐式证据中学习</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态记忆 · Agent 长期记忆评估</span> </div> <p class="affiliations">Johns Hopkins University · University of Wisconsin-Madison · Adobe Research</p> <div class="meta">Viet Nguyen, Thao Nguyen, Vishal M. Patel, Yuheng Li</div> <p class="one-liner">提出首个面向个性化AI助手的视觉记忆基准，并设计混合视觉-文本记忆架构显式保留身份与所有权</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Visual Memory">Visual Memory</a><a class="tag" href="/DailyPaper/tag/Personalized Agents">Personalized Agents</a><a class="tag" href="/DailyPaper/tag/Multimodal Memory">Multimodal Memory</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/RAG">RAG</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>图片记忆不应沦为caption：现有记忆系统将图像转为文本描述，丢失身份、所有权等关键视觉信息。你的电商/Agent场景若涉及用户上传图片（如服装、家居），应保留结构化视觉特征，而非仅存文本摘要。</li><li>延迟提交机制值得工程化：当图像信息不足以立即判断时，不急于提取结构化记忆，而是暂存pending状态，待后续多张图像累积证据后再统一解析。这一trick可迁移到用户多轮上传图片的商品识别、搭配推荐等场景。</li><li>结构化视觉记忆的模块设计：将记忆拆成relationship、entity、fact三个层级，分别存储社交关系、物体/宠物实例、持久化用户事实，按需路由。电商场景可类似设计：从用户晒图中抽取拥有的商品、偏好风格（实体/事实），而非仅用文本embedding。</li><li>利用合成数据构建视觉记忆评估管线：论文用一致化角色-场景-物体图像生成pipeline构建有多distractor的长会话，可借鉴用于Agent记忆能力的离线评测，避免隐私风险。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有长时记忆基准和系统以文本为中心，图像被转为caption，丢失身份、所有权等关键个人视觉证据。用户分享的照片中既包含显式实体（如宠物、个人物品），也包含可推理出的隐式事实（如养猫但不直说）。这些信息对个性化AI助手至关重要，但缺乏相关评测基准和记忆架构。<br>
+<strong>方法与架构</strong>：</p>
+<ul>
+<li><strong>基准构建</strong>：合成10个用户persona，包含社交图谱、拥有的物品/宠物；生成1,717个多轮对话事件，分为显式实体、隐式事实（纯视觉/多模态）和distractor三类；用主题一致性图像生成确保同一个人/物体/场景跨对话视觉连贯；最终产生696道选择题。</li>
+<li><strong>VISUALMEM架构</strong>：分三步处理图像——①上下文引导解读：结合周围对话消歧图像归属；②延迟提交：若证据不足将图像挂起，待后续多张图像累积后重新解析；③结构化提取：将确认信息按关系、实体、持久事实三层存入视觉记忆，同时将事实文本化同步至文本记忆后端。</li>
+<li><strong>检索时路由</strong>：实体相关问题走视觉记忆，事实/偏好走文本记忆或二者融合。<br>
+<strong>关键结果</strong>：</li>
+<li>视觉基准上，仅使用文本记忆的SOTA方法MemOS准确率56.0%，VISUALMEM达84.1%，在目标人物（95.0 vs 45.0）和目标资产（91.1 vs 59.9）提升巨大。</li>
+<li>纯视觉记忆优于纯文本记忆，验证了图像信息的关键性；增加文本记忆可进一步提升隐式多模态事实。</li>
+<li>移除延迟提交后整体下降2%以上，证明其必要性。</li>
+<li>在标准文本记忆基准LOCOMO和PersonaMem上，VISUALMEM与MemOS持平，未破坏文本记忆能力。<br>
+<strong>核心结论</strong>：个性化AI的长期记忆必须显式保留图像中的身份、所有权和用户事实，不能简单依赖caption。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.28806&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.28806" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.28806" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.28806" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

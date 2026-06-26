@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用微调LLM预测潜在转化广告商，注入检索与排序，线上广告回报提升4.94%-6.69%"><meta property="og:title" content="Fine-Tuned LLM as a Complementary Predictor Improving Ads System"><meta property="og:description" content="用微调LLM预测潜在转化广告商，注入检索与排序，线上广告回报提升4.94%-6.69%"><meta property="og:type" content="website"><title>Fine-Tuned LLM as a Complementary Predictor Improving Ads System</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.27856" target="_blank" rel="noopener">2605.27856</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Fine-Tuned LLM as a Complementary Predictor Improving Ads System</h1> <p class="title-zh">微调LLM作为补充预测器改进广告系统</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 广告辅助预测</span> </div> <p class="affiliations">Pinterest, Inc., USA</p> <div class="meta">Hui Yang, Daiwei He, Kevin Jiang, Taejin Park, Kungang Li, Jiajun Luo 等</div> <p class="one-liner">用微调LLM预测潜在转化广告商，注入检索与排序，线上广告回报提升4.94%-6.69%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Ad Prediction">Ad Prediction</a><a class="tag" href="/DailyPaper/tag/Candidate Generation">Candidate Generation</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Pinterest">Pinterest</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>LLM补全弱信号用户：对行为稀疏的用户，用LLM基于跨域特征（站外搜索/URL）预测可能转化的广告商，作为检索候选补充，显著提升覆盖与转化。</li><li>Semantic ID增强LLM：将多模态内容（PinCLIP嵌入量化后的SID）拼入prompt并通过多阶段继续预训练注入模型，可大幅提高广告商预测召回率（Recall@20 +7.2pp），是低成本引入视觉/协同信号的实用路径。</li><li>渐进式训练与奖励设计：先SFT学单目标，再GRPO扩展到多输出并利用位置奖励与长度惩罚，这种简单到复杂的两阶段方案适合工业广告预测，GRPO的格式奖励保证了结构化输出直接可用。</li><li>工程化部署要点：通过用户分层降低推理量、增量更新只处理活跃用户、vLLM+Ray分布式批量推理配合前缀缓存和连续批处理，可在成本可控下实现天级全量推断，适配推荐系统的时效约束。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+在广告推荐中，LLM直接替代工业级Ranker面临ID稀疏、推理延迟等瓶颈。现有LLM在推荐中的应用集中在生成式检索、重排序或信号富集，大规模广告场景的实践较少。本研究探索一种新范式：用微调LLM作为<strong>补充预测器</strong>，基于用户画像和行为历史预测最可能转化的广告商，将结果注入检索和排序，在不改变主排序架构的前提下提升系统效率。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>数据构建</strong>：选取有90天转化记录的活跃用户，特征包括用户画像、站内外搜索/转化/URL序列、历史转化广告商池与预设高收入广告商池；标签为未来7天首个转化广告商。</li>
+<li><strong>阶段化训练与提示</strong>：SFT阶段预测单个广告商（自由文本）；GRPO阶段预测20个广告商+5个用户兴趣（XML结构化输出），奖励函数包含位置匹配奖励和长度惩罚；推理复用GRPO格式保证一致性。</li>
+<li><strong>Semantic ID增强</strong>：通过三阶段继续预训练将PinCLIP多模态嵌入量化为20248码表的5级SID融入LLM，SID作为prompt额外输入，显著提升召回。</li>
+<li><strong>下游集成</strong>：检索端以LLM预测的广告商作为过滤，通过双塔模型生成候选；排序端将预测广告商和兴趣特征化，输入ctcvr/vtcvr转化率模型。</li>
+<li><strong>服务架构</strong>：vLLM+Ray分布式推理，利用前缀缓存、连续批处理；用户选择与增量更新降低日推理量。</li>
+</ul>
+<p><strong>关键实验与结果</strong></p>
+<ul>
+<li>广告商预测：V1数据集（贴近生产）上，SFT (1-ad) + GRPO + SID 的Recall@20达0.755，较零样本高出33个点。</li>
+<li>特征消融：历史转化广告商贡献最大，站外URL/搜索次之，用户画像影响微弱。</li>
+<li>下游转化模型：vtcvr PR-AUC提升1.64%，ctcvr PR-AUC提升0.71%。</li>
+<li>线上A/B：仅对opt-in用户展示LLM候选生成器，美国购物广告ROAS提升6.69%（p=0.029）。</li>
+</ul>
+<p><strong>核心结论</strong>
+“ 微调LLM作为补充预测器，可以有效地将异构用户信号合成为可操作的广告商先验，提升工业广告系统。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.27856&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.27856" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.27856" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.27856" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过图动态规划、递归两级执行和量规引导推理，实现可审计且 SOTA 的深度研究报告生成。"><meta property="og:title" content="DuMate-DeepResearch: An Auditable Multi-Agent System with Recursive Search and Rubric-Grounded Reasoning"><meta property="og:description" content="通过图动态规划、递归两级执行和量规引导推理，实现可审计且 SOTA 的深度研究报告生成。"><meta property="og:type" content="website"><title>DuMate-DeepResearch: An Auditable Multi-Agent System with Recursive Search and Rubric-Grounded Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07299" target="_blank" rel="noopener">2606.07299</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DuMate-DeepResearch: An Auditable Multi-Agent System with Recursive Search and Rubric-Grounded Reasoning</h1> <p class="title-zh">DuMate-DeepResearch：可审计的多智能体深度研究框架</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体深度研究架构与动态规划</span> </div> <p class="affiliations">Baidu AI Cloud</p> <div class="meta">Lingyong Yan, Can Xu, Yukun Zhao, Wenxuan Li, Qingyang Chen, Jiulong Wu 等</div> <p class="one-liner">通过图动态规划、递归两级执行和量规引导推理，实现可审计且 SOTA 的深度研究报告生成。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent System">Multi-Agent System</a><a class="tag" href="/DailyPaper/tag/Deep Research">Deep Research</a><a class="tag" href="/DailyPaper/tag/Graph-Based Planning">Graph-Based Planning</a><a class="tag" href="/DailyPaper/tag/Rubric-Guided Reasoning">Rubric-Guided Reasoning</a><a class="tag" href="/DailyPaper/tag/Recursive Execution">Recursive Execution</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>可审计的多智能体架构：将核心推理与工具生态解耦，使每一步规划和工具调用都可追踪。在电商推荐流程中，可将召回、排序、解释生成等环节分解为独立可审计的 Agent，便于调试与合规。</li><li>图动态规划与反思：用有向无环图管理长程子任务，支持粗到细扩展、回溯和剪枝。生成式推荐中的候选集生成、过滤、排序等步骤可建模为 DAG，遇到低质量结果时自动重规划，提高整体鲁棒性。</li><li>递归两级执行：外层规划代理将复杂搜索子任务委托给内层搜索代理，隔离噪声和局部失败。推荐系统中，可将高代价的实时检索或内容生成封装为子 Agent，防止单个子任务拖慢全局。</li><li>量规引导的推理与生成：动态生成任务特定的质量准则，注入搜索、规划和报告合成阶段，作为实时推理约束。生成推荐理由或商品描述时，可设计类似量规来强制证据链接、多源校验，降低幻觉。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有 Deep Research 系统面临长程规划难、任务分解调度易出错、长文合成幻觉高、过程不透明四大痛点。单调 ReAct 风格 agent 缺乏全局视野，一旦单步工具失败容易导致整条轨迹崩溃。为此，本文提出了一种可审计的多智能体框架，将研究流程形式化为可追踪的状态转移过程。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>解耦架构</strong>：基于千帆 Agent Foundry，将认知核心（Router、Planner、Writer）与工具生态分离，使全部中间决策和工具调用可审计。</li>
+<li><strong>图动态规划</strong>：研究计划表示为一个有向无环图，节点按深度排序执行，支持粗到细的边界探索；每个节点完成后由 Planner 评估证据，进行剪枝、重连或扩展，保持全局视野。</li>
+<li><strong>递归两级执行</strong>：外层 Research Agent 负责全局规划，每遇复杂搜索子任务即派发一个完整的 Search Agent（内部自行规划-执行），将检索噪声隔离在子任务内，避免全局连锁失败。</li>
+<li><strong>量规引导测试时优化</strong>：动态生成持久性与临时性量规，作为 Planner、Search Agent 和 Writer 的实时推理脚手架。持久量规锚定主题质量维度，临时量规追踪当前证据缺口，并作为自适应停止条件。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在 DeepResearch Bench（100 任务）和 DeepResearch Bench II（132 任务）上评估。DuMate-DeepResearch 在两个基准上均取得最佳总体得分：58.03%（DR Bench，超第二名 0.76%）和 61.95%（DR Bench II，超第二名 2.04%），且在信息召回和分析维度上领先明显。消融实验显示，去除量规主要损伤报告阶段的全面性和洞察力；替换报告模型则造成更大质量下降，表明合成模型是整体性能最敏感的组件。</p>
+<p><strong>最值得记住的一句话</strong><br>
+量规不应只是事后评价标准，而应作为实时推理约束注入 agent 的规划与生成过程，动态校准证据采集与报告合成。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07299&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07299" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07299" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07299" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

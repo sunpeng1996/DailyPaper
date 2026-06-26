@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在10亿参数生成式推荐模型中，用任务相关缩放法则、多token预测和语义塔解决了规模化后的效果迁移与工程效率难题。"><meta property="og:title" content="Towards Generalizable and Efficient Large-Scale Generative Recommenders"><meta property="og:description" content="在10亿参数生成式推荐模型中，用任务相关缩放法则、多token预测和语义塔解决了规模化后的效果迁移与工程效率难题。"><meta property="og:type" content="website"><title>Towards Generalizable and Efficient Large-Scale Generative Recommenders</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23312" target="_blank" rel="noopener">2605.23312</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Towards Generalizable and Efficient Large-Scale Generative Recommenders</h1> <p class="title-zh">迈向通用且高效的大规模生成式推荐系统</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 大规模生产优化</span> </div> <p class="affiliations">Netflix Research</p> <div class="meta">Qiuling Xu, Ko-Jen Hsiao, Moumita Bhattacharya</div> <p class="one-liner">在10亿参数生成式推荐模型中，用任务相关缩放法则、多token预测和语义塔解决了规模化后的效果迁移与工程效率难题。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/scaling laws">scaling laws</a><a class="tag" href="/DailyPaper/tag/multi-token prediction">multi-token prediction</a><a class="tag" href="/DailyPaper/tag/cold-start">cold-start</a><a class="tag" href="/DailyPaper/tag/sampled softmax">sampled softmax</a><a class="tag" href="/DailyPaper/tag/semantic towers">semantic towers</a><a class="tag" href="/DailyPaper/tag/generative recommenders">generative recommenders</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>任务相关的缩放法则作为资源分配指南：不同推荐任务的预测难度与天花板差异极大，直接用 MRR 拟合偏移幂律可量化剩余 headroom，指导模型容量投入——若任务已接近天花板，应转向优化目标函数或对象表示，而非盲目扩大 backbone。</li><li>多 token 预测对齐缓存服务延迟：电商推荐中常因在线排序延迟而使用缓存，导致 next-token 目标在服务时已失效。MTP 用带时间衰减的多目标加权标签训练，在 48 小时延迟下 MRR 提升 20%+，可直接用于离线与近线推理的标签构造，且不增加线上推理成本。</li><li>语义塔与协同嵌入掩码协同处理冷启动：新物品缺乏 ID 嵌入时，通过共享的多模态语义塔（知识图谱、LLM 文本嵌入、人工标签）构建物品向量，并在训练时按比例随机掩码协同嵌入为 OOV 嵌入，使解码器学会平衡 ID 与语义信号。电商新品上架可直接复用该范式。</li><li>轻量级解码效率方案：用 1% 均匀采样负样本的 sampled softmax 加 d/8 投影头，在不改 backbone 前提下可大幅降低训练 FLOPs（如 10^6 输出空间下降 35 倍），支持万亿级行为 token 的频繁重训练，工程实现简单且与 SID 等方法正交。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+生成式推荐将用户行为视为序列，用一个 backbone 支撑检索、排序、用户表征等多任务，但规模化后预训练增益难以自动迁移到下游——不同任务的 headroom 差异大、频繁重训练的成本高、缓存服务导致 next-token 目标失效、冷启动物品缺少可靠 ID 嵌入。本文在 Netflix 推荐场景下，将模型 backbone 从 2M 扩展到 1B 参数，系统研究这些生产约束下的解决方案。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>任务相关缩放法则</strong>：按可预测性将任务分为三类（长期偏好/短期参与/时间驱动），用偏移幂律 (P(N)=P_0 - (N/N_0)^{-a}) 拟合 MRR，(P_0) 指示天花板，用于判断哪些任务值得继续扩规模。</li>
+<li><strong>解码效率</strong>：预训练时用 1% 均匀采样负样本做 sampled softmax，并将 decoder 投影到 d/8 维度，大幅降低 FLOPs，使 1B 模型可频繁重训。</li>
+<li><strong>多 token 预测 (MTP)</strong>：针对缓存延迟下 next-token 目标失效，用指数衰减权重（半衰期 1 小时）对一组未来高价值目标做多标签训练，线上仍用单次解码打分，对延迟敏感任务提升显著。</li>
+<li><strong>语义塔与嵌入掩码</strong>：为冷启动物品构建共享多模态塔（图嵌入、LLM2Vec 语言嵌入、人工标注特征），在训练时按在线冷启动率随机掩码物品的协同嵌入为 learnable OOV 向量，迫使 decoder 综合 ID 与语义信息。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在包含万亿级行为 token 的数据集上，对比 2M 和 1B backbone 的模型：</p>
+<ul>
+<li>缩放法则：Task A 的 (P_0=0.311) 接近天花板，Task C 的 (P_0=1.075) 接近 MRR 上限，偏移幂律拟合误差低于 log-linear。</li>
+<li>MTP：48 小时缓存延迟下，5 token MTP 相对 MRR 提升 +22.1% (Task A) / +27.8% (Task B) / +27.9% (Task C)。</li>
+<li>一周百万用户生产影子评估：1B 模型在所有任务上优于基线，Task A +22.5%，冷启动 +28.1%，验证了综合方案的有效性。</li>
+</ul>
+<p><strong>核心论断</strong><br>
+“模型规模应作为生产迁移问题的一个组件，与任务天花板、解码成本、服务延迟对齐、物品泛化能力协同考量，而非孤立追求参数量。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23312&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23312" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23312" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23312" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

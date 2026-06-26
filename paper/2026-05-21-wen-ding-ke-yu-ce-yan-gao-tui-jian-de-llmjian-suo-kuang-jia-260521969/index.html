@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出基于LLM语义属性与图扩展的广告候选生成，线上可预测性指标A/A'差异降低8.62%，收入提升0.45%。"><meta property="og:title" content="LLM Retrieval for Stable and Predictable Ad Recommendations"><meta property="og:description" content="提出基于LLM语义属性与图扩展的广告候选生成，线上可预测性指标A/A'差异降低8.62%，收入提升0.45%。"><meta property="og:type" content="website"><title>LLM Retrieval for Stable and Predictable Ad Recommendations</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21969" target="_blank" rel="noopener">2605.21969</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>LLM Retrieval for Stable and Predictable Ad Recommendations</h1> <p class="title-zh">稳定可预测广告推荐的LLM检索框架</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM语义表征增强广告可预测性</span> </div> <p class="affiliations">Meta Platforms, Inc.</p> <div class="meta">Vinodh Kumar Sunkara, Satheeshkumar Karuppusamy, Hangjun Xu, Sai Deepika Regani, Kshitij Gupta, Gaby Nahum 等</div> <p class="one-liner">提出基于LLM语义属性与图扩展的广告候选生成，线上可预测性指标A/A&#39;差异降低8.62%，收入提升0.45%。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Ads">Ads</a><a class="tag" href="/DailyPaper/tag/Semantic Retrieval">Semantic Retrieval</a><a class="tag" href="/DailyPaper/tag/Predictability">Predictability</a><a class="tag" href="/DailyPaper/tag/Graph Traversal">Graph Traversal</a><a class="tag" href="/DailyPaper/tag/Candidate Generation">Candidate Generation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>可预测性指标(A/A&#39;差异)可作为系统稳定性新指标：在电商推荐中，可用来评估模型对商品描述微调、ID切换等输入扰动的鲁棒性，提前发现因特征工程缺陷导致的冷启动或收入波动问题。</li><li>利用LLM离线提取商品/广告的层次化语义属性（品类、品牌、上下文描述等），构建语义图，通过Jaccard相似度的图遍历实现语义相似召回；该通道可与现有双塔、图召回共存，作为补充候选源，提升召回多样性和长尾覆盖。</li><li>工程上采用离线LLM批量生成元数据+在线查图服务的模式，避免实时LLM推理的高延迟；对于电商推荐，可将商品描述输入LLaMA等模型，生成结构化属性，再通过近似匹配进行相似商品扩展，成本可控。</li><li>实验表明LLM候选生成器能有效提升最终召回（+1.2%）和线上收入（+0.45%），且对A/A&#39;波动抑制明显（MAD改善45%），推荐业务可将其作为稳定性优化组件，尤其适合需要高频更新商品库的场景。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+传统广告推荐系统仅关注点击/转化预估的准确率（如NDCG、Recall），缺乏对系统输出<strong>可预测性</strong>的量化。在广告库存随生成式AI激增的背景下，广告主对素材的微小改动（如文案微调）可能导致推荐结果剧烈波动，引发冷启动和重复性问题。该工作首次定义系统级可预测性指标，并基于LLM构建语义感知的候选生成框架，从根本上提升系统鲁棒性。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>提出<strong>可预测性度量</strong>：构造「主广告」与「影子广告」（通过复制并微调某特征模拟小扰动），计算两者转化差异的统计显著性（StatSigDiff）和每日曝光差的中位绝对偏差（MAD），作为系统稳定性评估依据。</li>
+<li><strong>LLM语义提取</strong>：用微调的Llama3-8B Instruct模型从广告素材（标题、描述等文本）推断层次化语义属性（品类、品牌、上下文描述）。</li>
+<li><strong>语义图构建与遍历</strong>：基于LLM输出的属性集合，计算广告间Jaccard相似度，构建语义图；检索时通过图遍历扩展出语义等价类中的相似广告，实现ad-to-ad候选生成。</li>
+<li><strong>两阶段引擎</strong>：第一阶段LLM批量离线生成广告的类别、属性与上下文标签；第二阶段利用这些标签进行快速候选检索与相关性打分，在线服务仅需查图，避免实时LLM调用。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在Meta大规模广告推荐系统上进行在线A/B实验。基线为双塔、嵌入及图模型集成的候选生成器；测试组引入LLM候选生成通道。数据集规模达数千万条文本描述。</p>
+<ul>
+<li>线上top-line收入指标提升**+0.45%<strong>，最终召回提升</strong>+1.2%**。</li>
+<li><strong>可预测性</strong>：A/A’ StatSigDiff相对降低<strong>8.62%</strong>，日曝光差MAD改善<strong>45%</strong>，显著减少因微小输入变化带来的交付波动。</li>
+</ul>
+<p><strong>值得记住的一句话</strong><br>
+“用LLM提取广告的层次语义属性并构建语义图进行候选扩展，可在不牺牲线上效果的同时，大幅提升广告系统的可预测性和稳定性。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21969&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21969" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21969" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21969" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

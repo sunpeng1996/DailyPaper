@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="真实人类数据揭示LLM个性化三阶段中的系统性局限，轻量级训练干预可有效对齐人类判断"><meta property="og:title" content="Re-Centering Humans in LLM Personalization"><meta property="og:description" content="真实人类数据揭示LLM个性化三阶段中的系统性局限，轻量级训练干预可有效对齐人类判断"><meta property="og:type" content="website"><title>Re-Centering Humans in LLM Personalization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06614" target="_blank" rel="noopener">2606.06614</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Re-Centering Humans in LLM Personalization</h1> <p class="title-zh">重新聚焦人类：LLM 个性化中的真实用户差距与对齐方法</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM个性化评估与对齐</span> </div> <p class="affiliations">University of Illinois Urbana-Champaign · Carnegie Mellon University</p> <div class="meta">Lechen Zhang, Jiarui Liu, Tal August</div> <p class="one-liner">真实人类数据揭示LLM个性化三阶段中的系统性局限，轻量级训练干预可有效对齐人类判断</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM personalization">LLM personalization</a><a class="tag" href="/DailyPaper/tag/human evaluation">human evaluation</a><a class="tag" href="/DailyPaper/tag/synthetic vs real">synthetic vs real</a><a class="tag" href="/DailyPaper/tag/user attribute extraction">user attribute extraction</a><a class="tag" href="/DailyPaper/tag/relevance matching">relevance matching</a><a class="tag" href="/DailyPaper/tag/personalized response">personalized response</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>属性提取后置轻量验证器：在从对话历史抽取用户属性后，使用基于人类标注训练的 RoBERTa 分类器作为过滤层，可大幅降低错误属性率（接受率从 58% 提升至 &gt;90%），适合作为 Agent 记忆或电商用户画像流水线的安全闸门。</li><li>相关性匹配不要依赖语义相似度：LLM 在判断“属性是否应影响当前回复”时严重过选（比人类多 20-40%），直接用 BM25 或 embedding 相似度效果更差，可改用监督分类或 GRPO 微调一个小模型（如 Qwen3-4B）来学习人类的保守选择边界，减少不必要的个性化干扰。</li><li>自动评估个性化质量需谨慎：LLM 评判者倾向给显式提及用户属性的回复更高分，但与人类偏好仅弱相关（Spearman &lt; 0.37），且近 55% 的个性化回复被人类认为不优于通用回复，因此推全个性化功能前必须结合人工评测，并警惕“表面个性化”带来的反向效果。</li><li>过度个性化会损害体验：多个开源模型在加入用户属性后回复质量反而下降，提示构建推荐系统或对话 Agent 时应保守引入个性化线索，当模型无法恰当时可退化为通用响应。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前 LLM 个性化评测主要依赖合成数据与 LLM 自动评判，但模型在合成数据上的表现是否能映射到真实用户存疑。为探究这一差距，本文构建了一个基于真实人类对话和人工标注的三阶段个性化流水线评测框架，涵盖“用户属性提取 → 属性与提示的相关性匹配 → 个性化回复生成”。</p>
+<p><strong>方法与关键设计</strong>：</p>
+<ul>
+<li>从 WildChat 中过滤出 16,573 名活跃英文用户的真实对话，辅以 LIMA 提示作为交互场景，收集 550 段对话、5,949 条属性质量判断、11,919 条相关性判断、1,101 条回复偏好判断。</li>
+<li>对比合成数据集（CUPID、PrefEval、PersonaLens）在属性多样性、提取难度上的差异。</li>
+<li>分别引入轻量级干预：在属性提取后训练 RoBERTa 验证器筛选不可靠属性；在相关性匹配上用监督分类和 GRPO 微调 Qwen3-4B 以对齐人类判断；在回复生成阶段尝试训练奖励模型。</li>
+</ul>
+<p><strong>核心结果</strong>：</p>
+<ul>
+<li>真实对话中属性提取的接受率仅 58%，远低于合成数据的 80%，主要失败模式为过度概括（53.9%）。</li>
+<li>LLM 在相关性匹配上与人类的一致率 κ 仅 0.30（模型间 κ 却高达 0.60），且普遍过选 20-40% 的属性为相关。</li>
+<li>在人类评价中，54.6% 的个性化回复质量不优于通用回复，多个开源模型甚至出现负提升。</li>
+<li>LLM 评判者系统性高估个性化效果，偏好显式提及属性的回复，而人类对此几乎无偏好。</li>
+<li>轻量级 RoBERTa 验证器将属性接受率提升至 >90%，GRPO 微调的 Qwen3-4B 将相关性 F1 从 0.417 提至 0.641。</li>
+</ul>
+<p><strong>核心洞见</strong>：真实人类在个性质化中的行为与偏好难以被合成数据或 LLM 评判替代，每个阶段都需要人类信号校准，且过犹不及——不当时个性化不如不个性化。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06614&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06614" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06614" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06614" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

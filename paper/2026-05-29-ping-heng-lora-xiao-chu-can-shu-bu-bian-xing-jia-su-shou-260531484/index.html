@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 BaLoRA，通过投影到平衡流形改善 LoRA 条件数，实现更快收敛且几乎无额外开销。"><meta property="og:title" content="Balanced LoRA: Removing Parameter Invariance to Accelerate Convergence"><meta property="og:description" content="提出 BaLoRA，通过投影到平衡流形改善 LoRA 条件数，实现更快收敛且几乎无额外开销。"><meta property="og:type" content="website"><title>Balanced LoRA: Removing Parameter Invariance to Accelerate Convergence</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31484" target="_blank" rel="noopener">2605.31484</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Balanced LoRA: Removing Parameter Invariance to Accelerate Convergence</h1> <p class="title-zh">平衡 LoRA：消除参数不变性加速收敛</p> <div class="dir-row"> <span class="direction-chip">🧭 LoRA 优化 · 平衡投影</span> </div> <p class="affiliations">École Normale Supérieure PSL · CNRS · Apple</p> <div class="meta">Valérie Castin, Kimia Nadjahi, Pierre Ablin, Gabriel Peyré</div> <p class="one-liner">提出 BaLoRA，通过投影到平衡流形改善 LoRA 条件数，实现更快收敛且几乎无额外开销。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/Convergence">Convergence</a><a class="tag" href="/DailyPaper/tag/Conditioning">Conditioning</a><a class="tag" href="/DailyPaper/tag/Balanced">Balanced</a><a class="tag" href="/DailyPaper/tag/PEFT">PEFT</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在生成式推荐或 Agent 微调中，用 BaLoRA 替代标准 LoRA：每步优化后加一次极分解+SVD 投影（复杂度 O((a+b)r²)），收敛更快且不增加显存。</li><li>高秩微调场景（如复杂多模态推荐、大规模 Agent 模型）下，BaLoRA 在高 rank（64、128）优势显著，可避免条件数恶化。</li><li>BaLoRA 对学习率和初始化缩放更鲁棒，降低超参搜索成本，适合业务中快速迭代。</li><li>投影保持乘积 AB 不变，无伤融入现有 LoRA 流水线，可即插即用。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LoRA 微调时多对低秩因子可产生同一适配器，但不同因子对应的 Hessian 条件数差异很大，导致收敛速率不稳定。已有工作未揭示平衡条件与最优条件数的理论联系。本文证明平衡的适配器（A⊤A = BB⊤）使损失 landscape 条件数最小，收敛最快。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>理论：分析一层线性及深度非线性网络下 LoRA 的 Hessian 谱，证明平衡最小化器达到最优条件数，条件数由权重矩阵的奇异值或谱间隙决定。</li>
+<li>BaLoRA：每次优化器步骤后，将 (A,B) 投影到超平衡流形 H = { (U S^{1/2}, S^{1/2} V) }。投影 P 利用极分解与 SVD，保持乘积 AB 不变，计算量仅 O((a+b)r²)。</li>
+<li>内在几何解释：用梯度下降时，BaLoRA 等价于在秩 r 矩阵流形上的 Bures 度量黎曼梯度下降，有优美的几何结构。</li>
+<li>与 AdamW 结合即为实用 BaLoRA，兼容各种初始化。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>合成数据：1 层/2 层线性网络优化，BaLoRA 先慢后快，最终收敛远快于 LoRA。</li>
+<li>大模型微调：在 Llama-3.2-3B 和 Qwen-2.5-3B 上，跨 Wikitext、Alpaca、CodeFeedback 等多个数据集，BaLoRA 测试损失一致优于 LoRA，与 RefLoRA、DoRA 等持平或更优，尤其 rank=64/128 时优势明显。</li>
+<li>显存：相比 LoRA 几乎无额外开销。</li>
+<li>鲁棒性：对学习率和初始化缩放不敏感，超参选择更宽松。</li>
+</ul>
+<p><strong>一句话</strong>：BaLoRA 以零成本投影消除 LoRA 的参数不变性引发的条件数恶化，实现更快更稳的微调，特别适合高秩适配。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31484&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31484" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31484" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31484" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

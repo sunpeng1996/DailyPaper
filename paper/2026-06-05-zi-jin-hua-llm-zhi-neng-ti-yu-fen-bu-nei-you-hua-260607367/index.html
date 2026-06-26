@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 Q-Evolve，通过混合离线数据的加权 IQL 与 GAE 自动生成过程奖励，结合行为近端策略优化实现 LLM 智能体的稳定自进化"><meta property="og:title" content="Self-evolving LLM agents with in-distribution Optimization"><meta property="og:description" content="提出 Q-Evolve，通过混合离线数据的加权 IQL 与 GAE 自动生成过程奖励，结合行为近端策略优化实现 LLM 智能体的稳定自进化"><meta property="og:type" content="website"><title>Self-evolving LLM agents with in-distribution Optimization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07367" target="_blank" rel="noopener">2606.07367</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Self-evolving LLM agents with in-distribution Optimization</h1> <p class="title-zh">自进化 LLM 智能体与分布内优化</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent 自进化训练 · 离线强化学习</span> </div> <p class="affiliations">Eindhoven University of Technology · University of Liverpool · MIT-IBM Watson AI Lab</p> <div class="meta">Yudi Zhang, Meng Fang, Zhenfang Chen, Mykola Pechenizkiy</div> <p class="one-liner">提出 Q-Evolve，通过混合离线数据的加权 IQL 与 GAE 自动生成过程奖励，结合行为近端策略优化实现 LLM 智能体的稳定自进化</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/self-evolving agents">self-evolving agents</a><a class="tag" href="/DailyPaper/tag/process reward">process reward</a><a class="tag" href="/DailyPaper/tag/distribution shift">distribution shift</a><a class="tag" href="/DailyPaper/tag/offline RL">offline RL</a><a class="tag" href="/DailyPaper/tag/IQL">IQL</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商客服 / 导购等长程对话 Agent 中，可采用混合离线数据（专家对话 + 自身探索记录）训练价值函数，通过 GAE 从稀疏成功信号自动生成步骤级奖励，省去人工标注过程标签。</li><li>借鉴加权 IQL 技巧：对成功轨迹、更靠近终端步的样本赋予更高权重，能有效稳定稀疏奖励下的价值学习，可迁移至点击率预估延迟转化等类似信用分配问题。</li><li>使用行为近端策略优化（BPPO）结合非对称裁剪（对负优势动作允许更大抑制），可在离线数据上安全地优化策略，防止灾难性遗忘和分布偏移，适用于线上策略迭代。</li><li>自进化循环模式（收集新经验 → 与专家数据混合 → 重新训练价值网络 → 重新计算奖励 → 更新策略）可应用于推荐系统的用户建模迭代，让模型在有限探索成本下持续提升。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM 智能体在长程交互任务中面临稀疏、延迟的终局奖励，信用分配困难。现有过程奖励模型依赖在线搜索或人工标注，且普遍忽视分布偏移——当策略更新后，过程奖励模型对未见状态 - 动作对的评价可靠性下降，导致训练不稳定甚至退化。因此，亟需一种能在同一分布内自动生成可靠步骤级监督并稳定更新策略的方法。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>混合离线数据构造</strong>：合并专家演示与智能体自生成轨迹，并利用环境自然语言反馈进行回顾性辅助奖励标注（格式错误、无效动作等），为后续学习提供初始信号。</li>
+<li><strong>加权隐式 Q 学习（Weighted IQL）</strong> ：在混合数据集上学习分布内价值函数 V 和 Q，通过对成功轨迹、靠近终止步的样本施加更高权重，稳定稀疏奖励下的 Bellman 备份，避免直接最大化分布外动作。</li>
+<li><strong>过程奖励生成</strong>：利用 GAE 从 V 和原始任务奖励计算标准化优势，作为步骤级过程奖励，无需环境回溯或人工标注，且保持与任务目标一致。</li>
+<li><strong>分布内策略优化</strong>：采用行为近端策略优化（BPPO），对正优势动作进行受限裁剪以鼓励，对负优势动作采用宽松的下界裁剪（ϵ_low > ϵ_high）以显式抑制有害行为，同时加入 KL 正则化防止策略偏离。</li>
+<li><strong>自进化闭环</strong>：新策略收集更多交互数据，与专家数据重新混合，再次训练 critic 并重标记奖励，再优化策略，形成政策、价值、数据三者协同进化的迭代过程。</li>
+</ul>
+<p><strong>关键结果</strong>：在 ALFWorld、WebShop、ScienceWorld 三个长程决策环境上，用 Llama-2-7B-Chat 基座，Q-Evolve 平均得分 79.4，超出最强基线 QLASS（74.5，需 600K 环境步数）和 ETO（69.4）。ALFWorld 上仅需 20K 环境步数即大幅领先。在 Qwen2.5-7B-Instruct 上仅 13K 步即超越所有在线 RL 基线（320K 步）。消融实验证实回顾性标注、加权 IQL、GAE、BPPO 均不可或缺。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07367&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07367" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07367" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07367" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="RankGuard 利用用户私有点击历史验证外来模型更新，有效抵御拜占庭攻击，并首次给出收敛证明"><meta property="og:title" content="Efficient and Robust Online Learning to Rank in Decentralized Systems"><meta property="og:description" content="RankGuard 利用用户私有点击历史验证外来模型更新，有效抵御拜占庭攻击，并首次给出收敛证明"><meta property="og:type" content="website"><title>Efficient and Robust Online Learning to Rank in Decentralized Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12246" target="_blank" rel="noopener">2606.12246</a>  </div> <h1>Efficient and Robust Online Learning to Rank in Decentralized Systems</h1> <p class="title-zh">去中心化在线排序学习的鲁棒高效框架</p> <div class="dir-row"> <span class="direction-chip">🧭 去中心化在线排序学习 · 拜占庭鲁棒性</span> </div> <p class="affiliations">TU Delft · EPFL</p> <div class="meta">Marcel Gregoriadis, Martijn de Vos, Sayan Biswas, Anne-Marie Kermarrec, Johan Pouwelse</div> <p class="one-liner">RankGuard 利用用户私有点击历史验证外来模型更新，有效抵御拜占庭攻击，并首次给出收敛证明</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Decentralized Learning">Decentralized Learning</a><a class="tag" href="/DailyPaper/tag/Online Learning to Rank">Online Learning to Rank</a><a class="tag" href="/DailyPaper/tag/Byzantine Robustness">Byzantine Robustness</a><a class="tag" href="/DailyPaper/tag/Poisoning Attack">Poisoning Attack</a><a class="tag" href="/DailyPaper/tag/Click Model">Click Model</a><a class="tag" href="/DailyPaper/tag/Gossip Learning">Gossip Learning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>模型验证即防御：在聚合其他节点的模型前，用本地私有交互数据（如用户点击序列）做似然检测，仅当外来模型对历史行为的解释优于本地模型时才接受。这可以低成本过滤恶意更新或噪声模型，适用于联邦推荐或分布式排序场景。</li><li>位置偏置校正的无偏评估：利用位置偏置点击模型（如 PBM）校准似然计算，确保评估的是真正的相关性提升而非位置引起的伪反馈。电商搜索排序中可借鉴此思想，用去偏后的点击信号做线上模型更新验证。</li><li>轻量高效的安全聚合：相比基于安全多方计算的聚合方法，RankGuard 只需简单的对数似然比较，计算开销极低（实验中达 62 倍加速）。在资源受限的边缘设备或需实时响应的推荐系统中，这种&quot;先验后聚合&quot;的策略有直接工程价值。</li><li>理论保障下的去中心化实践：首次为去中心化 OLTR 提供收敛性证明，表明即便在存在恶意节点的 Gossip 学习环境中仍可收敛到接近无攻击时的性能。这为电商去中心化推荐（如用户端训练个性化模型后共享）提供了可行性证据。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有在线排序学习依赖中心服务器收集用户交互，存在偏见和单点风险；去中心化学习让用户点对点交换模型，但易受拜占庭节点投毒攻击，现有防御算法计算量大且收敛性未知。</p>
+<p><strong>方法</strong>：提出 RankGuard，每个节点本地维护一个排序模型（广义线性模型）。收到邻居模型时，用自己私有点击历史（经位置偏置校正）计算新模型对历史点击的对数似然，只有当似然高于当前本地模型时，才通过指数滑动平均聚合该模型。聚合阈值天然阻止了恶意更新——攻击者只有提供真正提升用户点击似然的模型才能通过验证。论文给出了该算法在异步 Gossip 传播下的收敛上界，首次实现去中心化 OLTR 的理论收敛保证。</p>
+<p><strong>结果</strong>：在 MQ2007、MQ2008、MSLR-WEB10K、Istella-S 四个标准排序数据集，以及 perfect/informational/navigational 三种点击模型下，对抗随机噪声、梯度符号反转、自适应攻击等四种攻击。无攻击时 RankGuard 与普通去中心化 OLTR 性能持平；存在攻击时，RankGuard 在 11/12 种设定下排名质量（NDCG）显著优于七个基线（包括中心化 OLTR 的安全聚合、Krum、Multi-Krum 等），且计算效率最高提升 62 倍，仅需少量节点交换即可收敛。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12246&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12246" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12246" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12246" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

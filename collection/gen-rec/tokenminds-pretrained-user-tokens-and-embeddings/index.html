@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把 Semantic ID 从「物品侧」扩到「用户侧」。用一个 encoder-decoder（从预训练 LLM/Gemini 适配而来）同时产出两种用户表示——decoder 自回归生成离散的「SID-based 用户 token」（语义锚定、可解释、抗词表漂移），encoder 池化出传统「稠密用户 embedding」（兼容现有下游）。关键认知：离散 token 与稠密 embedding 捕捉互补信号，二者同时喂下游收益叠加；且共享 SID 词表天然支持长短视频跨场景统一建模（multi-context decoding 一次 encoder 前向解多场景），在 YouTube 十亿用户全量上线。"><meta property="og:title" content="TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems · 论文沉淀"><meta property="og:description" content="把 Semantic ID 从「物品侧」扩到「用户侧」。用一个 encoder-decoder（从预训练 LLM/Gemini 适配而来）同时产出两种用户表示——decoder 自回归生成离散的「SID-based 用户 token」（语义锚定、可解释、抗词表漂移），encoder 池化出传统「稠密用户 embedding」（兼容现有下游）。关键认知：离散 token 与稠密 embedding 捕捉互补信号，二者同时喂下游收益叠加；且共享 SID 词表天然支持长短视频跨场景统一建模（multi-context decoding 一次 encoder 前向解多场景），在 YouTube 十亿用户全量上线。"><meta property="og:type" content="website"><title>TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2026-06</time> <span class="sep">·</span><span>arXiv (Conference&#39;17 / ACM 格式投稿)</span>  </div> <h1>TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems</h1> <p class="archive-authors">Qingyun Liu, Bo Yan, Yang Liu, …, Lichan Hong, Li Wei, Xinyang Yi (Google DeepMind × YouTube, 20 人)</p> <p class="affiliations">Google DeepMind × YouTube</p> <p class="one-liner">把 Semantic ID 从「物品侧」扩到「用户侧」。用一个 encoder-decoder（从预训练 LLM/Gemini 适配而来）同时产出两种用户表示——decoder 自回归生成离散的「SID-based 用户 token」（语义锚定、可解释、抗词表漂移），encoder 池化出传统「稠密用户 embedding」（兼容现有下游）。关键认知：离散 token 与稠密 embedding 捕捉互补信号，二者同时喂下游收益叠加；且共享 SID 词表天然支持长短视频跨场景统一建模（multi-context decoding 一次 encoder 前向解多场景），在 YouTube 十亿用户全量上线。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">User Semantic ID</span><span class="tag tag-static">Dual-Output Representation</span><span class="tag tag-static">Cross-Scenario Modeling</span><span class="tag tag-static">Encoder-Decoder</span><span class="tag tag-static">Industrial RecSys</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：工业推荐里”用户表示”几乎都是<strong>稠密 embedding</strong>（把用户全部兴趣压进一个定长向量），受限于固定维度、丢失细粒度信号；而用 LLM 生成”文本用户画像”又只抓到话题共现、抓不到序列行为动态、且和非文本下游有模态鸿沟。物品侧的 <strong>Semantic ID（SID）</strong> 已被证明能提升泛化（TIGER/PLUM），但<strong>用户侧的离散 SID 表示几乎没人做</strong>。</p>
+<p><strong>关键 idea</strong>：把 SID 范式从物品<strong>搬到用户</strong>。用一个 <strong>encoder-decoder</strong> 同时吐出<strong>两种</strong>用户表示——</p>
+<ul>
+<li><strong>decoder</strong> 自回归生成<strong>离散的 SID-based 用户 token</strong>（语义锚定到物品 SID 词表、可解释、抗词表漂移）；</li>
+<li><strong>encoder</strong> 池化出<strong>稠密用户 embedding</strong>（无缝兼容现有依赖 dense 向量的下游）。</li>
+</ul>
+<p>这是”<strong>dual-output（稀疏 token + 稠密 embedding）用户表示</strong>”范式——论文证明二者<strong>互补</strong>（一起用收益叠加），且共享 SID 词表顺手解决了长/短视频<strong>跨场景统一建模</strong>。</p>
+<hr>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/tokenminds-pretrained-user-tokens-and-embeddings/fig1.png" alt="TokenMinds 总览：encoder-decoder 处理异构用户信号(长/短视频观看、搜索 query、互动特征)，encoder 出稠密 embedding、decoder 出离散 SID 用户 token，双路供下游"></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>输入：用户时序行为(长短视频观看 + 搜索 query + 互动特征如时长/点赞/设备)</span></span>
+<span class="line"><span>  → 每个 watch 用「物品 SID 前缀」+ 非SID特征 token 化</span></span>
+<span class="line"><span>  → encoder-decoder (从 Gemini V1.5 CPT 检查点初始化)</span></span>
+<span class="line"><span>        ├─ encoder：池化 → 1152 维稠密用户 embedding</span></span>
+<span class="line"><span>        └─ decoder：beam search → B 条 SID 序列(截到 prefix-L) = 离散用户 token</span></span>
+<span class="line"><span>  → 异步生成 + KV 缓存 → 下游 ranking 模型按需取用</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>两条关键设计线：<strong>(1) 表示学习与下游目标解耦</strong>（产出”通用”用户理解，不绑定某个下游 loss，区别于 GPR 那种对齐下游 metric 的做法）；<strong>(2) 重表示生成与实时打分解耦</strong>（靠异步 UBS 服务 + 缓存，让十亿用户可负担）。骨干不用 decoder-only 而用 encoder-decoder：encoder 更全面捕捉全历史序列模式、且能自然池化出 dense embedding；encoder/decoder 还能解耦部署（重 encoder 低频刷、轻 decoder 高频刷）。</p>
+<hr>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="模块-a--用户输入的-token-化sid-前缀--软硬特征">模块 A — 用户输入的 token 化（SID 前缀 + 软/硬特征）</h3>
+<p><strong>视频表示</strong>：每个观看的视频不用随机 VID，而用 <strong>RQ-VAE 生成的层次化 SID</strong>（<code>L_full=8</code> 级码本），但<strong>只保留 prefix-L 码</strong>（<code>L=4</code>）——利用 SID 层次性，用更粗粒度表示视频，鼓励多样性、抑制记忆化（消融证明截断很关键）。</p>
+<p><strong>每个 watch token 化</strong> = <code>condition token</code>（场景 <code>&#x3C;LFV>/&#x3C;SFV></code>）+ <code>prefix-L=4 个 SID 硬 token</code> + <code>M=1 个软 token</code>（非 SID 特征）：</p>
+<ul>
+<li><strong>硬 token</strong>：把稠密特征分桶、或类别/文本特征映射到词表。</li>
+<li><strong>软 token</strong>：每个特征独立 embedding → 拼接 → MLP 投影到 M 个 embedding。论文用 <code>M=1</code>（牺牲约 5% 离线 recall 换大幅缩短序列）。</li>
+</ul>
+<p>输入序列示例：<code>A12 B278 C23 D77 | 100.0s 20% IOS | …</code>（前 4 个是某视频 SID 前缀，后面是时长/完播率/设备等特征）。每用户取最近 <strong>1,200 个观看</strong> + <code>S=10</code> 条搜索 query 交织，最大序列长 <strong>1,024 token</strong>。</p>
+<h3 id="模块-b--双输出训练look-ahead-多目标--奖励加权">模块 B — 双输出训练（look-ahead 多目标 + 奖励加权）</h3>
+<p><img src="/ai-papers-daily/figures/tokenminds-pretrained-user-tokens-and-embeddings/fig2.png" alt="训练：encoder 吃交织的 SID token+特征，decoder 经 cross-attention 自回归生成多个近未来目标观看的 SID"></p>
+<p><strong>两个关键departure（都被消融验证）</strong>：</p>
+<ol>
+<li><strong>look-ahead 采样</strong>：不预测紧邻的下一个观看 <code>W_{t+1}</code>，而是从未来窗口 <code>{W_{t+1},…,W_n}</code>（cutoff T 后 24h 内）随机选最多 <strong>N=15</strong> 个目标——防过拟合紧邻行为、逼近”近未来兴趣”。</li>
+<li><strong>多目标同时预测</strong>：一次预测多个目标，提升训练效率。</li>
+</ol>
+<p><strong>损失函数</strong>（只作用于 decoder，且只在 prefix-L 个 SID token 上算）：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>L = − Σ_{i=1..N} r(W_i) · Σ_{j=1..L} log P(SID_{i,j} | W_1..W_t, W_{&#x3C;i}, SID_{i,&#x3C;j})</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li><code>i</code> 索引 N 个采样目标，<code>r(W_i)</code> 是<strong>互动奖励</strong>（鼓励多样、高价值消费，由多种用户信号组合）。</li>
+<li>实现上：按奖励<strong>正比采样</strong>训练样本、在 loss 里<strong>等权</strong>，比直接加不同权重更高效。</li>
+<li><strong>encoder 不直接受监督</strong>：梯度只经 decoder 的 cross-attention 回流，隐式监督 encoder 产出”利于 SID 生成”的表示。</li>
+</ul>
+<p><strong>骨干 &#x26; 训练</strong>：encoder-decoder 基于 <strong>Gemini V1.5</strong>，370M MoE encoder + 370M dense decoder，均从 <strong>CPT（Continued Pre-Training）检查点</strong>初始化（让 LLM 先对齐 SID 这个新模态）。JAX + Pathways；<strong>持续训练</strong>（每天用最新数据增量训，每天百万级样本，比传统 LEM 需要十亿级交互更省样本）；连续训练下<strong>恒定学习率</strong>比 warmup+cosine 更抗日间分布漂移。</p>
+<h3 id="模块-c--跨场景统一建模multi-context-decoding">模块 C — 跨场景统一建模（multi-context decoding）</h3>
+<p><img src="/ai-papers-daily/figures/tokenminds-pretrained-user-tokens-and-embeddings/fig3.png" alt="分场景独立推理(左) vs 多上下文解码(右)：共享一次 encoder 前向，context stage 分叉成并行子 batch，各自按场景前缀解码"></p>
+<p>长视频(LFV)和短视频(SFV)ID 空间不相交、消费模式不同，但近半用户两者都看、SID 词表前两级约 <strong>40% 重叠</strong> → 值得统一。</p>
+<ul>
+<li><strong>统一训练</strong>：每个 watch 前加 <code>&#x3C;LFV>/&#x3C;SFV></code> 条件 token；搜索 query 前加 <code>&#x3C;Search></code> token 交织进序列；目标采样同时含 LFV/SFV；condition token 不计入 loss（太好预测会拖累 SID 预测质量）。</li>
+<li><strong>multi-context decoding</strong>（核心效率创新）：朴素做法要为每个场景跑一次推理（重复处理历史）。改为：<strong>共享一次 encoder 前向</strong> → context stage 分叉出每场景一个并行子 batch → 各自用对应 condition token 独立 beam search，但全部复用同一份 encoder 隐状态。一次 prefill 同时出 LFV 和 SFV 用户 token。</li>
+</ul>
+<h3 id="模块-d--下游适配离散-token--连续向量">模块 D — 下游适配（离散 token → 连续向量）</h3>
+<p>下游 LEM 要稠密向量，需把离散 SID token 投影回连续空间，三种方法：</p>
+<ol>
+<li><strong>Prefix Embedding Mapping（EM，静态）</strong>：把预测的 L-prefix SID 映回生成它的原始内容 embedding；多个视频塌到同一前缀时<strong>对它们原始 embedding 取均值</strong>。</li>
+<li><strong>N-gram Embedding（LE，可学）</strong>：SID 切成定长 N-gram 子词（N=2 即相邻码元对），各查一张<strong>随机初始化、随下游端到端训练</strong>的 embedding 表，求和。</li>
+<li><strong>SPM Embedding（LE）</strong>：同 N-gram 但用 SentencePiece 学变长子词。</li>
+</ol>
+<p>beam search 出 <code>B</code> 条 SID 序列 → 各自得 SID embedding → 池化（attention/mean/max/top-k 拼接）成单个用户向量。<strong>结论：(2)(3) 这类可学 embedding(LE) 优于静态 EM</strong>；池化方式对结果影响很小（说明收益来自 token 本身信息）。</p>
+<h3 id="模块-e--异步-serving">模块 E — 异步 serving</h3>
+<p>为十亿用户在严格延迟下服务：基于 <strong>UBS（User Behavior Service）异步框架</strong>，把”重表示生成”与”实时打分”解耦——用户 embedding/token <strong>异步生成并缓存进 KV 存储</strong>，实时打分直接取缓存；缓存过期/缺失则后台 Refresh Service 读最新历史重新推理回写。<strong>24 小时刷新节奏</strong>；每用户取 1152 维 dense embedding + beam search 解 <strong>B=40</strong> 条 SID（20 LFV + 20 SFV）。</p>
+<hr>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据/场景</strong>：YouTube 长短视频观看历史 + 搜索 query，多个生产 surface，全量用户（十亿级）线上 A/B（7 天）。<strong>指标</strong>：离线 Recall@10（Session Recall 用近全历史预测末位；Cold-Start Recall 用截断历史预测未来窗口随机一个）；线上 Engaged Users / Satisfied Engagement / Fresh Engagement。</p>
+<p><strong>训练目标消融（Table 1，Recall@10）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>配置</th><th>Session Recall</th><th>Cold-Start Recall</th></tr></thead><tbody><tr><td><strong>TokenMinds（完整）</strong></td><td><strong>0.291</strong></td><td><strong>0.210</strong></td></tr><tr><td>w/o 多目标</td><td>0.265 (−8.9%)</td><td>0.203 (−3.3%)</td></tr><tr><td>w/o look-ahead 窗口</td><td>0.278 (−4.5%)</td><td>0.189 (−10.0%)</td></tr><tr><td>w/o SID 截断（用全长 SID）</td><td>0.247 (−15.1%)</td><td>0.174 (−17.1%)</td></tr></tbody></table>
+<p>→ <strong>SID 截断</strong>和 <strong>look-ahead</strong> 对冷启动尤其关键。</p>
+<p><strong>初始化 &#x26; 搜索信号（Table 2，相对随机初始化无搜索的 Δ%）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>初始化</th><th>+搜索 query</th><th>Session</th><th>Cold-Start</th></tr></thead><tbody><tr><td>CPT</td><td>否</td><td>+5.3%</td><td>+8.7%</td></tr><tr><td>随机</td><td>是</td><td>+12.5%</td><td>+16.9%</td></tr><tr><td><strong>CPT</strong></td><td><strong>是</strong></td><td><strong>+23.5%</strong></td><td><strong>+31.5%</strong></td></tr></tbody></table>
+<p>→ CPT > 通用预训练 Gemini > 随机；搜索 query 普遍加分，且与强初始化<strong>正交叠加</strong>。</p>
+<p><strong>线上下游（Table 4，SFV surface）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>表示</th><th>Engaged Users</th><th>Satisfied Engagement</th></tr></thead><tbody><tr><td>Embed-only</td><td>0.00%</td><td>+0.05%</td></tr><tr><td>Token-only</td><td>+0.04%</td><td>+0.40%</td></tr><tr><td><strong>Embed+Token</strong></td><td><strong>+0.11%</strong></td><td><strong>+0.62%</strong></td></tr></tbody></table>
+<p>→ <strong>核心证据（RQ2）</strong>：离散 token 单独有正增量，与 dense embedding <strong>一起用收益叠加</strong>（互补）。下游 EM vs LE 对比中 <strong>LE 更优</strong>。</p>
+<p><strong>跨场景效率（Table 6）</strong>：统一模型 vs 两个独立模型——<strong>上游训练 compute −50%、上游 serving compute −31%</strong>（multi-context decoding 共享 encoder：481 chips vs 698 chips），核心指标不降，Fresh Engagement 反升（SFV +0.33% / LFV +0.19%）。</p>
+<p><strong>其他</strong>：token 存储 1,280 字节 vs dense 4,608 字节（<strong>−72% 存储</strong>）；serving 缓存命中率 <strong>96.4%</strong>（1.44M reads/s）；每用户生成 ~339ms（后台吸收）；embedding 稳定性 Sim(扰动同用户)=0.993 ≫ Sim(不同用户)=0.761；beam search 多样性 CDF 与真实观看分布相当（不塌缩）。</p>
+<hr>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>定位</strong>：这是 Semantic ID 范式从”物品侧”正式扩到”<strong>用户侧</strong>”的工业代表作，建立在 TIGER（SID 起源）+ PLUM（把 SID 词表对齐进 LLM 的 CPT 框架）之上，是 gen-rec 这条线在”用户表示”维度的重要补全。</p>
+<p><strong>真正的创新点（区分新颖 vs 工程）</strong>：</p>
+<ul>
+<li>🔴 概念：用户的”稀疏 SID token + 稠密 embedding”<strong>dual-output 互补</strong>——把 LIGER/COBRA 在物品侧的稀疏-稠密互补搬到用户侧，并用线上 A/B 证明叠加增益。</li>
+<li>🟡 方法：multi-context decoding（一次 encoder 前向、按场景前缀并行解码）是省算力的巧设计；look-ahead 多目标 + 奖励正比采样的训练目标。</li>
+<li>🟢 工程：UBS 异步生成+缓存解耦、CPT 初始化、encoder/decoder 异步刷新频率分离。</li>
+</ul>
+<p><strong>局限（清醒看）</strong>：</p>
+<ul>
+<li>线上绝对增益偏小（核心指标 +0.11%、互动 +0.62%）——工业体量下显著但幅度有限，且<strong>全是内部指标、无法外部复现</strong>。</li>
+<li>全栈绑 Gemini + YouTube 内部数据/基建（UBS、RQ-VAE SID、Pathways），外部几乎不可复现。</li>
+<li>只验证了 ranking 一个下游（retrieval/LLM 下游仅提及）；离散 token “可解释/语义锚定”的 claim 缺直接证据（更多是结构性论证）。</li>
+<li>SID 仍来自冻结的物品 RQ-VAE，新内容/词表更新问题没碰（与 OneRetrieval「可编辑码本」是互补缺口）。</li>
+</ul>
+<p><strong>对电商/搜推/Agent 可直接借鉴</strong>：</p>
+<ol>
+<li><strong>用户表示也可以”离散化”</strong>：把用户兴趣编成共享 SID 词表的离散 token，和现有 dense 用户向量<strong>并存互补</strong>喂下游——是缓解”定长向量丢细节”的现成思路，且离散 token 抗物品词表漂移（长历史建模尤其受益）。</li>
+<li><strong>multi-context decoding</strong> 是任何”一套用户编码、多场景/多目标出口”系统的省算力模板（共享 encoder prefill、分支并行解码）。</li>
+<li><strong>表示与下游解耦 + 异步缓存 serving</strong>：重生成模型想上线但实时算不起时，UBS 式”异步生成→KV 缓存→下游直取”是可套用的工业架构（与本站 RaG 的 SID 缓存、Sortify 的解耦思路一脉）。</li>
+<li><strong>CPT 把新模态(SID)对齐进 LLM</strong> 再做下游，比随机初始化大幅提升——做”LLM + 自定义离散 ID”的团队应优先复用。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2606.25147" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

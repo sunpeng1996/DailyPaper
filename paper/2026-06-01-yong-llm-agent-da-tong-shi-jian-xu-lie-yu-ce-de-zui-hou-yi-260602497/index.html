@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出以 LLM agent 对统计基线预测进行可溯、约束化的业务修正，将上下文信息转化为结构化修订动作。"><meta property="og:title" content="Bridging the Last Mile of Time Series Forecasting with LLM Agents"><meta property="og:description" content="提出以 LLM agent 对统计基线预测进行可溯、约束化的业务修正，将上下文信息转化为结构化修订动作。"><meta property="og:type" content="website"><title>Bridging the Last Mile of Time Series Forecasting with LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-01">2026-06-01</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.02497" target="_blank" rel="noopener">2606.02497</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Bridging the Last Mile of Time Series Forecasting with LLM Agents</h1> <p class="title-zh">用 LLM Agent 打通时间序列预测的最后一公里</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM Agent · 预测修正与业务落地</span> </div> <p class="affiliations">Trip.com Group</p> <div class="meta">Yuhua Liao, Zetian Wang, Qiangqiang Nie, Zhenhua Zhang</div> <p class="one-liner">提出以 LLM agent 对统计基线预测进行可溯、约束化的业务修正，将上下文信息转化为结构化修订动作。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Time Series Forecasting">Time Series Forecasting</a><a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a><a class="tag" href="/DailyPaper/tag/Forecast Revision">Forecast Revision</a><a class="tag" href="/DailyPaper/tag/Auditable">Auditable</a><a class="tag" href="/DailyPaper/tag/Memory Reflection">Memory Reflection</a><a class="tag" href="/DailyPaper/tag/Map-Reduce Decomposition">Map-Reduce Decomposition</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>预测修正的工程化模式：将统计基线预测与业务修正解耦，把修正动作封装为可审计的操作（范围缩放、点位覆写），可直接用于电商需求计划、促销备货等场景，把运营经验结构化地注入到预测中。</li><li>Agent 工作区设计：共享的表格式工作区（历史值、基线预测、可编辑修订值）保证历史与基线不可变，所有修订仅作用于 y_final，避免模型幻觉污染原始信号，这种“受控编辑”的思路可复用于推荐系统中的打分后调整或多策略融合。</li><li>长时预测的 map-reduce 分解：将长预测区间拆分为事件窗口并行推理，再通过统一动作接口合并，适合电商大促期的多活动多时段调优，提升推理效率且保持可审查性。</li><li>基于记忆的自我改进闭环：在真实值出现后生成校准反思，存为结构化记忆，后续预测时优先检索历史修正错误，避免重复犯错，该机制可直接用于推荐系统的 A/B 后评估与在线参数的自适应调整。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：时间序列预测在统计模型层面已日趋成熟，但在实际业务决策中，一个统计上合理的基线预测往往需要结合节假日、促销计划、外部事件等上下文信息进行二次修正才能落地。这种“最后一公里”的修订过程过去主要依赖人工经验，缺乏结构化和可审计性。本文将该问题形式化为 <strong>last‑mile forecasting</strong>，即从基线预测到业务可用预测的约束化修订，并提出一种 LLM‑agent 框架来解决。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>系统架构</strong>：在预测主干（如 TimesFM）之上构建 Agent，将数值外推和上下文修正彻底解耦，主干负责基线，Agent 负责可追溯的修订。</li>
+<li><strong>统一工作区</strong>：保持一个包含历史值、不可变基线、可编辑修订值的数据表，所有修改只能通过受限动作（范围缩放、点位覆写、修订列表合并）作用于 y_final，确保修改变更完整记录。</li>
+<li><strong>基于工具的证据获取</strong>：Agent 通过日历查询、历史检索、记忆查询等工具收集证据，并将证据转化为结构化修订提案（含方向、幅度、置信度），再驱动修订动作。</li>
+<li><strong>长时预测的 map‑reduce 分解</strong>：将长预测区间按事件窗口分解，每个窗口由本地推理器独立生成修订信号后再汇总执行，保持过程清晰可审计。</li>
+<li><strong>记忆与自改进</strong>：在真实值出现后，对比基线、修正值和实际值，生成反思记录存入记忆库；后续预测时可检索这些记忆，以校准修正策略，实现跨 session 的自提升。</li>
+</ul>
+<p><strong>实验数据与结果</strong>
+基于携程某国内航线的每日机票销量数据（2024‑01‑01 至 2026‑05‑05），设计三组 case study：</p>
+<ul>
+<li><strong>节假日修正</strong>：对 2026 年春节窗口，相比 Prophet 和 TimesFM，MAE 分别降低 80.0% 和 88.2%，MAPE 从 155.95%／262.76% 降至 32.84%。</li>
+<li><strong>长时多事件预测</strong>：126 天区间含四个节假日，整体 MAPE 降至 18.91%，每个事件窗口误差均为最低，展示了按事件精准修正而非全局统一偏移的能力。</li>
+<li><strong>自改进机制</strong>：在连续三周的非事件窗口上，带记忆的 Agent 在第三周 MAE（60.10）显著低于无记忆对照组（92.94），验证了反思记忆的有效性。</li>
+</ul>
+<p><strong>关键结论</strong>：将 LLM Agent 的角色从预测生成转向预测的上下文修正，通过约束化、痕迹化的工作流，能显著提升预测的业务可用性与审计性，为“预测最后一公里”提供系统化方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.02497&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.02497" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.02497" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.02497" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

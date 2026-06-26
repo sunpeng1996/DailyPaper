@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Long-Horizon Agents - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Long-Horizon Agents - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Long-Horizon Agents</h2> <p style="color: var(--fg-muted); font-size: 14px;">1 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-18-hint-sd-mian-xiang-chang-cheng-zhi-neng-ti-de-mu-biao-hua-zi-260517873">HINT-SD: Targeted Hindsight Self-Distillation for Long-Horizon Agents</a></h2> <p class="title-zh">HINT-SD：面向长程智能体的目标化后见自蒸馏</p> <div class="dir-row"> <span class="direction-chip">🧭 长程 Agent 后训练 · 目标化后见蒸馏</span> <span class="badge badge-deep">★ 深度解读</span> </div> <p class="affiliations">KAIST · DeepAuto.ai</p> <p class="summary">通过选择失败相关动作进行自蒸馏，在不损失效率的前提下为长程 LLM Agent 提供精准过程监督</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>选择性过程监督：长程 Agent RL 训练中不要均匀地对所有步骤蒸馏反馈。先用策略自身对失败轨迹进行后见分析（Hindsight Analyzer），仅挑选出导致失败的关键步骤，再对这些步骤进行带反馈的自蒸馏，避免大量正确或无关步骤的噪声更新。在电商购物助手、多轮工具调用等场景中，可直接复刻“复盘→定位错误→精准纠正”的范式。</li><li>反馈放置的时机很关键：实验表明，将纠正反馈插入到发生错误的动作之前（而非整个轨迹的开头），教师与学生的上下文分布更匹配，纠正效果明显更好。在实施反馈条件蒸馏时，应将反馈准确地放置在相关步骤的上下文中，避免因前缀不同导致分布错位。</li><li>自蒸馏作为本地化的教师：无需外部大模型，训练中的 EMA 策略本身即可充当反馈生成器，节省成本。这在资源有限的场景（如在自有模型上持续训练 Agent）中尤为实用，可作为一个轻量、自包含的在线蒸馏组件集成进训练流程。</li><li>效率启发：选择性蒸馏大幅缩短训练步时和显存消耗（2.26× 步时降低，1.48× 显存降低）。对于需要批量处理大量长对话的推荐 / Agent 系统，采用“先判断哪些步骤需要学习”的策略可显著提升迭代效率和资源利用率。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span> <span>cs.CL</span> <span class="sep">|</span> <span class="badge badge-score">score 8/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Hindsight Distillation">Hindsight Distillation</a><a class="tag" href="/DailyPaper/tag/Long-Horizon Agents">Long-Horizon Agents</a><a class="tag" href="/DailyPaper/tag/Self-Distillation">Self-Distillation</a><a class="tag" href="/DailyPaper/tag/Credit Assignment">Credit Assignment</a><a class="tag" href="/DailyPaper/tag/Sparse Rewards">Sparse Rewards</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过查询桥接对比学习训练RQ-VAE生成相关性感知的离散语义ID，并利用LLM预测查询SID，以层次匹配分数增强排序模型"><meta property="og:title" content="DSIRM: Learning Query-Bridged Discrete Semantic Identifiers for E-commerce Relevance Modeling"><meta property="og:description" content="通过查询桥接对比学习训练RQ-VAE生成相关性感知的离散语义ID，并利用LLM预测查询SID，以层次匹配分数增强排序模型"><meta property="og:type" content="website"><title>DSIRM: Learning Query-Bridged Discrete Semantic Identifiers for E-commerce Relevance Modeling</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.04374" target="_blank" rel="noopener">2606.04374</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DSIRM: Learning Query-Bridged Discrete Semantic Identifiers for E-commerce Relevance Modeling</h1> <p class="title-zh">DSIRM：查询桥接的离散语义标识符用于电商相关性建模</p> <div class="dir-row"> <span class="direction-chip">🧭 搜索相关性 · 离散语义ID</span> </div> <p class="affiliations">Taobao &amp; Tmall Group of Alibaba</p> <div class="meta">Bokang Wang, Xing Fang, Mingmin Jin, Jing Wang, Zhentao Song, Guangxin Song 等</div> <p class="one-liner">通过查询桥接对比学习训练RQ-VAE生成相关性感知的离散语义ID，并利用LLM预测查询SID，以层次匹配分数增强排序模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Discrete Semantic Identifiers">Discrete Semantic Identifiers</a><a class="tag" href="/DailyPaper/tag/Contrastive RQ-VAE">Contrastive RQ-VAE</a><a class="tag" href="/DailyPaper/tag/LLM for Query Understanding">LLM for Query Understanding</a><a class="tag" href="/DailyPaper/tag/E-commerce Search">E-commerce Search</a><a class="tag" href="/DailyPaper/tag/Relevance Modeling">Relevance Modeling</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>1. 将离散SID作为排序模型的补充特征：物品侧用RQ-VAE离线量化成层级码，查询侧用小尺寸LLM在线生成可能的SID，通过层级前缀匹配得到一个离散匹配分数，即插即用到任意DNN排序模型中，有效弥补连续嵌入在细粒度属性区分上的不足。</li><li>2. 查询桥接的对比量化训练：用InfoNCE损失强制匹配的query-item对在量化空间中靠近，把无监督聚类转成有监督的搜索相关性分区，并配合类别感知的一级码本分配（按类目固定码本索引）缓解类别不平衡，这一范式可迁移至其他需要查询感知离散表示的场景（如推荐中的用户意图聚类）。</li><li>3. LLM解码意图多义性：微调自回归LLM根据查询文本生成Top-K个SID，以beam search得到多条候选，显式建模查询的多义意图，再与物品SID做层级匹配，该方法可复用到查询改写、意图识别等模块，比单一向量表示更灵活。</li><li>4. 离线在线混合部署方案：物品SID预计算并存入KV缓存，查询侧对历史查询做缓存（88%流量命中），仅12%实时流量走LLM推理，0.6B模型平均延迟17.9ms，P99 24.3ms，几乎不增加主链路耗时，为高性能系统中引入生成式LLM特征提供了低成本的工程样板。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+电商搜索相关性建模中，连续嵌入虽然泛化能力强，但同类目下仅在关键属性上有差异的商品在嵌入空间中过于拥挤，难以精确区分。离散语义标识符（SID）通过层级码本赋予物品结构化离散表示，但现有方法（如DSI、TIGER）多用于检索且依赖无监督聚类，缺乏查询-物品交互的显式监督，导致语义分区与搜索相关性脱节。</p>
+<p>**方法</p>
+<ol>
+<li>
+<p><strong>物品SID学习（查询桥接对比RQ-VAE）</strong>：</p>
+<ul>
+<li>使用预训练的双塔模型获取查询与物品的嵌入，送入共享的层次RQ-VAE（3层码本，大小分别为216/512/512）。</li>
+<li>训练时对正负样本对施加对称InfoNCE损失，强制匹配的查询-物品在量化空间拉近，使SID分配受搜索相关性驱动。</li>
+<li>为应对类目不均衡，第一层码本直接按天猫一级类目划分（216个类目对应216个码字），用EMA更新该类目码矢；后续层级由标准量化过程决定。</li>
+<li>总损失 = 对比损失 + 量化承诺损失 + 重建损失。</li>
+</ul>
+</li>
+<li>
+<p><strong>查询SID生成（LLM微调）</strong>：</p>
+<ul>
+<li>用物品SID作为监督标签，微调Qwen3-0.6B自回归模型，输入查询文本，预测对应的物品SID序列。</li>
+<li>推理时用beam search产生Top-K（K=5）条SID，显式建模查询的多重意图。</li>
+</ul>
+</li>
+<li>
+<p><strong>SID层次匹配与排序集成</strong>：</p>
+<ul>
+<li>对查询生成的K个SID与物品SID逐层比较，最深匹配层级转化为离散特征（0.0/0.25/0.5/1.0），作为新特征拼入原MLP排序模型。</li>
+</ul>
+</li>
+</ol>
+<p><strong>实验</strong></p>
+<ul>
+<li>离线：训练数据8000万query-item对，排序用160万Qwen3-30B标注的高质量样本。DSIRM AUC 0.9356，较无SID基线提升+1.54%，优于DSI（0.9312）和TIGER（0.9323）。</li>
+<li>消融：去掉对比学习AUC降0.09%，去掉类别约束降0.07%，验证各组件有效性。</li>
+<li>在线A/B：UCTR +0.13%，UCTCVR +0.25%，部署后低延迟（缓存命中率88%，实时RT 17.9ms）。</li>
+</ul>
+<p><strong>核心洞察</strong>
+“将无监督离散化转变为查询桥接的对比量化，使SID真正成为搜索相关性的结构化特征，再结合LLM解码查询多义性，是低成本提升排序细粒度区分能力的有效范式。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.04374&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.04374" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.04374" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.04374" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

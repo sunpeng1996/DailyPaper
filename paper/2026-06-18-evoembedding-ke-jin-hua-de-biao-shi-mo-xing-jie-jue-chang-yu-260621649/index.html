@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过FIFO潜在记忆队列实现可进化的上下文感知嵌入，在长上下文检索和Agent记忆任务上大幅超越静态大模型"><meta property="og:title" content="EvoEmbedding: Evolvable Representations for Long-Context Retrieval and Agentic Memory"><meta property="og:description" content="通过FIFO潜在记忆队列实现可进化的上下文感知嵌入，在长上下文检索和Agent记忆任务上大幅超越静态大模型"><meta property="og:type" content="website"><title>EvoEmbedding: Evolvable Representations for Long-Context Retrieval and Agentic Memory</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.21649" target="_blank" rel="noopener">2606.21649</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>EvoEmbedding: Evolvable Representations for Long-Context Retrieval and Agentic Memory</h1> <p class="title-zh">EvoEmbedding：可进化的表示模型，解决长上下文检索与Agent记忆动态匹配</p> <div class="dir-row"> <span class="direction-chip">🧭 可进化嵌入 · 长上下文检索与Agent记忆</span> </div> <p class="affiliations">Nanjing University</p> <div class="meta">Chang Nie, Chaoyou Fu, Junlan Feng, Caifeng Shan</div> <p class="one-liner">通过FIFO潜在记忆队列实现可进化的上下文感知嵌入，在长上下文检索和Agent记忆任务上大幅超越静态大模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Evolvable Embeddings">Evolvable Embeddings</a><a class="tag" href="/DailyPaper/tag/Latent Memory">Latent Memory</a><a class="tag" href="/DailyPaper/tag/Long-Context Retrieval">Long-Context Retrieval</a><a class="tag" href="/DailyPaper/tag/Agentic Memory">Agentic Memory</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/RAG">RAG</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用户行为序列的动态嵌入：电商场景中，同一用户在不同时段对同一query的意图不同（如“耳机”先浏览后比价），EvoEmbedding的可进化表示可压缩历史上下文，使召回/排序阶段感知时序变化，避免检索过时信息。可直接用其FIFO潜在记忆队列增量更新用户状态，嵌入维度仅1024，开销低。</li><li>多LoRA解耦训练与无损切换：将记忆更新和表示生成拆分为两个LoRA适配器，基座LLM参数冻结，既避免了灾难性遗忘，又可在推理时按需激活。业务中可借鉴为同一个基座模型同时具备记忆压缩和检索嵌入能力，省去额外部署专用嵌入模型。</li><li>长度加权对比损失：对于电商长序列（如用户全生命周期行为），正负样本数量差异极大且长度悬殊。论文的log(N+1)自适应校准因子可稳定训练，避免模型偏向短序列，值得直接移植到用户长序列表示学习。</li><li>Segment-Batching加速技巧：将多个连续片段拼接后并行编码，训练提速3.8倍且性能小幅提升。在处理用户流水数据时，可按时间窗口并行化，平衡效率与效果。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有文本嵌入模型（如Qwen3-Embedding、KaLM-Embedding）对每个文本块独立编码，完全忽略块之间的时序与上下文关联。在长对话、用户记忆等高动态场景中，同一查询在不同时间点的正确答案不同，静态表示会导致检索到过时信息（如会议时间被修改后仍返回旧时间）。这严重制约了RAG在Agent长期记忆中的实用性。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>可进化嵌入</strong>：维护一个FIFO潜在记忆队列（容量C=512 token），在处理连续文本段时，每段输出K=16个可学习记忆token，经投影后入队，形成动态上下文摘要。查询时联合当前记忆生成上下文感知的嵌入，使得相同query在不同历史阶段产生不同向量。</li>
+<li><strong>多LoRA解耦</strong>：记忆更新与向量生成分别用两个独立LoRA适配器，基座LLM参数冻结。既避免灾难性遗忘，又允许推理时灵活切换。训练时通过记忆生成损失（交叉熵，冻结LLM迫使记忆token兼容基座语义空间）和长度加权多正样本对比损失联合优化。</li>
+<li><strong>EvoTrain-180K数据集</strong>：三阶段流水线构建18.4万样本，混合长/短上下文、多领域文本（网页、对话、记忆），包含40+模板的语义匹配与复杂推理问答，最大训练长度12K token。</li>
+<li><strong>工程优化</strong>：动态Segment-Batching（并行处理k个连续段，总长不超阈值）加速训练3.8倍，长度加权<code>log(N+1)</code>平衡不同长度样本的梯度尺度。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在8个长上下文检索基准和2个个性化生成基准上，EvoEmbedding-4B（嵌入维度仅1024）在Overall Recall@10上达80.5，比KaLM-12B高7.8%，比Qwen3-8B高11.1%。在LongMemEval上，只用Top-8片段的简单RAG达到77.6%准确率，超越LightMem（70.2%）等专用记忆系统。作为即插即用模块插入A-MEM等记忆框架时，带来+19.2%的绝对提升。Temporal分析显示模型能根据“firstly/lastly”等时间关键词准确检索到对话开头或结尾片段，t-SNE可视化表明其潜在空间按时间顺序清晰分离。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.21649&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.21649" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.21649" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.21649" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

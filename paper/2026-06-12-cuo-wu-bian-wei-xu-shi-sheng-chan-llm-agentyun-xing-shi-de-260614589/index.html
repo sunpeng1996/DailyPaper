@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出五类机制导向的无声故障分类，揭示LLM系统特有的“fail-plausible”故障模式并给出工程防御框架"><meta property="og:title" content="When Errors Become Narratives: A Longitudinal Taxonomy of Silent Failures in a Production LLM Agent Runtime"><meta property="og:description" content="提出五类机制导向的无声故障分类，揭示LLM系统特有的“fail-plausible”故障模式并给出工程防御框架"><meta property="og:type" content="website"><title>When Errors Become Narratives: A Longitudinal Taxonomy of Silent Failures in a Production LLM Agent Runtime</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-12">2026-06-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14589" target="_blank" rel="noopener">2606.14589</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>When Errors Become Narratives: A Longitudinal Taxonomy of Silent Failures in a Production LLM Agent Runtime</h1> <p class="title-zh">错误变为叙事：生产LLM Agent运行时的无声故障纵向分类</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent系统可靠性 · 无声故障分类与防御</span> </div> <p class="affiliations">Independent researcher</p> <div class="meta">Wei Wu</div> <p class="one-liner">提出五类机制导向的无声故障分类，揭示LLM系统特有的“fail-plausible”故障模式并给出工程防御框架</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/silent failures">silent failures</a><a class="tag" href="/DailyPaper/tag/fail-plausible">fail-plausible</a><a class="tag" href="/DailyPaper/tag/agent reliability">agent reliability</a><a class="tag" href="/DailyPaper/tag/governance">governance</a><a class="tag" href="/DailyPaper/tag/postmortem analysis">postmortem analysis</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>上下文卫生是防止幻觉污染的第一关：在 Agent 或生成式推荐流水线中，必须将错误输出（如 stderr）与数据通道严格隔离，避免命令替换捕获错误日志并注入下游 LLM 导致虚构输出。可借鉴文中“一行 &gt;&amp;2 切断整条幻觉链”的思路。</li><li>分层反捏造守卫：对高风险生成场景（推荐理由、商品卖点、工作总结），建立来源可信度标注、禁止短语黑名单（从实际故障中抽取），并采用风险分级的提示守卫模块，共享给所有 LLM 调用任务，防止单点 copy-paste 式维护。</li><li>声明式状态收敛 + 机器同步：在多组件 Agent 系统中，建立声明式注册机与运行时真实状态的自动 diff 与同步（如定时任务登记 vs crontab、模型注册 vs 实际路由），避免人工遗漏导致的长期无声错误。可设计分级收敛策略：告警 → 预执行 → 自动同步。</li><li>将人工审阅纳为可观测性第一信号：无论自动测试与治理检查多密集，定期人工阅读最终推送给用户的消息（如推荐摘要、通知），这是发现 fail-plausible 等高阶语义故障最有效的手段。可进一步用 LLM-as-judge 做日常输出评分，但该评判器本身也需纳入同样的治理框架。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+LLM Agent 系统在长期自主运行时，常出现完全不会触发告警的无声故障，尤其当 LLM 将错误上下文转化为流畅却虚构的叙述（fail-plausible）时，危害极大。现有研究多关注基准测试下的任务失败，缺乏对生产环境下故障潜伏、发现渠道、防御演进的纵向观察。本文基于一个已持续运行的个人助理 Agent 系统的 22 起完整事后剖析，建立机制导向的无声故障分类，并量化防御效果。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>系统背景</strong>：三层架构的 Agent 运行时（控制平面、能力平面、记忆平面），包含 ~40 个定时任务、8 个 LLM 提供商、4286 项单元测试、827 条声明式治理检查。</li>
+<li><strong>事件库与协议</strong>：22 起生产沉默事件，每起均按强制协议记录因果链、三层根因（触发/放大/隐藏）、精确时间线，并反馈进治理本体。</li>
+<li><strong>分类方法</strong>：按故障机制而非代码位置迭代聚类，得到五类：A. 环境/平台怪异；B. 设计假设与部署现实不匹配；C. 错误吞没或稀释；D. 链式幻觉与捏造（fail-plausible）；E. 操作遗漏与取证盲点。其中 D 类为 LLM 系统特有，错误被模型“叙述”为可信输出。</li>
+<li><strong>防御框架</strong>：声明式治理引擎（90 条不变式/每日审计）、破坏验证（刻意注入违规以证明守卫有效）、声明状态收敛引擎（注册声明与 crontab/路由等运行时状态自动同步）、上下文卫生层（强制 stderr 分离、告警信息剥离、反捏造六层提示守卫）。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>无声故障潜伏期从 13 小时到 60 天，<strong>约 70% 最终由人工阅读系统输出发现</strong>，单元测试与治理检查事前预防率为 0%。</li>
+<li>事后审计对本已出现过的故障模式可阻止 87% 复发，但对全新机制类故障无法预防，体现<strong>审计是回归引擎而非预测引擎</strong>。</li>
+<li>D 类 fail-plausible 故障中，LLM 将 HTTP 400 错误页渲染成“平台危机分析”、将系统告警融入对话并编造修复指令，本质是<strong>污染上下文进入模型后产生的连贯谎言</strong>。</li>
+<li>防御成熟路径：点修复 → 元规则 → 机械化扫描器，只有达到扫描器层面的规则才能杜绝同类复发。</li>
+</ul>
+<p><strong>核心洞见</strong><br>
+“你的 Agent 系统最值得警惕的故障不是崩溃，而是准时送达、语法完美的段落，描述一场并不存在的危机。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14589&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14589" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14589" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14589" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

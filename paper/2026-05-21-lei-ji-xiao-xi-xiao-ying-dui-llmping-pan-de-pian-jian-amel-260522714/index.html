@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="LLM在作为评估器时，多轮对话历史中的评价极性会系统性地偏移后续判断，尤其放大不确定项的偏差。"><meta property="og:title" content="AMEL: Accumulated Message Effects on LLM Judgments"><meta property="og:description" content="LLM在作为评估器时，多轮对话历史中的评价极性会系统性地偏移后续判断，尤其放大不确定项的偏差。"><meta property="og:type" content="website"><title>AMEL: Accumulated Message Effects on LLM Judgments</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22714" target="_blank" rel="noopener">2605.22714</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>AMEL: Accumulated Message Effects on LLM Judgments</h1> <p class="title-zh">累积消息效应对LLM评判的偏见（AMEL）</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM评估中的上下文累积偏见</span> </div>  <div class="meta">Sid-ali Temkit</div> <p class="one-liner">LLM在作为评估器时，多轮对话历史中的评价极性会系统性地偏移后续判断，尤其放大不确定项的偏差。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/AMEL">AMEL</a><a class="tag" href="/DailyPaper/tag/LLM-as-judge">LLM-as-judge</a><a class="tag" href="/DailyPaper/tag/bias">bias</a><a class="tag" href="/DailyPaper/tag/context accumulation">context accumulation</a><a class="tag" href="/DailyPaper/tag/negativity asymmetry">negativity asymmetry</a><a class="tag" href="/DailyPaper/tag/evaluation robustness">evaluation robustness</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>每条评估用全新上下文：在电商内容审核、商品描述质量评分、推荐理由评估等LLM-as-judge场景中，请每次调用单独开启一个conversation，避免历史评价的累积。成本上升，但淘汰风险更高。</li><li>批量评估必须随机化且平衡：若因成本需批处理，务必随机打乱item顺序，并保持正负样本比例接近。禁止按预期结果排序，否则会产生自我强化的位置漂移（实验中固定顺序导致P(no)从0.07单调升至1.0）。</li><li>对不确定项单独处理：模型基准预测熵高的item（如 borderline 商品是否违规）是AMEL重灾区（d=-0.34）。可依据logprobs或多次采样区分这些项，优先分配新鲜上下文，或结合logprobs校正（如RBCorr）来抵消偏移。</li><li>监控线上评估的接受/拒绝比率漂移：若一个会话中比率持续偏离预期，很可能已受累计历史影响，触发告警或重置上下文。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM被广泛用于代码审查、内容审核、评分等自动评估任务，生产中常把多个待评项放入同一个多轮对话，生成累积的历史评价。这种历史是否会造成后续判断的偏见？本文定义了累积消息效应（AMEL），并对此展开大规模实证研究。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>实验设计：同一组测试项放在干净上下文（基线）与极性饱和历史（90%“是”/90%“否”）的对话之后，测量回答偏移。</li>
+<li>三个评估领域：代码审查（是否可上线）、内容审核（评论是否恰当）、营养评估（餐食是否健康）。</li>
+<li>11个模型（OpenAI、Anthropic、Google、本地开源），4种上下文长度（5/10/20/50轮），10次重复调用，总计75,898条API调用。</li>
+<li>偏差分数：BS = P(目标方向|处理) - P(目标方向|基线)，正值表示向历史极性偏移。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>整体效应显著，d=-0.17 (p&#x3C;10⁻⁴⁶)，历史极性将模型应答拉向自身。</li>
+<li>在模型基线不确定的item上效应放大：高熵项 d=-0.34，确定性项 d=-0.15。</li>
+<li>负历史比正历史强1.62倍（配对比率，p&#x3C;10⁻³⁹），甚至中性50/50历史也导致偏向“否”。</li>
+<li>偏差不随上下文长度增长：5轮与50轮效果等同（Spearman |r|&#x3C;0.01），快速饱和。</li>
+<li>更大模型偏差较小但未消失（如Anthropic: Haiku d=-0.22 → Opus d=-0.17）。</li>
+<li>机制探针：logprobs显示概率分布连续移动而非阈值跨越；负向不对称同时有token级偏好与语义级原因；历史中偏见轮次的位置无所谓（5轮放在开头、结尾或散布效果相同）。</li>
+</ul>
+<p><strong>一句话</strong>：LLM评估极易被对话历史中的评价极性“沾染”，且对最难判断的边界案例伤害最大，最简单的救法是给每条评估一个干净的新会话。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22714&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22714" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22714" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22714" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

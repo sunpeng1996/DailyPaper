@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过生成式模型主动合成可控视频，构建精细诊断多模态大模型时空推理能力的基准。"><meta property="og:title" content="VGenST-Bench: A Benchmark for Spatio-Temporal Reasoning via Active Video Synthesis"><meta property="og:description" content="通过生成式模型主动合成可控视频，构建精细诊断多模态大模型时空推理能力的基准。"><meta property="og:type" content="website"><title>VGenST-Bench: A Benchmark for Spatio-Temporal Reasoning via Active Video Synthesis</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22570" target="_blank" rel="noopener">2605.22570</a>  </div> <h1>VGenST-Bench: A Benchmark for Spatio-Temporal Reasoning via Active Video Synthesis</h1> <p class="title-zh">主动合成视频的时空推理评测基准</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态大模型时空推理评测</span> </div> <p class="affiliations">Sungkyunkwan University · Yonsei University</p> <div class="meta">Jinho Park, Youbin Kim, Hogun Park, Eunbyung Park</div> <p class="one-liner">通过生成式模型主动合成可控视频，构建精细诊断多模态大模型时空推理能力的基准。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/spatio-temporal reasoning">spatio-temporal reasoning</a><a class="tag" href="/DailyPaper/tag/video benchmark">video benchmark</a><a class="tag" href="/DailyPaper/tag/MLLM evaluation">MLLM evaluation</a><a class="tag" href="/DailyPaper/tag/active synthesis">active synthesis</a><a class="tag" href="/DailyPaper/tag/multi-agent pipeline">multi-agent pipeline</a><a class="tag" href="/DailyPaper/tag/visual reasoning">visual reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>若业务涉及视频理解或多模态 Agent，可借鉴通过主动合成可控场景构建评测集的方法，避免真实视频的变量不可控和偏差。</li><li>多智能体流水线配合人工质控的流程可迁移用于构建领域专有评测集，例如商品展示视频中的交互理解评测。</li><li>将任务解耦为低级视觉感知和高级时空推理的层级设计，可用于开发细粒度模型诊断工具，定位推理薄弱环节。</li><li>视频分类法（空间尺度、视角、场景动态）提供了构建更全面视频评测集的结构化思路。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+现有时空推理评测依赖静态图像或被动选取的真实视频，难以控制变量，无法精细诊断多模态大模型（MLLM）的细粒度时空理解能力。</p>
+<p><strong>方法</strong>
+提出 VGenST-Bench，利用生成式模型主动合成高度可控、多样化的视频场景。构建过程中采用多智能体流水线，并加入人工质量控制环节，确保视频和问答对的质量。定义了一个 3×2×2 视频分类法（空间尺度、视角、场景动态），覆盖丰富场景。设计层级任务套件，将低级视觉感知（对象计数、身份追踪）与高级时空推理（空间关系、时间排序）解耦，实现对模型能力的细粒度诊断。</p>
+<p><strong>结果</strong>
+在多个 SOTA MLLM 上评测显示，模型在空间关系、时间排序等高级推理任务上性能明显不足，证明基准能有效暴露短板，推动模型改进。该基准范式从被动策展转向主动合成，为视频理解评测提供了新方向。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22570&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22570" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22570" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22570" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

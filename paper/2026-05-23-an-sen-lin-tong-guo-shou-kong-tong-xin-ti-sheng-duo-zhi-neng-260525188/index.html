@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出受控通信框架 DarkForest，通过独立生成、校准信念和紧凑证据披露，在六个推理基准上取得领先精度，通信量降低高达 6.5 倍。"><meta property="og:title" content="DarkForest: Less Talk, Higher Accuracy for Multi-Agent LLMs"><meta property="og:description" content="提出受控通信框架 DarkForest，通过独立生成、校准信念和紧凑证据披露，在六个推理基准上取得领先精度，通信量降低高达 6.5 倍。"><meta property="og:type" content="website"><title>DarkForest: Less Talk, Higher Accuracy for Multi-Agent LLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-05-23">2026-05-23</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.25188" target="_blank" rel="noopener">2605.25188</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DarkForest: Less Talk, Higher Accuracy for Multi-Agent LLMs</h1> <p class="title-zh">暗森林：通过受控通信提升多智能体大模型推理精度</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体LLM协作 · 受控通信与证据校准</span> </div> <p class="affiliations">University of Texas at Dallas · Independent Researcher · University of California, Davis</p> <div class="meta">Yi Li, Songtao Wei, Dongming Jiang, Zhichun Guo, Qiannan Li, Bingzhe Li</div> <p class="one-liner">提出受控通信框架 DarkForest，通过独立生成、校准信念和紧凑证据披露，在六个推理基准上取得领先精度，通信量降低高达 6.5 倍。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Calibrated Belief">Calibrated Belief</a><a class="tag" href="/DailyPaper/tag/Controlled Communication">Controlled Communication</a><a class="tag" href="/DailyPaper/tag/Reasoning">Reasoning</a><a class="tag" href="/DailyPaper/tag/Token Efficiency">Token Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在多智能体投票/决策中，用校准信念代替简单多数投票：引入代理历史可靠性（α）、联合模式可靠性（R）、置信度重加权（ϕ）、解析质量折扣（ρ）和独立性校正（δ），生成后验分布指导最终选择，可减少电商推荐中多模型融合的误判。</li><li>限制代理间通信：只向协调者暴露紧凑的候选摘要、支持模式和后验边距，不传递完整推理链，直接降低 token 消耗和延迟，适合高吞吐的在线 Agent 系统。</li><li>采用“独立生成 + 协调者 + 确定性守卫”架构：协调者基于证据做出决策，只有当信念状态强烈支持某一候选且与协调者输出冲突时才触发守卫，防止强证据被大模型输出的随机性覆盖，可借鉴到客服/推荐的多路召回后融合。</li><li>离线校准参数（可靠性、折扣因子等）无运行时额外开销：对电商 Agent 的历史行为日志进行离线统计即可建立代理可信度表，部署时不增加模型调用成本。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+多智能体 LLM 系统常通过交互提升推理，但无限制通信容易导致错误传播和推理成本激增：一旦错误理由被共享，后续代理可能采纳并放大错误，且多轮对话大幅增加 token 消耗、延迟和推理成本。本文受不完全信息博弈启发，认为关键不在“多交流”，而在“保留独立证据并控制跨越边界的消息”。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>独立生成</strong>：各代理 (Qwen2.5-7B, Mathstral, Coder 等) 不互看输出，独立产生候选答案。</li>
+<li><strong>解析与聚类</strong>：将原始输出解析为结构化观察（规范候选、置信度、解析合法性），规范化等价答案并聚类成候选假设。</li>
+<li><strong>校准信念</strong>：为每个候选簇计算证据得分 <code>s(z) = Rπ * Σ(α_i * ρ_i * δ_i * ϕ(c_i))</code>，其中 <code>α_i</code> 代理可靠性、<code>Rπ</code> 支撑模式可靠性、<code>ρ_i</code> 解析质量折扣、<code>δ_i</code> 相关性惩罚、<code>ϕ(c_i)</code> 置信度乘子，归一化为后验分布。</li>
+<li><strong>受控披露</strong>：仅向协调者传递候选标识、后验质量、边距、不确定指示等紧凑证据，不暴露完整推理链。</li>
+<li><strong>最终决策</strong>：协调者基于输入和证据给出答案；确定型守卫仅当信念状态强烈支持一候选且与协调者输出冲突时替换结果。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在 MATH、HumanEval、MMLU-Pro、GPQA、FinQA、LegalBench 六个基准上评估，对比 Debate、Self-Consistency、Refine、ReConcile、Mixture-of-Agent、Graph-of-Agent 等方法。DarkForest 在 MATH 上准确率达 <strong>76.8%</strong>，比最强基线 Self-Consistency（71.8%）绝对提升 <strong>5 个点（30.7% 相对提升）</strong>，同时 token 消耗从 13.8k 降至 <strong>4.7k（约 2.9 倍减少，与其他基准相比最高 6.5 倍）</strong>。消融表明，协调者与守卫在专业领域（LegalBench）可互补：去掉守卫后准确率从 68.0% 跌至 65.6%，且守卫无额外模型调用。</p>
+<p><strong>核心洞察</strong><br>
+多智能体推理的关键不是增加通信，而是保留独立证据并控制哪些信息穿越代理边界。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.25188&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.25188" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.25188" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.25188" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过并行提取与层次时态索引，实现Agent记忆的局部更新与时间感知检索，大幅提升写入吞吐"><meta property="og:title" content="MemForest: An Efficient Agent Memory System with Hierarchical Temporal Indexing"><meta property="og:description" content="通过并行提取与层次时态索引，实现Agent记忆的局部更新与时间感知检索，大幅提升写入吞吐"><meta property="og:type" content="website"><title>MemForest: An Efficient Agent Memory System with Hierarchical Temporal Indexing</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23986" target="_blank" rel="noopener">2605.23986</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>MemForest: An Efficient Agent Memory System with Hierarchical Temporal Indexing</h1> <p class="title-zh">MemForest：基于层次时态索引的高效Agent记忆系统</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent记忆系统 · 层次时态索引</span> </div> <p class="affiliations">National University of Singapore · Zero Gravity Labs</p> <div class="meta">Han Chen, Zining Zhang, Wenqi Pei, Bingsheng He, Ming Wu, Jason Zeng 等</div> <p class="one-liner">通过并行提取与层次时态索引，实现Agent记忆的局部更新与时间感知检索，大幅提升写入吞吐</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent Memory">Agent Memory</a><a class="tag" href="/DailyPaper/tag/Temporal Indexing">Temporal Indexing</a><a class="tag" href="/DailyPaper/tag/Write-Efficient">Write-Efficient</a><a class="tag" href="/DailyPaper/tag/Hierarchical Retrieval">Hierarchical Retrieval</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/MemTree">MemTree</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>时态树组织用户状态：将用户偏好、行为轨迹等记忆按时间组织为MemTree，天然支撑“状态演变查询”，避免扁平向量检索丢失时间顺序，适合电商场景中用户偏好迁移、行为序列推断。</li><li>局部更新与惰性刷新：修改仅影响脏节点路径，避免全量重写Profile或Summary，大幅降低在线更新成本，适合高并发会话流下的实时记忆维护。</li><li>并行提取提升写入吞吐：将长会话切分为短块并行调用LLM，再通过事实规范化合并，可迁移到推荐系统中对用户长行为序列的实时摘要生成，加速记忆构建。</li><li>多粒度检索平衡效率与精度：从粗粒度树摘要快速召回，再细粒度浏览，避免全库向量搜索开销，适合多智体系统的上下文召回或检索增强生成中的高效证据定位。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM Agent需在长周期交互中维护持久记忆，但现有系统在写入路径存在严重瓶颈——粗粒度状态管理（如全量重写Profile）和顺序LLM提取导致更新延迟随记忆累积而增长，且难以保留时间维度的状态演进，影响历史查询与多步推理。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>并行chunk提取</strong>：将新会话切分为固定大小的短块（默认2轮），并发调用LLM提取记忆候选，打破串行瓶颈。</li>
+<li><strong>规范事实（Canonical Facts）</strong>：合并去重后的稳定记忆单元，作为写入和路由的基础，避免直接改写累积状态。</li>
+<li><strong>MemTree层次时态索引</strong>：以时间有序树组织每个记忆域（实体、场景、会话），叶子存储局部证据，内部节点总结时间区间，支持局部插入与惰性脏路径刷新，维护成本与受影响路径相关而非总记忆规模。</li>
+<li><strong>多粒度检索</strong>：森林级召回后从根节点到叶子逐级浏览，可选嵌入驱动或LLM引导，保持时间连续性，避免语义相似但时间错误的检索。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>基准：LongMemEval‑S（500实例）和LoCoMo；对比EverMemOS、Mem0、MemoryOS等有状态记忆基线。</li>
+<li>效率：在LongMemEval‑S上，MemForest写入耗时178s（30B模型），约为MemoryOS的13.7倍速，EverMemOS的5.9倍；写吞吐显著提升。</li>
+<li>质量：LongMemEval‑S达到79.8% pass@1（30B），优于所有基线；LoCoMo上68.4%，接近最强基线（69.6%），但写成本大幅降低。</li>
+<li>迁移实验：合并已构建记忆比顺序写入快2.4‑2.7倍。</li>
+</ul>
+<p><strong>核心洞见</strong>：将Agent记忆维护从全量重写转为基于时态树的局部增量更新，是打破写入瓶颈、同时保留时间感知能力的关键路径。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23986&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23986" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23986" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23986" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

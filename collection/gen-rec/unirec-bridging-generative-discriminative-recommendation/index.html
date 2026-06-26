@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="生成式推荐（GR）一直被诟病「表达力天花板低于判别式精排」：判别模型能直接拿 item 特征做 user×item 交叉打分，GR 却只在压缩后的 Semantic ID 上自回归解码、解码时看不到任何 item 侧信号。本文用贝叶斯定理证明：按判别分 p(y|f,u) 排序等价于按生成后验 p(f|y,u) 排序，后者可沿 item 特征自回归分解——即「带全特征访问的生成模型 = 判别模型」，差距只来自特征覆盖度而非建模范式。由此提出 Chain-of-Attribute（CoA）：在 SID 序列前先「speculate」出 category/seller/brand 等粗粒度属性 token，再条件解码 SID，把被 SID 压缩丢掉的 item 侧特征交叉补回生成轨迹，每步条件熵严格下降、beam search 更稳。再加 Capacity-constrained SID（曝光加权残差量化压马太效应）+ CDC（Task-Conditioned BOS 多场景条件 + hash Content Summary 组合特征）+ RFT/DPO 业务对齐。Shopee 离线 HR@50 +22.6%（订单样本 +15.5%），线上 A/B GMV +5.60%、订单 +4.76%、PVCTR +5.37%，端到端 110ms（旧多级链路 266ms）。
+"><meta property="og:title" content="UniRec: Bridging the Expressive Gap between Generative and Discriminative Recommendation via Chain-of-Attribute · 论文沉淀"><meta property="og:description" content="生成式推荐（GR）一直被诟病「表达力天花板低于判别式精排」：判别模型能直接拿 item 特征做 user×item 交叉打分，GR 却只在压缩后的 Semantic ID 上自回归解码、解码时看不到任何 item 侧信号。本文用贝叶斯定理证明：按判别分 p(y|f,u) 排序等价于按生成后验 p(f|y,u) 排序，后者可沿 item 特征自回归分解——即「带全特征访问的生成模型 = 判别模型」，差距只来自特征覆盖度而非建模范式。由此提出 Chain-of-Attribute（CoA）：在 SID 序列前先「speculate」出 category/seller/brand 等粗粒度属性 token，再条件解码 SID，把被 SID 压缩丢掉的 item 侧特征交叉补回生成轨迹，每步条件熵严格下降、beam search 更稳。再加 Capacity-constrained SID（曝光加权残差量化压马太效应）+ CDC（Task-Conditioned BOS 多场景条件 + hash Content Summary 组合特征）+ RFT/DPO 业务对齐。Shopee 离线 HR@50 +22.6%（订单样本 +15.5%），线上 A/B GMV +5.60%、订单 +4.76%、PVCTR +5.37%，端到端 110ms（旧多级链路 266ms）。
+"><meta property="og:type" content="website"><title>UniRec: Bridging the Expressive Gap between Generative and Discriminative Recommendation via Chain-of-Attribute · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2026-04</time> <span class="sep">·</span><span>arXiv (投 Conference &#39;26)</span>  </div> <h1>UniRec: Bridging the Expressive Gap between Generative and Discriminative Recommendation via Chain-of-Attribute</h1> <p class="archive-authors">Ziliang Wang, Gaoyun Lin, Xuesi Wang, Weijie Bian, …, Guanxing Zhang (10 人)</p> <p class="affiliations">Shopee</p> <p class="one-liner">生成式推荐（GR）一直被诟病「表达力天花板低于判别式精排」：判别模型能直接拿 item 特征做 user×item 交叉打分，GR 却只在压缩后的 Semantic ID 上自回归解码、解码时看不到任何 item 侧信号。本文用贝叶斯定理证明：按判别分 p(y|f,u) 排序等价于按生成后验 p(f|y,u) 排序，后者可沿 item 特征自回归分解——即「带全特征访问的生成模型 = 判别模型」，差距只来自特征覆盖度而非建模范式。由此提出 Chain-of-Attribute（CoA）：在 SID 序列前先「speculate」出 category/seller/brand 等粗粒度属性 token，再条件解码 SID，把被 SID 压缩丢掉的 item 侧特征交叉补回生成轨迹，每步条件熵严格下降、beam search 更稳。再加 Capacity-constrained SID（曝光加权残差量化压马太效应）+ CDC（Task-Conditioned BOS 多场景条件 + hash Content Summary 组合特征）+ RFT/DPO 业务对齐。Shopee 离线 HR@50 +22.6%（订单样本 +15.5%），线上 A/B GMV +5.60%、订单 +4.76%、PVCTR +5.37%，端到端 110ms（旧多级链路 266ms）。
+</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Generative Recommendation</span><span class="tag tag-static">Semantic ID</span><span class="tag tag-static">E-commerce</span><span class="tag tag-static">Chain-of-Attribute</span><span class="tag tag-static">DPO</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：生成式推荐（GR）把「召回→粗排→精排→重排」多级判别链路统一成在 Semantic ID（SID）上的单模型自回归解码，消除了级间目标不一致、样本选择偏差与误差累积。但它有一个<strong>结构性的表达力差距</strong>：判别模型估 (p(y\mid f,u))，<strong>解码/打分时直接看得到 item 特征向量 (f)</strong>，能做显式的 user×item 特征交叉；GR 在压缩后的 SID token 上解码，(\prod_l p(s_l\mid s_{&#x3C;l},u))，<strong>承诺一条生成路径时还没见过任何 item 侧信号</strong>。叠加推荐天然的 one-to-many（同一用户行为序列可对应多个合理 target），生成不确定性和训练冲突被放大。</p>
+<p><strong>本文的回答（两步）</strong>：</p>
+<ol>
+<li>
+<p><strong>理论上差距不是范式问题，是特征覆盖问题</strong>。由贝叶斯定理 (p(y\mid f,u)\propto p(f\mid y,u),p(y\mid u))，而 (p(y\mid u)) 与 (f) 无关，所以<strong>按判别分排序 ≡ 按生成后验 (p(f\mid y,u)) 排序</strong>。再用链式法则 (p(f\mid y,u)=\prod_{k=1}^n p(f_k\mid f_{&#x3C;k},y,u))，这恰好就是「在 item 特征上做自回归解码」。结论：<strong>一个能访问完整 item 特征 (f) 的生成模型，表达力等价于判别模型</strong>；实际差距只来自 SID 压缩把 taxonomy/seller/brand 等结构化属性「折叠」进了离散码、解码时变成隐变量。</p>
+</li>
+<li>
+<p><strong>工程上把丢掉的属性补回来就够了</strong> —— Chain-of-Attribute（CoA）：在 SID 前先生成 (m) 个粗粒度属性 token (a=[\text{attr}<em>1,\dots,\text{attr}<em>m])，做成 <strong>speculate-then-refine</strong>：先预测 category/seller/brand，再条件生成 SID。因为同属性的 item 在 SID 语义空间里是<strong>相邻聚集</strong>的，条件在 (a) 上每一步的条件熵严格下降 (H(s_k\mid s</em>{&#x3C;k},a)&#x3C;H(s_k\mid s</em>{&#x3C;k}))，搜索空间收窄、beam search 更稳、端到端解码误差衰减。</p>
+</li>
+</ol>
+<blockquote>
+<p>与 GRACE（同样在 SID 前 prepend 属性）的区别：GRACE 是经验设计，CoA 给出了<strong>第一个信息论刻画</strong>——用贝叶斯上界解释「为什么 prefix 属性能缩小 GR 的表达力差距」，并把缩小程度量化为互信息 (I(a;s_l\mid s_{&#x3C;l},u))。</p>
+</blockquote>
+<p>落地还解决两个问题：<strong>Capacity-constrained SID</strong>（曝光加权残差量化，压 SID 的「世袭马太效应」）和 <strong>CDC</strong>（Conditional Decoding Context：Task-Conditioned BOS 注入场景/目标条件 + hash Content Summary 注入组合特征）。最后 <strong>RFT + DPO</strong> 联合把模型从「拟合曝光分布」对齐到业务目标。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/unirec-bridging-generative-discriminative-recommendation/fig1.png" alt="UniRec 整体架构总览：Tokenization 阶段用 Capacity-constrained Semantic ID（RQ-KMeans + 超载簇 Repair）把多模态 embedding 量化成 codebook0/1/2 三层 SID；Architecture 主干为 Decoder-Only，对 User Sequence 做 Gated-CrossAttn（行为序列当 K/V），解码侧「bos + 属性 a1/a2/a3 + SID s0/s1/s2」过 RMSNorm/MMoE-FFN，再经 Hierarchical Rank Head（含 content summary 的 hash 组合特征）逐步出 token；Alignment 阶段 NTP/Reweight/layer-wise Stop Gradient 驱动 RFT Loss + DPO Loss 联合优化（L = L_RFT + λ_DPO·L_DPO）。"></p>
+<p>UniRec 把召回与排序融进<strong>统一的自回归解码</strong>：每个 item = 多层 SID + 前缀属性 token。Decoder-Only backbone，对 user 行为序列做 <strong>Cross-Attention</strong>（行为序列当 K/V，解码侧「BOS + 属性 + SID」当 Q），每个解码步一个专属 <strong>Rank Head</strong> 出 token 分布。整条 pipeline：</p>
+<ul>
+<li><strong>3.2 Capacity-constrained SID</strong>：曝光加权的残差量化（RQ-KMeans 改造），保证 codebook 负载均衡，治本马太效应。</li>
+<li><strong>3.3 CoA</strong>：在 SID 前 speculate 出 L2→L3 类目链，条件解码 SID。</li>
+<li><strong>3.4 CDC</strong>：Task-Conditioned BOS（场景×行为目标条件） + Content Summary（Bloom-filter 式 hash 组合特征）。</li>
+<li><strong>3.5 生成模型</strong>：输入建模（静态画像 / 行为序列 / SID 级多模态） + Gated Cross-Attention + 分层 Rank Head + NTP 训练。</li>
+<li><strong>3.6 对齐</strong>：RFT（连续业务价值 reweight NTP） + DPO（离散行为偏好对），联合优化。</li>
+</ul>
+<p>完整解码路径长度 = (1+m+L)（1 个 BOS + (m) 个属性 + (L) 层 SID），论文配置 (m=2)（L2、L3 类目）、(L=3)（s0/s1/s2）。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="32-capacity-constrained-semantic-id">3.2 Capacity-constrained Semantic ID</h3>
+<p><img src="/ai-papers-daily/figures/unirec-bridging-generative-discriminative-recommendation/fig2.png" alt="标准 RQ-KMeans 下 SID 各层曝光集中度。左图 Lorenz 曲线：sid0 单层 top-10% token 仅占 33.2% 曝光（接近对角线、温和倾斜），但 (s0,s1) 组合 top-10% 占 87.9%、(s0,s1,s2) top-10% 占 89.62%（曲线急剧上凸）。右图按 token 使用频次分桶的增量曝光分布：sid0-1 在最热的 0-1 桶贡献 49.1%、sid0-1-2 达 57.3%，说明组合层级把轻微 item-count 不均放大成极端流量集中——这是 Capacity-constrained SID 要治的「世袭马太效应」。"></p>
+<p><strong>动机（量化的马太效应）</strong>：用生产流量统计 SID 各层曝光集中度。第一层 (s_0) top-10% token 占 33.24% 曝光（温和倾斜）；但 ((s_0,s_1)) 组合 top-10% 占 <strong>87.90%</strong>，((s_0,s_1,s_2)) top-10% 占 89.62%。从 (s_0) 到 (s_1) <strong>2.6× 放大</strong>——轻微 item-count 不均被组合级放大成极端流量集中。标准均衡量化只约束「每簇 item 数」相等，但热门 item 仍霸占其 codebook entry 的曝光。</p>
+<p><strong>做法</strong>：在残差量化聚类时约束<strong>曝光负载</strong>而非 item 数。层 (l) 样本 ({x_i}<em>{i=1}^N)，每个带曝光权重 (w_i>0)（历史 impression 数），簇 (k) 的曝光负载 (V_k=\sum</em>{i:z_i=k}w_i)。带容量约束的聚类：</p>
+<p>[
+\min_{{z_i},{\mu_k}}\sum_{i=1}^N\lVert x_i-\mu_{z_i}\rVert_2^2,\quad \text{s.t. } V_k\le \tau C_{cap},\ \forall k
+]</p>
+<p>容量参考 (C_{cap}=\frac1K\sum_i w_i)（每簇平均曝光负载），(\tau\ge1) 是容差。这是 NP-hard，用<strong>两阶段贪心</strong>（Algorithm 1）：① 每个样本先分到最近簇心（最小化重构误差）；② 修复超载簇——把超出容量的样本重分到「加进去仍不超容量」的最近欠载簇 (\arg\min_{k’:V_{k’}+w_i\le\tau C_{cap}}\lVert r_i-\mu_{k’}\rVert^2)，并更新 (V_k,V_{k’})；迭代到 (|\Delta J|&#x3C;\epsilon)。逐层用残差 (r_i=e(x_i)-\sum_{j&#x3C;l}\mu_{j,s_j(x_i)})。配置 <strong>(K=4000)/层、3 层、(\tau=1.05)</strong>。效果：sid0-1-2 层 top-1% token 曝光占比从 RQ-KMeans 的 <strong>57.33% 降到 26.04%</strong>。</p>
+<h3 id="33-chain-of-attributecoa">3.3 Chain-of-Attribute（CoA）</h3>
+<p><strong>理论上界（核心论证，见上）</strong>：贝叶斯 + 链式法则证明带全特征访问的 GR ≡ 判别模型，差距源于 SID 压缩丢失结构化属性。</p>
+<p><strong>CoA 因式分解</strong>：在 SID 前 prefix (m) 个粗属性 token，</p>
+<p>[
+p(s\mid u)=p(a\mid u)\cdot\prod_{l=0}^{L-1}p(s_l\mid a,s_{&#x3C;l},u)
+]</p>
+<p>强调它是上界的<strong>实用近似</strong>：不解码全特征向量，只选择性恢复「最被 SID 压缩丢掉的粗粒度属性」，代价是固定 (m) 个额外自回归步的延迟。缩小程度由互信息 (I(a;s_l\mid s_{&#x3C;l},u)) 度量。</p>
+<p><strong>两个可证收益</strong>：</p>
+<ol>
+<li><strong>每步熵下降</strong>：(\Delta H_l=H(s_l\mid s_{&#x3C;l},u)-H(s_l\mid a,s_{&#x3C;l},u)=I(a;s_l\mid s_{&#x3C;l},u)\ge0)，只要 (a) 与 (s_l) 不条件独立就严格 >0（实际成立，因同类目 item 在 SID 空间相邻、token 序列与粗属性结构相关）。累积 (\sum_l\Delta H_l) 稳定 beam search。</li>
+<li><strong>级联失败率下降</strong>：条件在 (a) 上每层 token 错误率从 (\epsilon_l) 降到 (\epsilon’_l&#x3C;\epsilon_l)，端到端 (P’(\text{error})=1-\prod_l(1-\epsilon’_l)&#x3C;1-\prod_l(1-\epsilon_l)=P(\text{error}))。</li>
+</ol>
+<p><strong>与 Cross-Attention 互补</strong>：Cross-Attn 在<strong>表征层</strong>把 user 偏好编码进 hidden state（“who the user is”）；CoA 在<strong>解码层</strong>每步注入显式 item 侧语义（“what kind of item”）。论文实现取<strong>类目层级链 L2→L3</strong>作为属性。</p>
+<h3 id="34-conditional-decoding-contextcdc">3.4 Conditional Decoding Context（CDC）</h3>
+<p><strong>Task-Conditioned BOS</strong>：把固定 BOS 换成可学习 embedding，条件在任务上下文 (c_{task}) ——是「行为目标 × 推荐场景」的笛卡尔积：</p>
+<p>[
+c_{task}\in{\text{click},\text{purchase},\text{cart},\text{cross-border},\dots}\times{\text{main feed},\text{search},\text{similar items},\text{flash sale},\dots}
+]</p>
+<p>不改解码架构就让一个统一模型学到不同条件下的不同生成分布，避免「裸共享参数」导致的目标干扰。</p>
+<p><strong>Content Summary</strong>：层级解码里单个 token embedding 抓不到<strong>联合组合语义</strong>（同一 SID token 配不同父 token/属性含义不同）。显式建模解码路径上的笛卡尔积交叉，但全量存储 token 对会参数爆炸（如两个 4000 词表层 ≈ 16M entry）。用 <strong>Bloom-filter 式 hash 投影</strong>：(M) 个 hash 函数共享一张 embedding 表。第 (t) 步：</p>
+<p>[
+c_t=\bigoplus_{i=1}^M E_{\text{hash}}\big[H_i(\text{path}_{&#x3C;t})\bmod S\big]
+]</p>
+<p>(\bigoplus)=拼接，(\text{path}<em>{&#x3C;t})=step (t) 前已解码 token，(E</em>{\text{hash}}\in\mathbb R^{S\times d_{\text{hash}}}) 共享表，(S=\lfloor(\prod_{i=1}^n V_i)^{2/(n+1)}\rfloor)。配置：(M=3)，(H_1(x,y)=x+y)、(H_2=x\cdot y)、(H_3=p_1x+p_2y)（(p_1,p_2) 素数），(d_{\text{hash}}=64)。笛卡尔积对包括 (L2,s0)(L2,s1)(L3,s0)(L3,s1)(s0,s1)。参数量 (M\times S\times d_{\text{hash}}) 可控。</p>
+<h3 id="35-生成模型与训练">3.5 生成模型与训练</h3>
+<p><strong>输入建模（3 部分）</strong>：</p>
+<ul>
+<li>静态画像：(h_{\text{static}}=\text{RMSNorm}([e_{\text{uid}}\oplus e_{\text{ctx}}\oplus\cdots]))。</li>
+<li>行为序列：每个行为 (h_i=\text{Linear}(\text{RMSNorm}([e_{\text{item}<em>i}\oplus e</em>{\text{shop}<em>i}\oplus e</em>{\text{cate}<em>i}\oplus\cdots]))\in\mathbb R^{d</em>{\text{model}}})，序列 (H_{\text{seq}}\in\mathbb R^{T\times d_{\text{model}}})。</li>
+<li>SID 级多模态：(h_j^{mm}=\text{RMSNorm}(\text{Linear}([e_j^{(0)}\oplus e_j^{(1)}\oplus e_j^{(2)}])))，拼到序列末尾 (H_{\text{seq}}\leftarrow[H_{\text{seq}};H_{mm}]\in\mathbb R^{(T+L_{mm})\times d_{\text{model}}})。</li>
+<li>聚合 (h_{\text{agg}}=\text{RMSNorm}([h_{\text{static}}\oplus\text{Pool}(H_{\text{seq}})]))。</li>
+</ul>
+<p><strong>Cross-Attention 条件化</strong>：行为序列当 K=V，解码侧 Q：</p>
+<p>[
+Q^{(0)}=\text{PosEnc}([e_{\text{BOS}}\oplus e_{\text{attr}}\oplus e_0\oplus e_1\oplus e_2])\in\mathbb R^{(1+m+L)\times d_{\text{model}}}
+]</p>
+<p>每层 Pre-Norm + 残差，<strong>Gated Cross-Attn</strong>用可学习门控 (\gamma)：(\text{GatedCrossAttn}(Q,K,V)=\gamma\cdot\text{Softmax}(QK^\top/\sqrt{d_{\text{model}}})V)。FFN 用 <strong>MMoE-FFN（SwiGLU）</strong>。配置：3 层 cross-attn、8 头/层、4 expert、hidden (4d_{\text{model}})。</p>
+<p><strong>分层 Rank Head</strong>：每步 (t) 独立 head，输入 (x_t=[q_t\oplus e_{\text{prefix}}\oplus c_t\oplus h_{\text{agg}}])（cross-attn 输出 + 前缀 emb + content summary + 聚合表征），过 <strong>SENet + MaskNet</strong> 出 (p(s_t\mid s_{&#x3C;t},u,c_{task})=\text{Softmax}(g^{(t)}(x_t)))。输出词表分任务：(t\le m) 是属性域，(t>m) 是 SID 层 (V_{t-m-1})。</p>
+<p><strong>NTP loss</strong>（teacher forcing，target (s^\star=(a_1^\star,\dots,a_m^\star,s_0^\star,\dots,s_{L-1}^\star))）：</p>
+<p>[
+\mathcal L_{\text{NTP}}=-\sum_{t=1}^{m+L}\alpha_i\cdot\log p_\theta(s_t^\star\mid s_{&#x3C;t}^\star,u,c_{task})
+]</p>
+<p>(\alpha_i) 按 engagement（click/conversion）加权，AdamW 优化。</p>
+<h3 id="36-业务对齐rft--dpo-联合">3.6 业务对齐（RFT + DPO 联合）</h3>
+<p>联合损失：(\mathcal L=\mathcal L_{\text{RFT}}+\lambda_{\text{DPO}}\mathcal L_{\text{DPO}})。</p>
+<p><strong>RFT（Reward-Driven Fine-tuning）</strong>：复合 reward (R(u_i,x_i)=\mathcal F({\hat y_k}<em>{k=1}^{N</em>{\text{obj}}}))（预测的多目标 engagement 如观看时长、转化率，按业务优先级聚合）。batch 内归一化 advantage：(A_i=R_i-\frac1{|B|}\sum_j R_j)，(\hat A_i=A_i/(\sigma_A+\epsilon))，(\tilde A_i=\text{clip}(\hat A_i,-c_{\text{clip}},c_{\text{clip}}))（(\sigma_A)=batch RMS）。reweighted 目标：</p>
+<p>[
+\mathcal L_{\text{RFT}}=-\sum_{i\in B}\sum_{t=1}^{m+L}(1+\lambda\tilde A_i)\cdot\alpha_i\cdot\log p_\theta(s_{i,t}^\star\mid s_{i,&#x3C;t}^\star,u_i,c_{task})
+]</p>
+<p>(\alpha_i) 正比于交互 item 的 GMV；(\tilde A_i>0) 放大高 reward 样本、(&#x3C;0) 抑制低效模式。</p>
+<p><strong>DPO</strong>：行为偏好级 (\mathcal R(x)=2)(购买)/(1)(点击)/(0)(仅曝光)，同一 request 上下文 (u) 内 (x_i\succ x_j) 构对 (\mathcal D={(u,x_i,x_j)\mid x_i\succ x_j,\ x_i,x_j\in E_u})。标准 DPO 损失，(\beta=0.1)，reference (\pi_{\text{ref}})。<strong>Layer-wise Stop Gradient</strong>：除最后一层 SID 外所有解码步 stop-gradient，只让最后一层梯度流动，保证 DPO 只更新 final-layer Rank Head、不破坏前缀（条件上下文）预测：</p>
+<p>[
+\log\pi_\theta(y\mid u)=\sum_{t=1}^{L-1}\text{sg}[\log p_\theta(s_t^\star\mid s_{&#x3C;t}^\star,u)]+\log p_\theta(s_L^\star\mid s_{&#x3C;L}^\star,u)
+]</p>
+<p><strong>配置</strong>：(d_{\text{model}}=256)、(T=200)、(L_{mm}=100)、lr (3\times10^{-4})、(\lambda_{\text{RFT}}:\lambda_{\text{DPO}}=20:3)。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据</strong>：Shopee 主 feed 场景生产日志，连续 9 天，数十亿交互（曝光/点击/加购/购买），模型 0.05B 参数。</p>
+<p><strong>指标</strong>：Token Hit Ratio@3（teacher-forcing 下 ground-truth token 进 top-3 的比例，逐解码步）；BS Hit Ratio@K（beam search 后 target item 进 top-K，(K\in{50,100,200})），并单独报<strong>订单（购买）样本</strong>子集。</p>
+<p><strong>Baseline</strong>：SASRec（判别式序列召回，用学到的表征做 SID 近邻检索）、TIGER（Encoder-Decoder GR）、OneRec-V2（Decoder-Only + cross-attn GR）。</p>
+<h3 id="主结果table-1hr">主结果（Table 1，HR）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>全样本 HR@50</th><th>@100</th><th>@200</th><th>订单 HR@50</th><th>@100</th><th>@200</th></tr></thead><tbody><tr><td>SASRec</td><td>0.421</td><td>0.489</td><td>0.556</td><td>0.548</td><td>0.631</td><td>0.709</td></tr><tr><td>TIGER (0.05B)</td><td>0.437</td><td>0.508</td><td>0.578</td><td>0.567</td><td>0.652</td><td>0.731</td></tr><tr><td>OneRec-V2 (0.05B)</td><td>0.438</td><td>0.523</td><td>0.587</td><td>0.582</td><td>0.671</td><td>0.752</td></tr><tr><td><strong>UniRec (0.05B)</strong></td><td><strong>0.537</strong></td><td><strong>0.618</strong></td><td><strong>0.688</strong></td><td><strong>0.672</strong></td><td><strong>0.774</strong></td><td><strong>0.867</strong></td></tr></tbody></table>
+<p>全样本 vs 最强 GR baseline OneRec-V2：HR@50 +9.9pt（<strong>+22.6% 相对</strong>）、@100 +9.5pt（+18.2%）、@200 +10.1pt（+17.2%）；订单样本提升更大：+9.0/+10.3/+11.5pt（@200 即 <strong>+15.5% 相对</strong>）。</p>
+<h3 id="coa-属性链消融table-2">CoA 属性链消融（Table 2）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>属性链</th><th>L2@3</th><th>L3@3</th><th>s0@3</th><th>s1@3</th><th>s2@3</th><th>HR@50</th><th>@100</th><th>@200</th></tr></thead><tbody><tr><td>Direct SID（无属性）</td><td>—</td><td>—</td><td>0.314</td><td>0.752</td><td>0.952</td><td>0.458</td><td>0.532</td><td>0.595</td></tr><tr><td>L1→SID</td><td>—</td><td>—</td><td>0.488</td><td>0.776</td><td>0.961</td><td>0.471</td><td>0.569</td><td>0.622</td></tr><tr><td>L2→SID</td><td>0.755</td><td>—</td><td>0.591</td><td>0.789</td><td>0.963</td><td>0.515</td><td>0.597</td><td>0.664</td></tr><tr><td>L3→SID</td><td>—</td><td>0.694</td><td>0.654</td><td>0.801</td><td>0.967</td><td>0.517</td><td>0.601</td><td>0.670</td></tr><tr><td><strong>L2→L3→SID</strong></td><td>0.757</td><td>0.962</td><td>0.682</td><td>0.821</td><td>0.971</td><td><strong>0.537</strong></td><td><strong>0.618</strong></td><td><strong>0.688</strong></td></tr></tbody></table>
+<p>关键观察：加任何属性前缀都显著抬高 <strong>s0@3</strong>（0.314→最高 0.682），印证「属性条件降低首层 SID 解码熵」；属性链越细/越长越好，<strong>L2→L3 两级类目</strong>最佳。</p>
+<h3 id="其余消融table-3--4full-model-hr50100200--053706180688">其余消融（Table 3 / 4，Full Model HR@50/100/200 = 0.537/0.618/0.688）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>配置</th><th>HR@50</th><th>@100</th><th>@200</th></tr></thead><tbody><tr><td>(a) SID：RQ-KMeans（去掉容量约束）</td><td>0.481</td><td>0.558</td><td>0.627</td></tr><tr><td>(b) w/o Task-Cond. BOS</td><td>0.493</td><td>0.570</td><td>0.638</td></tr><tr><td>(b) w/o Content Summary</td><td>0.485</td><td>0.565</td><td>0.637</td></tr><tr><td>(c) scaling (d_{\text{model}}=64)</td><td>0.397</td><td>0.459</td><td>0.514</td></tr><tr><td>(c) (d_{\text{model}}=128)</td><td>0.477</td><td>0.551</td><td>0.615</td></tr><tr><td>(c) (d_{\text{model}}=256)†</td><td>0.537</td><td>0.618</td><td>0.688</td></tr><tr><td>(c) (d_{\text{model}}=512)</td><td>0.557</td><td>0.639</td><td>0.712</td></tr></tbody></table>
+<ul>
+<li>Capacity-constrained SID：去掉后 HR@50 0.537→0.481；top-1% token 曝光占比从 26.04% 恶化到 57.33%。</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/unirec-bridging-generative-discriminative-recommendation/fig3.png" alt="Capacity-constrained SID 对 codebook 利用率的修复效果（RQ-KMeans 粉色 vs Capacity-constrained 蓝色，分别看 top-1%/5%/10% 最热 token 捕获的总曝光占比，三组柱按 sid0 / sid0-1 / sid0-1-2 层级）。在完整三层 sid0-1-2 上，top-1% token 曝光占比从 RQ-KMeans 的 57.33% 压到 26.04%，top-5% 从 81.73% 降到 67.55%，top-10% 从 86.62% 降到 77.77%——曝光加权残差量化把负载从少数热门 token 摊平，越往细粒度层级修复越显著，值越低代表 codebook 利用越均衡。"></p>
+<ul>
+<li>Task-Cond. BOS / Content Summary：去掉分别 HR@100 相对 -7.8% / -8.6%，二者解决正交问题。</li>
+<li>Scaling：(d_{\text{model}}) 64→512 单调提升，仍有放大空间。</li>
+</ul>
+<p><strong>多场景 Task-Cond. BOS（Table 4）</strong>：单场景独立模型 HR@50/100/200=0.386/0.470/0.540 → 多场景联合训练 0.395/0.486/0.570（跨场景知识迁移 +0.9/+1.6/+3.0pt） → 多场景 + Task-Cond. BOS 0.400/0.510/0.590（再一致提升，说明场景条件化必要）。</p>
+<h3 id="线上-abtable-5">线上 A/B（Table 5）</h3>
+<p>20% 流量/桶，control = 旧判别式多级链路。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标</th><th>Overall</th><th>Feed</th><th>Landing</th></tr></thead><tbody><tr><td>Total Orders</td><td>+4.76%</td><td>+4.27%</td><td>+5.78%</td></tr><tr><td>GMV</td><td>+5.60%</td><td>+5.42%</td><td>+6.19%</td></tr><tr><td>Page-view CTR</td><td>+5.37%</td><td>+5.37%</td><td>—</td></tr></tbody></table>
+<p><strong>延迟</strong>：UniRec 端到端 <strong>110ms</strong>（约等于单个排序模型），旧多级 pipeline <strong>266ms</strong> —— 端到端化省一半延迟。engagement/PVCTR 相对增益 > 转化增益，说明内容相关性与满意度提升更明显。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>核心洞见的价值</strong>：把 GR vs 判别式的「表达力差距」从玄学拍回到一个<strong>可操作的命题</strong>——差距 = 特征覆盖度。贝叶斯等价 (p(y\mid f,u)\Leftrightarrow p(f\mid y,u)) 这个论证很干净，给「GR 该不该、该怎么补 item 侧特征」提供了第一性原理依据，而不是堆 trick。CoA 的「speculate-then-refine（先属性后 SID）」是个通用范式：<strong>任何 SID 类生成式召回/排序，都可以在 SID 前 prefix 一段判别力强、词表小的结构化属性，用每步熵下降换 beam search 稳定性</strong>。</p>
+<p><strong>对电商/搜推可直接借鉴</strong>：</p>
+<ol>
+<li><strong>Capacity-constrained SID</strong> 解决了一个 GR 落地真痛点——SID 组合级马太效应（top-10% 组合吃 87.9% 曝光）。把均衡量化的约束从「item 数」换成「曝光负载 (w_i)」+ 两阶段贪心修复超载簇，是低成本可复用的工程改造，直接改善长尾 codebook 利用率。</li>
+<li><strong>Task-Conditioned BOS</strong> = 用「行为目标 × 场景」的笛卡尔积条件化 BOS，一个统一模型服多场景多目标而不互相打架，比训 N 个模型省，且有跨场景迁移红利。中国出海多市场（domestic vs cross-border）场景特别契合。</li>
+<li><strong>Content Summary 的 Bloom-filter hash 共享表</strong>：显式组合特征又不参数爆炸（避开 4000²≈16M），(S=\lfloor(\prod V_i)^{2/(n+1)}\rfloor) 这个 sizing 公式 + 多 hash 函数（加/乘/素数线性组合）可直接搬到任何需要笛卡尔积交叉的离散特征场景。</li>
+<li><strong>RFT + DPO 联合 + layer-wise stop gradient</strong>：RFT 走连续业务价值（GMV）reweight、DPO 走离散行为偏好对（购买>点击>曝光，从线上流量自动构对、无需人工标注），(20:3) 权重；stop-gradient 只让最后一层 SID 受 DPO 更新、冻结前缀，避免偏好对齐破坏条件上下文——这个细节对「多步自回归 + DPO」很关键。</li>
+<li><strong>端到端 110ms vs 266ms</strong>：GR 统一链路的延迟优势是真金白银的部署论据。</li>
+</ol>
+<p><strong>局限 / 待观察</strong>：</p>
+<ul>
+<li>实验全在 Shopee 私有数据（数十亿交互），<strong>无公开数据集复现</strong>，也无开源代码，外部很难复刻具体数字。</li>
+<li>模型规模只到 0.05B、(d_{\text{model}}\le512)，scaling 表明还没到饱和，但工业大规模（如 OneRec 的 B 级）下 CoA 收益是否保持未知。</li>
+<li>CoA 的理论上界依赖「属性与 SID 强相关」，对属性体系稀疏/噪声大的品类（如长尾白牌、缺类目标注 item）熵下降可能很弱，论文未给反例分析。</li>
+<li>属性链固定取 L2→L3 类目，seller/brand 虽在动机里提及但主实验未单独消融其增益；(m) 个额外解码步的延迟-收益权衡也只给了固定配置。</li>
+<li>DPO 的偏好仅 3 级（购买/点击/曝光），对更细粒度业务价值（如不同 GMV 档）的偏好建模留白，RFT 的连续 reward 与 DPO 的离散偏好之间是否冗余/冲突未深入分析。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2604.12234" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

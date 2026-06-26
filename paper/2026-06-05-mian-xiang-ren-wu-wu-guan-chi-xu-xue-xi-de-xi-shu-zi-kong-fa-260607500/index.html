@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过稀疏 MoE 自适应分解任务共享与特有知识，并用弹性锚定和路由正则化缓解灾难性遗忘"><meta property="og:title" content="Sparse Subspace-to-Expert Sharing for Task-Agnostic Continual Learning"><meta property="og:description" content="通过稀疏 MoE 自适应分解任务共享与特有知识，并用弹性锚定和路由正则化缓解灾难性遗忘"><meta property="og:type" content="website"><title>Sparse Subspace-to-Expert Sharing for Task-Agnostic Continual Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07500" target="_blank" rel="noopener">2606.07500</a>  </div> <h1>Sparse Subspace-to-Expert Sharing for Task-Agnostic Continual Learning</h1> <p class="title-zh">面向任务无关持续学习的稀疏子空间到专家共享方法</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 持续学习 · Mixture of Sparse Experts</span> </div> <p class="affiliations">Iowa State University · Argonne National Laboratory</p> <div class="meta">Fatema Siddika, Md Anwar Hossen, Tanwi Mallick, Ali Jannesari</div> <p class="one-liner">通过稀疏 MoE 自适应分解任务共享与特有知识，并用弹性锚定和路由正则化缓解灾难性遗忘</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/continual learning">continual learning</a><a class="tag" href="/DailyPaper/tag/mixture of experts">mixture of experts</a><a class="tag" href="/DailyPaper/tag/catastrophic forgetting">catastrophic forgetting</a><a class="tag" href="/DailyPaper/tag/sparse experts">sparse experts</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多任务推荐的增量更新可借鉴任务特定与共享专家分离：当电商推荐需要持续适配新品类或促销时，将突发 pattern 注入专属专家，避免覆盖通用偏好知识。</li><li>路由感知正则化与弹性锚定对在线模型稳定更新有参考价值：在推荐系统不停服微调时，可对关键共享参数施加弹性约束，防止遗忘核心基础能力。</li><li>稀疏激活的 MoE 结构天然适合低延迟服务：在生成式推荐或 Agent 中，每次推理仅激活少量专家，可控制计算开销，适合在线增量学习场景。</li><li>任务无关的自动门控机制对 Agent 长程任务序列有效：Agent 持续学习多工具调用时，门控可按子任务组合历史专家，无需人工指定，提升向后迁移。</li> </ul> </div> <div class="content"> <p>动机：LLM 在持续学习中面临可塑性-稳定性困境——新任务学习常导致旧知识灾难性遗忘。现有方法均等对待所有参数，未区分任务专用知识与跨任务共享能力。</p>
+<p>方法：提出 SETA，将参数空间自适应稀疏分解为任务特定专家和共享专家。任务特定专家隔离独立模式，共享专家捕捉通用特征。训练时通过自适应弹性锚定对关键权重施加变化约束，并引入路由感知正则化同时保护权重和路由层面的共享知识；推理时统一门控网络自动检索正确专家组合。模型基于 LLaMA-2 和 Qwen 等 backbone 进行参数高效微调，仅更新少量专家参数。</p>
+<p>结果：在多个领域 benchmark 上，SETA 在 LLaMA-2 7B 和 Qwen3-4B 上均达到竞争或最优总体性能，尤其对早期任务知识的保留显著优于 SOTA 基线，后向迁移指标明显提升，验证了隔离与共享分离的有效性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07500&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07500" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07500" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07500" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

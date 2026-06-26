@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把推荐 agent 的 &#34;想 → 调工具 → 输出排序列表&#34; 整条 ReAct 轨迹用 list-wise GRPO（reward = NDCG@K）端到端训练并证明梯度无偏；再叠一个 Progressive Preference Refinement 阶段，自挖 ranking 违例做硬负样本对、用 bidirectional preference 双向打磨，把 pairwise 排序误差的凸上界压紧。"><meta property="og:title" content="AgenticRec: End-to-End Tool-Integrated Policy Optimization for Ranking-Oriented Recommender Agents · 论文沉淀"><meta property="og:description" content="把推荐 agent 的 &#34;想 → 调工具 → 输出排序列表&#34; 整条 ReAct 轨迹用 list-wise GRPO（reward = NDCG@K）端到端训练并证明梯度无偏；再叠一个 Progressive Preference Refinement 阶段，自挖 ranking 违例做硬负样本对、用 bidirectional preference 双向打磨，把 pairwise 排序误差的凸上界压紧。"><meta property="og:type" content="website"><title>AgenticRec: End-to-End Tool-Integrated Policy Optimization for Ranking-Oriented Recommender Agents · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🧭 Agent推荐</span> <span class="sep">·</span><time>2026-03</time> <span class="sep">·</span><span>arXiv (Conference&#39;17 submission)</span>  </div> <h1>AgenticRec: End-to-End Tool-Integrated Policy Optimization for Ranking-Oriented Recommender Agents</h1> <p class="archive-authors">Tianyi Li, Zixuan Wang, Guidong Lei, Xiaodong Li, Hui Li</p> <p class="affiliations">Xiamen University</p> <p class="one-liner">把推荐 agent 的 &quot;想 → 调工具 → 输出排序列表&quot; 整条 ReAct 轨迹用 list-wise GRPO（reward = NDCG@K）端到端训练并证明梯度无偏；再叠一个 Progressive Preference Refinement 阶段，自挖 ranking 违例做硬负样本对、用 bidirectional preference 双向打磨，把 pairwise 排序误差的凸上界压紧。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">GRPO</span><span class="tag tag-static">Recommender Agent</span><span class="tag tag-static">Tool Use</span><span class="tag tag-static">List-wise RL</span> </div> <div class="content"> <blockquote>
+<p>论文正式名（PDF 内）：<strong>AgenticRec: A Recommendation-Oriented Agentic Framework with Progressive Tool-Integrated Reasoning Optimization</strong>。Qwen3-4B-Instruct-2507 backbone，Amazon Reviews 2023 四个垂类，代码匿名仓 <code>anonymous.4open.science/r/AgenticRec-FB16</code>。</p>
+</blockquote>
+<h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：现有 LLM 推荐 agent（RecMind / InteRecAgent 等）的「Think → Act(调工具) → Recommend」轨迹是靠通用语言先验或 prompt 启发式驱动的，<strong>中间的工具调用与推理过程从不被最终的 ranking feedback 优化</strong>（misalignment）；而且只用 list-level 的粗监督，<strong>搞不定 top 几个高度混淆候选之间的细粒度偏好边界</strong>（在 implicit feedback 这种稀疏信号下尤其明显）。</p>
+<p><strong>关键 idea / 范式</strong>：把推荐建模成一个「工具增强推理（Tool-Integrated Reasoning, TIRR）」的 ReAct 闭环，配一套推荐专用工具（用户画像 / 物品信息 / 行为统计 / 协同信号），然后用<strong>两阶段 RL</strong>端到端训练这条轨迹：</p>
+<ol>
+<li><strong>RTA（Recommendation-Oriented Trajectory Activation）</strong>：用 list-wise GRPO，把 <strong>NDCG@K 当 trajectory-level reward</strong> 沿整条「think + tool-call + 最终排序」回传（observation token 做 stop-gradient），让「何时调工具 / 调哪个 / 证据怎么回写到排序」全部 outcome-driven；</li>
+<li><strong>PPR（Progressive Preference Refinement）</strong>：从 stage-1 模型自己的 ranking 违例里自挖 hard negative 对 <code>(c⁺, c⁻)</code>，用 <strong>bidirectional preference reasoning</strong>（同一对既问”哪个更可能选”又问”哪个更不可能选”）做 pair-wise GRPO，把 pairwise ranking error 的凸上界压紧。</li>
+</ol>
+<p>论文给了两条 proposition：(1) RTA 的 GRPO 梯度对 list-wise 目标方向无偏；(2) PPR 的双向偏好损失是 0-1 排序误差的凸上界（logistic loss）。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline（见下图）：输入是用户交互历史 <code>xᵤ = [v₁,...,vₜ]</code>（最长 10 条）+ 候选集 <code>C = {c₁,...,c₂₀}</code>（1 正 + 19 随机负），要求输出 top-10 排序列表 <code>rₖ</code>。</p>
+<ul>
+<li><strong>推理框架（TIRR）</strong>：ReAct 闭环 <code>Think₁ → Act₁ → Obs₁ → ... → Rec</code>。模型在 <code>&#x3C;think></code> 里推理，在 <code>&#x3C;tool_call></code> 里发 JSON 工具调用，工具返回写进 <code>&#x3C;observation></code>，最终答案放在 <code>&#x3C;answer>\boxed{[8,3,15,...]}&#x3C;/answer></code>。单条轨迹最多 10 次工具交互（latency budget）。</li>
+<li><strong>Stage 1 RTA</strong>：每个样本采 G=8 条 rollout，reward = NDCG@K（命中且合法）/ −0.5（合法但目标 y 不进 top-K）/ −1（格式错），Hit@1 且至少调一次工具再 +0.1 bonus；advantage = 组内 reward 减组均值（GRPO），整条 trajectory 的 log-prob 一起求梯度，<strong>observation token stop-gradient</strong>；借鉴 DAPO 把「整组全负奖励」的样本动态丢弃。训 3 epoch。</li>
+<li><strong>Stage 2 PPR</strong>：拿 stage-1 模型在训练集上跑出的排序，凡是正样本没排第一就算 ranking violation，从「排在 <code>c⁺</code> 之前的 item」里随机采 1 个当 <code>c⁻</code>，组成硬对；对每对生成正/反两个二分类任务（MORE / LESS likely），用 binary 0/1 reward 的 pair-wise GRPO 再训 1 epoch。</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/agenticrec-end-to-end-tool-integrated-policy-optimization/fig1.png" alt="AgenticRec 总体架构：Stage 1 RTA（左上 ReAct 闭环 + 推荐工具套件 + list-wise GRPO，含 stop-gradient observation）与 Stage 2 PPR（左下 ranking violation 自挖硬负样本，右下 bidirectional preference reasoning 双向问 more/less preferred）"></p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-推荐工具套件4-类tool-agnostic-可扩展">1. 推荐工具套件（4 类，tool-agnostic 可扩展）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具</th><th>调用名</th><th>输入 → 输出</th><th>实现</th></tr></thead><tbody><tr><td><strong>User Profile</strong></td><td><code>get_user_profile</code></td><td>无参 → 一段 LLM 预生成的用户画像（偏好品类/长期兴趣）</td><td>用 backbone 同款 Qwen3-4B-Instruct-2507 离线对「样本时间戳之前的历史」预生成画像</td></tr><tr><td><strong>Item Information</strong></td><td><code>item_info_search</code> / <code>candidates_analyze</code></td><td>item_name → 类目/价格/评分/热度；无参 → 按类目或价格聚合的候选概览</td><td>查 dataset item metadata；候选分析做双粒度（单品细节 + 列表组成）</td></tr><tr><td><strong>Behavioral Statistics</strong></td><td><code>get_session_behavior</code> / <code>get_rating_behavior</code></td><td>无参 → 近期 session 兴趣演化；按高/中/低评分分组的物品</td><td>对 metadata 字段算统计摘要，把人工特征工程变成 agentic 过程</td></tr><tr><td><strong>Collaborative</strong></td><td><code>get_similar_items</code> / <code>get_similar_users</code></td><td>item_title → I2I 相似物品；无参 → U2U 相似用户近期购买</td><td>在训练集上跑 <strong>SASRec</strong> 建 embedding 空间做协同检索</td></tr></tbody></table>
+<h3 id="2-rta--reward-设计eq-1">2. RTA — Reward 设计（Eq. 1）</h3>
+<p>$$
+R(r_K, y) = \begin{cases} R_{rec}(r_K, y) &#x26; \text{valid}(r_K)\ \text{且}\ y \in r_K \ -0.5 &#x26; \text{valid}(r_K)\ \text{且}\ y \notin r_K \ -1 &#x26; \text{otherwise} \end{cases}
+$$</p>
+<ul>
+<li><strong>Recommendation reward</strong>：<code>R_rec(r_K, y) = NDCG@K(r_K; y)</code> —— 把真实交互物品 y 在排序列表里的 NDCG 当奖励，直接对齐 ranking 目标与偏好信号（<code>y</code> = ground-truth next item，唯一正样本）。</li>
+<li><strong>Format constraint</strong>：非法 item / 非法工具 / 格式错 → −1，强约束输出可执行。</li>
+<li><strong>Tool-call bonus</strong>：算完 <code>R_rec</code> 后，若 <code>Hit@1</code> 且 <code>N_tool(τ) > 0</code>（τ 中工具调用次数 > 0）再 <strong>+0.1</strong>，鼓励用工具但只奖励高质量轨迹以防 reward hacking。</li>
+<li><strong>Tool-call budget</strong>：单 τ 最多 10 次工具交互，超了算 invalid → 吃 −1。</li>
+</ul>
+<h3 id="3-rta--策略优化grpo--动态采样">3. RTA — 策略优化（GRPO + 动态采样）</h3>
+<p>GRPO 估计量（Eq. 6）：对每个 instance 采 G 条 rollout <code>{τ⁽ᵍ⁾}</code>，</p>
+<p>$$
+\nabla \hat{J}<em>{GRPO}(\theta) = \frac{1}{G}\sum</em>{g=1}^{G}\big(R(r_K^{(g)}, y) - b\big),\nabla \log \pi_\theta(\tau^{(g)}), \quad b = \frac{1}{G}\sum_{j=1}^{G} R(r_K^{(j)}, y)
+$$</p>
+<p>baseline <code>b</code> 是<strong>包含自身的组均值（inclusive group-average）</strong>。轨迹 τ 覆盖整条 think + Act(工具) + Obs + 最终 ranking，<strong>observation token 做 stop-gradient</strong>（工具返回的内容不回传梯度，只回传模型自己生成的 think / act / rank token）。<strong>动态采样</strong>：整组 rollout 全是负奖励的样本直接 drop（DAPO 思路），避免早期噪声更新。</p>
+<p><strong>Proposition 1（梯度方向无偏）</strong>：用 inclusive group-average baseline，<code>E[∇Ĵ_GRPO] = (G−1)/G · ∇J(θ)</code>。证明用 <code>E_τ[∇log π_θ(τ)] = 0</code>（score function 期望为零），baseline 因含自身那项不完全抵消，最终只引入正缩放因子 <code>(G−1)/G</code>（G>1 时恒正），相当于学习率衰减、不改变优化方向 → 保证「高质量 ranking 的 credit 能正确回传到具体的中间推理和工具调用步骤」。</p>
+<h3 id="4-ppr--hard-negative-miningeq-3">4. PPR — Hard Negative Mining（Eq. 3）</h3>
+<p>对每个 <code>(xᵤ, C)</code>，正样本 <code>c⁺ = y</code>。stage-1 模型出 <code>r_K</code> 后，若 <code>c⁺</code> 没排第一即「ranking violation」。硬负池：</p>
+<p>$$
+H(x_u, C) = \begin{cases} {c^- \mid c^- \in r_K,\ \text{rank}<em>{r_K}(c^-) &#x3C; \text{rank}</em>{r_K}(c^+)} &#x26; c^+ \in r_K \ r_K &#x26; c^+ \notin r_K \end{cases}
+$$</p>
+<p>即「排在 c⁺ 之前的 item」；若 c⁺ 根本不在 top-K，就用整个 top-K 当池。<strong>不取最难的 top-1，而是随机采 1 个</strong> <code>c⁻</code> 组成 <code>(c⁺, c⁻)</code> —— 增加负样本多样性、避免过度对抗导致模糊监督。无需额外标注，只靠 implicit feedback。</p>
+<h3 id="5-ppr--bidirectional-preference-reasoningeq-4">5. PPR — Bidirectional Preference Reasoning（Eq. 4）</h3>
+<p>同一对 <code>(c⁺, c⁻)</code> 在同一用户上下文下拆成两个对称任务：</p>
+<ul>
+<li><strong>Positive direction</strong>：问「用户更可能选哪个」→ 目标 <code>c⁺_⋆ = c⁺</code>；</li>
+<li><strong>Negative direction</strong>：问「用户更不可能选哪个」→ 目标 <code>c⁻_⋆ = c⁻</code>，<strong>逼模型显式找出 <code>c⁻</code> 相对用户历史的 mismatch / 短板</strong>，而不是把它当背景非正样本。</li>
+</ul>
+<p>两方向共享 prompt 结构（PPR prompt 模板里 <code>[MORE / LESS] LIKELY</code>，输出 <code>\boxed{A}</code> 或 <code>\boxed{B}</code>），reward 换成二元 pair-wise：</p>
+<p>$$
+R^d_{pair} = \mathbb{I}[\hat{c}^d = c^d_\star], \quad d \in {+, -}
+$$</p>
+<p>其余 reward 分量（format / tool budget）保持不变。</p>
+<p><strong>Proposition 2（误差上界最小化）</strong>：定义打分差 <code>Δs = s(c⁺) − s(c⁻)</code>，排序错误即 <code>Δs &#x3C; 0</code>（离散 0-1 损失 <code>L₀₋₁ = I(Δs&#x3C;0)</code> 不可导）。双向任务的组合损失正比于
+$$
+L_{Bi} \approx -\log P_{pos} - \log P_{neg} = 2\log(1 + e^{-\Delta s})
+$$
+（因为 <code>P_pos = e^{s(c⁺)}/(e^{s(c⁺)}+e^{s(c⁻)})</code>，而 <code>P_neg</code>「拒绝 c⁻」化简后等于同一个 sigmoid）。这是 logistic loss，是 0-1 排序误差的<strong>凸光滑上界</strong>（<code>2log(1+e^{-Δs}) ≥ 2log2·I(Δs&#x3C;0)</code>），在 <code>Δs≪0</code> 时仍有非零梯度 → 专挖 <code>Δs&#x3C;0</code> 的硬对训练即最小化经验 pairwise 错误率，sharpen 偏好边界。</p>
+<h3 id="6-关键超参appendix-c3">6. 关键超参（Appendix C.3）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>Backbone</td><td>Qwen3-4B-Instruct-2507</td></tr><tr><td>Stage1 / Stage2 epoch</td><td>3 / 1</td></tr><tr><td>Group size G</td><td>8</td></tr><tr><td>最大生成长度</td><td>6,144</td></tr><tr><td>batch size</td><td>64</td></tr><tr><td>learning rate</td><td>1e-6</td></tr><tr><td>rollout temperature</td><td>0.6</td></tr><tr><td>工具调用上限 / 轨迹</td><td>10</td></tr><tr><td>候选集 / 历史长度</td><td>20（1 正 + 19 负）/ 最长 10</td></tr><tr><td>硬件</td><td>4× A800 80GB（推理 vLLM）</td></tr></tbody></table>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据集</strong>：Amazon Reviews 2023 四子集 —— CDs / Instruments / Office / Games，限定 2022.10–2023.10，按时间 8:1:1 切分。采负样本时排除历史交互物品并打乱候选顺序（去位置偏置）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dataset</th><th>#Users</th><th>#Items</th><th>#Inters.</th><th>Sparsity</th></tr></thead><tbody><tr><td>CDs</td><td>5,437</td><td>8,785</td><td>13,826</td><td>99.71%</td></tr><tr><td>Instruments</td><td>7,593</td><td>5,279</td><td>15,746</td><td>99.61%</td></tr><tr><td>Office</td><td>27,130</td><td>11,511</td><td>47,333</td><td>99.85%</td></tr><tr><td>Games</td><td>6,251</td><td>3,003</td><td>11,457</td><td>99.39%</td></tr></tbody></table>
+<p><strong>指标</strong>：NDCG@K（N@K）/ HitRate@K（H@K），K∈{1,5,10}，看真实购买物品在 top-10 里的命中与排序。</p>
+<p><strong>Baseline</strong>：传统序列推荐（Caser / GRU4Rec / SASRec / ReaRec）；training-free LLM（LLMRank、InteRecAgent，用 GPT-4）；可训 LLM（TALLRec / LLaRA / S-DPO / ReRe，统一 Qwen3-4B backbone，lr 1e-5）。</p>
+<h3 id="主结果table-1节选最强-baseline-对比">主结果（Table 1，节选最强 baseline 对比）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>CDs H@1</th><th>CDs N@5</th><th>CDs N@10</th><th>Games H@1</th><th>Games N@5</th><th>Games N@10</th></tr></thead><tbody><tr><td>SASRec</td><td>0.0536</td><td>0.1413</td><td>0.2145</td><td>0.1535</td><td>0.2762</td><td>0.3234</td></tr><tr><td>InteRecAgent</td><td>0.0782</td><td>0.1660</td><td>0.2392</td><td>0.1782</td><td>0.3009</td><td>0.3477</td></tr><tr><td>LLaRA</td><td>0.2324</td><td>0.3736</td><td>0.4394</td><td>0.2763</td><td>0.4588</td><td>0.4952</td></tr><tr><td>ReRe</td><td>0.2073</td><td>0.3371</td><td>0.4080</td><td>0.2921</td><td>0.4473</td><td>0.4976</td></tr><tr><td><strong>AgenticRec</strong></td><td><strong>0.2992</strong></td><td><strong>0.4795</strong></td><td><strong>0.5324</strong></td><td><strong>0.3282</strong></td><td><strong>0.4887</strong></td><td><strong>0.5445</strong></td></tr></tbody></table>
+<p>四数据集 20 列指标里 <strong>AgenticRec 拿下 19 列 SOTA</strong>。CDs H@1 0.2992（vs LLaRA 0.2324，+28.7%），Games H@1 0.3282（vs ReRe 0.2921，+12.4%）。值得注意：training-free 的 InteRecAgent（带工具但不训）甚至打不过可训的 LLaRA，印证「工具不端到端训会引入噪声」。</p>
+<h3 id="消融table-2r--纯-llm-推理tirr--带工具推理">消融（Table 2：R = 纯 LLM 推理，TIRR = 带工具推理）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Data</th><th>Setting</th><th>Variant</th><th>H@1</th><th>H@5</th><th>N@5</th></tr></thead><tbody><tr><td>CDs</td><td>Frozen</td><td>R</td><td>0.1907</td><td>0.4696</td><td>0.3303</td></tr><tr><td>CDs</td><td>Frozen</td><td>TIRR</td><td>0.2331</td><td>0.5476</td><td>0.3955</td></tr><tr><td>CDs</td><td>Trained</td><td>R</td><td>0.2324</td><td>0.5399</td><td>0.3865</td></tr><tr><td>CDs</td><td>Trained</td><td>TIRR (RTA)</td><td>0.2837</td><td>0.6162</td><td>0.4606</td></tr><tr><td>CDs</td><td>Trained</td><td>TIRR (RTA+PPR)</td><td><strong>0.2992</strong></td><td><strong>0.6472</strong></td><td><strong>0.4795</strong></td></tr><tr><td>Instr.</td><td>Frozen</td><td>R</td><td>0.1973</td><td>0.5613</td><td>0.3818</td></tr><tr><td>Instr.</td><td>Frozen</td><td>TIRR</td><td>0.1948</td><td>0.5277</td><td>0.3673</td></tr><tr><td>Instr.</td><td>Trained</td><td>TIRR (RTA+PPR)</td><td><strong>0.2586</strong></td><td><strong>0.6115</strong></td><td><strong>0.4393</strong></td></tr></tbody></table>
+<p><strong>关键结论</strong>：① <strong>Frozen 设置下 TIRR 不一定胜 R</strong>（Instruments/Office 上 TIRR 反而更差）—— 不训练时工具调用纯靠语言先验，会调出噪声证据；② <strong>Trained 后 TIRR 一致胜 R</strong>（CDs 0.2324→0.2837）—— 工具必须端到端训才有用；③ <strong>PPR 在 RTA 之上再涨一档</strong>（CDs H@1 0.2837→0.2992）。</p>
+<h3 id="训练动态与-scaling">训练动态与 scaling</h3>
+<p><img src="/ai-papers-daily/figures/agenticrec-end-to-end-tool-integrated-policy-optimization/fig2.png" alt="Office 数据集第一阶段（RTA）训练动态：(a) 工具使用——橙线为正奖励轨迹的工具调用率早期即冲到接近 100%，蓝线为平均工具调用次数从 3 缓涨到 8 后稳定；(b) 推荐质量 H@10 随训练稳步上升"></p>
+<ul>
+<li><strong>工具使用学习</strong>：正奖励轨迹的 tool-call rate 早期迅速逼近 100% 并保持；平均调用次数从 ~3 缓涨到 ~8 后稳定（学到稳定策略而非滥调）；与 H@10 同步上升。</li>
+<li><strong>PPR 训练</strong>（Games）：PPR 测试集偏好判断准确率 +26.3%（0.190→0.240），同时最终推荐 H@1 +12.5%（0.292→0.328）—— 双向偏好能力可迁移到最终排序。</li>
+<li><strong>Scaling</strong>：Qwen3 1.7B → 4B → 8B 全指标单调上升。</li>
+<li><strong>Group size</strong>：G 2→4→8 性能提升但渐饱和，中等 G 是稳定性/效率折中。</li>
+<li><strong>Latency</strong>：单 A800 + vLLM，每请求平均 16–21s，工具时间仅 0.01–0.02s（agent 推理为主，论文定位于交互式/推理密集场景而非毫秒级实时排序）。</li>
+<li><strong>Token cost</strong>：AgenticRec（含 Think/Act/Obs/Rec）相比 Naive LLM 仅小幅上涨（如 CDs 2595→2708，Games 3074→3663），可控。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：① 只在 Qwen3-4B + Amazon 4 垂类做，跨 backbone / 真实工业流量未验证（论文 limitation 自承没上 72B）；② <strong>候选集仅 20</strong>，离工业 hundreds-to-thousands 候选的真实 ranking 还远；③ 4 类工具手工设计、固定数量，“tool-agnostic” 在工具变多/有噪声时的稳定性没测；④ Hit@1+用工具的 +0.1 bonus 是 reward shaping，“为拿 bonus 而调工具” 的 hacking 倾向未专门分析；⑤ 只有 NDCG/H@K 一族 offline 指标，无 CTR/GMV/留存等业务验证；⑥ PPR 依赖 base 模型已有一定 LLM-as-a-Judge 自评能力，更小模型起步可能失败。</p>
+<p><strong>对电商 / 搜推 / Agent 方向的可借鉴点</strong>：</p>
+<ol>
+<li><strong>「list-wise reward 接 GRPO 整条 trajectory」是一个干净可迁移的范式</strong>——任何「中间推理 + 工具调用 + 最终输出排序列表」的 agent（电商搜索重排、生成式推荐、多路召回融合）都能套：把业务 ranking metric 当 trajectory-level reward，observation 做 stop-gradient，DAPO 式丢全负组。这是把 R1 风格 GRPO 真正落到推荐 agent 的一个代表作。</li>
+<li><strong>Bidirectional Preference Reasoning 是近乎零成本的工程 trick</strong>：同一对硬负样本正向问「更喜欢哪个」、反向问「更不喜欢哪个」，逼模型显式 articulate 负样本的 mismatch，可零成本插进任何 pairwise/DPO 风格的偏好训练。理论上还有「等价于 logistic loss、是 0-1 误差凸上界」的支撑。</li>
+<li><strong>从 ranking 违例自挖 hard negative 比全局采负更精细</strong>：用模型自己的错误（排在正样本之前的 item）做硬负，随机采而非取最难，平衡难度与稳定性 —— 适用任何 ranking 任务的难例挖掘。</li>
+<li><strong>「工具必须端到端训才不引入噪声」的消融很有指导意义</strong>：frozen 下带工具反而掉点，提醒在落地 agent 推荐/搜索时，不要直接 plug 一堆工具靠 prompt 启发式，而要把工具调用纳入 outcome-driven 的 RL 优化。</li>
+<li><strong>下一步值得做</strong>：候选集拉大到 100+、工具带真实噪声、reward 里塞真实转化信号（不止 NDCG，加 CTR/GMV），以及 self-evolving recommender agent（论文 future work）。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2603.21613" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

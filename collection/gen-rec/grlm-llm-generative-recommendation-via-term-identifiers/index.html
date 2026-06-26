@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="生成式推荐的 item identifier 之争给出第三条路：不用 raw title（会幻觉、判别力弱），也不用 Semantic ID（要扩词表 + 对齐训练、跨域不通），而是把每个 item 压成 5 个标准化英文关键词「Term ID」，全部来自 LLM 原生词表。靠「邻域 in-context」生成全局一致 + 局部判别的 TID，再用「item→TID 内化 + 序列预测」多任务 SFT 把开放词空间收敛到语义子空间，配双级弹性 grounding。Amazon 上 in-domain Recall@5 提升 7.8%~30%，跨域平均提升 50%+，有效率/直命中率 >99% 几乎无幻觉，且 K=3000 压缩词表精度只掉 <1%。
+"><meta property="og:title" content="Unleashing the Native Recommendation Potential: LLM-Based Generative Recommendation via Structured Term Identifiers · 论文沉淀"><meta property="og:description" content="生成式推荐的 item identifier 之争给出第三条路：不用 raw title（会幻觉、判别力弱），也不用 Semantic ID（要扩词表 + 对齐训练、跨域不通），而是把每个 item 压成 5 个标准化英文关键词「Term ID」，全部来自 LLM 原生词表。靠「邻域 in-context」生成全局一致 + 局部判别的 TID，再用「item→TID 内化 + 序列预测」多任务 SFT 把开放词空间收敛到语义子空间，配双级弹性 grounding。Amazon 上 in-domain Recall@5 提升 7.8%~30%，跨域平均提升 50%+，有效率/直命中率 >99% 几乎无幻觉，且 K=3000 压缩词表精度只掉 <1%。
+"><meta property="og:type" content="website"><title>Unleashing the Native Recommendation Potential: LLM-Based Generative Recommendation via Structured Term Identifiers · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2026-01</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>Unleashing the Native Recommendation Potential: LLM-Based Generative Recommendation via Structured Term Identifiers</h1> <p class="archive-authors">Zhiyang Zhang, Junda She, Kuo Cai, …, Kun Gai, Guorui Zhou (11 人)</p> <p class="affiliations">Kuaishou (快手)</p> <p class="one-liner">生成式推荐的 item identifier 之争给出第三条路：不用 raw title（会幻觉、判别力弱），也不用 Semantic ID（要扩词表 + 对齐训练、跨域不通），而是把每个 item 压成 5 个标准化英文关键词「Term ID」，全部来自 LLM 原生词表。靠「邻域 in-context」生成全局一致 + 局部判别的 TID，再用「item→TID 内化 + 序列预测」多任务 SFT 把开放词空间收敛到语义子空间，配双级弹性 grounding。Amazon 上 in-domain Recall@5 提升 7.8%~30%，跨域平均提升 50%+，有效率/直命中率 &gt;99% 几乎无幻觉，且 K=3000 压缩词表精度只掉 &lt;1%。
+</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">LLM4Rec</span><span class="tag tag-static">Generative Recommendation</span><span class="tag tag-static">Item Identifier</span><span class="tag tag-static">Term ID</span><span class="tag tag-static">Cross-Domain</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>: 当用预训练 LLM 做生成式推荐（GR）的 backbone 时，最核心的卡点是 <strong>item identifier 怎么设计</strong>——既要让 LLM 在参数空间里表示不断涌现的海量 item，又要在自回归生成时把 token 可靠地 ground 回真实 item。现有两条路都有硬伤：</p>
+<ul>
+<li><strong>Textual ID（title / description）</strong>: 直接用 LLM 原生词表，但 raw title 判别力不足、full description 太长不利于序列建模，且输出空间巨大极易幻觉，常需约束解码 + 固定候选集兜底，称不上真正的生成式。</li>
+<li><strong>Semantic ID（SID）</strong>: 把 item embedding 量化成离散码 <code>&#x3C;7>&#x3C;12>&#x3C;85></code>，但这些数字码不在 LLM 预训练词表里，存在<strong>语义鸿沟</strong>，要付出昂贵的<strong>词表扩展 + 对齐训练</strong>；且数字码本身无通用语义，天然 domain-specific，跨域推荐严重失效。</li>
+</ul>
+<p><strong>GRLM 的答案</strong>: 引入 <strong>Term ID（TID）</strong>——把每个 item 压成<strong>一组语义丰富、标准化的英文关键词</strong>（论文固定长度 5，如 <code>perfume | feminine | oriental | woody | calvin-klein</code>）。TID 完全来自 LLM 原生词表，因此天然兼容、语义丰富、无需改架构/扩词表，且因为是自然语言、跨域时不同品类共享词表（“Portable”、“Ergonomic” 当语义桥），实现 zero-effort 知识迁移。</p>
+<p><img src="/ai-papers-daily/figures/grlm-llm-generative-recommendation-via-term-identifiers/fig1.png" alt="三类 item identifier 对比：a) 直接用 raw title 易输入难输出、易幻觉；b) Semantic ID 需 Modality Encoder + 量化 tokenizer + 词表扩展 + SID 对齐的复杂流水线；c) Term ID（本文）以 Context-aware Summarization 产出原生文本关键词，结构化高效，仅需 SFT。底部表格显示 TID 在&#x22;原生兼容/语义丰富/低幻觉/跨域&#x22;四维全面占优。"></p>
+<p>三个关键设计（对应三阶段）：</p>
+<ol>
+<li><strong>Context-aware Term Generation (CTG)</strong>: 不是孤立地给每个 item 生成关键词，而是检索 top-k 相似邻居作为 in-context 参考，让 LLM 对共享属性用一致术语（全局一致，避免 “Cell-Phone” vs “Mobile-Phone” 碎片化）、对独特属性刻意选判别性词（局部判别，避免两个不同 iPhone 都标成 “iPhone”）。</li>
+<li><strong>Integrative Instruction Fine-tuning (IIFT)</strong>: 多任务 SFT，联合优化「item metadata → TID 内化（GTI）」和「用户行为序列预测」，把 LLM 巨大的开放词空间<strong>收敛/蒸馏</strong>到一个聚焦的语义子空间。</li>
+<li><strong>Elastic Identifier Grounding (EIG)</strong>: 推理时双级映射——先精确直映射（Direct Mapping），失败则利用 TID 可分解的结构做结构映射（Structural Mapping），保证近乎 100% 的有效 grounding。</li>
+</ol>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/grlm-llm-generative-recommendation-via-term-identifiers/fig2.png" alt="GRLM 整体框架：左侧 Context-aware Term Generation 用 embedding 模型检索相似邻居作上下文，经 Prompt 让 LLM 把 item metadata 压成标准化 Term IDs；中间 Integrative Instruction Fine-tuning 联合 Generative Term Internalization（metadata→TID）与 User Sequence Prediction（历史序列→下一 item）两任务做 SFT；右侧 Elastic Identifier Grounding 用 beam search 生成候选 TID 后经 Direct Mapping / Structural Mapping 双级落地到真实 item。"></p>
+<p>三阶段流水线，全程围绕 Term ID：</p>
+<ul>
+<li><strong>阶段 1（CTG，离线一次性）</strong>: 用冻结的 Qwen3-4B-2507 + Qwen3-Embedding-8B，把每个 item 的 metadata 转成长度 5 的标准化 TID。LLM 参数在此阶段 <strong>frozen</strong>。</li>
+<li><strong>阶段 2（IIFT，训练）</strong>: 对 Qwen3 backbone 做<strong>全参数 SFT</strong>，两个任务混合：GTI（item metadata → TID）让模型内化 identifier 结构；序列预测（历史 → 下一 item 的 TID）学个性化偏好。</li>
+<li><strong>阶段 3（EIG，推理）</strong>: 模型只生成下一 item 的 TID（不生成 title，省推理开销），beam search 出候选 TID 序列，经双级映射落地到真实 item。</li>
+</ul>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="31-context-aware-term-generation-ctg">3.1 Context-aware Term Generation (CTG)</h3>
+<p><strong>目标</strong>: 标准化 identifier 时同时满足「相似 item 术语一致（防碎片化）」与「不同 item 保持判别（防语义碰撞）」。孤立生成两者都做不到。</p>
+<p><strong>流程</strong>:</p>
+<ol>
+<li>对每个 item <code>i</code>，聚合其 metadata <code>m_i</code>，用预训练 embedding 模型（<strong>Qwen3-Embedding-8B</strong>）编码成稠密向量 <code>v_i ∈ R^d</code>。</li>
+<li>计算 <code>i</code> 与候选库中所有 <code>j</code> 的 <strong>cosine 相似度</strong>，取 top-k 最相似的邻居构成上下文集 <code>N_i = {j_1,...,j_k}</code>。</li>
+<li>构造结构化 prompt <code>P</code>，把 item <code>i</code> 的 metadata 和邻居 <code>{m_j}</code> 一起喂给 LLM：</li>
+</ol>
+<p>$$T_i = \mathrm{LLM}\big(P(m_i, {m_j}_{j \in N_i})\big)$$</p>
+<p><strong>Prompt 设计</strong>（附录 Figure 5，可直接复刻）: 角色设为 “expert product summarizer”，要求<strong>恰好输出 5 个词</strong>，约束：</p>
+<ul>
+<li>词形用 base form（名词/形容词，no -ed/-ing/-s）；</li>
+<li>按重要性排序，内容覆盖 5 个维度：a) 主品类/类型 → b) 关键功能/用途 → c) 显著特征 → d) 目标受众 → e) 独特卖点；</li>
+<li>提供 TOP 5 相似产品作参考，先找共性用一致术语，再找差异性至少留 1-2 个独特词；</li>
+<li>输出严格 <code>[word1, word2, word3, word4, word5]</code>，无任何额外文本。</li>
+</ul>
+<p>设计哲学就是「全局一致 + 局部判别」的平衡：共享属性用标准词，独特属性刻意选判别词。</p>
+<h3 id="32-integrative-instruction-fine-tuning-iift">3.2 Integrative Instruction Fine-tuning (IIFT)</h3>
+<p>传统方法只做序列预测，会丢失 identifier 的语义 grounding。IIFT 联合优化两任务：</p>
+<p><strong>(a) Generative Term Internalization (GTI)</strong>: 模型直接从 item metadata <code>m_i</code> 生成标准化 <code>T_i</code>，<strong>不带 CTG 阶段的邻域上下文</strong>。动机是让 LLM 内化生成逻辑，把开放的自然语言输出空间压缩/蒸馏到聚焦的语义子区，建立对 identifier 结构的内在理解。</p>
+<p><strong>(b) User Behavior Sequence Prediction（核心推荐任务）</strong>: 对用户序列 <code>S = {i_1,...,i_n}</code>，先把每个 item <code>i_j</code> 表示成 <strong>TID 与 raw title 拼接</strong>的联合文本序列：</p>
+<p>$$x_j = [,T_{i_j};;;m^{title}_{i_j},]$$</p>
+<p>训练为自回归：把第一个 item <code>x_1</code> 当输入 context，后续 <code>{x_2,...,x_n}</code> 拼成输出，最小化输出 token 的 NLL（条件于初始 instruction <code>I</code>）：</p>
+<p>$$\mathcal{L} = -\sum_{k=2}^{n} \log P\big(x_k \mid I(x_1, …, x_{k-1})\big)$$</p>
+<blockquote>
+<p>注意训练时 item 表示含 title（<code>x_j</code> 拼了 TID + title），但<strong>推理时只需生成下一 item 的 TID <code>T_{i_{t+1}}</code></strong>（不生成完整含 title 的 <code>x_{t+1}</code>），直接映射回 item，保证高推理效率。</p>
+</blockquote>
+<p><strong>训练超参（附录 A，可复现）</strong>:</p>
+<ul>
+<li>全参数 SFT，next-token 目标；</li>
+<li>cosine annealing LR schedule，初始 LR <code>1e-4</code>，global batch size <strong>128</strong>，<strong>3 epochs</strong>；</li>
+<li>scaling 实验各尺寸 LR 单独调：0.6B/1.7B = <code>2e-4</code>，4B = <code>1e-4</code>，8B = <code>7e-5</code>，14B = <code>5e-5</code>。</li>
+</ul>
+<h3 id="33-elastic-identifier-grounding-eig">3.3 Elastic Identifier Grounding (EIG)</h3>
+<p>双级检索把生成的 TID 序列映射回推荐 item：</p>
+<ol>
+<li><strong>Direct Mapping</strong>: 先在候选库 <code>C</code> 里做精确字符串级匹配。模型输出完全对齐某 item 标准 TID 时精度最高。</li>
+<li><strong>Structural Mapping</strong>: 若无精确命中，利用 TID 可分解性做结构映射，选使结构得分最大的 item：</li>
+</ol>
+<p>$$s^* = \arg\max_{i \in C} \sum_{j=1}^{N} w_j \cdot \mathbb{I}(t^j_{gen} = t^j_i),\qquad w_j = \frac{1}{j+1}$$</p>
+<p><code>t^j_gen</code> 是生成序列第 <code>j</code> 个词，<code>w_j = 1/(j+1)</code> 是衰减权重（靠前的词权重更高，呼应 CTG 里”按重要性排序”）。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>Backbone</strong>: term 生成模型与推荐模型都用 <strong>Qwen3-4B-Instruct-2507</strong>（CTG 时冻结、IIFT 时全参微调）；TID 长度固定 <strong>5</strong>；推理用 beam search，max generation length = 30。指标 <strong>Recall / NDCG @5,@10</strong>。</p>
+<p><strong>数据集</strong>:</p>
+<ul>
+<li>In-domain: Amazon <strong>Beauty / Sports / Toys</strong>，5-core 过滤 + leave-one-out 划分。</li>
+<li>Cross-domain: 两对 <strong>Sports-Clothing（Leisure）</strong> 与 <strong>Phones-Electronics（Technology）</strong>，按重叠用户合并两域交互、按时间排序成统一序列，评估时分别预测各域最后一次交互。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>#User</th><th>#Item</th></tr></thead><tbody><tr><td>Beauty</td><td>22,363</td><td>12,101</td></tr><tr><td>Sports</td><td>35,598</td><td>18,357</td></tr><tr><td>Toys</td><td>19,412</td><td>11,924</td></tr><tr><td>Clothing</td><td>39,387</td><td>23,033</td></tr><tr><td>Phones</td><td>27,879</td><td>10,429</td></tr><tr><td>Electronics</td><td>192,403</td><td>63,001</td></tr></tbody></table>
+<p><strong>Baseline</strong>: 序列类 SASRec / BERT4Rec；生成类 TIGER / HSTU；LLM 类 OneRec-Think / IDGenRec；跨域专用 TriCDR / LLM4CDSR / GenCDR。</p>
+<h3 id="rq1-主结果in-domainrecallndcg">RQ1 主结果（In-domain，Recall/NDCG）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>指标</th><th>SASRec</th><th>TIGER</th><th>HSTU</th><th>IDGenRec</th><th>OneRec-Think</th><th><strong>GRLM</strong></th><th>提升</th></tr></thead><tbody><tr><td>Beauty</td><td>Recall@5</td><td>0.0402</td><td>0.0405</td><td>0.0424</td><td>0.0484</td><td>0.0563</td><td><strong>0.0607</strong></td><td>+7.82%</td></tr><tr><td>Beauty</td><td>NDCG@10</td><td>0.0320</td><td>0.0337</td><td>0.0353</td><td>0.0404</td><td>0.0471</td><td><strong>0.0506</strong></td><td>+7.43%</td></tr><tr><td>Sports</td><td>Recall@5</td><td>0.0199</td><td>0.0215</td><td>0.0268</td><td>0.0270</td><td>0.0288</td><td><strong>0.0375</strong></td><td>+30.21%</td></tr><tr><td>Sports</td><td>NDCG@10</td><td>0.0141</td><td>0.0179</td><td>0.0226</td><td>0.0223</td><td>0.0239</td><td><strong>0.0313</strong></td><td>+30.96%</td></tr><tr><td>Toys</td><td>Recall@5</td><td>0.0448</td><td>0.0337</td><td>0.0366</td><td>0.0595</td><td>0.0579</td><td><strong>0.0684</strong></td><td>+14.96%</td></tr><tr><td>Toys</td><td>NDCG@10</td><td>0.0358</td><td>0.0276</td><td>0.0309</td><td>0.0498</td><td>0.0482</td><td><strong>0.0561</strong></td><td>+12.65%</td></tr></tbody></table>
+<p>三数据集全指标 SOTA，Recall@5 相对最强 baseline 提升 7.8% / 30.2% / 15.0%。</p>
+<h3 id="rq1-跨域结果提升更夸张">RQ1 跨域结果（提升更夸张）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>数据集</th><th>指标</th><th>最强跨域 baseline (GenCDR)</th><th><strong>GRLM</strong></th><th>提升</th></tr></thead><tbody><tr><td>Leisure</td><td>Sports</td><td>Recall@5</td><td>0.0274</td><td><strong>0.0480</strong></td><td>+75.18%</td></tr><tr><td>Leisure</td><td>Clothing</td><td>Recall@10</td><td>0.0265</td><td><strong>0.0436</strong></td><td>+64.53%</td></tr><tr><td>Tech</td><td>Phones</td><td>Recall@5</td><td>0.0436</td><td><strong>0.0928</strong></td><td>+112.84%</td></tr><tr><td>Tech</td><td>Phones</td><td>NDCG@5</td><td>0.0411</td><td><strong>0.0739</strong></td><td>+79.81%</td></tr><tr><td>Tech</td><td>Electronics</td><td>Recall@10</td><td>0.0342</td><td><strong>0.0529</strong></td><td>+54.68%</td></tr></tbody></table>
+<p>跨域 Recall@K 平均提升 <strong>>50%</strong>，且 GRLM <strong>不需要任何跨域专用架构或对齐模块</strong>（TriCDR/GenCDR 需要）。原因：TID 把 item 映射到统一自然语言语义空间，共享词表当”语义桥”，复用 LLM 预训练世界知识做无缝迁移。</p>
+<h3 id="rq2-消融in-domain">RQ2 消融（in-domain）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>指标</th><th>w/o CTG</th><th>w/o GTI</th><th><strong>GRLM</strong></th></tr></thead><tbody><tr><td>Beauty</td><td>Recall@5</td><td>0.0576</td><td>0.0564</td><td><strong>0.0607</strong></td></tr><tr><td>Sports</td><td>Recall@5</td><td>0.0346</td><td>0.0361</td><td><strong>0.0375</strong></td></tr><tr><td>Toys</td><td>Recall@10</td><td>0.0857</td><td>0.0889</td><td><strong>0.0942</strong></td></tr></tbody></table>
+<p>去掉 CTG（无邻域上下文）会让生成倾向通用/碎片化词，性能明显下滑；去掉 GTI（无 item→TID 内化任务）说明内化任务对把复杂 metadata 映射进受限 TID 空间很关键，两任务协同保证既学准 item 表征又维持语义空间内的可靠转移。</p>
+<h3 id="rq3-scaling-law">RQ3 Scaling Law</h3>
+<p>固定 Qwen3-4B-2507 做 term 生成，backbone 换 Qwen3-2504 系列覆盖 <strong>0.6B / 1.7B / 4B / 8B / 14B</strong>。三数据集 Recall 随参数量稳定提升，符合 LLM scaling law——TID 让更大 LLM 更好地利用其语义推理与开放世界知识。</p>
+<p><img src="/ai-papers-daily/figures/grlm-llm-generative-recommendation-via-term-identifiers/fig3.png" alt="GRLM 在 Beauty / Sports / Toys 三个 in-domain 数据集上随 backbone 规模（0.6B→14B）的性能曲线：Recall@5（蓝）与 Recall@10（红）均随参数量单调上升，呈现清晰的 scaling 趋势，印证 TID 范式能持续受益于更大 LLM。"></p>
+<h3 id="rq4-幻觉关键卖点">RQ4 幻觉（关键卖点）</h3>
+<p>两指标：<strong>Valid Rate VR@K</strong>（生成 identifier 属于候选库的比例）、<strong>Direct Hit Rate DHR@K</strong>（EIG 里被精确直映射命中的比例）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>Beauty</th><th>Sports</th><th>Toys</th><th>Leisure</th><th>Technology</th></tr></thead><tbody><tr><td>VR@10</td><td>0.996</td><td>0.989</td><td>0.995</td><td>0.998</td><td>0.998</td></tr><tr><td>DHR@10</td><td>0.997</td><td>0.999</td><td>0.998</td><td>0.999</td><td>1.000</td></tr></tbody></table>
+<p>VR@10 与 DHR@10 全 >99%，说明模型已内化 TID 的结构与语义约束，把输出约束到预定义子空间，几乎消除文本生成式推荐的幻觉瓶颈，且不需约束解码就近 100% 直命中。</p>
+<h3 id="附录补充实验">附录补充实验</h3>
+<ul>
+<li><strong>TID 长度（附录 B / Table 8）</strong>: 长度 5 vs 7 vs 10——7 与 5 相当，10 反而略降（过长引入冗余噪声、淹没显著特征），叠加推理延迟，<strong>经验上选 5</strong> 最优权衡。</li>
+<li><strong>数据可扩展性（附录 D）</strong>: 合并 <strong>10 个 Amazon 子集</strong>联合训练，平均 Recall@10=0.0664、NDCG@10=0.0387，相比单数据集训练<strong>稳定不掉点</strong>（不出现 SID 那种 “id-space crowding”），因为 TID 共享自然语言词表带来跨品类正迁移。</li>
+<li><strong>语义压缩（附录 D / Table 9）</strong>: 把 54,255 个原始 term 用 embedding + K-means 压成 K 个 “Core Term”。即便 <strong>K=3000（约原始 1/18）</strong>，性能下降 &#x3C;1%。证明 GRLM <strong>不依赖记忆细粒度字符串</strong>，而是抓高层语义抽象——对超大规模 item 目录的可扩展性极强。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>核心洞见</strong>: 这篇把”item identifier 该长什么样”的争论推到一个很干净的结论——<strong>用 LLM 原生词表里的少量标准化关键词（结构化文本）做 item ID</strong>，同时绕开了 SID 的”扩词表 + 对齐训练 + 跨域失效”和 raw title 的”判别力弱 + 幻觉”。关键不是”用文本”，而是<strong>用受约束、标准化、可分解、按重要性排序的文本</strong>，再配 GTI 内化把开放词空间收敛成语义子空间，幻觉问题就被结构性地解决了。</p>
+<p><strong>局限</strong>:</p>
+<ol>
+<li>CTG 用的是<strong>固定外部 embedding 模型</strong>（Qwen3-Embedding-8B）检索邻域，未做 domain-specific 检索优化，TID 判别力还有提升空间。</li>
+<li>受算力限制只在 <strong>Qwen3</strong> 上验证，更大 base model 的上限未探。</li>
+<li>数据集全是 <strong>Amazon 离线公开集</strong>，无工业线上/真实流量验证（对比 OneRec/OneLoc 这类同组工业系统，这篇偏学术验证）。</li>
+<li>TID 固定长度 5 + 按重要性排序，对”特征极多且都重要”的复杂 item（如组合套装）可能信息损失。</li>
+</ol>
+<p><strong>对电商/搜推可借鉴点</strong>:</p>
+<ul>
+<li><strong>跨域/冷启/长尾</strong>: TID 的”共享自然语言词表当语义桥”是电商多品类、多业务线统一表征的现成思路——不用为每个域单独训 SID，common term（“Portable”/“Ergonomic”）天然做正迁移。这点对电商跨类目召回、新品冷启动直接可用。</li>
+<li><strong>可解释 + 可干预</strong>: TID 是人类可读关键词（<code>perfume | feminine | oriental | woody | calvin-klein</code>），推荐链路天然透明，便于业务侧审计、做属性级 boost/降权、甚至给运营看为什么推这个。比 <code>&#x3C;216>&#x3C;32></code> 这种 SID 友好太多。</li>
+<li><strong>词表压缩落地</strong>: K-means 把 54k term 压到 3k Core Term 精度几乎不掉，给”有界输出词表 + beam search 可控”提供了工程上限保证——电商 item 量级巨大时，固定小词表 + 结构映射 grounding 是可落地的。</li>
+<li><strong>CTG 的 prompt 范式可直接复用</strong>: 附录 Figure 5 的”恰好 5 词 + base form + 5 维度排序 + 邻域一致性 + 独特性”prompt 是个通用的”item → 结构化标签”蒸馏模板，可迁移到任何需要把商品 metadata 压成标准标签的场景（标签体系构建、特征工程、检索召回字段）。</li>
+<li><strong>训练范式</strong>: “identifier 内化任务 + 序列预测任务”多任务联合，比单纯序列预测更稳——对自研 LLM4Rec 的 SFT 阶段是个低成本可加的辅助任务。</li>
+</ul>
+<p><strong>与同组工作的关系</strong>: 作者来自快手（含 Kun Gai、Guorui Zhou、Ruiming Tang），与 OneRec / OneLoc / OpenOneRec 同源。GRLM 可视为对”GR 中 SID vs 文本 identifier”路线的一次学术性再思考，方向与工业系统互补——把 native-vocab term ID 这条路探通后，有潜力反哺工业 GR pipeline 的 identifier 设计。</p> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2601.06798" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/ZY0025/GRLM" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

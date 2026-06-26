@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出训练无关的N-gram记忆模块，通过平均token嵌入构建表示并用余弦门控注入，显著提升代码和知识密集型任务性能。"><meta property="og:title" content="NGM: A Plug-and-Play Training-Free Memory Module for LLMs"><meta property="og:description" content="提出训练无关的N-gram记忆模块，通过平均token嵌入构建表示并用余弦门控注入，显著提升代码和知识密集型任务性能。"><meta property="og:type" content="website"><title>NGM: A Plug-and-Play Training-Free Memory Module for LLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.16893" target="_blank" rel="noopener">2605.16893</a>  </div> <h1>NGM: A Plug-and-Play Training-Free Memory Module for LLMs</h1> <p class="title-zh">NGM：即插即用、无需训练的LLM记忆模块</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM记忆增强 · 训练无关即插即用</span> </div> <p class="affiliations">Nanjing University</p> <div class="meta">Yuwen Qu, Wenhui Dong, Chenyang Si, Caifeng Shan</div> <p class="one-liner">提出训练无关的N-gram记忆模块，通过平均token嵌入构建表示并用余弦门控注入，显著提升代码和知识密集型任务性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/N-gram Memory">N-gram Memory</a><a class="tag" href="/DailyPaper/tag/Training-Free">Training-Free</a><a class="tag" href="/DailyPaper/tag/Plug-and-Play">Plug-and-Play</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Cosine Gate">Cosine Gate</a><a class="tag" href="/DailyPaper/tag/Knowledge Injection">Knowledge Injection</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商搜索/推荐中，商品标题、品牌、规格等高频短语可利用N-gram缓存跳过大量计算，直接注入LLM的表示层，提升推理速度与事实准确性。</li><li>在多轮对话Agent中，可将用户重复提到的实体或结构化信息（如订单号、地址）通过NGM快速恢复，减少遗忘和重复生成。</li><li>完全无训练，即插即用，无需修改骨干模型权重或增加可学习参数，适合快速A/B测试和已有模型的无损增强。</li><li>余弦相似度+ReLU的门控机制简单高效，可作为其他知识注入场景（如检索增强生成）中轻量级融合模块的设计参考。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM在处理命名实体、重复短语、固定搭配等局部模式时，仍需通过完整的注意力与FFN计算，效率低下。现有条件记忆模块虽能显式存储知识，但依赖可学习的记忆嵌入，需要额外训练且灵活性受限。</p>
+<p><strong>方法</strong>：提出 <strong>N-gram Memory (NGM)</strong>，一个无训练、即插即用的模块，包含两个组件：</p>
+<ul>
+<li><strong>因果N-gram编码器</strong>：直接对骨干模型的预训练token嵌入取滑动窗口平均，动态构建N-gram表示，无需额外记忆表或检索流程，完全基于已有嵌入。</li>
+<li><strong>余弦门控记忆注入器</strong>：用当前上下文与N-gram表示的余弦相似度计算门控值，经ReLU截断后，将检索到的N-gram嵌入调制进原始表示，实现非参数化的自适应融合。</li>
+</ul>
+<p><strong>关键结果</strong>：在Qwen3系列（0.6B<del>14B）的8个基准上，NGM使平均性能提升0.5</del>1.2个点，尤其对代码生成（LiveCodeBench +3.0）和知识密集型任务（GPQA +3.03）增益显著；多模态模型Qwen3-VL-2B在MMStar上提升1.53个点。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.16893&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.16893" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.16893" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.16893" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

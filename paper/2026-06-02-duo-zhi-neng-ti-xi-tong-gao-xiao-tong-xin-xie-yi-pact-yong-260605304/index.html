@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 PACT 协议，将智能体间消息压缩为行动-状态-结果三字段，在保持性能的同时大幅减少 token 消耗"><meta property="og:title" content="What Should Agents Say? Action-state Communication for Efficient Multi-Agent Systems"><meta property="og:description" content="提出 PACT 协议，将智能体间消息压缩为行动-状态-结果三字段，在保持性能的同时大幅减少 token 消耗"><meta property="og:type" content="website"><title>What Should Agents Say? Action-state Communication for Efficient Multi-Agent Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-02">2026-06-02</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05304" target="_blank" rel="noopener">2606.05304</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>What Should Agents Say? Action-state Communication for Efficient Multi-Agent Systems</h1> <p class="title-zh">多智能体系统高效通信协议 PACT：用行动-状态记录替代自由文本</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent · 多智体通信协议优化</span> </div> <p class="affiliations">Singapore University of Technology and Design</p> <div class="meta">Chen Huang, Yuhao Wu, Wenxuan Zhang</div> <p class="one-liner">提出 PACT 协议，将智能体间消息压缩为行动-状态-结果三字段，在保持性能的同时大幅减少 token 消耗</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent Systems">Multi-Agent Systems</a><a class="tag" href="/DailyPaper/tag/Communication Protocol">Communication Protocol</a><a class="tag" href="/DailyPaper/tag/Token Efficiency">Token Efficiency</a><a class="tag" href="/DailyPaper/tag/Action-State">Action-State</a><a class="tag" href="/DailyPaper/tag/PACT">PACT</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商推荐的多智能体协作（如 query 改写、策略规划）中，可将智能体间通信设计为“行动-状态-结果”三字段，去除冗余推理，降低上下文长度和 API 成本。</li><li>PACT 作为推理时协议，无需更改模型或训练，可直接通过代理钩子集成到现有 Agent 框架（如 LangChain、AutoGen），实现紧凑通信。</li><li>对于使用推理模型的 Agent 系统，解耦私有计算与公共通信可以避免将冗长的推理 trace 反复暴露给下游，缓解上下文窗口耗尽风险。</li><li>在长上下文任务（如代码生成、对话规划）中，仅传递结构化关键信息能显著减少输入 token，提升解析率，在 SWE-agent 上每解析 token 降低 47%。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>多智能体系统（MAS）中，智能体间通常采用自由形式的自然语言通信，导致 token 消耗爆发式增长、上下文窗口快速耗尽，影响任务性能与推理成本。尤其当推理模型将长思考链转发给下游时，冗余内容会反复被重新处理。现有工作多关注角色与调度，却忽视通信内容本身的设计。本文诊断五种常见通信策略，发现没有单一策略普适，但有效消息始终保留以行动为中心的信息，从而提出一种结构化通信协议。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>通信策略诊断</strong>：在分割证据交互和顺序流水线两种 MAS 设置中，测试完整输出、简洁生成、仅结论、简短摘要、仅制品五种策略，发现制品携带关键任务信息但缺乏行动与状态，导致效率低下。</li>
+<li><strong>PACT 协议</strong>：将智能体间通信视为公共状态更新问题，要求每个非最终智能体的输出被投影为紧凑的公共消息，仅包含三个字段：<strong>ACTION</strong>（已采取或待执行的动作）、<strong>STATE</strong>（支撑动作的证据或环境反馈）、<strong>RESULT</strong>（动作的产出物）。该投影在发送端进行，禁止中间推理过程进入共享历史。</li>
+<li><strong>协议属性</strong>：PACT 不限制智能体内部计算，只约束公共通信，实现私有计算与公共状态更新的解耦；协议与具体 MAS 拓扑、角色分配无关，可作为推理时通用干预。</li>
+</ul>
+<h3 id="关键实验结果">关键实验结果</h3>
+<ul>
+<li><strong>MAS 实验</strong>：在两种设置、Qwen3‑8B/14B/32B 模型上，PACT 相比 CoA、TextMAS、Multi‑Agent Debate 等基线，平均减少 token 使用量 38.7%，同时 F1 或准确率持平或提升。例如在 HotpotQA 分割证据交互上，8B 模型 F1 69.9（Token 6,704），优于完整输出的 13,520 Token；在 AIME 流水线上，32B 模型 Tok 减少 20% 以上。</li>
+<li><strong>真实编码工具</strong>：在 SWE‑bench Verified 上，OpenHands 的解析率从 19.4% 升至 23.0%，每解析 token 降低 10.3%；SWE‑agent 输入 token 减少 50.4%，每解析 token 从 2.46M 降至 1.30M（−47%）。</li>
+<li><strong>消融实验</strong>：去除 ACTION 或 STATE 字段导致 F1 下降 5 点以上，仅保留 RESULT 性能最低且 token 增加 12.9%，验证三字段的必要性。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05304&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05304" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05304" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05304" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

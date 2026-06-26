@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="DataCOPE从无标注探索轨迹中利用自适应检查表与答案一致性自我提炼可复用数据分析技能，无需人工标注"><meta property="og:title" content="Unsupervised Skill Discovery for Agentic Data Analysis"><meta property="og:description" content="DataCOPE从无标注探索轨迹中利用自适应检查表与答案一致性自我提炼可复用数据分析技能，无需人工标注"><meta property="og:type" content="website"><title>Unsupervised Skill Discovery for Agentic Data Analysis</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06416" target="_blank" rel="noopener">2606.06416</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Unsupervised Skill Discovery for Agentic Data Analysis</h1> <p class="title-zh">无监督技能发现驱动的自主数据分析代理</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 技能发现 · 无监督对比蒸馏</span> </div> <p class="affiliations">Zhejiang University · Ant Group</p> <div class="meta">Zhisong Qiu, Kangqi Song, Shengwei Tang, Shuofei Qiao, Lei Liang, Huajun Chen 等</div> <p class="one-liner">DataCOPE从无标注探索轨迹中利用自适应检查表与答案一致性自我提炼可复用数据分析技能，无需人工标注</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Skill Discovery">Skill Discovery</a><a class="tag" href="/DailyPaper/tag/Data Analysis">Data Analysis</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Unsupervised Learning">Unsupervised Learning</a><a class="tag" href="/DailyPaper/tag/Self-Improvement">Self-Improvement</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>无监督技能迭代方案可降标成本：利用代理探索轨迹的自洽性、答案聚类或自生成检查表作为质量信号，结合对比蒸馏更新技能，尤其适合电商场景中报告自动生成、客服问答等任务，避免高成本人工标注。</li><li>报告评估：自适应检查表与交替优化：对于商品分析报告、广告文案等开放性输出，可引入Checklist Agent动态生成任务相关评估准则并与生成代理交替优化，防止过拟合，提升输出完备性。</li><li>推理任务：答案聚类 + 自洽性辅助筛选：在处理固定答案的电商问答、候选推荐时，通过答案聚类形成群体信号，辅以自洽性估计过滤错误一致，可有效发现稳定推理模式。</li><li>技能粒度需平衡通用与专用：实验表明过粗或过细的技能颗粒度会损害效果，为业务线构建Agent技能库时应先评估任务多样性再划分技能类别。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：数据科学代理在不同任务中的灵活性受限于固定的流水线或昂贵的模型微调。推理时注入可复用技能是一种轻量方案，但发现有效技能通常依赖人工标注，而数据分析任务的成功标准因格式（报告 vs. 答案）而异，标注成本高且难统一。</p>
+<p><strong>方法</strong>：DataCOPE 提出一个闭环无监督技能发现框架，协调三个模块迭代运作：1）<strong>Data-Analytic Agent</strong> 在当前技能下采样探索轨迹；2）<strong>Unsupervised Verifier</strong> 从轨迹中提取相对质量或一致性信号，不依赖真实标签。对于报告式任务，采用<strong>自适应检查表验证器</strong>（Adaptive Checklist Verifier）：生成任务特定检查项、评分报告、并交替优化 Checklist Agent 技能以防止过拟合；对于推理式任务，采用<strong>答案一致性验证器</strong>（Answer Agreement Verifier）：对最终答案聚类，计算自洽性作为辅助不确定性信号；3）<strong>Skill Manager</strong> 基于这些信号将轨迹分为正例组与负例组，通过对比蒸馏提炼可复用的分析策略、错误规避规则，更新技能。</p>
+<p><strong>实验</strong>：在两个基准上评估：Deep Data Research（报告式数据科研任务）和 DABStep（多步推理），随机划分 1:3 探索/测试集。与无技能基线和 Skill Creator 对比，DataCOPE 在报告任务上平均提升 9.71%，推理任务平均提升 32.30%，且在 Claude、GPT-5.2、DeepSeek-V4-Pro、Qwen3.5 等不同模型上一致有效。消融显示移除检查表或答案聚类会导致大幅性能下降；技能迭代在前两轮收益显著，后期可能饱和。无监督技能在报告任务上甚至超过少量标注轨迹的监督方法，展示了极高的标注效率。</p>
+<p><strong>核心结论</strong>：无监督验证器驱动的对比蒸馏是实现数据分析代理自我提升的有效范式，自适应检查表和答案一致性信号是两大关键，且发现技能可跨模型迁移。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06416&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06416" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06416" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06416" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

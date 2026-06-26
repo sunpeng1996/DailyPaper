@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个按统一原则训练的具身基础模型，用单一VLM实现理解、推理、想象与行动，同规模下多项性能最优"><meta property="og:title" content="Pelican-Unified 1.0: A Unified Embodied Intelligence Model for Understanding, Reasoning, Imagination and Action"><meta property="og:description" content="首个按统一原则训练的具身基础模型，用单一VLM实现理解、推理、想象与行动，同规模下多项性能最优"><meta property="og:type" content="website"><title>Pelican-Unified 1.0: A Unified Embodied Intelligence Model for Understanding, Reasoning, Imagination and Action</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.15153" target="_blank" rel="noopener">2605.15153</a>  </div> <h1>Pelican-Unified 1.0: A Unified Embodied Intelligence Model for Understanding, Reasoning, Imagination and Action</h1> <p class="title-zh">Pelican-Unified 1.0：统一理解、推理、想象与行动的具身基础模型</p> <div class="dir-row"> <span class="direction-chip">🧭 具身智能 · 统一多模态基础模型</span> </div>  <div class="meta">Yi Zhang, Yinda Chen, Che Liu, Zeyuan Ding, Jin Xu, Shilong Zou 等</div> <p class="one-liner">首个按统一原则训练的具身基础模型，用单一VLM实现理解、推理、想象与行动，同规模下多项性能最优</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Embodied AI">Embodied AI</a><a class="tag" href="/DailyPaper/tag/Unified Model">Unified Model</a><a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/World Model">World Model</a><a class="tag" href="/DailyPaper/tag/Video Generation">Video Generation</a><a class="tag" href="/DailyPaper/tag/Action Prediction">Action Prediction</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>统一多任务的架构思路：用一个VLM同时承担理解与推理，将场景、指令、历史动作映射到共享语义空间，避免多个专家系统的拼接，降低系统复杂度，适合电商场景中需要融合文本、图像、用户行为序列的多任务统一建模。</li><li>未来生成器联合预测视频与动作：通过同一去噪过程同时产生未来视觉和未来行动，并将语言、视频、动作损失回传至共享表示，这种联合训练能让模型学到更丰富的环境动态表征，对需要想象用户未来行为的推荐模型有启发，可以尝试在用户序列预测中同时生成行为与上下文。</li><li>自回归思维链生成与潜变量投影：VLM在单次前向中输出任务、动作和未来导向的思维链，并将最终隐状态投影为潜变量，作为未来生成的Condition，这类似于将推理过程显式化为离散Token再总结为稠密向量，可以借鉴到Agent决策或推荐解释中，提升推理的可控性和下游生成质量。</li><li>一个Checkpoint保持各能力竞争力：实验表明统一训练不会导致能力妥协，对工业部署友好，可减少线上模型数量和版本管理成本，适合电商中需要同时具备理解、推理、想象能力的基础模型建设。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前具身智能系统通常需要独立模型分别负责环境理解、任务推理、未来想象和行动预测，导致系统集成复杂、训练不一致。本工作旨在用一个统一基础模型同时覆盖这四种能力，并在不牺牲单能力性能的前提下简化架构。</p>
+<p><strong>方法</strong>：Pelican‑Unified 1.0以单一VLM作为统一理解和推理模块，将场景图像、指令、视觉上下文、动作历史全部映射至共享语义空间，并自回归地生成任务、动作和未来导向的思维链，最终隐状态投影为一个稠密潜变量。统一未来生成器（UFG）基于该潜变量，通过同一去噪过程同时生成未来视频帧和未来动作序列，由两路模态专用输出头分别解码。语言、视频和动作损失全部反向传播到共享表示中，实现理解、推理、想象与行动的端到端联合优化。</p>
+<p><strong>结果</strong>：一个模型权重在所有任务上均取得强结果：在8个VLM评测上平均64.7分，为同规模模型最佳；WorldArena上66.03分排名第一；RoboTwin动作预测达93.5分，位列第二。证明统一范式能够保留专项模型的强性能，同时将四种能力集成至单一模型。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.15153&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.15153" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.15153" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.15153" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

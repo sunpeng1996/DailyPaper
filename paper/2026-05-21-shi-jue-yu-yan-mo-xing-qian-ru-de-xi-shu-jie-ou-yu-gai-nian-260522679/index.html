@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出CEDAR，通过可逆旋转+top-k稀疏瓶颈，不扩大维度实现多模态嵌入的稀疏解耦与概念对齐"><meta property="og:title" content="Conceptualizing Embeddings: Sparse Disentanglement for Vision-Language Models"><meta property="og:description" content="提出CEDAR，通过可逆旋转+top-k稀疏瓶颈，不扩大维度实现多模态嵌入的稀疏解耦与概念对齐"><meta property="og:type" content="website"><title>Conceptualizing Embeddings: Sparse Disentanglement for Vision-Language Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22679" target="_blank" rel="noopener">2605.22679</a>  </div> <h1>Conceptualizing Embeddings: Sparse Disentanglement for Vision-Language Models</h1> <p class="title-zh">视觉-语言模型嵌入的稀疏解耦与概念解释</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态嵌入的可解释性</span> </div> <p class="affiliations">Jagiellonian University, Kraków, Poland · Warsaw University of Technology, Warsaw, Poland</p> <div class="meta">Piotr Kubaty, Patryk Marszałek, Łukasz Struski, Adam Wróbel, Jacek Tabor, Marek Śmieja</div> <p class="one-liner">提出CEDAR，通过可逆旋转+top-k稀疏瓶颈，不扩大维度实现多模态嵌入的稀疏解耦与概念对齐</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Sparse Disentanglement">Sparse Disentanglement</a><a class="tag" href="/DailyPaper/tag/Vision-Language Models">Vision-Language Models</a><a class="tag" href="/DailyPaper/tag/Interpretability">Interpretability</a><a class="tag" href="/DailyPaper/tag/Post-hoc">Post-hoc</a><a class="tag" href="/DailyPaper/tag/CLIP">CLIP</a><a class="tag" href="/DailyPaper/tag/SAE">SAE</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>主要学术贡献，针对视觉-语言模型可解释性，业务可直接迁移的工程方法较少。</li><li>可借鉴旋转+top-k稀疏瓶颈的思路，对电商多模态商品向量（如CLIP嵌入）做后处理，将语义属性轴对齐，便于运营理解与人工调控，例如将某维度对应“颜色”或“风格”概念。</li><li>方法保持维度不变、可逆，避免SAE的冗余与几何失真，适合线上对延迟敏感的场景，可给已部署模型附加可解释性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多模态模型（如CLIP、BLIP）的嵌入内部语义不透明，现有解释方法依赖稀疏自编码器（SAE）扩展维度，破坏原始几何结构并引入冗余。需要一种不增加维度的后处理方式，揭示预训练嵌入的组合语义结构。</p>
+<p><strong>方法</strong>：提出CEDAR（Conceptual Embedding Disentanglement via Adaptive Rotation），学习一个可逆的正交变换矩阵，配合top-k稀疏瓶颈，将原始嵌入旋转到新的轴对齐坐标系，使少量维度承载大部分语义信息。变换保持嵌入空间基本几何性质，且可逆，避免信息丢失。对CLIP类模型，每个轴可直接用文本概念类比；对生成式BLIP，则可解码为自然语言描述。</p>
+<p><strong>关键结果</strong>：在重建误差-稀疏性权衡上达到与SAE相当甚至更优的水平；生成的解释与人类感知对齐度更高，概念更聚焦。定性实验展示了清晰的语义轴，如“户外”“食物”等概念可被独立调控。结果表明，视觉-语言表征的“纠缠”可通过适当的基底变换解决，无需过度完备字典。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22679&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22679" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22679" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22679" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

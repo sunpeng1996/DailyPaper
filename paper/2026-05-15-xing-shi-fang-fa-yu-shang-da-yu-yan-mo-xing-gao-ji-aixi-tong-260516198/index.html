@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用LTL进展将时序合规监控拆解为LLM标注+形式推理，效果远超LLM直接评判，并实现预测性干预"><meta property="og:title" content="Formal Methods Meet LLMs: Auditing, Monitoring, and Intervention for Compliance of Advanced AI Systems"><meta property="og:description" content="利用LTL进展将时序合规监控拆解为LLM标注+形式推理，效果远超LLM直接评判，并实现预测性干预"><meta property="og:type" content="website"><title>Formal Methods Meet LLMs: Auditing, Monitoring, and Intervention for Compliance of Advanced AI Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.16198" target="_blank" rel="noopener">2605.16198</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Formal Methods Meet LLMs: Auditing, Monitoring, and Intervention for Compliance of Advanced AI Systems</h1> <p class="title-zh">形式方法遇上大语言模型：高级AI系统的合规审计、监控与干预</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 行为合规监控 · 形式方法</span> </div> <p class="affiliations">University of Toronto · Vector Institute</p> <div class="meta">Parand A. Alamdari, Toryn Q. Klassen, Sheila A. McIlraith</div> <p class="one-liner">利用LTL进展将时序合规监控拆解为LLM标注+形式推理，效果远超LLM直接评判，并实现预测性干预</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LTL">LTL</a><a class="tag" href="/DailyPaper/tag/Monitoring">Monitoring</a><a class="tag" href="/DailyPaper/tag/Auditing">Auditing</a><a class="tag" href="/DailyPaper/tag/LLM-as-a-Judge">LLM-as-a-Judge</a><a class="tag" href="/DailyPaper/tag/Temporal reasoning">Temporal reasoning</a><a class="tag" href="/DailyPaper/tag/AI Governance">AI Governance</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用 LTL 形式化业务规则，监控 Agent 行为：电商场景中复杂的时序约束（如“必须先确认支付再发货，且发货前需人工审核大额订单”）可直接用 LTL 表达，结合 TRAC 对客服机器人、推荐流程或供应链Agent进行实时合规检查。</li><li>小模型标注 + 形式逻辑推理 &gt; 大模型直接评判：不要依赖 GPT-4 等巨额模型作为时序行为裁判，改用 7B 小模型做动作/状态的命题标注，再交由 LTL 进展自动推理，成本低且 F1 大幅度领先，适合大规模日志审计。</li><li>预测与干预机制降低违规率：新增预测监控模块，对即将发生的违规进行采样估计，并通过重采样、约束注入提示或切换更安全的模型进行黑盒干预，在保持任务完成率的同时显著减少违规，可嵌入到对话Agent或推荐Agent的推理循环中。</li><li>审计日志自动生成可解释证据：TRAC 在监控过程中记录每次公式进展的 witness，为每一步合规/违规提供可追溯的解释，便于满足监管审计要求。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：AI 产品与服务需遵守产品、行业和地域特定的时序行为规范（如“收到有效发票最终必须付款”），这类约束存在时间弹性，LLM 直接作为裁判（LLM-as-a-Judge）难以识别时序模式违规，尤其是事件间隔大、约束数量多时性能急剧下降。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>TRAC 算法族</strong>：将监控问题分解为 LLM 标注器（从 I/O 序列中提取原子命题）和基于线性时序逻辑（LTL）进展的监控器。LTL 进展逐步重写公式，保留符号结构，支持新增约束无需重编译、生成可读的残留公式以用于干预。TRAC 可灵活用于在线监控或离线日志审计。</li>
+<li><strong>TRACP+I</strong>：加入预测监控（采样未来 k 步估计违规概率）与黑盒干预（重采样、约束注入提示、模型替换），在预计违规前主动修正输入或输出。</li>
+<li><strong>重置机制（TRAC R）</strong>：检测到违规后重置，支持持续监控和“合理合规”评估。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li><strong>环境</strong>：IPC-Trucks、TextWorld、ScienceWorld，均为长视自序列决策环境，带有时序行为约束。</li>
+<li><strong>对比基准</strong>：LLM-as-a-Judge（零样本/少样本/少样本+真值标签）、不同规模的 LLM（Qwen-7B 至 Gemini-2.5-Pro）。</li>
+<li><strong>主要结果</strong>：TRAC + LLM 标注器的 F1 普遍提升 0.3–0.5 以上，7B 小模型作标注器即可超越前沿模型直接评判。受控合成实验证实：LLM 的时序推理准确率随事件间隔、约束数量和每步命题数量的增加而明显下降，复杂公式下前沿模型也快速退化。TRACP+I 的三种干预策略在不同模型和环境均降低违规率（例如从 0.6–0.8 降至 0.2–0.4），且任务奖励无明显损失。</li>
+</ul>
+<p><strong>核心启示</strong>：将时序合规监控解耦为 LLM 负责感知标记、形式方法负责时序推理，是当前最可靠的工程路线；LLM 不应单独承担时序推理任务。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.16198&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.16198" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.16198" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.16198" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

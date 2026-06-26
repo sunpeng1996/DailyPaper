@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="证明扩散模型可在无显式时间步嵌入下达到最优，输入可隐式推断噪声尺度，实现更高效生成架构"><meta property="og:title" content="On the Redundancy of Timestep Embeddings in Diffusion Models"><meta property="og:description" content="证明扩散模型可在无显式时间步嵌入下达到最优，输入可隐式推断噪声尺度，实现更高效生成架构"><meta property="og:type" content="website"><title>On the Redundancy of Timestep Embeddings in Diffusion Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20416" target="_blank" rel="noopener">2606.20416</a>  </div> <h1>On the Redundancy of Timestep Embeddings in Diffusion Models</h1> <p class="title-zh">扩散模型中时间步嵌入的冗余性研究</p> <div class="dir-row"> <span class="direction-chip">🧭 生成架构简化与冗余去除</span> </div> <p class="affiliations">Independent Researcher, Lima, Peru</p> <div class="meta">José A. Chávez</div> <p class="one-liner">证明扩散模型可在无显式时间步嵌入下达到最优，输入可隐式推断噪声尺度，实现更高效生成架构</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Diffusion Models">Diffusion Models</a><a class="tag" href="/DailyPaper/tag/Timestep Embeddings">Timestep Embeddings</a><a class="tag" href="/DailyPaper/tag/Generative Models">Generative Models</a><a class="tag" href="/DailyPaper/tag/Ablation Study">Ablation Study</a><a class="tag" href="/DailyPaper/tag/Efficiency">Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在基于扩散的推荐模型（如 DiffRec）中，可尝试移除时间步嵌入，利用用户交互序列或物料特征直接隐式推断噪声尺度，减少额外调制参数</li><li>简化时间步调制后，推理阶段无需处理时间编码，降低工程复杂度与延迟，适合在线推荐场景</li><li>无时间步嵌入的扩散模型可能更鲁棒，尤其在数据稀疏的冷启动场景，模型会更关注内容结构而非时间信号</li><li>注意力可集中于去噪网络本身的结构设计，为序列推荐中利用上下文长度、时间间隔等信息提供新思路</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：扩散模型普遍依赖显式时间步嵌入来调制不同噪声尺度下的去噪；但该条件信号是否绝对必要尚未被充分验证。本文直接挑战这一长期范式，探究移除时间步嵌入对 U-Net 与 DiT 架构的影响。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>理论推导：证明在特定条件下（如去噪目标为 L2 损失），全局最优解可以在无显式时间步条件下达到——模型能从被破坏的输入中隐式推断噪声尺度。</li>
+<li>架构修改：直接从 U-Net 和 DiT 的所有注入位置删除时间步嵌入，取消特征图相加或自适应调制，仅保留基于噪声输入的学习。</li>
+<li>实验：在 CelebA 和 CIFAR-10 上进行消融，比较有无时间步嵌入的生成质量。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>无时间步嵌入的模型在 FID、精度、召回率等指标上持平甚至超越原始条件模型，表现出惊人鲁棒性。</li>
+<li>结构保真度得以维持，间接验证了输入本身携带的噪声强度信息足以引导去噪过程。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20416&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20416" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20416" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20416" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

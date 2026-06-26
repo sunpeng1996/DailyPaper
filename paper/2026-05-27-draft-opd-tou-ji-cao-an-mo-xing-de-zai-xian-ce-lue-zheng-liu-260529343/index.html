@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 Draft-OPD，通过错误位置重放的在线蒸馏，解决草案模型 SFT 的分布偏移，将接受长度与加速比提升超过 20%。"><meta property="og:title" content="Draft-OPD: On-Policy Distillation for Speculative Draft Models"><meta property="og:description" content="提出 Draft-OPD，通过错误位置重放的在线蒸馏，解决草案模型 SFT 的分布偏移，将接受长度与加速比提升超过 20%。"><meta property="og:type" content="website"><title>Draft-OPD: On-Policy Distillation for Speculative Draft Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29343" target="_blank" rel="noopener">2605.29343</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Draft-OPD: On-Policy Distillation for Speculative Draft Models</h1> <p class="title-zh">Draft-OPD：投机草案模型的在线策略蒸馏</p> <div class="dir-row"> <span class="direction-chip">🧭 投机解码 · 在线策略蒸馏</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Shanghai AI Laboratory · Tsinghua University · The Chinese University of Hong Kong · Peking University</p> <div class="meta">Haodi Lei, Yafy Li, Haoran Zhang, Shunkai Zhang, Qianjia Cheng, Xiaoye Qu 等</div> <p class="one-liner">提出 Draft-OPD，通过错误位置重放的在线蒸馏，解决草案模型 SFT 的分布偏移，将接受长度与加速比提升超过 20%。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Speculative Decoding">Speculative Decoding</a><a class="tag" href="/DailyPaper/tag/On-Policy Distillation">On-Policy Distillation</a><a class="tag" href="/DailyPaper/tag/Draft Model">Draft Model</a><a class="tag" href="/DailyPaper/tag/KL Divergence">KL Divergence</a><a class="tag" href="/DailyPaper/tag/LLM Inference">LLM Inference</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>错误驱动的在线训练思路可迁移至生成式推荐：将物品推荐视为逐 token 生成，模仿草案模型接收目标模型验证的过程，对推荐序列中被“拒绝”的错误 token 进行重播与针对性蒸馏，提升生成质量。</li><li>接受/拒绝的非对称 KL 设计可复用于轻量级打分模型：在排序或召回阶段，用目标模型（如大模型）监督轻量级模型时，对正确预测和错误预测分别使用 forward KL 和 reverse KL，让轻量模型更专注于自身易错模式。</li><li>利用验证阶段的暴露错误进行针对性训练：在 Agent 多智体协作中，可记录交互过程中被另一智能体“拒绝”的决策点，对这些状态进行重放学习，使策略模型更聚焦于合作失败的关键状态。</li><li>解耦 rollout 稳定性和策略信号的思想：在强化学习或蒸馏中，当学生无法独立生成高质量轨迹时，可借助教师辅助 rollout 维持稳定性，再通过锚点重放学生自身的错误决策，兼顾训练稳定与策略改进。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+投机解码（Speculative Decoding）通过轻量级草案模型（draft model）提前生成多个 token，再由目标模型并行验证来加速推理。主流草案模型（如 EAGLE-3、DFlash）采用离线 SFT 在目标模型生成的轨迹上训练，但训练曲线会快速达到平台期，接受长度不再提升。原因是训练与推理的状态分布存在偏移：SFT 使用的所有前缀均由目标模型生成，而推理时草案模型是在自己提出的 token 块上接受验证，SFT 无法覆盖草案模型自身导致的错误状态。在线策略蒸馏（OPD）是自然解法，但直接应用于草案模型面临两难：草案模型无法独立生成完整序列（退化严重），而目标辅助 rollout 又会抹去草案特有的错误信号，使训练退化为目标分布上的 SFT。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>带错误位置记录的 rollout</strong>：使用标准投机解码流程生成完整序列，同时记录每块草案 block 的起始位置作为锚点（anchor），保证了 rollout 质量且保留了草案动作的位置信息。</li>
+<li><strong>从锚点重放计算 log-prob</strong>：后续对每个锚点进行重放，计算草案模型和目标模型在同一草案诱导前缀下的 token 级对数概率，得到接受与拒绝 token 的集合。</li>
+<li><strong>接受感知的蒸馏损失</strong>：对接受 token 使用正向 KL（使草案覆盖目标分布），对拒绝 token 使用反向 KL（惩罚草案高概率但与目标不符的模式），并按指数衰减降低块内靠后位置拒绝 token 的权重，聚焦早期错误。</li>
+</ul>
+<p><strong>关键实验</strong><br>
+在 Qwen3 系列模型（4B/8B/30B-A3B-Thinking）上，使用数学推理（GSM8K、MATH-500、AIME）、代码生成（MBPP、HumanEval、SWE-Lite）和 MT-Bench 等基准，与 EAGLE-3、DFlash 在匹配的训练 FLOPs 下对比。开启思维链时，Draft-OPD 平均加速比达到 4.88×，比 EAGLE-3 提升 23%，比 DFlash 提升 13%；在 SGLang 部署环境下，实测吞吐量最高提升 17%。消融实验表明，错误位置重放、非对称 KL 和位置衰减权重均对接受长度有显著贡献。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29343&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29343" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29343" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29343" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

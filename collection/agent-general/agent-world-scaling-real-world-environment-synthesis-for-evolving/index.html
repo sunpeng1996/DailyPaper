@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="端到端 &#34;环境 + agent 共进化&#34; arena：自动从真实主题挖环境、生工具、合成可验证任务，再用多环境 RL 训 agent，由 self-evolving arena 自动诊断短板、定向扩环境。共合成 1978 环境 / 19822 工具，平均任务 >15 轮交互。"><meta property="og:title" content="Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence · 论文沉淀"><meta property="og:description" content="端到端 &#34;环境 + agent 共进化&#34; arena：自动从真实主题挖环境、生工具、合成可验证任务，再用多环境 RL 训 agent，由 self-evolving arena 自动诊断短板、定向扩环境。共合成 1978 环境 / 19822 工具，平均任务 >15 轮交互。"><meta property="og:type" content="website"><title>Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🤖 Agent通用</span> <span class="sep">·</span><time>2026-04</time> <span class="sep">·</span><span>arXiv (Working in progress)</span>  </div> <h1>Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence</h1> <p class="archive-authors">Guanting Dong, Junting Lu, Junjie Huang, …, Ji-Rong Wen, Zhicheng Dou</p> <p class="affiliations">ByteDance Seed × 人民大学</p> <p class="one-liner">端到端 &quot;环境 + agent 共进化&quot; arena：自动从真实主题挖环境、生工具、合成可验证任务，再用多环境 RL 训 agent，由 self-evolving arena 自动诊断短板、定向扩环境。共合成 1978 环境 / 19822 工具，平均任务 &gt;15 轮交互。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Env Synthesis</span><span class="tag tag-static">General Agent</span><span class="tag tag-static">Scaling</span><span class="tag tag-static">MCP</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：通用 Agent 训练严重受限于”真实、可执行、可验证、有状态”环境的稀缺——现有环境要么是 LLM 纯模拟（易幻觉、偏离真实动态），要么来自有限的开源 toolchain（复杂度低、不能支撑长程多状态任务），且缺乏用环境去”诊断 agent 短板并定向补强”的 life-long learning 机制。</p>
+<p><strong>关键 idea</strong>：把”环境数据”提升为 Agent Scaling 的第一公民。论文构建一个<strong>自演化训练竞技场 Agent-World</strong>，它由两个紧耦合组件闭环组成：</p>
+<ol>
+<li><strong>Agentic Environment-Task Discovery</strong>：用 deep-research agent 从数千真实主题（MCP servers / 工具文档 / 工业 PRD）自主从 Web 挖掘 topic-aligned 数据库 + 生成并验证可执行工具，再用图游走 / 程序化两种方式合成可验证、难度可控的长程任务。最终产出 <strong>1978 个真实环境 + 19822 个工具</strong>。</li>
+<li><strong>Continuous Self-Evolving Agent Training</strong>：多环境 RL（GRPO + 可执行 reward）训练策略；同一环境生态又当作动态诊断 arena，自动发现弱环境与失败模式，定向再合成环境/任务，让”策略 ↔ 环境”正反馈共进化。</li>
+</ol>
+<p>核心范式总结：<strong>environment scaling 是与 reward scaling / data scaling 并列的独立可扩展轴</strong>，论文用”环境数量”和”自演化轮次”两条 scaling 曲线给出经验证据。</p>
+<p><img src="/ai-papers-daily/figures/agent-world-scaling-real-world-environment-synthesis-for-evolving/fig1.png" alt="Agent-World 总体架构（左：环境-agent 共进化闭环；右：下游通用 agent 性能 + 环境数量 scaling 曲线）"></p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline 是一个<strong>两阶段闭环</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>真实主题 M ──┐</span></span>
+<span class="line"><span>            ▼</span></span>
+<span class="line"><span>[阶段1] Agentic Environment-Task Discovery</span></span>
+<span class="line"><span>  主题采集(MCP/Doc/PRD) → 深研 agent 挖数据库 D → 数据库复杂化 φ</span></span>
+<span class="line"><span>  → coding agent 生成工具 f + 单测 → 交叉验证过滤 → 环境生态 E={(D,F)}</span></span>
+<span class="line"><span>  → 层级 taxonomy(20/50/2K) → 可验证任务合成(图游走 X_graph + 程序化 X_prog)</span></span>
+<span class="line"><span>            ▼</span></span>
+<span class="line"><span>[阶段2] Continuous Self-Evolving Agent Training</span></span>
+<span class="line"><span>  冷启 SFT(40K 轨迹) → 多环境 GRPO RL(可执行 reward)</span></span>
+<span class="line"><span>  → Self-Evolving Arena: 分层抽样 arena → 动态合成新评测任务</span></span>
+<span class="line"><span>    → 在 agent-tool-database 协议下评测 → 诊断 agent δ 定位弱环境 W^(r) + 任务生成指南 G_guide^(r)</span></span>
+<span class="line"><span>    → 定向再合成 X_target^(r) → continue RL → π^(r+1)</span></span>
+<span class="line"><span>            └──────── 反馈回阶段1 再扩环境 ────────┘</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>形式化基础是把多轮 agent 交互建模为 <strong>POMDP <code>(U, S, A, O, P)</code></strong>：</p>
+<ul>
+<li>全局状态 <code>S = S_E × S_H</code>：环境状态 <code>s_E</code>（数据库/文件/服务）+ 对话状态 <code>s_H</code>（历史/约束/偏好）。<code>s_E</code> 不可直接观测，只能从工具观测 <code>O_E</code> 间接推断。</li>
+<li>每个环境显式参数化为 <code>e = (D, F)</code>：<code>D</code> 是环境状态的存储载体（结构化记录/文件），<code>F = {f_k}</code> 是可读写 <code>D</code> 的可执行算子集合，调用工具会诱导环境状态转移。</li>
+<li>动作 <code>A = A_tool ∪ A_resp</code>（工具调用 vs 自然语言回复）；<code>a_t ∈ A_tool</code> 时执行 <code>f</code> 改写 <code>D</code>、产生结构化观测 <code>o_E_{t+1}</code>，<code>a_t ∈ A_resp</code> 时只更新对话状态、环境状态不变。</li>
+</ul>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<p><img src="/ai-papers-daily/figures/agent-world-scaling-real-world-environment-synthesis-for-evolving/fig2.png" alt="阶段1 Agentic Environment-Task Discovery 流水线：主题采集 → 数据库挖掘 → 工具生成与验证 → 环境 taxonomy → 可验证任务合成"></p>
+<h3 id="1-环境主题采集environment-theme-collection">1. 环境主题采集（Environment Theme Collection）</h3>
+<ul>
+<li><strong>输入/输出</strong>：三路真实来源 → 种子主题集 <code>M = M1 ∪ M2 ∪ M3</code>。
+<ul>
+<li><code>M1</code> <strong>MCP Servers</strong>（~2.8K）：从 Smithery（smithery.ai/servers）取真实 MCP server 规范，每个带结构化 JSON（数据源描述 + 标准化工具定义）。</li>
+<li><code>M2</code> <strong>Tool Documentations</strong>（~0.5K）：过滤开源 tool-use 数据集，抽工具定义文档，用 LLM 反向映射到环境主题。</li>
+<li><code>M3</code> <strong>Industrial PRDs</strong>（~0.2K）：产品需求文档，天然含背景 / 领域 workflow / 系统接口，直接作主题锚点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-agentic-database-mining数据库挖掘--复杂化">2. Agentic Database Mining（数据库挖掘 + 复杂化）</h3>
+<ul>
+<li>
+<p><strong>deep-research agent</strong> <code>G</code>：以策略模型 <code>π_θ</code> 为核心 + 外部工具集 <code>T</code>（search / browser / code compiler / OS 工具）。对每个主题 <code>m</code> 迭代检索挖数据，再用 OS 工具结构化持久化：</p>
+<p><code>D(m) = G(m; π_θ, T)</code></p>
+</li>
+<li>
+<p><strong>数据库复杂化 <code>φ</code></strong>：单次挖掘往往规模小、结构简单，故迭代 <code>N</code> 轮扩充丰富：</p>
+<p><code>D^(n+1)(m) = φ(D^(n)(m), m, T)</code>，<code>n = 0,…,N-1</code>，最终 <code>D^(N)(m)</code>。</p>
+</li>
+<li>
+<p>关键点：<strong>用真实 Web 结构化数据</strong>而非 LLM 合成数据库（区别于 EnvScaler 等纯合成路线），强调真实数据可实时更新、高价值。</p>
+</li>
+</ul>
+<h3 id="3-工具接口生成与验证tool-generation--verification">3. 工具接口生成与验证（Tool Generation &#x26; Verification）</h3>
+<ul>
+<li>
+<p><strong>coding agent <code>ψ</code></strong>（带 code compiler + OS 工具 <code>T̂</code>）：给 <code>(m, D^(N)(m))</code> 生成候选工具 + 单测：</p>
+<p><code>(f̂, Ĉ_f̂) = ψ(m, D^(N)(m); π_θ, T̂)</code>，每个工具一对多映射到测试集 <code>Ĉ_f̂</code>。</p>
+</li>
+<li>
+<p><strong>交叉验证过滤</strong>：工具测试精度</p>
+<p><code>Acc(f̂; Ĉ_f̂) = (1/|Ĉ_f̂|) Σ_{ĉ∈Ĉ_f̂} 1[f̂(ĉ) passes]</code></p>
+<p><strong>保留条件（三者同时满足）</strong>：① Python 编译通过；② <code>Acc > 0.5</code>；③ 该环境至少含 1 个有效工具 + 1 个有效测试用例。过滤后得 <code>F(m)</code>，环境生态 <code>E = {(D^(N)(m), F(m)) | m∈M}</code>。</p>
+</li>
+</ul>
+<h3 id="4-环境-taxonomy-构建">4. 环境 Taxonomy 构建</h3>
+<ul>
+<li>层级聚类（hierarchical clustering）数千主题 → 50 个簇心；回溯每簇样本随机选代表；基于 TOUCAN taxonomy，用 <strong>GPT-OSS-120B</strong> 做监督式摘要识别簇主题 → 50 个二级标签；再请 3 名标注员合并抽象成 20 个一级类型，交叉验证讨论定稿。</li>
+<li>最终：<strong>20 一级 / 50 二级 / 2K+ 三级（1978）标签</strong>，记一级类别集合 <code>C</code>。用于跨环境任务合成 + 分层 arena 构建。</li>
+</ul>
+<h3 id="5-可验证任务合成verifiable-task-synthesis">5. 可验证任务合成（Verifiable Task Synthesis）</h3>
+<p>两条互补策略，均靠 <strong>sandbox 执行</strong>收集 trace、导出 ground-truth、保证可验证。</p>
+<p><strong>(a) 图游走任务 <code>X_graph</code></strong>（建模顺序工具依赖）：</p>
+<ul>
+<li><strong>工具图构建</strong>：对每个环境构造全连通带权有向图 <code>G=(V,E)</code>，节点是工具，边由 LLM 评估三种依赖：
+<ul>
+<li><strong>强依赖</strong> <code>f_i → f_j, w=3</code>：<code>f_j</code> 输入严格依赖 <code>f_i</code> 输出（如 <code>create_order</code> 拿 <code>order_id</code> 再 <code>get_order_details</code>），严格有向边。</li>
+<li><strong>弱依赖</strong> <code>f_i ↔ f_j, w=2</code>：<code>f_j</code> 输入可来自 <code>f_i</code> 也可另取（查库 / 常量），双向边。</li>
+<li><strong>独立边</strong> <code>f_i ↔ f_j, w=1</code>：无参数级依赖，作 fallback 保证全连通、防 random walk 死路。</li>
+</ul>
+</li>
+<li><strong>随机游走</strong>：优先从”有输出但无强依赖前驱”的起点 <code>f_1</code> 出发，第 <code>t</code> 步按边权 <code>w</code> 偏置概率采样后继，得原始序列 <code>τ=[f_1,…,f_k]</code>；强/弱依赖传上一工具输出，独立边从 <code>D^(N)(m)</code> 随机采有效值；LLM 复核剪冗余得精炼可执行序列 <code>τ*</code>。</li>
+<li><strong>任务与 rubric 生成</strong>：LLM 据 <code>τ*</code> 起草 <code>q_init</code>（<strong>严禁含工具名/库 schema 防泄漏</strong>）→ sandbox 逐步执行记录 trace 与返回 → LLM 据真实字段精炼出 <code>q_final</code> + 严格 JSON ground-truth <code>a*</code> + 结构化评分 rubric <code>R</code>（字段完整性 / schema 匹配 / 数值容差等）。</li>
+<li><strong>一致性验证</strong>：部署 ReAct agent 在 sandbox 求解 5 次，<strong>≥2 次得一致答案才保留</strong>。</li>
+</ul>
+<p><strong>(b) 程序化任务 <code>X_prog</code></strong>（建模条件/循环/聚合等非线性推理）：</p>
+<ul>
+<li>LLM 据工具 schema + 库描述生成复杂 query <code>q_prog</code>（不暴露工具/库细节）→ LLM 当 solver 写端到端可执行 Python 解 <code>π_code</code>（含 for/if-else/统计聚合），包在 ReAct loop 里遇错自动 debug → 执行得 <code>a*</code>。</li>
+<li><strong>验证码生成</strong>：把 <code>(q_prog, π_code, a*)</code> 喂 LLM 生成可执行验证脚本 <code>V_code(a, a*)</code>，含多级断言 + 自定义逻辑，校验候选答案 <code>a</code> 和数据库状态 <code>s_E</code> 是否满足全部约束；同样 ReAct debug 保可靠。同样 5 次跑、<code>≥2</code> 成功才留。</li>
+</ul>
+<p><strong>难度 scaling（两策略通用）</strong>：增大随机游走最大步数扩工具链、提高弱依赖/独立边采样概率削弱”明显顺序输出”依赖、程序化侧增加唯一工具数与调用数 + 注入条件分支 + 跨库聚合排序过滤；最后<strong>改写任务描述抹去工具名/执行逻辑</strong>，逼 agent 从抽象目标自行推断 workflow。</p>
+<h3 id="6-多环境-agent-rl">6. 多环境 Agent RL</h3>
+<p><img src="/ai-papers-daily/figures/agent-world-scaling-real-world-environment-synthesis-for-evolving/fig3.png" alt="阶段2 Continuous Self-Evolving Agent Training 框架：上=多环境 GRPO RL（可执行 reward），下=自演化 arena（动态合成评测任务 → 诊断弱环境 → 定向再合成 → continue RL）"></p>
+<ul>
+<li>
+<p><strong>多环境 rollout</strong>：三组件闭环——LLM 策略 <code>π_θ</code>、工具 runtime（执行 <code>F(m)</code>、维护 DB 连接/缓存等环境侧状态）、数据库状态 <code>D^(N)(m)</code>。给任务 <code>x</code>，<code>π_θ</code> 据 <code>h_t=(o_0,a_0,…,o_t)</code> 采动作 <code>a_t</code>；输出 <code>y=(τ, a_final)</code>，<code>τ</code> 为交互轨迹。<strong>全局 batch 内每个任务配独立动态环境</strong>实现多环境 rollout。</p>
+</li>
+<li>
+<p><strong>结构化可验证 reward</strong>（两类）：</p>
+<p><code>r(x,y) = I[ (1/n)Σ_j I[Judge(x,y,r_j)] == 1 ]</code>，若 <code>x∈X_graph</code>（rubric-conditioned LLM-as-judge，全部 criterion 通过才得分）</p>
+<p><code>r(x,y) = I[ Execute(V_code(y, y*)) ]</code>，若 <code>x∈X_prog</code>（sandbox 跑验证脚本校验答案/状态）</p>
+</li>
+<li>
+<p><strong>策略更新（GRPO）</strong>：每任务采 <code>G</code> 条轨迹，算 token 级 advantage <code>Â_{i,t}</code>，clipped importance ratio + KL 惩罚到参考策略：</p>
+<p><code>J_GRPO(θ) = E[ (1/G)Σ_i (1/|y_i|)Σ_t min( r_{i,t}(θ)Â_{i,t}, clip(r_{i,t}(θ),1-ε,1+ε)Â_{i,t} ) − β·D_KL(π_θ‖π_ref) ]</code></p>
+</li>
+</ul>
+<h3 id="7-self-evolving-agent-arena自演化诊断闭环">7. Self-Evolving Agent Arena（自演化诊断闭环）</h3>
+<ul>
+<li>
+<p><strong>Arena 构建</strong>：基于层级 taxonomy 分层抽样，每个一级类别 <code>c∈C</code> 随机选 <code>K=5</code> 个环境，合成 <code>E_arena</code>（兼顾覆盖广度与评测成本）。</p>
+</li>
+<li>
+<p><strong>动态评测任务合成</strong>：每轮 <code>r</code> 对 arena 每个环境按 §5 新合成一批 fresh 可验证任务 <code>X_arena^(r)(m_i)</code>（图+程序化，各带 <code>R</code> 或 <code>V_code</code>），<strong>环境与任务都逐轮动态</strong>防过拟合静态评测。</p>
+</li>
+<li>
+<p><strong>Agentic Diagnosis</strong>：诊断 agent <code>δ</code>（带 Python 解释器 + search）输入：① 每任务失败 trace（工具日志/中间观测/validator 反馈）② 按环境与 taxonomy 的错误分布统计 ③ 环境元数据（工具 schema + 库描述）；输出 <strong>(a) 排序后的弱环境集 <code>W^(r) ⊆ E_arena</code></strong> + <strong>(b) 环境专属任务生成指南 <code>G_guide^(r)(m)</code></strong>（刻画缺失能力，如错误工具用法 / 状态更新错误）。</p>
+</li>
+<li>
+<p><strong>共进化循环</strong>：据 <code>W^(r)</code> 和 <code>G_guide^(r)</code> 重跑任务合成得定向训练集 <code>X_target^(r)</code>（弱因状态多样性不足时还触发 <code>φ</code> 数据库复杂化）→ 从 <code>π^(r)</code> continue RL 得 <code>π^(r+1)</code>：</p>
+<p><code>π^(r) --evaluate--> W^(r) --diagnose+target--> X_target^(r) --continue RL--> π^(r+1)</code></p>
+</li>
+</ul>
+<h3 id="关键超参复现要点">关键超参（复现要点）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>环境挖掘/任务合成/诊断 policy</td><td>GPT-OSS-120B</td></tr><tr><td>冷启 SFT 轨迹</td><td>40K（由 in-house Doubao-Seed-1.8 生成）</td></tr><tr><td>backbone</td><td>Qwen3-8B / 14B</td></tr><tr><td>RL 算法</td><td>GRPO（RLVR）</td></tr><tr><td>clip ratio</td><td>ε_low=0.2, ε_high=0.28</td></tr><tr><td>最大轨迹长度 / 单步生成上限</td><td>80K / 32K tokens</td></tr><tr><td>每步采样任务数 × rollout</td><td>32 × 8</td></tr><tr><td>解码</td><td>temperature=1.0, top_p=1.0</td></tr><tr><td>arena 每一级类别抽环境数 K</td><td>5</td></tr><tr><td>任务一致性保留阈值</td><td>5 次跑 ≥2 次成功</td></tr><tr><td>RL 样本规模</td><td>5K</td></tr></tbody></table>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据集规模</strong>：1978 环境 / 19822 工具；每环境平均 >10 工具（部分 >40）；数据库文件类型多样（json/csv/sql/html/tex/yaml）；<strong>所有任务 ≥7 轮交互，平均 >20 轮，非平凡部分 >40 轮</strong>；用 Doubao-Seed-2.0-pro 在 Pass@10 下测，多数任务仅 10 次成功 1 次、少量全 0，证明难度 scaling 有效。</p>
+<p><strong>Baseline 三组</strong>：① 闭源前沿（GPT-5.2 High / Claude Sonnet-4.5 / Gemini-3 Pro / Seed2.0）；② 开源基座 8B–685B（DeepSeek-V3.2-685B / GPT-OSS-120B / Qwen3-235B-A22B / Qwen3-8B/14B/32B）；③ 开源环境 scaling 方法 7B–14B（Simulator-8B / TOUCAN-7B / EnvScaler-8B / AWM-8B/14B / ScaleEnv-8B）。</p>
+<p><strong>Benchmark</strong>：23 个，覆盖 agentic tool-use（MCP-Mark / BFCL V4 / τ²-Bench）、advanced AI assistant（SkillsBench / ARC-AGI-2 / Claw-Eval）、通用推理（MATH500/GSM8K/MATH/AIME24/25/KOR-Bench/OlympiadBench）、agentic search &#x26; coding（WebWalkerQA / SWE-bench Verified+Multilingual / Terminal-Bench 1.0+2.0 / GAIA / HLE）、knowledge &#x26; MCP（MMLU / SuperGPQA / MCP-Universe 5 子域）。每实验跑 8 次取均值。</p>
+<h3 id="主结果三大-agentic-tool-use-套件avg">主结果（三大 agentic tool-use 套件，Avg %）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>MCP-Mark</th><th>BFCL V4</th><th>τ²-Bench</th></tr></thead><tbody><tr><td>GPT-5.2 High（闭源）</td><td>53.1</td><td>75.0</td><td>80.2</td></tr><tr><td>Claude Sonnet-4.5</td><td>33.3</td><td>68.8</td><td>84.7</td></tr><tr><td>Gemini-3 Pro</td><td>50.8</td><td>68.8</td><td>85.4</td></tr><tr><td>Seed 2.0</td><td>54.7</td><td>76.6</td><td>83.0</td></tr><tr><td>Qwen3-8B（基座）</td><td>2.4</td><td>81.3</td><td>26.2</td></tr><tr><td>Qwen3-14B</td><td>3.4</td><td>81.3</td><td>32.4</td></tr><tr><td>Qwen3-235B-A22B</td><td>5.8</td><td>87.5</td><td>58.5</td></tr><tr><td>DeepSeek-V3.2-685B</td><td>36.7</td><td>37.5</td><td>80.3</td></tr><tr><td>EnvScaler-8B</td><td>5.6</td><td>93.8</td><td>37.9</td></tr><tr><td>AWM-14B</td><td>5.1</td><td>75.0</td><td>39.0</td></tr><tr><td>ScaleEnv-8B</td><td>–</td><td>–</td><td>38.5</td></tr><tr><td><strong>Agent-World-8B</strong></td><td><strong>8.9</strong></td><td>93.8</td><td><strong>61.8</strong></td></tr><tr><td><strong>Agent-World-14B</strong></td><td><strong>13.3</strong></td><td>93.8</td><td><strong>65.4</strong></td></tr></tbody></table>
+<blockquote>
+<p>注：MCP-Mark/BFCL 上 Avg 列对应论文表 1 各子项均值（如 BFCL 的 Relevance 子项 Agent-World 达 93.8）。重点结论：Agent-World-8B 在三套件<strong>一致超过所有环境-scaling baseline 且超过 Qwen3-235B-A22B</strong>；14B 比 8B 再 +约5%，BFCL-V4 上 55.8（论文文中口径）甚至胜 DeepSeek-V3.2-685B（54.1）。基座 Qwen3-8B 在 MCP-Mark 仅 2.4 → 提到 8.9，τ²-Bench 26.2 → 61.8，提升显著。</p>
+</blockquote>
+<h3 id="环境数量-scaling">环境数量 scaling</h3>
+<p>环境数 0→10→100→500→1000→2000（1978），在 4 个代表域（MCPMark-Postgres / BFCL-WebSearch / BFCL-Multi-Turn / τ²-Bench-Airline）评测：四域均值 <strong>18.4% → 38.5%（+20.1，翻倍多）</strong>；MCPMark-Postgres 4.8→19.9，BFCL-WebSearch 7.0→47.0。<strong>阶段性跃升</strong>集中在 10→100、100→500（早期补关键交互模式覆盖），500→2000 边际递减但仍正向（后期补细粒度鲁棒性）。</p>
+<h3 id="自演化轮次消融table-2">自演化轮次消融（Table 2）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model / Round</th><th>τ²-Bench</th><th>BFCL-V4</th><th>MCP-Mark(Post.)</th></tr></thead><tbody><tr><td>Agent-World-14B (base)</td><td>60.2</td><td>52.4</td><td>29.5</td></tr><tr><td>+1 round</td><td>63.5 (+3.3)</td><td>54.9 (+2.5)</td><td>36.3 (+6.8)</td></tr><tr><td>+2 rounds</td><td>65.4 (+1.9)</td><td>55.8 (+0.9)</td><td>38.1 (+1.8)</td></tr><tr><td>EnvScaler-8B (base)</td><td>37.9</td><td>47.6</td><td>9.5</td></tr><tr><td>+1 round</td><td>40.2 (+2.3)</td><td>49.1 (+1.5)</td><td>13.9 (+4.4)</td></tr><tr><td>+2 rounds</td><td>41.6 (+1.4)</td><td>50.0 (+0.9)</td><td>15.1 (+1.2)</td></tr></tbody></table>
+<p><strong>结论</strong>：① 两轮单调增益，<strong>MCP-Mark 涨幅最大</strong>（Agent-World +8.6 / EnvScaler +5.6），因其最吃状态追踪与真实 MCP 交互，正契合”诊断定位弱环境 → 定向合成难例”目标；② 自演化 loop <strong>对非本方法基座（EnvScaler-8B）同样有效</strong>，不依赖 Agent-World 初始化；③ 第二轮增益小于第一轮（早期修 pattern 级错误，后期攻长程残余失败），递减但仍正。</p>
+<h3 id="其他泛化结论">其他泛化结论</h3>
+<ul>
+<li><strong>通用推理不退化</strong>：7 个数学/推理 benchmark 上 Agent-World-8B profile 最佳，核心数学无 degradation。</li>
+<li><strong>长程 search &#x26; coding 增益最大</strong>：WebWalkerQA/SWE-Verified/SWE-Multilingual/Terminal 1.0+2.0/GAIA/HLE 一致超基座与 EnvScaler；EnvScaler-8B 在 SWE / Terminal 1.0 反而低于其 Qwen3-8B 基座。</li>
+<li><strong>AI assistant 跨尺度稳定</strong>：8B→14B 在 SkillsBench(9.2→12.6)/ARC-AGI-2(6.5→8.5)/Claw-Eval(30.5→31.5) 一致提升，而多数 baseline 8B→14B 无稳定增益（Qwen3 在 ClawEval 25.6→24.7 反降）。</li>
+<li><strong>训练动态</strong>：GRPO 下 reward 稳定上升，<strong>entropy 稳步增长不坍缩</strong>——模型适配陌生 API/异构状态转移时维持甚至扩大探索空间。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>23 benchmark 是否覆盖真实工业 agent 场景仍待验证；arxiv v1 标注 “Working in progress”，结果可能更新，社区独立复现尚未跟上。</li>
+<li><strong>自动 capability-gap 诊断的准确率没有充分披露</strong>：诊断 agent <code>δ</code> 的弱环境定位 / 错误归因到底多准、误诊会不会把 RL 带偏，缺定量评估。</li>
+<li>MCP-Mark 绝对分仍很低（8B 仅 8.9，14B 13.3），离闭源（50+）差距巨大——环境 scaling 缩小了相对差距但绝对能力天花板未突破。</li>
+<li>环境合成大量依赖 GPT-OSS-120B 这一强 teacher（挖库/合任务/诊断都用它），合成质量与该模型强相关，蒸馏味较重。</li>
+<li>数据库主要靠 Web 真实数据，受可访问性/版权/时效约束；“复杂化 <code>φ</code>”和”难度 scaling”靠 prompt 启发式控制，缺可量化的难度旋钮。</li>
+</ul>
+<p><strong>对电商 / 搜索推荐 / Agent 方向可借鉴点</strong>：</p>
+<ul>
+<li><strong>environment-as-data 思路直接可迁电商</strong>：电商客服/履约/比价天然是有状态多工具 workflow（查库存→下单→改日历），可照 <code>e=(D,F)</code> 把”商品库/订单库/物流库 + 可执行工具”封成环境，用图游走（强/弱/独立依赖）自动合成长程可验证任务，省去人工标 SOP。</li>
+<li><strong>可执行 reward + rubric/验证码双轨</strong>值得搬：电商任务多有客观终态（订单状态/库存数/金额），程序化 <code>V_code</code> 校验数据库终态比 LLM-judge 更可靠、抗 reward hacking；主观环节再用 rubric-conditioned judge 兜底。</li>
+<li><strong>自演化诊断闭环可作为线上 agent 的持续运维范式</strong>：用真实/影子环境周期性合成 fresh 评测任务 → 诊断 agent 定位弱品类/弱工具 → 定向补数据 continue RL，比一次性静态训练更贴”线上分布漂移”，且实验证明对<strong>非本方法基座也有效</strong>，可低成本接入既有模型。</li>
+<li><strong>环境数量 scaling 的阶段性规律</strong>（10→500 跃升、500+ 递减）提示工程上<strong>先广覆盖品类/工具再深挖</strong>的资源分配策略，避免一上来堆单一垂域。</li>
+<li><strong>任务难度可控合成</strong>（改写抹去工具名、增弱依赖比例）对构造”逼 agent 从用户意图自行规划”的电商 Agent 训练集有直接参考价值，避免模型靠表层模式作弊。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2604.18292" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

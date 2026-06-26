@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="动态调度Muon类矩阵更新的频谱指数p从正到负，早期聚焦高曲率方向，后期转向平坦方向，实现更优收敛"><meta property="og:title" content="DynMuon: A Dynamic Spectral Shaping View of Muon"><meta property="og:description" content="动态调度Muon类矩阵更新的频谱指数p从正到负，早期聚焦高曲率方向，后期转向平坦方向，实现更优收敛"><meta property="og:type" content="website"><title>DynMuon: A Dynamic Spectral Shaping View of Muon</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.17109" target="_blank" rel="noopener">2605.17109</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DynMuon: A Dynamic Spectral Shaping View of Muon</h1> <p class="title-zh">DynMuon：动态频谱塑形优化器</p> <div class="dir-row"> <span class="direction-chip">🧭 动态频谱塑形优化 · Muon改进</span> </div> <p class="affiliations">University of Wisconsin–Madison · MIT · Elorian AI</p> <div class="meta">Fangzhou Wu, Rikhav Shah, Sandeep Silwal, Qiuyi Zhang</div> <p class="one-liner">动态调度Muon类矩阵更新的频谱指数p从正到负，早期聚焦高曲率方向，后期转向平坦方向，实现更优收敛</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Muon">Muon</a><a class="tag" href="/DailyPaper/tag/Spectral Shaping">Spectral Shaping</a><a class="tag" href="/DailyPaper/tag/Dynamic Schedule">Dynamic Schedule</a><a class="tag" href="/DailyPaper/tag/LLM Training">LLM Training</a><a class="tag" href="/DailyPaper/tag/Optimizer">Optimizer</a><a class="tag" href="/DailyPaper/tag/Newton-Schulz">Newton-Schulz</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>动态频谱调度可迁移：在训练推荐模型（如CTR预估、Embedding矩阵）的矩阵参数时，可引入类似DynMuon的阶段式频谱调整，前期用高曲率方向加速信号衰减，后期转向平坦方向捕捉剩余信号，避免固定谱变换的次优性。</li><li>高效近似实现：利用Newton–Schulz迭代+二阶泰勒展开近似任意p的UΣ^pV^T更新，额外计算成本仅比Muon增加0.3%~2.5%，可即插即用地嵌入现有AdamW/Muon框架，适合大规模电商模型训练。</li><li>噪声感知的调度设计思路：通过曲率方向上的信号-噪声分解（如本文的mode-wise分析），可诊断训练中各子空间的优化状态，指导自适应调度，例如在Agent多智体协作训练中动态分配参数更新强度。</li><li>简单的logistic调度策略：p从1平滑降至-0.25，仅需两个超参数（τ, w），鲁棒性强，无需在线估计曲率，可直接作为默认配置，为其他动态优化器设计提供参考。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：Muon优化器通过将动量更新矩阵的奇异值替换为1（即polar factor U V^T）在LLM训练中取得显著效果，但这种固定频谱变换是否适用于所有训练阶段？近期工作开始探索更一般的频谱塑形族UΣ^pV^T，但缺乏动态视角。本文研究如何根据训练进展动态调整频谱指数p，以进一步提升优化效果。</p>
+<p><strong>方法关键点</strong>：</p>
+<ol>
+<li>将Muon推广到幂律频谱塑形族UΣ^pV^T，提出噪声感知的局部动态模型，将曲率方向上的残差信号与随机梯度噪声分解，揭示p控制信号收缩与噪声放大的模态间权衡。</li>
+<li>理论分析指出：早期残差集中于高曲率方向，正p加速其衰减；后期残差转向平坦方向，而平坦方向噪声相对较小，允许使用稍负的p（-0.25左右）加强更新，且不会因负得太猛而放大噪声。</li>
+<li>提出DynMuon，用logistic调度p从1平滑降至-0.25；高效实现利用Newton‑Schulz近似Muon更新（A^{-1/2}X_n），再对A^{p/2}做二阶泰勒展开，避免完全SVD，保持与Muon相同的计算复杂度。</li>
+</ol>
+<p><strong>关键实验</strong>：在GPT风格（127M~1.11B）和Qwen风格（171M）模型上，使用FineWeb/FineWeb-Edu数据训练10B或20B tokens，对比Muon、AdamW等。DynMuon在所有规模下验证损失更低，且达到Muon 80%训练步数时的目标损失可提前10.6%<del>26.5%步数，每步时间仅额外1.003</del>1.025倍；在多种学习率、数据集上鲁棒，-0.25的p_min表现最优。</p>
+<p><strong>核心结论</strong>：固定p=0并非全局最优；通过简单的正到负p调度，即可在几乎无额外计算开销下显著改善大模型训练，为未来在线自适应频谱调度打开了方向。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.17109&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.17109" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.17109" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.17109" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

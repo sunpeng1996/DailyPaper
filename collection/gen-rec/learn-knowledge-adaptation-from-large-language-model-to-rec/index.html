@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="快手提出 LEARN，把&#34;Rec-to-LLM&#34;（喂对话给 LLM 出文本）反转成&#34;LLM-to-Rec&#34;：冻结 LLM 当 item 内容编码器抽 content embedding，再用一个从头训的 12 层 causal-transformer（PAL）把开放域语义投影进协同域，用对比/dense-all-action loss 对齐推荐任务。双塔产出的 user/item emb 直接喂线上排序模型，工业 A/B 上 CVR/营收稳定正向，对冷启动与长尾用户收益尤其显著。"><meta property="og:title" content="LEARN: Knowledge Adaptation from Large Language Model to Recommendation for Practical Industrial Application · 论文沉淀"><meta property="og:description" content="快手提出 LEARN，把&#34;Rec-to-LLM&#34;（喂对话给 LLM 出文本）反转成&#34;LLM-to-Rec&#34;：冻结 LLM 当 item 内容编码器抽 content embedding，再用一个从头训的 12 层 causal-transformer（PAL）把开放域语义投影进协同域，用对比/dense-all-action loss 对齐推荐任务。双塔产出的 user/item emb 直接喂线上排序模型，工业 A/B 上 CVR/营收稳定正向，对冷启动与长尾用户收益尤其显著。"><meta property="og:type" content="website"><title>LEARN: Knowledge Adaptation from Large Language Model to Recommendation for Practical Industrial Application · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2024-12</time> <span class="sep">·</span><span>AAAI 2025</span>  </div> <h1>LEARN: Knowledge Adaptation from Large Language Model to Recommendation for Practical Industrial Application</h1> <p class="archive-authors">Jian Jia, Yipei Wang, Yan Li, Quan Chen, et al. (11 人)</p> <p class="affiliations">Kuaishou Technology × Southeast University</p> <p class="one-liner">快手提出 LEARN，把&quot;Rec-to-LLM&quot;（喂对话给 LLM 出文本）反转成&quot;LLM-to-Rec&quot;：冻结 LLM 当 item 内容编码器抽 content embedding，再用一个从头训的 12 层 causal-transformer（PAL）把开放域语义投影进协同域，用对比/dense-all-action loss 对齐推荐任务。双塔产出的 user/item emb 直接喂线上排序模型，工业 A/B 上 CVR/营收稳定正向，对冷启动与长尾用户收益尤其显著。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">LLM4Rec</span><span class="tag tag-static">content-embedding</span><span class="tag tag-static">twin-tower</span><span class="tag tag-static">cold-start</span><span class="tag tag-static">industrial-recsys</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>当前工业推荐系统主要依赖 ID embedding 捕捉 user-item 协同信号，但完全丢弃了 item 文本描述里的语义信息，导致冷启动、长尾用户上泛化差，且无法像 CV/NLP 那样训出一个可跨下游迁移的预训练底座。LLM 天然携带丰富的开放域知识与推理能力，自然想把它接进推荐。</p>
+<p>本文的关键判断是：<strong>主流接法（作者称为 “Rec-to-LLM”）在工业场景不可行</strong>。Rec-to-LLM 指把 user-item 交互序列文本化成对话 prompt 喂进 LLM、用 next-token loss 微调 LLM 直接出文本预测（用户兴趣 / 下一个 item / 推荐理由）。三个致命问题：</p>
+<ol>
+<li><strong>算力不可承受</strong>：LLM 输入长度 2K–128K，而快手短视频用户平均每周交互近 800 个视频，几个月的全局历史根本喂不进，推理/微调成本工业上不可行。</li>
+<li><strong>灾难性遗忘</strong>：用推荐数据微调 LLM，因协同域与开放域 gap 巨大，会破坏开放域知识，反而变差。</li>
+<li><strong>目标错配</strong>：LLM 的 next-token 目标与推荐的检索/排序目标不对齐。</li>
+</ol>
+<p>LEARN 把方向反过来——<strong>“LLM-to-Rec”</strong>：不让推荐去迁就 LLM 的文本格式，而是把 LLM 抽出的语义 content embedding <strong>投影进协同域</strong>，用推荐任务本身当监督目标。具体做法：冻结 LLM 当 <strong>item 内容编码器</strong>（而非 user 偏好编码器，每个 item 独立编码，规避长序列算力问题），再接一个从头训的轻量 transformer 把语义投影成 user/item embedding，对齐线上排序模型的相似度检索目标。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/learn-knowledge-adaptation-from-large-language-model-to-rec/fig1.png" alt="LEARN 框架总览：双塔结构，User Tower 与 Item Tower 各由冻结 LLM 的 Content Extraction Module（内容抽取）与可训的 Preference Alignment Module（偏好对齐）串联；图中并列展示 User Tower 与 Item Tower 的三种变体 (a)/(b)/(c)，下方箭头为按时间顺序排列的交互序列，右侧图例区分文本描述 / content / user / item embedding"></p>
+<p>把用户按时间顺序的交互序列以某一时间戳切成两段：前段为历史序列 U^hist（长度 H），后段为目标序列 U^tar（长度 T）。LEARN 是<strong>双塔</strong>结构：</p>
+<ul>
+<li><strong>User Tower</strong>：输入 U^hist 的 item 文本描述序列 → 输出 user embedding E^user ∈ R^64。</li>
+<li><strong>Item Tower</strong>：输入 U^tar 的 item → 输出 item embedding E^item。</li>
+</ul>
+<p>两塔各由两个模块串联：</p>
+<ol>
+<li><strong>CEX（Content EXtraction）模块</strong>：冻结的预训练 LLM + average pooling，把每个 item 的文本描述编码成 content embedding E^c。每个 item 独立过 CEX（这是规避长序列算力的关键）。</li>
+<li><strong>PAL（Preference ALignment）模块</strong>：content adaptor（维度变换）+ 12 层 causal transformer + online projection，把 E^c 序列从开放域投影到协同域，输出 user/item emb。</li>
+</ol>
+<p>训练用自监督对比学习对齐线上排序目标（user emb 与相关 item emb 拉近、与无关 item 推远），并采用 dense all-action loss 充分利用长期兴趣。线上则把双塔产出的 user/item emb 通过一个 LEARN-Adaptor 融合进既有排序模型。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<p><img src="/ai-papers-daily/figures/learn-knowledge-adaptation-from-large-language-model-to-rec/fig2.png" alt="两大子模块细节：(a) Content Extraction (CEX) 模块——冻结的 Pretrained LLM + Average Pooling Layer，输入为人工拼接的极简 item 文本描述（图中即原文耳环商品 prompt 示例），输出 content embedding E^c；(b) Preference Alignment (PAL) 模块——Content Adaptor 做维度变换、12 层 causal Transformers 做域投影、Online Projection 产出 user embedding E^user"></p>
+<h3 id="cex-模块内容抽取">CEX 模块（内容抽取）</h3>
+<ul>
+<li><strong>Backbone</strong>：Baichuan2-7B（选它是因为中英双语理解强），<strong>训练全程冻结</strong>，避免灾难性遗忘、保留开放域知识。</li>
+<li><strong>输入 prompt</strong>：刻意设计得极简，用于衡量文本描述本身的信息量。工业数据用 6 类信息拼描述（title / category / brand / price / keywords / attributes）。原文 prompt 示例（耳环商品）：
+<blockquote>
+<p>The item information is given as follows. Item title is “Envy Versatile Five-Petal Flower Earrings 357”. This item belongs to “Earrings” and brand is “Envy”. The price is “9.9 yuan”. The keywords of item are “Earrings, Five-Petal Flower Earrings”. This item supports “Returns for Damaged Packages”.</p>
+</blockquote>
+</li>
+<li><strong>输出</strong>：取 LLM 最后一层 decoder 的 hidden states → average pooling 层 → content embedding E^c。</li>
+<li>整段历史序列里每个 item 各自独立编码，拼成 content embedding 序列。</li>
+</ul>
+<h3 id="pal-模块偏好对齐--域投影">PAL 模块（偏好对齐 / 域投影）</h3>
+<ul>
+<li><strong>content adaptor</strong>：先做维度变换，把 LLM 维度的 content emb 降到 transformer 工作维度。</li>
+<li><strong>backbone</strong>：12 层 transformer，配置照搬 <strong>BERT-base</strong>，但<strong>从头训练</strong>（不是用 BERT 权重）。</li>
+<li><strong>注意力</strong>：与 BERT 的双向注意力不同，PAL 用 <strong>causal attention</strong>——只看过去的 item，符合用户偏好的时序因果性。</li>
+<li><strong>输出</strong>：经 online projection 层产出 user embedding E^user ∈ R^64（64 维是为了对齐线上系统）。</li>
+</ul>
+<h3 id="item-tower-三种变体消融的核心设计">Item Tower 三种变体（消融的核心设计）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>变体</th><th>注意力</th><th>训练时输入</th><th>域适配方向</th><th>备注</th></tr></thead><tbody><tr><td><strong>Item Tower (a)</strong></td><td>causal（与 User Tower 同）</td><td>整个 target 序列 U^tar</td><td>LLM-to-Rec（投影进协同域）</td><td><strong>默认</strong>，序列到序列对齐，更能抓长期兴趣</td></tr><tr><td>Item Tower (b)</td><td>self-attention（每个 item 只看自己）</td><td>单个 item 独立</td><td>LLM-to-Rec</td><td>序列到 item 对齐</td></tr><tr><td>Item Tower (c)</td><td>—</td><td>单个 item 独立</td><td><strong>Rec-to-LLM</strong>（直接用 E^c 当 item emb）</td><td>用 content emb 当对齐目标，效果最差</td></tr></tbody></table>
+<ul>
+<li>(a)/(b) 与 User Tower <strong>共享权重、同架构</strong>；(c) 跳过 PAL，直接拿 content embedding E^c 当 item emb 去监督 user emb 学习（即把推荐域往 LLM 域投，复刻 Rec-to-LLM）。</li>
+<li>推理阶段三种变体都是单 item 输入、独立产出 item emb。</li>
+<li>注意：Amazon 数据集因 leave-one-out 设定 target 序列长度为 1，故 (a) 等价于 (b)。</li>
+</ul>
+<h3 id="训练目标loss-构造">训练目标（loss 构造）</h3>
+<ul>
+<li><strong>自监督对比学习</strong>：对齐线上排序”算 user-item 相似度取 top-k”的机制。正样本对 = 同一用户历史序列采的 user emb × 该用户 target 序列采的 item emb；负样本 = 同 batch 内其他用户的 target item emb（in-batch negatives）。</li>
+<li><strong>dense all-action loss</strong>（来自 PinnerFormer）：从历史序列采 <strong>N_h</strong> 个 user emb、target 序列采 <strong>N_t</strong> 个 item emb，构造 <strong>N_h × N_t</strong> 个正样本对，充分挖掘单个用户交互、捕捉长期兴趣。<strong>N_h = N_t = 10</strong>（默认）。</li>
+</ul>
+<h3 id="两阶段采样策略工业长序列">两阶段采样策略（工业长序列）</h3>
+<p>用户序列长达 10 个月、太长跑不动，设计两阶段采样：</p>
+<ol>
+<li>
+<p><strong>第一阶段</strong>：从完整历史/目标交互里<strong>随机采样</strong>当 User Tower 输入，保证建模无偏。</p>
+</li>
+<li>
+<p><strong>第二阶段</strong>：构造正负样本对时做<strong>样本加权</strong>，优先近期 item（可视化发现近期交互更能反映当前兴趣、更贴 target）。第 i 个 item 的权重：</p>
+<p>$$\tilde{w}_i = \frac{w_i}{\max(w)}, \quad w_i = \log!\left(\alpha + i \cdot \frac{\beta - \alpha}{N - 1}\right)$$</p>
+<p>超参 <strong>α = 10，β = 10000</strong>，N 为第一阶段采到的序列长度。</p>
+</li>
+</ol>
+<h3 id="线上排序接入learn-adaptor">线上排序接入（LEARN-Adaptor）</h3>
+<ul>
+<li>基线 = 原排序模型，吃既有线上特征（图中 “Other”）。</li>
+<li><strong>LEARN-Adaptor</strong> = fusion module（两个线性层）+ MLP，把 user emb 和 item emb 聚合成 fusion emb，由 <strong>CVR loss</strong> 监督。</li>
+<li>最终把 fusion emb + LEARN 的 user/item emb + 既有线上特征 <strong>concat</strong> 后喂排序模型，由 ranking loss 监督。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<h3 id="数据集">数据集</h3>
+<ul>
+<li><strong>工业数据</strong>：短视频 App 电商平台，12M 用户 × 31M item，2022.06–2023.04 共 10 个月；前 9 个月当历史、最后 1 个月当 target。Train 11.97M 用户 / 18.8 亿交互 / 平均序列 157.4；Test 23.98 万用户 / 3768 万交互。item 描述用 6 类信息。</li>
+<li><strong>Amazon Review</strong>（对齐 RecFormer 设定）：7 类做 pretraining、另 6 类（Scientific / Instruments / Arts / Office / Games / Pet）做 finetuning，item 描述用 3 类（title / category / brand），leave-one-out 评测。</li>
+</ul>
+<h3 id="超参">超参</h3>
+<ul>
+<li>LLM = Baichuan2-7B（冻结），优化器 AdamW + cosine scheduler。</li>
+<li>工业：batch 240，历史长 80 / target 长 40（受显存限制），10 epoch；评测 H@50/H@100、R@50/R@100。</li>
+<li>Amazon：pretrain batch 1024 / lr 5e-5 / 20 epoch；finetune batch 16 / lr 2e-5 / 200 epoch；评测 N@10、R@10、MRR；序列短故不用采样策略。</li>
+</ul>
+<h3 id="amazon-review-主结果recall10vs-sota-recformer">Amazon Review 主结果（Recall@10，vs SOTA RecFormer）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>RecFormer</th><th>LEARN</th><th>提升</th></tr></thead><tbody><tr><td>Scientific</td><td>0.1448</td><td><strong>0.1594</strong></td><td>+10.08%</td></tr><tr><td>Instruments</td><td>0.1052</td><td><strong>0.1240</strong></td><td>+17.87%</td></tr><tr><td>Arts</td><td>0.1614</td><td><strong>0.1701</strong></td><td>+5.39%</td></tr><tr><td>Office</td><td>0.1403</td><td><strong>0.1549</strong></td><td>+10.41%</td></tr><tr><td>Games</td><td>0.1039</td><td><strong>0.1345</strong></td><td>+29.45%</td></tr><tr><td>Pet</td><td>0.1162</td><td><strong>0.1284</strong></td><td>+10.50%</td></tr></tbody></table>
+<p>Recall@10 平均提升 <strong>13.95%</strong>，且 LEARN 只用单阶段 user-item 对比 loss（RecFormer 要 MLM loss + 两阶段微调），约束更少、流程更简却更强。zero-shot 设定（仅 pretrain）下 LEARN 也优于 UniSRec/ZESRec/RecFormer，说明可当预训练推荐底座。</p>
+<h3 id="消融-1对齐策略amazonn10--r10">消融 1：对齐策略（Amazon，N@10 / R@10）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>w/o Align</th><th>w/ ItemTower(c)</th><th>LEARN</th></tr></thead><tbody><tr><td>Scientific R@10</td><td>0.0813</td><td>0.1389</td><td><strong>0.1594</strong> (+14.76%)</td></tr><tr><td>Instruments R@10</td><td>0.0332</td><td>0.0940</td><td><strong>0.1240</strong> (+31.91%)</td></tr><tr><td>Games R@10</td><td>0.0361</td><td>0.0891</td><td><strong>0.1345</strong> (+50.95%)</td></tr></tbody></table>
+<ul>
+<li><strong>w/o Align</strong>（直接平均 content emb 当 user emb、content emb 当 item emb）效果极差 → 证实开放域与协同域 gap 巨大，LLM 的 content emb <strong>不能直接用</strong>于推荐。</li>
+<li><strong>ItemTower(c)</strong>（Rec-to-LLM，用 content emb 当对齐目标）显著弱于 LEARN（LLM-to-Rec，把源域投进目标域）→ 方向必须是”把语义投进协同域”。</li>
+</ul>
+<h3 id="消融-2工业数据集hr-at-50100">消融 2：工业数据集（H@/R@ at 50/100）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>变体</th><th>H@50</th><th>R@50</th><th>H@100</th><th>R@100</th></tr></thead><tbody><tr><td>w/o Align</td><td>0.0069</td><td>0.0154</td><td>0.0101</td><td>0.0210</td></tr><tr><td>w/ ItemTower(c)</td><td>0.0292</td><td>0.0416</td><td>0.0468</td><td>0.0626</td></tr><tr><td>w/ ItemTower(b)</td><td>0.0313</td><td>0.0488</td><td>0.0505</td><td>0.0675</td></tr><tr><td>w/ RandomSample</td><td>0.0440</td><td>0.0610</td><td>0.0701</td><td>0.0905</td></tr><tr><td><strong>LEARN (ours)</strong></td><td><strong>0.0477</strong></td><td><strong>0.0663</strong></td><td><strong>0.0751</strong></td><td><strong>0.0970</strong></td></tr></tbody></table>
+<p>排序 (a) > (b) > (c)：序列到序列对齐 > 序列到 item > Rec-to-LLM。样本加权 vs 随机采样在 H@100/R@100 上各 +7.13% / +7.18%。</p>
+<h3 id="消融-3embedding-类型--pal-backbone工业">消融 3：embedding 类型 &#x26; PAL backbone（工业）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>input emb</th><th>Params</th><th>H@100</th><th>R@100</th></tr></thead><tbody><tr><td>ID-emb</td><td>2.3B</td><td>0.0503</td><td>0.0754</td></tr><tr><td>BERT-emb</td><td>86M</td><td>0.0576</td><td>0.0843</td></tr><tr><td><strong>LLM-emb (Ours)</strong></td><td>89M</td><td><strong>0.0751</strong></td><td><strong>0.0970</strong></td></tr></tbody></table>
+<p>LLM content emb 替代 ID emb：H@100 0.0504→0.0751（<strong>+49.01%</strong>），且仅 89M 可训参数 vs ID 的 2.3B；比 BERT emb 再 +30.38%。</p>
+<p><strong>PAL backbone 用 LLM+LoRA vs 从头训 12 层 transformer</strong>：把 PAL 换成 Baichuan2-7B + LoRA，可训参数 134M→572M，H@100 仅 0.0376→0.0513，远逊于从头训 transformer 的 0.0751。原因：LoRA 输出是”开放域原始特征 + 推荐域 LoRA 特征”的混合，而冻结参数远多于 LoRA 参数，被 next-token 监督的原始特征占主导，与对比 loss 训的 LoRA 特征冲突，拉不到最优。</p>
+<h3 id="线上-ab4-亿-dau-短视频广告202401-起部署">线上 A/B（4 亿+ DAU 短视频广告，2024.01 起部署）</h3>
+<ul>
+<li><strong>AUC</strong>：UAUC 0.6885→0.6969（+0.84pp），WUAUC 0.7002→0.7078（+0.76pp）。</li>
+<li><strong>分群营收</strong>（按交互频次分 cold-start / long-tail / others）：</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型</th><th>cold-start</th><th>long-tail</th><th>others</th></tr></thead><tbody><tr><td>User 营收</td><td>+1.56%</td><td>+5.79%</td><td>+0.32%</td></tr><tr><td>Item 营收</td><td>+8.77%</td><td>+4.63%</td><td>+0.35%</td></tr></tbody></table>
+<p>收益高度集中在冷启动与长尾，印证语义泛化优势。20% 流量、9 天实验，CVR 与营收稳定显著正向（营收量级以千万计，2% 提升已极显著）。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>核心可借鉴点</strong></p>
+<ol>
+<li><strong>“LLM-to-Rec” 而非 “Rec-to-LLM”</strong>：在工业体量下，把 LLM 当<strong>冻结的 item 内容编码器</strong>、再用轻量可训模块把语义<strong>投影进协同域</strong>，比把推荐数据文本化喂 LLM 微调更省算力、更不易遗忘、目标更对齐。这条工程路线对电商/搜推几乎可直接复用。</li>
+<li><strong>每 item 独立编码 + 双塔解耦</strong>：item emb 可离线预算并缓存，user emb 线上轻量推理，规避长序列进 LLM 的算力墙——这是它能上 4 亿 DAU 的关键。</li>
+<li><strong>对齐目标即线上目标</strong>：用 in-batch 对比 + dense all-action loss 直接对齐”算相似度取 top-k”的检索机制，省掉 MLM/两阶段微调仍 SOTA，简化训练。</li>
+<li><strong>语义 emb 替代/增强 ID emb 的强证据</strong>：LLM emb 比 ID emb +49%、参数还少 25 倍，且冷启动/长尾增益巨大——给”用 semantic content emb 替代 ID emb”提供了工业级背书，与 Semantic-ID/生成式推荐方向呼应。</li>
+<li><strong>PAL 别用大 LLM+LoRA</strong>：从头训 12 层小 transformer 反而显著更好，因为冻结大模型的开放域特征会压制 LoRA 学到的协同信号——提醒做域适配时”投影头宁小而专”。</li>
+</ol>
+<p><strong>局限与风险</strong></p>
+<ul>
+<li><strong>prompt 极简、特征工程化</strong>：item 描述靠人工拼 6 个字段，对字段缺失/脏数据敏感；未探索更丰富的多模态（图像/视频）内容，这对短视频电商其实是大遗漏。</li>
+<li><strong>LLM 冻结 → 语义上限锁死</strong>：content emb 完全由冻结 LLM 决定，无法针对推荐域做语义层面的再适配，若 item 描述里的细粒度卖点 LLM 理解偏差，下游无从纠正。</li>
+<li><strong>离线 emb 时效性</strong>：item emb 离线预算，价格/促销/库存等高频变化属性的更新延迟未讨论，电商场景需关注 emb 刷新频率。</li>
+<li><strong>对比 loss 的负采样</strong>：纯 in-batch 负样本可能 false negative，工业 31M item 下负样本质量与 hard negative 策略未展开。</li>
+<li><strong>未开源</strong>：无代码，N_h/N_t、采样权重、Adaptor 维度等需自行复现调参。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2405.03988" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

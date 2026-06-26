@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出基于熵淬灭的多因子信息能量令牌压缩框架，结合保真门与能量平方放大，实现40-60%压缩且语义保持>0.80"><meta property="og:title" content="Entropy Gate: Entropy Quenching for Near-Lossless Token Compression in LLM Pipelines"><meta property="og:description" content="提出基于熵淬灭的多因子信息能量令牌压缩框架，结合保真门与能量平方放大，实现40-60%压缩且语义保持>0.80"><meta property="og:type" content="website"><title>Entropy Gate: Entropy Quenching for Near-Lossless Token Compression in LLM Pipelines</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-02">2026-06-02</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.03739" target="_blank" rel="noopener">2606.03739</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Entropy Gate: Entropy Quenching for Near-Lossless Token Compression in LLM Pipelines</h1> <p class="title-zh">熵门控：LLM管线中近乎无损的令牌压缩熵淬灭技术</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM推理优化 · 提示令牌压缩</span> </div> <p class="affiliations">Kwame Nkrumah University of Science and Technology</p> <div class="meta">Justice Owusu Agyemang, Jerry John Kponyo, Kwame Opuni-Boachie Obour Agyekum, Francisca Adoma Acheampong, Kwame Agyeman-Prempeh Agyekum, James Dzisi Gadze</div> <p class="one-liner">提出基于熵淬灭的多因子信息能量令牌压缩框架，结合保真门与能量平方放大，实现40-60%压缩且语义保持&gt;0.80</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/entropy quenching">entropy quenching</a><a class="tag" href="/DailyPaper/tag/token compression">token compression</a><a class="tag" href="/DailyPaper/tag/prompt compression">prompt compression</a><a class="tag" href="/DailyPaper/tag/fidelity gate">fidelity gate</a><a class="tag" href="/DailyPaper/tag/agentic workflows">agentic workflows</a><a class="tag" href="/DailyPaper/tag/energy-squared amplification">energy-squared amplification</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>令牌重要性建模：多因子能量（统计+结构+位置）及自校准域能量可迁移至电商搜索/推荐场景，对商品描述、用户查询进行关键令牌保留，压缩冗余而不丢失实体词。</li><li>能量平方放大技巧：通过能量平方拉伸分布右尾，放大信噪比，使得高信息令牌更易被保留。可应用于任何基于分数排序的文本压缩或关键信息提取任务。</li><li>复合压缩策略：上下文去重结合外部记忆，实现88-96%的令牌削减。在Agent多轮对话或商品信息重复出现的场景中，可借鉴“记忆+淬灭”乘法组合，极大降低推理成本。</li><li>输出侧淬灭：利用模型回复信息密度低的特点，以更激进的压缩率减少回复长度。可在生成式推荐或对话式导购中压缩冗长回应，兼顾准确性与效率。</li><li>保真门机制：以能量加权相似度作为无模型推理的语义保留指标，为压缩提供数学保证。可引入任何压缩流程作为安全阀，确保任务关键信息不丢失。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM推理中的大量token消耗在重复上下文、冗余回复和样板文本上，现有压缩方法各管一段，缺乏统一的数学框架与保真保证，且多需额外训练。</p>
+<p><strong>方法</strong>：提出Entropy Gate，受统计力学熵淬灭启发，将令牌压缩建模为逐步冻结低能令牌的过程。</p>
+<ul>
+<li>定义多因子信息能量 (E(t) = w_1 E_{\text{stat}} + w_2 E_{\text{struct}} + w_3 E_{\text{pos}})，融合统计TF-IDF、结构角色权重与位置衰减，并加入自校准域能量（基于任务动词的邻近性）自动捕获域关键词。</li>
+<li>淬灭调度 (T(\tau) = T_0/(1+\alpha\tau))，令牌以玻尔兹曼概率 (p_i = e^{-E_i/kT}) 生存，通过能量平方放大（(E \rightarrow E^2)）拉伸分布右尾，提升信噪比。</li>
+<li>能量加权相似度 (S_E) 作为保真门，当低于阈值 (\theta) 时停止压缩，保证语义保留 (\ge \theta)。</li>
+<li>支持上下文块去重、输出侧淬灭、多轮结构压缩，可与外部记忆组合，理论压缩削减达88-96%。</li>
+<li>实现为无状态HTTP代理，无需训练，模型无关。</li>
+</ul>
+<p><strong>实验</strong>：在代码审查、安全审计、文档生成、SQL生成、系统提示五类提示上，Phase 1确定性模式达到40-60%压缩率，(S_E>0.80)。消融显示能量平方放大单独贡献18.7个百分点。上下文去重带来50-70%额外节省。标准基准（MMLU、HumanEval、GSM8K）上，压缩后问题正确率在6/9项中保持，有效压缩率24%时LLM-jugde质量评分3.9/5。结合外部记忆的乘法效应经定理11.1证明，推估压缩比0.4-0.6且重复率70-90%时总削减88-96%。</p>
+<p><strong>要点</strong>：Entropy Gate将热力学淬灭与信息能量统一，为LLM令牌压缩提供了有保真保证、无需训练的数学框架，其能量组合与放大策略可直接迁移到任意文本重要性筛选场景。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.03739&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.03739" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.03739" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.03739" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="构建覆盖25个领域、76个工具的自动评估基准，揭示LLM代理在多轮跨域场景下的工具调用短板与一致性挑战"><meta property="og:title" content="T1-Bench: Benchmarking Multi-Scenario Agents in Real-World Domains"><meta property="og:description" content="构建覆盖25个领域、76个工具的自动评估基准，揭示LLM代理在多轮跨域场景下的工具调用短板与一致性挑战"><meta property="og:type" content="website"><title>T1-Bench: Benchmarking Multi-Scenario Agents in Real-World Domains</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.11070" target="_blank" rel="noopener">2606.11070</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>T1-Bench: Benchmarking Multi-Scenario Agents in Real-World Domains</h1> <p class="title-zh">T1-Bench：面向多域真实对话代理的工具调用高保真基准</p> <div class="dir-row"> <span class="direction-chip">🧭 多领域多轮工具调用Agent评估基准</span> </div> <p class="affiliations">Capital One</p> <div class="meta">Genta Indra Winata, Amartya Chakraborty, Yuzhen Lin, Swasthi P Rao, Shikhhar Siingh, Houhan Lu 等</div> <p class="one-liner">构建覆盖25个领域、76个工具的自动评估基准，揭示LLM代理在多轮跨域场景下的工具调用短板与一致性挑战</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/agent evaluation">agent evaluation</a><a class="tag" href="/DailyPaper/tag/tool-calling">tool-calling</a><a class="tag" href="/DailyPaper/tag/multi-domain">multi-domain</a><a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/LLM agents">LLM agents</a><a class="tag" href="/DailyPaper/tag/conversational AI">conversational AI</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对电商客服Agent离线评估可借鉴双代理角色扮演：用户代理按策略生成自然对话，助理代理调用工具，自动生成轨迹并复用，大幅降低人工成本。</li><li>工具调用评估需分层：工具选择、参数提取、输出精确匹配三级，同时使用Pass@K/Pass^K衡量可靠性与一致性；尤其推荐Pass^K捕获单次成功但不可复现的模型。</li><li>多域切换时性能坍塌严重（4域以上几乎归零），提示实用系统必须强化上下文保持与状态追踪，可引入论文中的Memory Module缓存工具结果，避免重复调用。</li><li>工具数量是主要难度源之一（如Food &amp; Dining 15工具），可考虑层次化工具选择或分阶段推理，先按意图聚类再在子域内调用，缓解动作空间爆炸。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有LLM Agent基准多局限于单域或简化的单轮交互，难以反映真实客服场景中多域、多轮、工具调用的复杂性。评估端到端任务完成能力的缺失，导致无法衡量代理在长对话、跨域状态切换和工具编排中的真实可靠性。为此，T1-Bench构建了一个高保真、多域的自动评估平台，以系统衡量工具调用Agent的综合能力。<br>
+<strong>方法关键点</strong></p>
+<ul>
+<li><strong>数据集</strong>：涵盖11个单域（如酒店、航班、餐厅）和14个多域组合（2~4域叠加，乃至8、11域压力测试），共525个用户策略模板，76个可执行工具（搜索、过滤、预订、取消等）。</li>
+<li><strong>自动对话生成</strong>：USER AGENT按给定目标、用户画像和对话历史生成用户话语；ASSISTANT AGENT调用工具并生成回复；两者均受结构化策略约束，模拟真实交互轨迹。</li>
+<li><strong>评估体系</strong>：工具调用正确率（精确/召回/F1）、参数提取匹配度、工具输出完全匹配率；对话级别Pass@K/Pass^K（K=3）衡量一次性成功与重复一致性；LLM-as-a-judge 5分制评估帮助性、连贯性。</li>
+<li><strong>实验模型</strong>：评估了GEMMA4、GPT-OSS、GPT-5.4、Claude等12个开源及闭源模型。<br>
+<strong>关键结果</strong><br>
+GEMMA4-31B-IT获最高Pass@K 61.33%，但Pass^K仅41.14%，反映一致性不足；Claude Opus工具调用准确率最高。随着域数增加，所有模型性能断崖式下降，4域以上Pass@K接近0。单域中，Food &#x26; Dining因包含15个工具，Pass@K仅3.5，远低于其他单域。人工评估与LLM评判相关性中等（Spearman ρ>0.45），验证了自动化评估的参考价值。<br>
+<strong>核心结论</strong><br>
+工具数量和跨域上下文切换是当前LLM Agent的主要瓶颈，端到端任务成功率和可复现性仍需大幅提升。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.11070&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.11070" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.11070" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.11070" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

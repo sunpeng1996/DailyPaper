@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用判别式隐藏状态回归替代生成式解码，在连续情感分析中精度更高、更可靠、推理更快"><meta property="og:title" content="Beyond Generative Decoding: Discriminative Hidden-State Readout from a Native Omni-Modal LLM for Multimodal Sentiment Analysis"><meta property="og:description" content="用判别式隐藏状态回归替代生成式解码，在连续情感分析中精度更高、更可靠、推理更快"><meta property="og:type" content="website"><title>Beyond Generative Decoding: Discriminative Hidden-State Readout from a Native Omni-Modal LLM for Multimodal Sentiment Analysis</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05713" target="_blank" rel="noopener">2606.05713</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Beyond Generative Decoding: Discriminative Hidden-State Readout from a Native Omni-Modal LLM for Multimodal Sentiment Analysis</h1> <p class="title-zh">基于原生全模态LLM的判别式隐藏状态读出用于多模态情感分析</p> <div class="dir-row"> <span class="direction-chip">🧭 判别式读出 · 多模态情感回归</span> </div> <p class="affiliations">School of Computer Sciences, Universiti Sains Malaysia</p> <div class="meta">Bin Wen, Tien-Ping Tan</div> <p class="one-liner">用判别式隐藏状态回归替代生成式解码，在连续情感分析中精度更高、更可靠、推理更快</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Sentiment Analysis">Multimodal Sentiment Analysis</a><a class="tag" href="/DailyPaper/tag/Discriminative Readout">Discriminative Readout</a><a class="tag" href="/DailyPaper/tag/Generative Readout">Generative Readout</a><a class="tag" href="/DailyPaper/tag/Qwen2.5-Omni">Qwen2.5-Omni</a><a class="tag" href="/DailyPaper/tag/QLoRA">QLoRA</a><a class="tag" href="/DailyPaper/tag/Hidden-State Regression">Hidden-State Regression</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>连续值输出的LLM应用首选判别式头：当需要预测连续值（评分、概率、强度）时，不要用生成字符串再解析，直接从最后一token隐藏状态接轻量MLP回归，避免格式错误和精度损失，同时大幅降低推理延迟。</li><li>QLoRA + 动态帧采样降低多模态LLM硬件门槛：在单张32GB消费显卡上跑通7B全模态模型，LoRA rank=32，仅训练1.14%参数，该配方可直接迁移到电商视频评论理解、直播情感监控等任务。</li><li>可控读出对比可作为模型诊断工具：固定骨干、数据和适配方案，只改变读出方式，能定量评估生成式解码的额外误差和不可靠性，类似思路可用于推荐系统中LLM输出评分/理由时选择最优读出策略。</li><li>音频预处理合理提点：用轻量去噪（如DeepFilterNet）清理音频通道，可改善细粒度回归指标，这在金融举报音频、客服录音等场景下值得尝试。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多模态情感分析（MSA）需从文本、音频、视频预测连续情感值。主流LLM方案采用生成式读出：让模型采样输出数值字符串再解析，这与连续回归目标存在本质错配——离散自回归解码无法精确刻画强度，推理慢且可能产生不可解析或越界输出。本文首次在相同骨干、数据和适配条件下系统比较两种读出机制，主张用判别式读出替代生成式，并给出可复现的消费级硬件方案。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li>以Qwen2.5-Omni-7B的Thinker为共享编码器，处理文本、视频帧和音频，丢弃原生的语音生成Talker头。</li>
+<li>判别式读出：取末层最后一个非填充token隐藏状态，经LN→Linear→ReLU→Dropout→Linear的轻量MLP直接回归[-3,+3]标量，单次前向，无解码。</li>
+<li>生成式基线：在同样骨干上保留语言头，自回归生成数值字符串后解析，训练时使用字符串似然损失。</li>
+<li>高效适配：骨干4-bit NF4量化，LoRA (r=32)插入注意力与FFN投影，仅训练~1.14%参数；动态采帧与像素上限控制内存，峰值10–21GB。</li>
+<li>训练目标：判别式用标准化标签的MAE损失，生成式用交叉熵。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在CMU-MOSI和CMU-MOSEI上，判别式读出精度与SOTA专用融合模型持平（MOSI: MAE 0.551, Corr 0.888; MOSEI: MAE 0.506, Corr 0.790），但无需手工特征和定制融合架构。</li>
+<li>控制读出对比：固定骨干与LoRA，判别式MAE 0.667，生成式零样本MAE 1.443（2.8%无法解析），监督训练后MAE反升至1.521且相关性暴跌，揭示了生成式损失与连续目标的不匹配。</li>
+<li>隐藏空间可视化显示情感强度呈平滑梯度，kNN标签平滑度较随机基线降低49.9%，说明骨干已习得线性可分的情感流形，轻量头足以捕获。</li>
+<li>音频去噪（DeepFilterNet）在MOSI上将MAE从0.598降至0.551，细粒度回归收益显著。</li>
+</ul>
+<p><strong>核心启示</strong>：对于连续值ML任务，
+“如何读出”与“如何训练”同等重要，判别式读出在精度、可靠性和效率上全面优于生成式，且可轻松部署于消费级GPU。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05713&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05713" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05713" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05713" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

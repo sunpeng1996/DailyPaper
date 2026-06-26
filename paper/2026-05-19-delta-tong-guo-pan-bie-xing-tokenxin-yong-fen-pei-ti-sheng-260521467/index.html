@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将RLVR更新视为隐式线性判别器，通过重加权token梯度向量增强正负侧质心的区分度，提升数学推理等任务表现。"><meta property="og:title" content="DelTA: Discriminative Token Credit Assignment for Reinforcement Learning from Verifiable Rewards"><meta property="og:description" content="将RLVR更新视为隐式线性判别器，通过重加权token梯度向量增强正负侧质心的区分度，提升数学推理等任务表现。"><meta property="og:type" content="website"><title>DelTA: Discriminative Token Credit Assignment for Reinforcement Learning from Verifiable Rewards</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-19">2026-05-19</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21467" target="_blank" rel="noopener">2605.21467</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DelTA: Discriminative Token Credit Assignment for Reinforcement Learning from Verifiable Rewards</h1> <p class="title-zh">DelTA：通过判别性Token信用分配提升可验证奖励的强化学习</p> <div class="dir-row"> <span class="direction-chip">🧭 强化学习训练优化 · Token级信用分配</span> </div> <p class="affiliations">Gaoling School of Artificial Intelligence, Renmin University of China · Ant International</p> <div class="meta">Kaiyi Zhang, Wei Wu, Yankai Lin</div> <p class="one-liner">将RLVR更新视为隐式线性判别器，通过重加权token梯度向量增强正负侧质心的区分度，提升数学推理等任务表现。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/Token Credit Assignment">Token Credit Assignment</a><a class="tag" href="/DailyPaper/tag/Discriminator View">Discriminator View</a><a class="tag" href="/DailyPaper/tag/Policy Gradient">Policy Gradient</a><a class="tag" href="/DailyPaper/tag/DAPO">DAPO</a><a class="tag" href="/DailyPaper/tag/Mathematical Reasoning">Mathematical Reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>将策略梯度更新解构为隐式判别器的方法可用于诊断线上RL模型训练中的token偏向问题，尤其适合电商推荐中奖励信号稀疏的长序列生成（如自动文案、对话）场景。</li><li>通过对比正负优势响应的token梯度质心并重加权token贡献，可以兼容大部分序列级RL目标（如GRPO、DAPO），工程实现可插入现有RLHF训练流程。</li><li>系数计算采用最后一层隐藏状态或输出行梯度代理，无需全参梯度，开销可控，适合大规模LLM训练的在线重加权。</li><li>在电商Agent的推理规划中，可借鉴基于判别性信号重新分配token信用，提升模型在长推理链上的一致性和正确率。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：RLVR 用序列级可验证奖励优化 LLM 推理能力，但奖励与 token 更新间存在粒度错配。标准策略梯度更新如何将序列奖励转换为 token 概率变化并不透明。研究发现 RLVR 更新方向隐含地充当了 token 梯度向量的线性判别器，但现有方法中正负侧质心易被高频共享模式（如格式 token）主导，稀释了能区分高低奖励响应的判别方向。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>将 DAPO 等序列级 RLVR 的局部更新分解为优势加权正负侧 token 梯度质心之差，推导出更新方向等价于 token 梯度空间中的隐式线性判别器。</li>
+<li>提出 DelTA，通过对比正负侧质心为每个 token 分配判别性得分，得分高的 token 梯度方向更代表自身侧而远于对侧。</li>
+<li>使用得分重加权 RLVR 代理损失，并引入自归一化，塑造更具判别力的更新方向，抑制共享方向。</li>
+<li>系数计算采用冻结 token 梯度代理（LM-head 行向量或 top-K 隐藏梯度），避免全参梯度开销，且不向优化过程回传梯度。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 Qwen3-8B/14B-Base 上使用 DeepMath-103K 训练，在 AIME24-26、HMMT25 等七个数学基准上评估。</li>
+<li>DelTA 较 DAPO、SAPO、FIPO 等最强同尺寸基线平均提升 8B 上 3.26 分、14B 上 2.62 分。</li>
+<li>额外验证了代码生成和不同 backbone 的泛化性，消融实验显示去掉对侧比较或系数映射均导致显著下降。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：RLVR 的更新方向可以被视为一个隐式线性判别器，通过重塑正负侧质心来调整 token 概率的增减，DelTA 以判别性 token 信用分配让模型更关注能区分好答案与坏答案的关键 token。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21467&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21467" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21467" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21467" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

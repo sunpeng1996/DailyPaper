@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出双扩散Transformer，联合图像与文本生成，实现个性化且可解释的时尚推荐。"><meta property="og:title" content="Dual-Diffusional Generative Fashion Recommendation"><meta property="og:description" content="提出双扩散Transformer，联合图像与文本生成，实现个性化且可解释的时尚推荐。"><meta property="og:type" content="website"><title>Dual-Diffusional Generative Fashion Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-05-17">2026-05-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.17357" target="_blank" rel="noopener">2605.17357</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Dual-Diffusional Generative Fashion Recommendation</h1> <p class="title-zh">双扩散生成式时尚推荐架构</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 双扩散多模态架构</span> </div> <p class="affiliations">Singapore Management University · Shandong University</p> <div class="meta">Mingzhe Yu, Lei Wu, Qianru Sun, Yunshan Ma</div> <p class="one-liner">提出双扩散Transformer，联合图像与文本生成，实现个性化且可解释的时尚推荐。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Dual-Diffusion">Dual-Diffusion</a><a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Fashion">Fashion</a><a class="tag" href="/DailyPaper/tag/Multimodal">Multimodal</a><a class="tag" href="/DailyPaper/tag/Text-Image Generation">Text-Image Generation</a><a class="tag" href="/DailyPaper/tag/Personalization">Personalization</a><a class="tag" href="/DailyPaper/tag/Interpretability">Interpretability</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用户偏好建模：利用属性级结构化caption + 偏好加权采样，从交互历史提取高维语义意图，避免视觉冗余，可直接用于电商多模态推荐中的用户画像构建。</li><li>双模态联合生成与互增强：图像与文本分支跨注意力、联合损失训练，生成结果自带解释文本，可用于电商导购场景生成推荐理由，提升可解释性。</li><li>高效文本增强微调：仅用LLM生成的多样化匹配文本微调文本分支，比图像级DPO微调快7倍，且提升多样性与兼容性，可借鉴用于推荐模型的高效领域适配。</li><li>多条件可控推理：通过Classifier-Free Guidance独立控制任务定义、匹配条件、用户偏好，可灵活调节推荐生成的质量、个性化与多样性权衡。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>现有生成式时尚推荐主要依赖图像模态，存在两个根本缺陷：(1) 用户行为建模不足——历史交互图像包含大量偏好无关视觉细节，难以提取精准偏好；(2) 缺乏可解释性——仅输出图像，无法解释为何推荐该物品。这些问题源于图像中心架构的限制，亟需迁移到多模态联合生成范式。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>双扩散Transformer</strong>：图像分支采用连续流匹配扩散，文本分支采用离散掩码扩散，跨注意力传递多模态条件。</li>
+<li><strong>偏好建模</strong>：用VLM将交互物品转为结构化属性caption，再按频率加权采样生成用户文本偏好，平衡探索与利用。</li>
+<li><strong>三阶段训练</strong>：
+<ul>
+<li>Warm-up：在时尚图文对上进行图文对齐与结构化文本重建；</li>
+<li>匹配感知个性化训练：引入不完整outfit的匹配条件（VAE编码+可学习角色嵌入），联合优化图像流匹配损失与文本掩码损失；</li>
+<li>文本增强微调：用LLM生成多样化匹配文本，仅用文本损失微调，高效提升多样性和适配性。</li>
+</ul>
+</li>
+<li><strong>多条件可控推理</strong>：使用分类器无关引导独立控制任务定义、匹配条件和个人偏好三种信号。</li>
+</ul>
+<h2 id="关键实验">关键实验</h2>
+<p>在两个时尚数据集iFashion和Polyvore-U上，评估PFITB（填空）与GOR（整身生成）任务。对比SD系列、ControlNet、DiFashion、FashionDPO等基线，DualFashion在个性化得分上大幅领先（iFashion PFITB Per. 65.17 vs 60.39），同时保持较高的图像质量与兼容性，多样性也得到改善。训练效率比FashionDPO快约7倍。消融实验证实Warm-up、可学习角色嵌入、联合损失和文本增强微调均不可或缺。</p>
+<h2 id="核心启示">核心启示</h2>
+<p>多模态双扩散架构通过解耦用户偏好与匹配信息，实现了图像生成与文本可解释性的协同增强，为生成式推荐提供了更高效且可控的方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.17357&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.17357" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.17357" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.17357" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

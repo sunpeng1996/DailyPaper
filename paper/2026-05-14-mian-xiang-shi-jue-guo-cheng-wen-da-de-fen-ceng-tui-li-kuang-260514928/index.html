@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出ProcedureVQA基准和CoP层次推理框架，通过先检索后细化的方式增强VLM的过程推理能力"><meta property="og:title" content="Chain-of-Procedure: Hierarchical Visual-Language Reasoning for Procedural QA"><meta property="og:description" content="提出ProcedureVQA基准和CoP层次推理框架，通过先检索后细化的方式增强VLM的过程推理能力"><meta property="og:type" content="website"><title>Chain-of-Procedure: Hierarchical Visual-Language Reasoning for Procedural QA</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14928" target="_blank" rel="noopener">2605.14928</a>  </div> <h1>Chain-of-Procedure: Hierarchical Visual-Language Reasoning for Procedural QA</h1> <p class="title-zh">面向视觉过程问答的分层推理框架与基准</p> <div class="dir-row"> <span class="direction-chip">🧭 视觉过程问答 · 多模态分层推理</span> </div>  <div class="meta">Guanhua Chen, Yutong Yao, Shenghe Sun, Ci-Jun Gao, Shudong Liu, Lidia S. Chao 等</div> <p class="one-liner">提出ProcedureVQA基准和CoP层次推理框架，通过先检索后细化的方式增强VLM的过程推理能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/ProcedureQA">ProcedureQA</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/Hierarchical Reasoning">Hierarchical Reasoning</a><a class="tag" href="/DailyPaper/tag/Multimodal">Multimodal</a><a class="tag" href="/DailyPaper/tag/Chain-of-Thought">Chain-of-Thought</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>Agent 多步决策借鉴：CoP 的“先粗粒度检索 → 细粒度步骤分解”架构可直接用于电商场景的过程式 Agent，如根据订单状态图片自动检索售后退款流程并定位下一步操作。</li><li>多模态 RAG 实现：利用视觉线索检索结构化过程知识库的方法，能迁移到商品手册、安装教程的智能问答系统，通过图像匹配相关文档段落再生成答案。</li><li>数据构建思路：ProcedureVQA 的构建方式可用于内部评测 Agent 的多模态过程推理能力，暴露模型在细粒度跨模态对齐上的短板。</li><li>流程优化 trick：CoP 的语义分解模块对于长文本步骤的细化，可用于将用户粗糙的意图（如“退货”）分解为可执行的子步骤，提升推荐或客服 Agent 的指令可操作性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：视觉语言模型（VLM）在标准图像-文本任务上进展显著，但在视觉过程问答（VP-QA）中仍面临挑战：用户上传过程中间状态图片询问下一步动作，现有模型难以跨模态检索结构化过程指令，且图像序列粒度与文本步骤分解不匹配。为系统评估此能力，需构建专用基准并设计针对性推理方法。</p>
+<p><strong>方法</strong>：提出 <strong>ProcedureVQA</strong> 基准，精心构造覆盖多种过程领域的问答对。同时提出 <strong>Chain-of-Procedure (CoP)</strong> 分层推理框架：（1）基于视觉线索检索最相关的文本指令；（2）通过语义分解将粗粒度步骤细化为子步骤；（3）结合上下文生成准确的下一步动作。该框架以 VLM 为基础，显式注入过程结构知识。</p>
+<p><strong>结果</strong>：在六个代表性 VLM 上评估，CoP 在 ProcedureVQA 上均带来显著提升，最高绝对改进达 13%。消融实验验证了检索模块与分解模块的必要性，表明分层设计有效缓解了单步推理中的跨模态对齐误差。工作揭示了当前 VLM 在过程性推理上的短板，并提供了数据和算法支撑。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14928&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14928" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14928" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14928" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

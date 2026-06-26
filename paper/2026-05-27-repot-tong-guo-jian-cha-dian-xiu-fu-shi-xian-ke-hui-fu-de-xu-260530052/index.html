@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在一次性程序化思维中引入确定性验证重放与单次修复调用，将静默失败变成可恢复的推理过程。"><meta property="og:title" content="REPOT: Recoverable Program-of-Thought via Checkpoint Repair"><meta property="og:description" content="在一次性程序化思维中引入确定性验证重放与单次修复调用，将静默失败变成可恢复的推理过程。"><meta property="og:type" content="website"><title>REPOT: Recoverable Program-of-Thought via Checkpoint Repair</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.30052" target="_blank" rel="noopener">2605.30052</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>REPOT: Recoverable Program-of-Thought via Checkpoint Repair</h1> <p class="title-zh">REPOT：通过检查点修复实现可恢复的程序化思维</p> <div class="dir-row"> <span class="direction-chip">🧭 可恢复的 LLM 规划 · 检查点修复</span> </div> <p class="affiliations">University of California, Santa Cruz</p> <div class="meta">Parsa Mazaheri</div> <p class="one-liner">在一次性程序化思维中引入确定性验证重放与单次修复调用，将静默失败变成可恢复的推理过程。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Program-of-Thought">Program-of-Thought</a><a class="tag" href="/DailyPaper/tag/Checkpoint Repair">Checkpoint Repair</a><a class="tag" href="/DailyPaper/tag/Planning">Planning</a><a class="tag" href="/DailyPaper/tag/Verified Replay">Verified Replay</a><a class="tag" href="/DailyPaper/tag/Suffix Repair">Suffix Repair</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>Agent 动作序列的断点恢复：当 Agent 生成多步操作时，可利用环境接口实时验证每一步，保留已成功的动作前缀，仅让 LLM 从失败点续写剩余动作，避免全盘废弃，节省 token 成本。</li><li>电商推荐策略的鲁棒执行：例如生成式推荐产生的 action 序列在真实环境（库存、价格等约束）中可能中途失效，借鉴 REPOT 的检查点机制，可保留前缀合法动作，仅修复后缀，提升端到端成功率。</li><li>成本控制的恢复预算：REPOT 只对首次失败的问题额外调用一次 LLM（~14% 的问题），保持平均成本接近原 POT，适合线上高吞吐场景，可作为 Agent 类系统的基线恢复策略。</li><li>环境即权威验证器：利用确定性环境（如数据库状态、API 返回码）做真实的下一步状态验证，比模型自我反思更可靠，在电商有明确规则域（库存校验、优惠券有效期等）中可直接复用。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM 在生成多步规划（如程序化思维 PoT）时，一次非法动作就会导致整个轨迹静默失败，而现有补救方法（多次采样、树搜索、自我批评）要么成本高，要么无法利用已成功的部分。该工作瞄准的是“可恢复的执行崩溃”——多数失败轨迹拥有很长的有效前缀，只需修复错误后的后缀。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>确定性验证重放</strong>：将候选动作序列逐步送入环境，记录直到第一个无效动作之前的所有合法动作（验证前缀），返回失败点状态和错误信息，无需额外 LLM 调用。</li>
+<li><strong>单次后缀修复</strong>：仅当重放未达目标时，用一次 LLM 调用从检查点（已验证状态）续写剩余动作，同时展示最后 4 个合法动作和验证器错误信息。</li>
+<li><strong>自适应路由</strong>：当验证前缀过短时（&#x3C;15% 总长度），改回全新重试（ADAPTIVEREPOT），避免在低质量前缀上浪费修复调用。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 PUZZLEZOO-775（覆盖河内塔、跳棋、渡河、积木世界）上，REPOT 在四个闭源模型上比 PoT 提高 +3~+11pp，最强配置（gpt-5.4-mini-medium）达到 96.9% vs 86.3%。</li>
+<li>与等成本（首次失败后重试一次 PoT）基线相比，REPOT 在 Gemini 上显著胜出（+3.8pp），但在能力较弱的模型上落后，呈现能力缩放规律。</li>
+<li>在控制恢复基准 DERAIL-550 中，提供检查点状态的方法恢复率达 80.7%，而仅错误反馈仅 20.7%，证明检查点信息是关键恢复信号。</li>
+<li>在 PLANBENCH Blocksworld 上复制了提升（+1.1~+11.4pp），开源模型复制了能力缩放趋势。</li>
+</ul>
+<p><strong>核心结论</strong>：可信的检查点状态，而非文本自我批评，是恢复规划的关键信号；REPOT 以极低额外成本（平均 1.06× PoT LLM 调用）将一次性规划升级为可恢复执行。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.30052&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.30052" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.30052" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.30052" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

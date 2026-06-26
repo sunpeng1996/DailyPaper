@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用树广播过程定义合成语言，精确分析上下文长度与推理的作用，证明有限上下文导致统计不一致且 O(log n) 记忆的推理即可精确采样"><meta property="og:title" content="A Hierarchical Language Model with Predictable Scaling Laws and Provable Benefits of Reasoning"><meta property="og:description" content="用树广播过程定义合成语言，精确分析上下文长度与推理的作用，证明有限上下文导致统计不一致且 O(log n) 记忆的推理即可精确采样"><meta property="og:type" content="website"><title>A Hierarchical Language Model with Predictable Scaling Laws and Provable Benefits of Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-05-13">2026-05-13</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.13687" target="_blank" rel="noopener">2605.13687</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>A Hierarchical Language Model with Predictable Scaling Laws and Provable Benefits of Reasoning</h1> <p class="title-zh">具有可预测缩放定律及推理可证明益处的层级语言模型</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM</span> </div> <p class="affiliations">Duke University · University of Chicago · MIT · Princeton University</p> <div class="meta">Jason Gaitonde, Frederic Koehler, Elchanan Mossel, Joonhyung Shin, Allan Sly</div> <p class="one-liner">用树广播过程定义合成语言，精确分析上下文长度与推理的作用，证明有限上下文导致统计不一致且 O(log n) 记忆的推理即可精确采样</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Scaling Laws">Scaling Laws</a><a class="tag" href="/DailyPaper/tag/Reasoning">Reasoning</a><a class="tag" href="/DailyPaper/tag/Hierarchical Models">Hierarchical Models</a><a class="tag" href="/DailyPaper/tag/Broadcast Process">Broadcast Process</a><a class="tag" href="/DailyPaper/tag/Context Length">Context Length</a> </div>  <div class="content"> <p><strong>动机</strong><br>
+现代大语言模型中，上下文窗口长度是核心设计参数，但究竟多少上下文才能忠实复现全局语言分布仍缺乏严格理论。现有理论多关注最坏情况表达能力，而实际训练得到的模型行为与统计分布的对齐未被定量刻画。该工作引入一类由树广播过程生成的层级合成语言，其分布可精确分析，从而首次给出上下文长度与推理作用在自回归生成中的定量缩放定律和严格下界。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>数据模型</strong>：定义 (d, h, κ, ν)-广播过程，在 d-ary 树上从根先验向下通过噪声信道传播，叶节点构成观测序列；研究两种实例：Ising 广播过程（软约束）和着色广播过程（硬约束）。</li>
+<li><strong>理论分析替身</strong>：提出 k-gram ansatz，用仅依赖前 k 个 token 的最优自回归过程代替 transformer，推导生成序列的分布统计量。</li>
+<li><strong>下界</strong>：证明对于 Ising 过程，有限上下文造成生成序列的总和方差对数线性于上下文深度，且峰度趋于高斯，远弱于真语言的多尺度长程相干；对于着色过程，在冻结区间有限上下文几乎必然产生不一致的序列，给出 Ω(n) 的上下文长度下界。</li>
+<li><strong>上界</strong>：引入推理记忆模型，证明仅需 Θ(log n) 比特的工作记忆即可从真语言中精确采样，实现指数级改善。</li>
+</ul>
+<p><strong>关键结果数字</strong></p>
+<ul>
+<li>在 d=3, h=8, ρ=0.9 的 Ising 实验中，非推理 transformer 的 log 归一化方差和峰度随上下文减小偏离真值，与理论渐近线吻合；推理模型即使上下文仅 64 远小于总长 6561，仍接近真值。</li>
+<li>在 d=4, h=6, q=3 的着色实验中，非推理模型小上下文几乎完全不生成有效序列（有效率接近 0），而推理模型几乎总是有效（接近 1）。</li>
+<li>理论上，方差对数标度斜率为 log(dρ²)，峰度趋于高斯峰度 3；推理记忆只需 O(h log(d|Σ|)) 比特。</li>
+<li>核心启示：<strong>“有限上下文自回归在层级语言中产生可预测的统计失真或逻辑不一致，而极少量可写记忆的推理即可恢复真实分布。”</strong></li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.13687&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.13687" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.13687" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.13687" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

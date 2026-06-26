@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出AsymRec框架，解耦输入输出表示，用连续专家投影缓解输入端信息瓶颈，用多面子空间残差量化防止输出端维度坍塌，平均NDCG@10提升15.8%"><meta property="og:title" content="Asymmetric Generative Recommendation via Multi-Expert Projection and Multi-Faceted Hierarchical Quantization"><meta property="og:description" content="提出AsymRec框架，解耦输入输出表示，用连续专家投影缓解输入端信息瓶颈，用多面子空间残差量化防止输出端维度坍塌，平均NDCG@10提升15.8%"><meta property="og:type" content="website"><title>Asymmetric Generative Recommendation via Multi-Expert Projection and Multi-Faceted Hierarchical Quantization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14512" target="_blank" rel="noopener">2605.14512</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Asymmetric Generative Recommendation via Multi-Expert Projection and Multi-Faceted Hierarchical Quantization</h1> <p class="title-zh">非对称生成式推荐：多专家投影与多面层次量化</p> <div class="dir-row"> <span class="direction-chip">🧭 RecSys</span> </div> <p class="affiliations">Tsinghua University · Tencent</p> <div class="meta">Bin Huang, Xin Wang, Junwei Pan, Yongqi Zhou, Yifeng Zhou, Zhixiang Feng 等</div> <p class="one-liner">提出AsymRec框架，解耦输入输出表示，用连续专家投影缓解输入端信息瓶颈，用多面子空间残差量化防止输出端维度坍塌，平均NDCG@10提升15.8%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Semantic IDs">Semantic IDs</a><a class="tag" href="/DailyPaper/tag/Vector Quantization">Vector Quantization</a><a class="tag" href="/DailyPaper/tag/Mixture-of-Experts">Mixture-of-Experts</a><a class="tag" href="/DailyPaper/tag/Hierarchical Quantization">Hierarchical Quantization</a><a class="tag" href="/DailyPaper/tag/Sequential Recommendation">Sequential Recommendation</a> </div>  <div class="content"> <h3 id="动机">动机</h3>
+<p>现有生成式推荐（GenRec）将物品表示为离散语义ID，并对称地用于模型输入与预测目标。这种设计存在<strong>双重信息瓶颈</strong>：(1) <strong>输入端</strong>：有损量化丢弃了细粒度语义，且离散ID嵌入在训练中偏向高频热门物品，导致冷物品泛化差；(2) <strong>输出端</strong>：简单量化的离散目标重建误差高，码本碰撞严重，监督信号不精确，而直接预测连续向量又易引发维度坍塌。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<p><strong>AsymRec</strong> 采用非对称连续-离散框架，解耦输入输出表示：</p>
+<ul>
+<li><strong>Multi-expert Semantic Projection (MSP)</strong>：将原始连续语义嵌入通过 Mixture-of-Experts 直接投影到 Transformer 隐藏空间，旁路离散ID查找。多个专家（2层MLP）由门控网络加权，保留语义拓扑结构，改善冷物品与长尾物品的表示质量。</li>
+<li><strong>Multi-faceted Hierarchical Quantization (MHQ)</strong>：先将嵌入经可学习投影映射到多个正交子空间，在每个子空间内进行多层残差量化（RQ），码本采用EMA更新稳定优化。同时引入子空间能量均衡损失与投影矩阵正交正则化，防止信息坍塌至少数子空间。最终每个物品获得由 M×L 个码本索引组成的结构化离散码字，提供高保真监督信号。</li>
+<li><strong>训练与推理</strong>：Transformer 解码器以 MSP 输出的连续表示作为输入，预测 MHQ 产生的多面层级语义ID；推理时使用图约束解码保证生成有效性。</li>
+</ul>
+<h3 id="关键实验结果">关键实验结果</h3>
+<p>在 Amazon 四个子集（Sports、Beauty、Toys、CDs）上，AsymRec对比12个基线（含Caser、SASRec、BERT4Rec、TIGER、RPG等），<strong>NDCG@10平均提升15.8%</strong>，所有数据集均达最优。消融实验表明：</p>
+<ul>
+<li>替换连续输入为离散ID，性能下降；冷物品区间 Recall@10 大幅下滑，证实 MSP 缓解了流行度偏差。</li>
+<li>改用连续输出直接回归，Transformer 输出有效秩从178.1锐减至99.5，NDCG@10明显下降，验证离散目标防止维度坍塌的必要性。</li>
+<li>MHQ用更少的总码本数（如8子空间×3层=24 tokens）即可超越标准乘积量化（64 tokens），且能量均衡与正交正则化进一步提升了量化质量。
+在线A/B测试中，部署于大型广告平台pCVR系统，<strong>总消耗提升1.4%，GMV提升1.9%</strong>，证实方法在工业级场景的有效性。</li>
+</ul>
+<blockquote>
+<p>一句话：解耦输入连续投影与输出结构化离散量化，是打通生成式推荐双重瓶颈的关键。</p>
+</blockquote> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14512&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14512" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14512" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14512" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

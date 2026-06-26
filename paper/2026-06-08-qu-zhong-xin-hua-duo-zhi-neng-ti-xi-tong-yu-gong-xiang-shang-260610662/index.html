@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出去中心化多智能体框架DELM，通过共享验证上下文和异步任务队列，在软件工程与长上下文推理上显著提升性能并降低近半成本。"><meta property="og:title" content="Decentralized Multi-Agent Systems with Shared Context"><meta property="og:description" content="提出去中心化多智能体框架DELM，通过共享验证上下文和异步任务队列，在软件工程与长上下文推理上显著提升性能并降低近半成本。"><meta property="og:type" content="website"><title>Decentralized Multi-Agent Systems with Shared Context</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-08">2026-06-08</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.10662" target="_blank" rel="noopener">2606.10662</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Decentralized Multi-Agent Systems with Shared Context</h1> <p class="title-zh">去中心化多智能体系统与共享上下文</p> <div class="dir-row"> <span class="direction-chip">🧭 去中心化多智能体协调框架</span> </div> <p class="affiliations">Stanford University</p> <div class="meta">Yuzhen Mao, Azalia Mirhoseini</div> <p class="one-liner">提出去中心化多智能体框架DELM，通过共享验证上下文和异步任务队列，在软件工程与长上下文推理上显著提升性能并降低近半成本。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent Systems">Multi-Agent Systems</a><a class="tag" href="/DailyPaper/tag/Decentralized Coordination">Decentralized Coordination</a><a class="tag" href="/DailyPaper/tag/Shared Context">Shared Context</a><a class="tag" href="/DailyPaper/tag/Verification">Verification</a><a class="tag" href="/DailyPaper/tag/Test-Time Scaling">Test-Time Scaling</a><a class="tag" href="/DailyPaper/tag/Long-Context Reasoning">Long-Context Reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>共享验证状态替代中心化路由：在电商多智能体场景（如并行搜索、推荐、客服），通过维护一个全局共享的已验证上下文（可类比为购物车状态或用户意图），让多个 Agent 异步读写紧凑进展摘要，避免依赖单一协调器合并结果，减少串行瓶颈和错误传播。</li><li>先验证后准入的防污染机制：对 Agent 写入共享状态的内容进行自动验证，检查其与原始证据的一致性，避免不可靠的信息在 Agent 间扩散。在商品知识库更新、多源信��聚合时，可借鉴此设计确保共享状态可信。</li><li>分层压缩与按需展开：用极简要点（gist）构建全局视图，需要细节时再追溯深层摘要或原始数据，降低长上下文推理的 token 开销。处理海量商品描述、用户评论、长文档问答时，可在低分辨率快速扫描后精准定位关键段落。</li><li>异步任务队列与自主领取：Agent 从队列自行认领子任务，完成后写回结果，适合大量并行子任务（如分品类推荐生成、多广告渠道创意生成），天然支持弹性扩展，并可通过失败记录复用避免重复试错。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>现有中心化多智能体系统（如AOrchestra、Claude Code）依赖一个主 Agent 分解任务、分发子上下文、收集与合并结果。随着子任务增多，主 Agent 成为通信和整合瓶颈；并行发现的成果需经主 Agent 再广播，可能被稀释、遗漏或变形；长上下文推理中，主 Agent 预先分配证据簇，发现关联困难，来回协调成本高。需要一种去中心化协调机制，让 Agent 直接通过共享状态高效交换已验证的进展。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>核心架构</strong>：DELM（Decentralized Language Models）由并行 Agent、共享上下文（C）和任务队列（T）构成。Agent 异步从队列认领子任务，读取共享上下文中的紧凑要点（gist），执行局部推理，然后将结果压缩、验证后写回 C，无需中心控制器。</li>
+<li><strong>共享状态设计</strong>：C 中存储的不是原始轨迹，而是经过压缩的要点，并附带指向更详细证据的指针。采用分层摘要（原始文档 → 锚定摘要 S_i → 要点 G_i），Agent 默认读要点，需要细节时可“展开”到摘要或原文，平衡全局视野与成本。</li>
+<li><strong>准入验证</strong>：任何更新写入 C 前，必须通过 LLM 验证器检查其与源证据的一致性。不忠实的归纳、数字错误等将被拒绝并重新生成，防止错误污染下游推理。</li>
+<li><strong>任务队列与动态调度</strong>：队列空时，最近完成的 Agent 根据已有状态自动生成新的子任务，直到无需额外分解才输出最终答案。</li>
+</ul>
+<h2 id="关键实验">关键实验</h2>
+<ul>
+<li><strong>SWE-bench Verified</strong>：DELM 以 Gemini 3 Flash 为基座，达到 Avg.@1 65.7%，Pass@4 77.4%，成本仅 $0.12/task；相较最强基线 AOrchestra-Parallel 提升 9.3 个百分点 Avg.@1，成本降低约一半。在 Claude Opus 4.6 上也获得 78.0% Avg.@1 与 82.5% Pass@4。</li>
+<li><strong>LongBench-v2 Multi-Doc QA</strong>：DELM 在 GPT-5.4、Claude Sonnet 4.6、Gemini 3 Flash、DeepSeek-V4-Pro 四个模型上平均准确率均最高，提升幅度达 3.6~5.7 个百分点。消融实验表明移除验证或分层摘要均导致准确率下降，验证贡献最大。</li>
+<li><strong>与 RLM 结合</strong>：在聚合密集的 OOLONG 基准上，DELM+RLM 混合取得 64.0% 准确率，优于单独使用两种方法，显示去中心化协调与程序化执行可互补。</li>
+</ul>
+<h2 id="最值得记住的一句话">最值得记住的一句话</h2>
+<p>去中心化多智能体系统的核心并非堆更多并行 Agent，而是建立一个可验证、可展开的共享状态作为通信基板，让发现、失败和约束真正成为可复用的全局资产。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.10662&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.10662" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.10662" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.10662" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过图搜索、回顾记忆与分层规划实现长周期自演化，在 MLE‑Bench 上以半数时间达到 65.3% 奖牌率 SOTA。"><meta property="og:title" content="MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery"><meta property="og:description" content="通过图搜索、回顾记忆与分层规划实现长周期自演化，在 MLE‑Bench 上以半数时间达到 65.3% 奖牌率 SOTA。"><meta property="og:type" content="website"><title>MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06473" target="_blank" rel="noopener">2606.06473</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery</h1> <p class="title-zh">MLEvolve：面向自动化机器学习算法发现的自演化多智体框架</p> <div class="dir-row"> <span class="direction-chip">🧭 多智体长周期自演化与算法搜索</span> </div> <p class="affiliations">Shanghai Artificial Intelligence Laboratory · East China Normal University</p> <div class="meta">Shangheng Du, Xiangchao Yan, Jinxin Shi, Zongsheng Cao, Shiyang Feng, Zichen Liang 等</div> <p class="one-liner">通过图搜索、回顾记忆与分层规划实现长周期自演化，在 MLE‑Bench 上以半数时间达到 65.3% 奖牌率 SOTA。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/MultiAgent">MultiAgent</a><a class="tag" href="/DailyPaper/tag/Self-Evolving">Self-Evolving</a><a class="tag" href="/DailyPaper/tag/MCGS">MCGS</a><a class="tag" href="/DailyPaper/tag/Memory">Memory</a><a class="tag" href="/DailyPaper/tag/Code Generation">Code Generation</a><a class="tag" href="/DailyPaper/tag/MLE">MLE</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>图搜索 + 跨分支信息复用：Progressive MCGS 在有向图中引入引用边，允许非父‑子节点间的策略组合，可迁移到多方案 A/B 实验或推荐模型架构搜索，打破单支探索的信息孤岛。</li><li>动态经验积累：回顾式记忆将每次尝试的计划、结果、分析存入全局记忆，通过 BM25+FAISS 混合检索在规划和调试阶段自动召回相关经验，可直接用于 Agent 的“失败经验库”或营销策略迭代记忆。</li><li>规划‑编码解耦与自适应模式：分离“改什么”与“怎么改”，根据搜索阶段和代码成熟度在全量生成、模块化生成、diff 编辑间自动切换，能稳定长周期代码迭代，适用于 LLM 驱动的自动化特征工程或流水线优化。</li><li>渐进式探索‑利用调度：熵启发的软开关在 UCT 探索与精英引导利用间平滑过渡，可在有限计算预算（如广告竞价、推荐排序在线调参）下自动从宽探索收敛到高价值方向，避免后期资源浪费。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有 LLM 驱动的机器学习工程（MLE）代理在长周期算法发现中普遍面临分支信息隔离、无记忆搜索、规划与编码耦合三大瓶颈，导致后期优化效率低下、经验无法复用。</p>
+<p><strong>方法关键点</strong>：</p>
+<ol>
+<li><strong>Progressive MCGS</strong>：将 MCTS 扩展为有向图，通过主边和引用边实现跨分支信息流；引入熵启发渐进调度，利用软开关从 UCT 探索转向精英引导利用；定义四种扩展操作（主扩展、分支内演化、跨分支引用、多分支聚合），分别对应反思历史、借鉴他支和融合多路经验。</li>
+<li><strong>回顾式记忆</strong>：静态领域知识库提供冷启动先验，动态全局记忆自动积累每次成功/失败的结构化记录；采用 BM25+FAISS 混合检索与 RRF 融合，并分阶段检索（规划/调试），实现经验驱动的决策。</li>
+<li><strong>分层规划与自适应代码生成</strong>：将 Planner（决定修改什么）与 Coder（如何实现）解耦，根据搜索状态自动选择基础模式（全新生成）、逐步模式（按模块生成）或 diff 模式（补丁编辑），提升长周期迭代的稳定性。</li>
+</ol>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 MLE‑Bench 75 个 Kaggle 任务上，12 小时预算（标准 24 小时的一半）下平均奖牌率 <strong>65.3%</strong>，金牌率 34.7%，100% 有效提交，超过所有开源与闭源基线（次优 MARS+ 为 62.7%）。</li>
+<li>在 AlphaEvolve 的 15 个数学优化题目中，11 题取得最优，展示跨域泛化。</li>
+<li>消融实验：移除 Progressive MCGS 导致奖牌率下降最显著（从 81.82% 降至 68.18%），分支内演化是其中最关键算子。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06473&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06473" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06473" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06473" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

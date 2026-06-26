@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出神经信任函数，从教师内部表示预测弱标签正确性以过滤噪声，实现匹配甚至超越真值训练的弱监督泛化，并可通过迭代链滚雪球式提强。"><meta property="og:title" content="Trust Functions: Near-Lossless Weak-to-Strong Generalization by Learning When to Trust the Weak Teacher"><meta property="og:description" content="提出神经信任函数，从教师内部表示预测弱标签正确性以过滤噪声，实现匹配甚至超越真值训练的弱监督泛化，并可通过迭代链滚雪球式提强。"><meta property="og:type" content="website"><title>Trust Functions: Near-Lossless Weak-to-Strong Generalization by Learning When to Trust the Weak Teacher</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-30">2026-05-30</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.01000" target="_blank" rel="noopener">2606.01000</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Trust Functions: Near-Lossless Weak-to-Strong Generalization by Learning When to Trust the Weak Teacher</h1> <p class="title-zh">通过学习何时信任弱教师实现近乎无损的弱到强泛化</p> <div class="dir-row"> <span class="direction-chip">🧭 弱到强泛化 · 数据选择</span> </div> <p class="affiliations">Johns Hopkins University</p> <div class="meta">Arda Uzunoglu, Alvin Zhang, Daniel Khashabi</div> <p class="one-liner">提出神经信任函数，从教师内部表示预测弱标签正确性以过滤噪声，实现匹配甚至超越真值训练的弱监督泛化，并可通过迭代链滚雪球式提强。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/weak-to-strong generalization">weak-to-strong generalization</a><a class="tag" href="/DailyPaper/tag/trust functions">trust functions</a><a class="tag" href="/DailyPaper/tag/data selection">data selection</a><a class="tag" href="/DailyPaper/tag/LLM supervision">LLM supervision</a><a class="tag" href="/DailyPaper/tag/snowballing chain">snowballing chain</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>弱标签质量过滤：当业务中只有弱监督（如用户点击、规则伪标签）时，可训练一个小型神经网络，从强模型的隐层表示预测标签正确性，仅用高信任度样本训练主模型，大幅减少噪声。</li><li>隐式课程学习：信任函数倾向选择简单样本，形成从易到难的自然课程，有助于大模型稳定训练，可直接用于冷启动或样本不均衡场景。</li><li>迭代自我提升：将当前模型作为下一轮的“教师”，用信任函数筛选其输出作为新训练数据，逐步提升模型能力，类似自训练，但过滤机制能防止错误累积，适合在标注稀缺时扩增高质量训练集。</li><li>风险控制的数据选择：提供基于霍夫丁上界的阈值校准方法，只需少量标注数据即可自动确定高纯度子集，避免人工调参，适合自动化数据生产 pipeline。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当强模型超越人类标注质量时，传统监督假设失效。弱到强泛化旨在用弱教师监督强学生，但弱标签噪声往往导致学生无法逼近真值训练的效果。本文从数据选择角度切入，核心挑战是如何识别出真正可靠的弱标签作为训练信号。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出<strong>信任函数</strong>（trust functions），将弱标签可靠性量化为标量信任分，用于过滤弱监督数据。</li>
+<li>实现为<strong>神经信任函数（NTF）</strong>：一个轻量残差MLP，输入弱教师最后一层隐状态（对应生成 token 的表示），预测该标签是否正确。训练时仅需有标签的源域数据，部署时在目标域零样本使用，适应分布内偏移。</li>
+<li>训练流程：弱教师生成弱标签并提取隐状态 → 用标注源域训练NTF → 在未标注目标域用NTF打分并保留高信任样本 → 用该子集训练强学生。</li>
+<li>迭代<strong>弱到强链</strong>：将训练出的学生作为下一轮教师，反复过滤和训练，实现复合提升。</li>
+</ul>
+<p><strong>实验结果</strong>：</p>
+<ul>
+<li>在<strong>世界知识</strong>（MCQA，OLMo/Qwen系列）、<strong>定量推理</strong>（数学题，QWEN，AIME评测）、<strong>策略游戏</strong>（国际象棋谜题，Lichess）三个领域，NTF过滤的弱监督训练均达到与真值训练统计无差异甚至超越的性能（恢复率92%~110%+）。</li>
+<li>信任链在策略游戏上滚动多代后，Qwen3-14B最终性能超过单步弱到强、真值训练和 naive 链基线。</li>
+<li>机制分析表明：NTF保守地选择低难度样本（隐式课程）、在真值标签不完整时恢复更优走法、并产生更低秩、更一致的梯度更新方向。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.01000&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.01000" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.01000" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.01000" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

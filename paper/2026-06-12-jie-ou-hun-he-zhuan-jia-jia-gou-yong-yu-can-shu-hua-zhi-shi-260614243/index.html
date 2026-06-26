@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出解耦混合专家 (DMoE)，把外部知识模块化为独立 LoRA 专家，通过不确定性路由选择性激活并保持 KV-cache 复用，实现高效可更新的知识注入。"><meta property="og:title" content="Decoupled Mixture-of-Experts for Parametric Knowledge Injection"><meta property="og:description" content="提出解耦混合专家 (DMoE)，把外部知识模块化为独立 LoRA 专家，通过不确定性路由选择性激活并保持 KV-cache 复用，实现高效可更新的知识注入。"><meta property="og:type" content="website"><title>Decoupled Mixture-of-Experts for Parametric Knowledge Injection</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-12">2026-06-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14243" target="_blank" rel="noopener">2606.14243</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Decoupled Mixture-of-Experts for Parametric Knowledge Injection</h1> <p class="title-zh">解耦混合专家架构用于参数化知识注入</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 知识注入 · 解耦 MoE · 参数化专家</span> </div> <p class="affiliations">Tsinghua University</p> <div class="meta">Baoqing Yue, Weihang Su, Qingyao Ai, Yichen Tang, Changyue Wang, Jiacheng Kang 等</div> <p class="one-liner">提出解耦混合专家 (DMoE)，把外部知识模块化为独立 LoRA 专家，通过不确定性路由选择性激活并保持 KV-cache 复用，实现高效可更新的知识注入。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Knowledge Injection">Knowledge Injection</a><a class="tag" href="/DailyPaper/tag/Decoupled MoE">Decoupled MoE</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/KV-cache Reuse">KV-cache Reuse</a><a class="tag" href="/DailyPaper/tag/Uncertainty-aware Routing">Uncertainty-aware Routing</a><a class="tag" href="/DailyPaper/tag/Parametric Knowledge">Parametric Knowledge</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商知识热更新：商品属性、活动规则频繁变化，可借鉴 DMoE 的解耦专家模块独立更新，无需重训基座模型，新增知识只需训练对应 LoRA 并加入索引，避免灾难性遗忘。</li><li>Agent 技能/知识模块化：可将不同领域的工具调用知识、业务规则训练为独立专家，通过 BM25 路由按需激活，结合不确定性触发实现 agent 的动态知识组合与按需注入，保持缓存复用降低推理延迟。</li><li>推荐系统知识增强：用户画像、物品属性知识可封装为独立适配器，注入最后层 FFN，不干扰基础推荐能力；能够离线存储大量专家，仅加载 top-k 激活，大幅降低 GPU 内存占用，适合大规模在线服务场景。</li><li>低开销的缓存友好设计：专家只挂在最后一层前馈网络，避免破坏 KV-cache，使动态知识注入的推理代价远低于 FLARE 等上下文改写方法，可直接应用于对实时性要求高的电商对话或推荐解释生成。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM 的知识在训练后静止，RAG 只能提供 prompt 级浅层增强，post-training 方法将新知识写入共享参数，容易引发灾难性遗忘和知识冲突，且更新成本高。一种理想的注入架构需要同时实现参数级深度集成、知识模块独立可更新以及高效自回归推理。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>解耦 MoE 架构</strong>：将知识专家和路由器完全从冻结的基座模型中解耦，专家以 LoRA 适配器形式存在，可独立添加、删除或更新。</li>
+<li><strong>最后一层放置</strong>：专家只附加到 transformer 最后一层的前馈网络（FFN），保证专家激活不改变前面各层的 hidden state，从而保持 KV-cache 完全有效，避免多次解码时的重复注意力计算。</li>
+<li><strong>不确定性感知路由</strong>：推理时，每一步计算 token 熵作为不确定性（TU），仅当 TU 超过阈值时才触发路由，避免不必要的专家激活。</li>
+<li><strong>轻量级 BM25 路由器</strong>：每个专家关联一个文本代理（训练时使用的文档与增强数据），通过外部倒排索引进行 BM25 检索，选择 top-k 相关专家；路由器无需训练，可增量更新。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>在 HotpotQA、ComplexWebQuestions、Quasar-T、StrategyQA 四个知识密集基准上，基于 Llama‑3.2‑1B 和 Qwen2.5‑1.5B，DMoE 在 14 个指标中有 11 个取得最优或并列最优，显著优于 Basic‑RAG、FLARE、PRAG、SFT‑LoRA。</li>
+<li>相比同属动态知识注入的 FLARE，DMoE 推理时间快约 3 倍（Llama‑3.2‑1B 上 2.67 s vs 9.26 s），GPU 内存减少 1.6‑1.9 倍（7.24 GB vs 13.97 GB），核心原因是 KV-cache 复用。</li>
+<li>与标准耦合 MoE 骨干比较（OLMoE‑1B‑7B + SFT‑LoRA），DMoE 效果更优且推理时间从 20 s 降至 2.7‑3.9 s，GPU 内存从 26 GB 降至 7‑8 GB。</li>
+<li>消融显示专家层放置在最后层时效果最好且兼容 KV-cache；不确定性触发阈值对性能影响稳定，BM25 路由与 token 熵触发器缺一不可。</li>
+</ul>
+<p><strong>一句话总结</strong>：DMoE 通过“解耦 + 最后层放置 + 不确定性触发”的组合，在不牺牲推理效率的前提下实现了模块化、可更新的参数级知识注入，为电商、Agent 等需频繁更新知识的场景提供了可落地的架构范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14243&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14243" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14243" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14243" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

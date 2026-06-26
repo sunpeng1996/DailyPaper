@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出递归记忆与两阶段RL，用恒定上下文长度预测下一查询，token消耗最高降低22倍，质量优于全历史基线"><meta property="og:title" content="OnePred: Next-Query Prediction via Recursive Intent Memory in Multi-Turn Conversations"><meta property="og:description" content="提出递归记忆与两阶段RL，用恒定上下文长度预测下一查询，token消耗最高降低22倍，质量优于全历史基线"><meta property="og:type" content="website"><title>OnePred: Next-Query Prediction via Recursive Intent Memory in Multi-Turn Conversations</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23668" target="_blank" rel="noopener">2605.23668</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OnePred: Next-Query Prediction via Recursive Intent Memory in Multi-Turn Conversations</h1> <p class="title-zh">OnePred：基于递归意图记忆的多轮对话下一查询预测</p> <div class="dir-row"> <span class="direction-chip">🧭 多轮对话下一查询预测 · 递归意图记忆</span> </div> <p class="affiliations">Tsinghua University · Alibaba Qwen Applications Business Group</p> <div class="meta">Jiangwang Chen, Bowen Zhang, Zixin Song, Jiazheng Kang, Xiao Yang, Da Zhu 等</div> <p class="one-liner">提出递归记忆与两阶段RL，用恒定上下文长度预测下一查询，token消耗最高降低22倍，质量优于全历史基线</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Next-Query Prediction">Next-Query Prediction</a><a class="tag" href="/DailyPaper/tag/Recursive Memory">Recursive Memory</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/Intent Tracking">Intent Tracking</a><a class="tag" href="/DailyPaper/tag/Multi-Turn Dialogue">Multi-Turn Dialogue</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对话式电商的主动查询预测：可直接借鉴递归记忆架构，用小型模型（8B）在每次交互后实时预测用户下一商品咨询或搜索意图，触发预取和缓存，降低感知延迟。</li><li>记忆压缩的RL训练范式：两阶段RL（先学预测再学压缩）解决了端到端记忆无监督问题，对构建主动对话Agent、推荐对话系统中的状态追踪具有通用性。</li><li>低成本长对话上下文管理：利用文本形式的记忆替代KV-cache全量历史，使每轮推理token消耗恒定，适合高并发、长会话的线上场景；500 token预算已足够保留意图轨迹。</li><li>预测评估的量规设计：5点Likert意图评分量表（从完全命中到无关）可迁移至推荐对话的生成质量评估，优于传统n-gram匹配。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前LLM对话系统仍是被动响应，无法预判用户需求，导致检索延迟累积和体验下降。下一查询预测（next-query prediction）可驱动预取、缓存和主动建议，但面临两大瓶颈：全历史拼接导致token成本随对话长度线性增长，且原始历史中大量噪声掩盖预测信号。核心假设是预测只需追踪用户意图演化轨迹，而非重读全部原始历史。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>递归意图记忆</strong>：维护一个文本记忆状态$m_t$，仅用上一轮记忆$m_{t-1}$和当前交互$(q_t, r_t)$更新，长度上限$k$（500 tokens），形成硬信息瓶颈。记忆经RL优化后专注保存预测相关信号（话题链、未解决问题、兴趣转移）。</li>
+<li><strong>两阶段强化学习</strong>：Stage 1用完整历史训练模型直接预测下一查询（Full-History RL），掌握“预测什么”；Stage 2切换到记忆接口，模型只能通过自己维护的记忆进行预测，强制学习“压缩什么”。两者皆用GRPO优化，Stage 2将最终预测奖励广播至所有中间记忆更新步，解决无监督记忆的信用分配。</li>
+<li><strong>奖励设计</strong>：用三模型集成投票的5点意图对齐评分代替文本匹配，避免形式偏差。</li>
+<li><strong>基准NQP-Bench</strong>：涵盖私域、WildChat、ShareChat三个子集，经多轮过滤保证可预测性，并标注意图转移范式与难度。</li>
+</ul>
+<p><strong>关键结果</strong>：
+在三种模型配置（闭源Gemini-3.1-Pro、未训练Qwen3-8B、RL训练Qwen3-8B）下，OnePred均超过Current-turn和Full-history基线。在NQP-Wild上，RL训练的OnePred比Full-history高出1.6分（Judge评分），且在长对话（≥10轮）中优势扩大至+3.7分，保留97%的短对话性能。推理效率方面，平均每轮消耗约650 tokens保持不变，而全历史方法在14轮时达14k tokens，节省最高22倍。消融证实两阶段训练互补：仅Stage 1得43.82分，仅Stage 2得42.96分，完整管线达到46.00。模型规模从1.7B到8B均可受益，8B下RL提升+6.4分。</p>
+<p><strong>一句话</strong>：通过递归记忆把对话历史压缩为预测导向的意图链，用两阶段RL训练，实现恒定成本的下一查询预测，效果反超完整历史输入.</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23668&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23668" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23668" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23668" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

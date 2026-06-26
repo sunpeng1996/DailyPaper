@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#Hypernetwork - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#Hypernetwork - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#Hypernetwork</h2> <p style="color: var(--fg-muted); font-size: 14px;">2 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-06-03-code2lora-mian-xiang-ruan-jian-yan-hua-de-chao-wang-luo-dai-260606492">Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution</a></h2> <p class="title-zh">Code2LoRA：面向软件演化的超网络生成代码适配器</p> <div class="dir-row"> <span class="direction-chip">🧭 参数高效微调 · 超网络生成 LoRA</span>  </div> <p class="affiliations">University of Waterloo</p> <p class="summary">用超网络为代码仓库动态生成 LoRA 适配器，零推理 token 开销注入库级知识，支持静态与演化场景。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>为不同场景动态生成 LoRA：超网络可推广到电商推荐中，为不同用户群、商家或商品类目生成专属 LoRA，避免为每个实体独立微调，节省存储与训练成本。</li><li>零推理 token 开销注入知识：生成的适配器直接融合到基座模型，推理时无额外上下文拼接，适合延迟敏感的推荐重排或 Agent 调用。</li><li>进化机制应对分布漂移：GRU 隐藏状态按 commit 更新适配器，类似可用于在线学习场景，持续跟踪用户兴趣变化或商品趋势，低成本保持模型新鲜度。</li><li>基准与评估框架：RepoPeftBench 的构建思路可借鉴到电商领域，构建包含不同商家、不同时期的 PEFT 评估基准，量化个性化与迁移能力。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 6/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Hypernetwork">Hypernetwork</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/Code Language Model">Code Language Model</a><a class="tag" href="/DailyPaper/tag/Software Evolution">Software Evolution</a><a class="tag" href="/DailyPaper/tag/PEFT">PEFT</a> </div> </article><article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-06-02-video2lora-tong-guo-can-shu-hua-shi-pin-nei-hua-jiang-di-vlm-260604351">Video2LoRA: Parametric Video Internalization for Vision-Language Models</a></h2> <p class="title-zh">Video2LoRA：通过参数化视频内化降低 VLM 推理成本</p> <div class="dir-row"> <span class="direction-chip">🧭 视觉语言模型 · 视频压缩内化</span>  </div> <p class="affiliations">University of Maryland, College Park</p> <p class="summary">用超网络从视频直接预测 LoRA 权重，查询时零视觉 token，保持性能的同时大幅降低延迟和吞吐成本</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>对于电商商品视频、直播切片等需要反复问答的场景，将视频内化为 LoRA 权重后，后续查询完全省去视频帧编码，可实现 6~80 倍的首 token 延迟降低和 1500 倍的视觉 token 负载缩减，适用于对同一内容多次交互的 Agent 或推荐解释链路。</li><li>超网络预测 LoRA 权重的思路可迁移到其他多模态输入的快速适配：如图集、商品描述集合等，用一次前向生成一个适配器，替代传统微调，快速构建个性化模型。</li><li>发现不重叠视频段独立生成的 LoRA 可在秩空间直接相加组合，这为长视频（如长时直播回放）的分块处理提供了可能，可在电商视频理解中用于处理超长商品讲解或直播内容。</li><li>单次前向生成适配器的架构设计（感知器超网络读取冻结 VLM 中间层特征）可作为“模型即存储”的参考，当业务需要反复访问同一批多媒体内容时，可将内容压缩为轻量权重，减少对上下文窗口的依赖。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-06-02">2026-06-02</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 7/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Video Understanding">Video Understanding</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/Hypernetwork">Hypernetwork</a><a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/Inference Efficiency">Inference Efficiency</a><a class="tag" href="/DailyPaper/tag/Parameter Generation">Parameter Generation</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

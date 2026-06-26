@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="一种无需预定义错误分类的动态多粒度代理评估方法，自动生成系统、节点与步骤级的文本诊断洞察"><meta property="og:title" content="Agentic CLEAR: Automating Multi-Level Evaluation of LLM Agents"><meta property="og:description" content="一种无需预定义错误分类的动态多粒度代理评估方法，自动生成系统、节点与步骤级的文本诊断洞察"><meta property="og:type" content="website"><title>Agentic CLEAR: Automating Multi-Level Evaluation of LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22608" target="_blank" rel="noopener">2605.22608</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Agentic CLEAR: Automating Multi-Level Evaluation of LLM Agents</h1> <p class="title-zh">Agentic CLEAR：LLM 代理系统的多层级自动评估框架</p> <div class="dir-row"> <span class="direction-chip">🧭 代理行为多层级自动评估</span> </div> <p class="affiliations">IBM Research</p> <div class="meta">Asaf Yehudai, Lilach Eden, Michal Shmueli-Scheuer</div> <p class="one-liner">一种无需预定义错误分类的动态多粒度代理评估方法，自动生成系统、节点与步骤级的文本诊断洞察</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent Evaluation">Agent Evaluation</a><a class="tag" href="/DailyPaper/tag/Multi-Level Feedback">Multi-Level Feedback</a><a class="tag" href="/DailyPaper/tag/LLM Judge">LLM Judge</a><a class="tag" href="/DailyPaper/tag/Error Analysis">Error Analysis</a><a class="tag" href="/DailyPaper/tag/Dynamic Taxonomies">Dynamic Taxonomies</a><a class="tag" href="/DailyPaper/tag/Observability">Observability</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多粒度自动诊断：可将步骤级、trace级、系统级评估嵌入电商 Agent 开发流水线，自动发现重复工具调用、策略错误、输出格式违规等问题，替代人工逐条检查 trace。</li><li>无需预定义错误分类：动态生成评估维度（rubric）和错误模式，适合频繁变化的推荐流程或购物 Agent，大幅降低适配成本。</li><li>可集成到已有观测平台：支持 LangFuse 格式，提供 PyPI 包，可以快速接入现有 Agent 观测系统，利用 LLM Judge 输出补充自动评分以外的文本解释。</li><li>对齐人类标注的可靠参考：与 TRAIL 错误分类的 macro-F1 达 0.459，能够替代部分人工审核，尤其适用于线上 Agent 质量监控与回归检测。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+代理系统在多步骤交互中变得愈发自主，但其行为评估仍依赖观测平台静态日志或手工错误分类，无法动态适应新任务。现有方法要么只提供基础指标，要么依赖固定分类体系，缺少可自动生成细粒度、可操作诊断的框架。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>两级流水线</strong>：先由 LLM Judge 对每条 trace 进行步骤级（Js）、trace 级（Jt）和基于任务生成 rubrics 的合规性评估（Jr+Jv）；随后用 CLEAR 算法聚类实例反馈，聚合为系统级和节点级洞察。</li>
+<li><strong>三层输出</strong>：系统级表面跨任务失败模式；节点级定位具体子代理（如规划节点、执行节点）的缺陷；trace 级保留每步的评分与原因。</li>
+<li><strong>零预定义分类</strong>：Judge 动态生成任务相关的评估标准和错误描述，不依赖固定错误类型。</li>
+<li><strong>工程落地</strong>：PyPI 包 + 命令行接口 + 交互式 UI，接收 LangFuse 格式 trace，直接嵌入开发流程。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>在 AppWorld、GAIA、SWE‑bench Verified Mini、τ²‑bench 四项基准及七种代理‑模型组合上验证（共计数万次 LLM 调用）。</li>
+<li>与人类标注的 TRAIL 错误分类对齐：GPT‑5 法官在 full+partial 匹配下 macro-F1 达 0.459，涵盖 12 个相关类别中的 10‑12 个。</li>
+<li>任务成功预测：AppWorld 上 AUC 最高 0.89（GPT‑5 trace 级评估），τ²‑bench 则因政策隐式性而偏低（≤0.62），说明方法信号因领域而异。</li>
+<li>法官模型对比：GPT‑5 输出比 OSS‑120B 更长、更领域具体，表明法官选择显著影响诊断深度。</li>
+</ul>
+<p><strong>核心结论</strong><br>
+Agentic CLEAR 以无固定分类的方式实现了与专家分类高度一致的可操作诊断，为代理系统评估从“观察”迈向“理解与改进”提供了实用方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22608&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22608" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22608" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22608" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

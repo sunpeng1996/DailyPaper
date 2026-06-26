@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过在线双路径 rollout 探测知识边界，构建细粒度监督信号，在不牺牲准确率的前提下减少冗余工具调用 18%。"><meta property="og:title" content="Efficient Agentic Reinforcement Learning with On-Policy Intrinsic Knowledge Boundary Enhancement"><meta property="og:description" content="通过在线双路径 rollout 探测知识边界，构建细粒度监督信号，在不牺牲准确率的前提下减少冗余工具调用 18%。"><meta property="og:type" content="website"><title>Efficient Agentic Reinforcement Learning with On-Policy Intrinsic Knowledge Boundary Enhancement</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26952" target="_blank" rel="noopener">2605.26952</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Efficient Agentic Reinforcement Learning with On-Policy Intrinsic Knowledge Boundary Enhancement</h1> <p class="title-zh">基于在线策略知识边界增强的高效智能体强化学习</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 工具调用效率优化</span> </div> <p class="affiliations">Tencent Inc · The Chinese University of Hong Kong · Shenzhen MSU-BIT University</p> <div class="meta">Dingwei Chen, Zefang Zong, Zhipeng Ma, Leo Luo, Yang Li, Chengming Li 等</div> <p class="one-liner">通过在线双路径 rollout 探测知识边界，构建细粒度监督信号，在不牺牲准确率的前提下减少冗余工具调用 18%。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agentic RL">Agentic RL</a><a class="tag" href="/DailyPaper/tag/Tool Call Reduction">Tool Call Reduction</a><a class="tag" href="/DailyPaper/tag/Knowledge Boundary">Knowledge Boundary</a><a class="tag" href="/DailyPaper/tag/On-policy">On-policy</a><a class="tag" href="/DailyPaper/tag/Dual-path rollouts">Dual-path rollouts</a><a class="tag" href="/DailyPaper/tag/Efficiency">Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在 Agent RL 训练中引入双路径（with-tool / no-tool）rollout 来动态评估模型是否真正需要工具，这一探测机制可直接用于电商对话 Agent 或推荐 Agent 的工具调用决策，避免因盲目调用搜索、计算等工具而增加延迟和成本。</li><li>将问题按知识边界分为四类（Tool‑dependent / Efficiency / Hallucination / Both‑wrong）并差异化构建监督信号，这种细粒度策略可迁移到多智能体协作或生成式推荐场景，用于优化不同情境下的资源调度与动作选择。</li><li>该方法作为即插即用模块，与 GRPO / DAPO / GSPO / AEPO 等多种主流 Agentic RL 算法兼容，无需修改奖励函数或优化流程，适合在现有业务 RL 训练框架上快速叠加实验。</li><li>训练过程中轨迹类别的分布变化（如 Efficiency 比例上升）可作为知识内化的可解释指标，帮助监控 Agent 对工具依赖的演化，为线上策略调整提供信号。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+Agentic RL 训练 LLM 使用外部工具时，会逐渐产生大量冗余工具调用（认知卸载），不仅浪费计算资源，还可能引入噪声导致答案质量下降。现有基于奖励塑形的方法（如 OTC‑PO）对工具调用施加全局惩罚，容易诱导智能体不分场合地抑制工具使用，造成奖励破解，且无法适应模型知识边界在训练过程中的动态变化。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>双路径 rollout</strong>：对每个训练问题，同时采样带工具（with‑tool）和无工具（no‑tool）的多条轨迹。</li>
+<li><strong>知识边界探测</strong>：比较两条路径的正确性，判断问题是否在模型参数知识范围内（即无工具也能答对）。</li>
+<li><strong>四类信号构建</strong>：根据 with‑tool 和 no‑tool 的正确性组合，将问题分为 Tool‑dependent（需工具，选最少工具调用的正确轨迹）、Efficiency（无需工具，选无工具正确轨迹）、Hallucination（无工具对而有工具错，选无工具轨迹）和 Both‑wrong（跳过），并构造对应的监督目标。</li>
+<li><strong>联合训练</strong>：在标准 RL 损失（如 GRPO）之上加入选出的目标轨迹的交叉熵损失 L_AKBE，通过系数 λ 平衡，实现在线知识边界的动态跟踪与优化。</li>
+</ul>
+<p><strong>关键实验</strong>
+在 HotpotQA、2WikiMultihopQA、MuSiQue、Bamboogle、NQ、TriviaQA、PopQA 共 7 个 QA 基准上，使用 Qwen3‑4B 和 Qwen2.5‑7B 进行实验。与 ReAct、Search‑o1、R1‑Searcher、Search‑R1、OTC‑PO、β‑GRPO、Offline AKBE 等多个基线对比，AKBE 平均准确率提升 +1.85，工具调用减少 18%，工具生产力提升 25%。消融实验表明三类信号缺一不可，其中 Tool‑dependent 信号有效防止了对必要工具调用的过度抑制。此外，AKBE 与多种 RL 算法（DAPO、GSPO、AEPO）组合均能一致提升，训练速度反而比原始 GRPO 快约 15%。</p>
+<p><strong>核心洞见</strong>
+通过在线双路径 rollouts 动态捕捉模型的知识边界，并转化为实例级的细粒度监督信号，可以同时实现准确率提升和工具调用精简，避免粗粒度奖励塑造带来的副作用。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26952&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26952" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26952" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26952" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

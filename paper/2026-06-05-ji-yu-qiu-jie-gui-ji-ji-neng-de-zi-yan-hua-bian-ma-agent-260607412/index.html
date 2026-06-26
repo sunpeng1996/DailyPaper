@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将求解轨迹蒸馏为结构化Agent技能，驱动自适应课程生成与梯度对齐选择，在SWE-bench Verified达到50.40%"><meta property="og:title" content="Socratic-SWE: Self-Evolving Coding Agents via Trace-Derived Agent Skills"><meta property="og:description" content="将求解轨迹蒸馏为结构化Agent技能，驱动自适应课程生成与梯度对齐选择，在SWE-bench Verified达到50.40%"><meta property="og:type" content="website"><title>Socratic-SWE: Self-Evolving Coding Agents via Trace-Derived Agent Skills</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07412" target="_blank" rel="noopener">2606.07412</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Socratic-SWE: Self-Evolving Coding Agents via Trace-Derived Agent Skills</h1> <p class="title-zh">基于求解轨迹技能的自演化编码Agent</p> <div class="dir-row"> <span class="direction-chip">🧭 自演化Agent·技能注册与课程学习</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Alibaba Group</p> <div class="meta">Chuan Xiao, Zhengbo Jiao, Shaobo Wang, Wei Wang, Bing Zhao, Hu Wei 等</div> <p class="one-liner">将求解轨迹蒸馏为结构化Agent技能，驱动自适应课程生成与梯度对齐选择，在SWE-bench Verified达到50.40%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/SWE-agent">SWE-agent</a><a class="tag" href="/DailyPaper/tag/self-evolution">self-evolution</a><a class="tag" href="/DailyPaper/tag/trace distillation">trace distillation</a><a class="tag" href="/DailyPaper/tag/curriculum learning">curriculum learning</a><a class="tag" href="/DailyPaper/tag/skill registry">skill registry</a><a class="tag" href="/DailyPaper/tag/gradient alignment">gradient alignment</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>轨迹→技能→任务闭环：将Agent执行日志中的失败模式与修复策略结构化为Skill Registry，用于定向生成针对性训练任务。可迁移到电商/推荐场景的Agent行为分析，例如从订单纠纷处理轨迹提取决策技能，生成新的客服训练case。</li><li>梯度对齐课程筛选：用held-out验证集上的策略梯度方向与候选任务梯度余弦相似度做奖励，选出与目标方向一致的训练样本。该方法可推广到任何需要从合成数据中筛选高质量样本的场景，如生成式推荐的Semantic ID训练数据筛选。</li><li>多角色自演训练框架：同一策略网络在Generator和Solver间切换，共享权重，用GDPO处理多尺度奖励，比单一通过率的GRPO更稳定。借鉴到多智体协作优化时，可设计类似角色切换与奖励解耦训练，减少模式坍塌。</li><li>执行验证四阶段门控：格式→接地→执行→语义的四关验证保证任务可用且非平凡，可复用于任何依赖代码/工具执行的Agent微调数据构造pipeline。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：软件工程任务依赖真实仓库中的长程交互，高质量训练实例稀缺，现有合成方法通过固定规则注入bug，生成的分布与Agent的实际能力边界脱节，训练信号随模型提升而衰减。求解轨迹记录了Agent反复失败的位置、修复策略偏差和无效探索模式，但通常仅用于奖励信号抽取后即被丢弃。本文认为这些被丢弃的轨迹正是驱动课程进化的关键。</p>
+<p><strong>方法</strong>：提出Socratic-SWE闭环自演化框架，将历史求解轨迹蒸馏为结构化的Agent Skill Registry（包含名称、描述、适用条件、操作步骤）。Generator角色采样技能并约束生成仓库内修复任务，经过格式、接地、执行、语义四阶段执行验证过滤，再通过<strong>Solver‑Gradient Alignment 奖励</strong>：用held‑out验证集上Solver的策略梯度作为目标方向，计算候选任务梯度与其余弦相似度，优先选择更新方向与验证梯度对齐的任务。Solver则用GDPO对通过率、修复率、回归避免三项奖励进行组内归一化后联合优化。整个过程形成轨迹→技能→任务→轨迹的闭环。</p>
+<p><strong>关键结果</strong>：在Qwen3.5‑9B基座、3轮迭代、36k训练实例预算下，SWE‑bench Verified从42.60%提升到<strong>50.40%</strong>（+7.80），Lite 36.67%（+7.00），Pro 22.85%（+5.61），Terminal‑Bench 2.0 14.61%（+4.50），全面超越SSR、Socratic‑Zero等基线。消融实验表明移除Skill Registry掉4.20点，验证梯度对齐的作用。扩展至5轮后达到52.00%，比SSR晚两个迭代饱和且天花板更高。</p>
+<p><strong>核心洞见</strong>：求解轨迹是Agent自我演化的可规模化基底，将失败经验转化为结构化技能并驱动课程生成，比依赖静态bug模式的合成数据更可持续。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07412&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07412" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07412" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07412" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

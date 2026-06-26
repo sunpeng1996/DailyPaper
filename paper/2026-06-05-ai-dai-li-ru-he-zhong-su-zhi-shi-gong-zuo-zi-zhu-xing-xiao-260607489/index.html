@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="基于 Perplexity 生产数据，用匹配对自然实验证明代理将任务时间减少 87%、成本降低 94%，并扩展了工作广度与深度"><meta property="og:title" content="How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope"><meta property="og:description" content="基于 Perplexity 生产数据，用匹配对自然实验证明代理将任务时间减少 87%、成本降低 94%，并扩展了工作广度与深度"><meta property="og:type" content="website"><title>How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07489" target="_blank" rel="noopener">2606.07489</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope</h1> <p class="title-zh">AI 代理如何重塑知识工作：自主性、效率与范围</p> <div class="dir-row"> <span class="direction-chip">🧭 AI Agent 自主任务执行与效率分析</span> </div> <p class="affiliations">Harvard University · Perplexity</p> <div class="meta">Jeremy Yang, Kate Zyskowski, Noah Yonack, Jerry Ma</div> <p class="one-liner">基于 Perplexity 生产数据，用匹配对自然实验证明代理将任务时间减少 87%、成本降低 94%，并扩展了工作广度与深度</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/AI agents">AI agents</a><a class="tag" href="/DailyPaper/tag/knowledge work">knowledge work</a><a class="tag" href="/DailyPaper/tag/autonomy">autonomy</a><a class="tag" href="/DailyPaper/tag/efficiency">efficiency</a><a class="tag" href="/DailyPaper/tag/task scope">task scope</a><a class="tag" href="/DailyPaper/tag/natural experiment">natural experiment</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>任务路由决策：代理的高固定成本、低边际成本特性（f_Agent &gt; f_Conversational, m_Agent &lt; m_Conversational）可指导电商智能客服或 Agent 系统设计——对简单查询（如 FAQ）使用对话式，对多步复杂任务（如售后处理、跨系统操作）自动切换为代理执行，平衡体验与成本。</li><li>匹配对评估范式：利用同一用户提交近似查询到两个产品（相似度 &gt;0.99）作为自然实验，消除了任务和用户异质性，能干净地衡量新功能的增量价值。在推荐系统或 Agent 迭代中，可设计类似 A/B 测试，用近似上下文配对评估效果。</li><li>代理解锁新生需求：Computer 用户在代理模式下尝试了更多跨领域、高认知复杂度的任务，且 23% 的查询涉及全新任务类型。生成式推荐系统可借鉴此发现，在用户授权下，主动生成超出历史兴趣的商品或内容，扩大用户探索边界。</li><li>自主性与质量共存：代理的自动执行并未导致不满意率上升（反而降低 55%），验证了自主性不必然牺牲输出质量。对于多智体系统，可在编排设计中嵌入校验步骤，如自动复核、用户确认点，确保长链路任务可靠性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：AI 系统正从对话式助手向能端到端执行任务的自主代理演进，但缺乏大规模生产数据证明其对现实工作的影响。本文利用 Perplexity 的 Search（对话式）和 Computer（代理式）产品，研究这一转变如何改变知识工作的完成方式。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>构建个体级任务模型，假定代理固定委托成本更高、边际执行成本更低，推导出代理会扩展可负担任务边界、增加总价值和剩余。</li>
+<li>匹配对自然实验：从 100,000 双产品用户中抽取 10,000 对初始查询余弦相似度 >0.99 的会话，控制任务内容，对比自主性、效率和范围。</li>
+<li>自主性衡量：机器执行时间（Computer 记录工具调用墙钟时间）、跟进查询分类、用户不满意度信号。</li>
+<li>效率估计：工具推算、LLM 估算、用户访谈三角度量化 Search+Human 与 Computer+Human 的时间成本，人工时薪映射至 BLS 职业工资数据。</li>
+</ul>
+<p><strong>关键实验与结果</strong>：</p>
+<ul>
+<li>自主性：Computer 平均每会话自主工作 26 分钟，Search 仅 33 秒（48×），跟进查询从指令式转向验证/扩展；Computer 的中高不满意度率比 Search 低 55%（1.3% vs. 2.9%）。</li>
+<li>效率：匹配任务上，Search+Human 平均需 269 分钟，Computer+Human 仅需 36 分钟，时间节省 87%，成本节省 94%；盈亏平衡分析显示，人类若要匹配代理成本，需在 20 分钟内手动完成所有非检索步骤。</li>
+<li>范围扩展：横向，Computer 查询跨职业边界比例高出 9 pp；纵向，认知复杂度（高阶 Bloom 思维 76% vs. 55%）、知识广度（所需 O*NET 领域数 2.40 vs. 1.74）、任务复合度（单查询涉及详细工作活动数 +59%）均显著更高；23% 的 Computer 查询涉及用户 Search 历史中从未出现的新任务。</li>
+</ul>
+<p><strong>核心结论</strong>：自主代理通过自动化多步执行，大幅压缩知识工作的时间和成本，同时提升了输出质量，并引导用户涉足更复杂、更跨领域的工作，揭示了 AI 代理重塑工作结构的经济学证据。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07489&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07489" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07489" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07489" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

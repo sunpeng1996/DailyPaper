@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次指出SID早期静态提交是冷启动瓶颈，通过渐进式候选池构建、保守提交与多路径推理提升冷物品召回4-12倍"><meta property="og:title" content="DREAM: Dynamic Refinement of Early Assignment Mappings"><meta property="og:description" content="首次指出SID早期静态提交是冷启动瓶颈，通过渐进式候选池构建、保守提交与多路径推理提升冷物品召回4-12倍"><meta property="og:type" content="website"><title>DREAM: Dynamic Refinement of Early Assignment Mappings</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06947" target="_blank" rel="noopener">2606.06947</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DREAM: Dynamic Refinement of Early Assignment Mappings</h1> <p class="title-zh">DREAM：生成式推荐冷启动语义ID的动态渐进修正</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · Semantic ID冷启动优化</span> </div> <p class="affiliations">Kuaishou Technology</p> <div class="meta">Liwei Guan, Huanjie Wang, Hongwei Zhang, Linxun Chen, Zhaojie Liu</div> <p class="one-liner">首次指出SID早期静态提交是冷启动瓶颈，通过渐进式候选池构建、保守提交与多路径推理提升冷物品召回4-12倍</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/Cold-Start">Cold-Start</a><a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Item Tokenization">Item Tokenization</a><a class="tag" href="/DailyPaper/tag/Multi-Path Inference">Multi-Path Inference</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>渐进式 SID 修正思路：将 Semantic ID 从一次性固定变为可逐步修正的接口，冷启动物品在获得足够交互证据前不强制提交单一路径，可借鉴到电商生成式推荐 pipeline 中，避免新商品因初始 SID 偏差而长期不可达。</li><li>冷启动候选池生成（CART）：通过对比学习与反事实硬负例（CHN）构造行为对齐的候选 SID 池，可迁移至电商场景：为新商品预生成多个合理 SID，而非依赖单一的离线量化结果。</li><li>低成本保守提交策略（UC3）：利用冻结推荐模型评估候选 SID 的置信度加权投票，仅当支持度与边距均达标才更新主路径，否则回退至先验，这种无训练成本的评估机制可直接用于线上冷启动物品的 SID 安全切换。</li><li>多路径推理与冷温梯度隔离（CPDE）：通过 LoRA 隔离冷物品梯度（避免干扰温物品）、维持动态束并注册多路径到约束解码树，可显著提高冷物品被生成命中的概率，适合工业级生成式推荐系统实现冷温解耦优化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：基于 Semantic ID（SID）的生成式推荐将物品检索转化为自回归生成，但冷启动物品在交互稀疏时被离线 tokenizer 一次性指定一个静态 SID，一旦该路径在行为空间中不匹配，约束解码仅注册该单一路径，导致冷物品在训练和推理阶段几乎不可达。现有工作未同时解决<strong>无支持分配、过早提交、推理时单路径约束</strong>这三个耦合问题，冷启动失败根源在于“早期静态单路径提交”而非模型容量不足。</p>
+<p><strong>方法</strong>：DREAM 用一个三阶段的渐进式框架替代固定 SID 分配。</p>
+<ul>
+<li><strong>第一阶段 CART（协作感知 token 优化）</strong>：引入 collaborative alignment 损失和反事实硬负例（用 LLM 生成意图翻转描述，BM25 从目录检索真实负例），训练带有 diversity 正则的 Gumbel-Softmax 量器，为每个冷物品输出一个 top-K 候选 SID 池（K=8），主路径被更新为池内最优，修复 88% 冷物品的无支持分配。</li>
+<li><strong>第二阶段 UC3（用户条件候选压缩）</strong>：冻结推荐模型作为零成本评估器，对每个冷物品候选 SID 在多个用户上下文中计算 teacher-forced NLL，转换为置信度加权投票，仅当票数超过支持阈值且最高票与次高票差超过边距阈值时才提交新 SID，否则回退到 CART 先验，89.4% 的冷物品保持 CART 主路径。</li>
+<li><strong>第三阶段 CPDE（冷保留动态束演化）</strong>：在 LoRA 隔离冷物品梯度的同时，保留每个冷物品的前 B 个候选作为动态束，用 soft 多目标训练和动量 EMA 更新束权重，推理时注册所有束路径到约束解码 Trie，实现多路径恢复。</li>
+</ul>
+<p><strong>实验结果</strong>：在 Amazon Beauty、Sports、Toys 三个基准上，DREAM 在所有 18 项冷启动指标上大幅超越 SID 生成式基线（TIGER、LETTER、LC-Rec、SpecGR）及传统序列模型，提升幅度 4.3× 到 11.5×；整体指标保持竞争力，Sports 上全面最优。消融实验证实各阶段单调贡献，CART 单独带来冷指标数十倍提升，UC3 通过 gates 进一步精炼，CPDE 多路径推理比单路径额外恢复 30–40% 冷物品命中。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06947&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06947" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06947" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06947" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

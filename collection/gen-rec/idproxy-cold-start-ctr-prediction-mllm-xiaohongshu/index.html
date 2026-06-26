@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="小红书把多模态大模型（MLLM）的内容表征对齐到 CTR 模型已有的 item ID embedding 空间，生成&#34;代理 ID embedding&#34;（IDProxy），让冷启新 item 无交互数据也能直接顶替 ID embedding 进现有排序模型。核心是 coarse-to-fine 两阶段：先用对比学习把 MLLM 表征拟合到 ID embedding 分布，再用轻量 adaptor 抽 MLLM 多层 hidden state 端到端跟 CTR ranker 联合训练并复用其结构先验。已上线 Content Feed 与 Display Ads，新 note AUC 增益约为全局 2 倍。"><meta property="og:title" content="IDProxy: Cold-Start CTR Prediction for Ads and Recommendation at Xiaohongshu with Multimodal LLMs · 论文沉淀"><meta property="og:description" content="小红书把多模态大模型（MLLM）的内容表征对齐到 CTR 模型已有的 item ID embedding 空间，生成&#34;代理 ID embedding&#34;（IDProxy），让冷启新 item 无交互数据也能直接顶替 ID embedding 进现有排序模型。核心是 coarse-to-fine 两阶段：先用对比学习把 MLLM 表征拟合到 ID embedding 分布，再用轻量 adaptor 抽 MLLM 多层 hidden state 端到端跟 CTR ranker 联合训练并复用其结构先验。已上线 Content Feed 与 Display Ads，新 note AUC 增益约为全局 2 倍。"><meta property="og:type" content="website"><title>IDProxy: Cold-Start CTR Prediction for Ads and Recommendation at Xiaohongshu with Multimodal LLMs · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2026-03</time> <span class="sep">·</span><span>arXiv (under review)</span>  </div> <h1>IDProxy: Cold-Start CTR Prediction for Ads and Recommendation at Xiaohongshu with Multimodal LLMs</h1> <p class="archive-authors">Yubin Zhang, Haiming Xu, Guillaume Salha-Galvan, Ruiyan Han, et al. (9 人)</p> <p class="affiliations">Xiaohongshu Inc. × Shanghai Jiao Tong University × Fudan University</p> <p class="one-liner">小红书把多模态大模型（MLLM）的内容表征对齐到 CTR 模型已有的 item ID embedding 空间，生成&quot;代理 ID embedding&quot;（IDProxy），让冷启新 item 无交互数据也能直接顶替 ID embedding 进现有排序模型。核心是 coarse-to-fine 两阶段：先用对比学习把 MLLM 表征拟合到 ID embedding 分布，再用轻量 adaptor 抽 MLLM 多层 hidden state 端到端跟 CTR ranker 联合训练并复用其结构先验。已上线 Content Feed 与 Display Ads，新 note AUC 增益约为全局 2 倍。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">cold-start</span><span class="tag tag-static">CTR</span><span class="tag tag-static">multimodal-LLM</span><span class="tag tag-static">embedding-alignment</span><span class="tag tag-static">industrial</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>工业 CTR 模型严重依赖 <strong>item ID embedding</strong> 来捕获协同信号（collaborative signal），但新 item 没有足够交互历史，ID embedding 训练不充分——这就是 item cold-start 问题。小红书每天有海量新 note/广告必须即时分发，冷启尤其严重。</p>
+<p>已有的”用多模态内容补冷启”路线有两个工业落地痛点：</p>
+<ol>
+<li><strong>语义空间 ≠ 协同空间</strong>。多模态语义表征和 CTR 系统的协同 ID embedding 空间不匹配。论文用一张 t-SNE 图（Figure 1）说明：在 MovieLens 这类公开 benchmark 上 ID embedding 有清晰的按 genre 聚类结构，content→ID 对齐相对容易；但小红书生产环境的 ID embedding 因特征稀疏、交互模式复杂而呈现<strong>不规则、非聚类</strong>的分布，冻结的 content encoder 或浅层 MLP 映射根本架不起这座桥。</li>
+</ol>
+<p><img src="/ai-papers-daily/figures/idproxy-cold-start-ctr-prediction-mllm-xiaohongshu/fig1.png" alt="Figure 1：用 t-SNE 可视化 item ID embedding。左为 MovieLens-1M（SASRec + 特征交叉学到），按 genre 呈清晰聚类结构；右为小红书生产环境 ID embedding，呈不规则、非聚类分布——说明工业 ID 空间难以用浅层映射对齐。">
+2. <strong>要复用成熟架构、不能加部署成本</strong>。已有方法（QARM / MOON / SimTier&#x26;Maker 对齐共现结构；CB2CF / CLCRec / GoRec / GAR 直接 content→collaborative 映射）要么靠手工设计的对齐目标反复调，要么没充分利用排序模型本身的结构与分布先验，增益有限且部署复杂。而且 CTR 模型在线上持续演化，对着一个<strong>静态 target</strong>学，长期优化和稳定部署都成问题。</p>
+<p>IDProxy 的答案：用 MLLM 生成 <strong>proxy item embedding</strong> (p_i \in \mathbb{R}^d)，它被<strong>显式对齐到现有 item ID embedding 空间</strong>，并在 CTR 目标下与 ranker <strong>端到端联合优化</strong>，从而能直接”无缝顶替” (e_i) 进现有排序流水线，最大化复用已有 ID 知识和结构先验。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/idproxy-cold-start-ctr-prediction-mllm-xiaohongshu/fig2.png" alt="Figure 2：IDProxy 两阶段 coarse-to-fine 对齐框架总览（左侧为小红书 Explore Feed）。First Stage 用 MLLM（Vision Enc + Token Emb + connector）编码多模态内容，经 Align Loss 对齐到 item id embedding 得到 IDproxy_coarse；Second Stage 用层次表征划分（Hierarchical Rep Partitioning）+ 残差细粒度 Encoder 产出 IDproxy_fine，与 coarse 一起灌进 ranker 的 sequence modeling（Target Attention）与 feature interaction（Cross network）端到端联合训练。"></p>
+<p>两阶段 coarse-to-fine：</p>
+<ul>
+<li><strong>Stage 1（MLLM-based 粗对齐）</strong>：用 MLLM 把 item 的多模态内容（文本 + 图）编码成 content embedding，再投影到 ID embedding 空间，用<strong>对比学习</strong>拉近到该 item 真实 ID embedding、推远其他 item，得到粗代理 (p_i^{coarse})。这一步把 MLLM 表征”扳”进静态 ID embedding 分布。</li>
+<li><strong>Stage 2（CTR-aware 细对齐）</strong>：抽 MLLM 多个 transformer 层的 hidden state，用 k-means 分成浅/中/深三组，经一个<strong>轻量多粒度 adaptor</strong> 融合，加 residual gating 控制细粒度信号贡献，得到 (p_i^{fine})；把 (p_i^{coarse})、(p_i^{fine}) 灌进 ranker 的 feature interaction 与 target attention 模块，<strong>端到端跟 CTR loss 联合训练</strong>（MLLM 冻结），让代理 embedding 继承 ranker 演化中的结构先验。</li>
+</ul>
+<p>部署上：adaptor 离线训一次，连同 MLLM 打包成 IDProxy 生成服务；线上对每个新 item 实时算 coarse/fine 代理写进在线存储，排序系统按 ID 取用即可，不改 ranker 架构。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="stage-1mllm-粗代理生成">Stage 1：MLLM 粗代理生成</h3>
+<p><strong>ID embedding 预处理</strong>。设 (e_i^{raw} \in \mathbb{R}^d) 为线上 CTR 模型学到的 item ID embedding。两步清洗：</p>
+<ol>
+<li><strong>频次过滤</strong>：用阈值 (\tau) 滤掉更新次数 &#x3C; (\tau) 的 item，保证对齐 target 可靠（很多 item 交互极少）。</li>
+<li><strong>L2 归一化</strong>：embedding 模长往往跟 item 热度相关，做 (e_i = e_i^{raw} / |e_i^{raw}|_2) 去掉热度引入的 bias，稳定对齐学习。</li>
+</ol>
+<p><strong>MLLM 多模态编码</strong>。MLLM (M) 的输入 prompt：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[BOS]&#x3C;image>&#x3C;text>The compression word is:"[EMB]". [EOS]</span></span>
+<span class="line"><span></span></span></code></pre>
+<p><code>&#x3C;image></code>/<code>&#x3C;text></code> 替换成 item 内容，<code>[EMB]</code> 是用来”压缩”语义的特殊 token。取最后 token-level hidden state (H_i \in \mathbb{R}^{T \times D})，经基于 attention 的 token 聚合 (g(\cdot))（含 <code>[EMB]</code>）得到 content embedding (z_i = g(H_i) \in \mathbb{R}^D)。再用 MLP (\phi) 投影到 ID 空间并 L2 归一化：</p>
+<p>$$\tilde{h}_i = \phi(z_i) / |\phi(z_i)|_2 \in \mathbb{R}^d$$</p>
+<p><strong>Proxy Alignment Loss（对比目标）</strong>。mini-batch (B) 内，((\tilde{h}_i, e_i)) 为正对，((\tilde{h}<em>i, e_j)</em>{j\neq i}) 为 in-batch 负样本，温度 (\tau_c>0)：</p>
+<p>$$\mathcal{L}<em>{PAL} = -\frac{1}{|B|}\sum</em>{i\in B}\log\frac{\exp(\tilde{h}<em>i^\top e_i/\tau_c)}{\sum</em>{j\in B}\exp(\tilde{h}_i^\top e_j/\tau_c)}$$</p>
+<p>联合优化 (M) 与 (\phi)。收敛后定义粗代理 (p_i^{coarse} = \tilde{h}_i)。</p>
+<h3 id="stage-2ctr-aware-细对齐">Stage 2：CTR-aware 细对齐</h3>
+<p><strong>层次表征划分（Hierarchical Representation Partitioning）</strong>。从 Stage 1 训好的 MLLM（数十层）抽多层 hidden state，用 <strong>k-means</strong> 把层聚成三个子组 (l_{n1}, l_{n2}, l_{n3})（浅→深，平衡表征丰富度与学习效率），各组再过 Stage 1 的聚合 (g(\cdot))：</p>
+<p>$$z_i^{(l)} = g(H_i^{(l)}) \in \mathbb{R}^D, \quad l \in {l_{n1}, l_{n2}, l_{n3}}$$</p>
+<p><strong>轻量多粒度 adaptor + residual gating</strong>。三组拼接后过 MLP (\tilde{\phi})（参数远小于 MLLM 和 ranker）：</p>
+<p>$$p_i^{raw_fine} = \tilde{\phi}\big(\text{Concat}(z_i^{(l_{n1})}, z_i^{(l_{n2})}, z_i^{(l_{n3})})\big) \in \mathbb{R}^{\tilde{d}}$$</p>
+<p>为避免 (p_i^{raw_fine}) 与 (p_i^{coarse}) 信息冗余，加 residual gating 自适应控制细粒度信号贡献，鼓励学到超出 coarse 的信息：</p>
+<p>$$p_i^{fine} = W_c, p_i^{coarse} + r \odot p_i^{raw_fine}, \quad r = \sigma\big(W_g[p_i^{coarse}, p_i^{raw_fine}]\big)$$</p>
+<p><strong>端到端联合训练</strong>。把原本只有 item ID 和 (p_i^{coarse}) 的特征集，扩展加入 (p_i^{fine})，同时灌进 <strong>feature interaction</strong> 与 <strong>target attention</strong> 两个模块。CTR 预测：</p>
+<p>$$\hat{y}<em>{ui} = f</em>\theta(e_u, e_i, p_i^{coarse}, p_i^{fine}, x_{ui})$$</p>
+<p>标准交叉熵分类 loss：</p>
+<p>$$\mathcal{L}<em>{CTR} = -\frac{1}{|D|}\sum</em>{(u,i,x_{ui},y_{ui})\in D}\big[y_{ui}\log\hat{y}<em>{ui} + (1-y</em>{ui})\log(1-\hat{y}_{ui})\big]$$</p>
+<p>Stage 2 优化 adaptor (\tilde{\phi})、(W_g)、(W_c) 和 ranker (\theta)，<strong>MLLM 冻结</strong>。</p>
+<p><strong>部署</strong>。adaptor 离线训一次→参数与 MLLM 打包成 IDProxy 生成服务；每个新 item 实时算 coarse/fine 代理写在线存储，排序系统按 ID 取，无缝接入。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>设置</strong>。MLLM 用 <strong>InternVL</strong>；所有方法 AdamW，lr=1e-4，batch=512。Base 是小红书高度优化的生产 CTR 系统（复杂 ID 特征交叉 + 用户序列建模）。在线 A/B 跑在 Explore Feed：Content Feed（推 note，2025 年 8 月测）、Display Ads（投广告，2025 年 3 月测）。部分实现细节因保密省略。</p>
+<p><strong>Q1+Q2 离线 ΔAUC（相对 Base）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型变体</th><th>ID</th><th>ΔAUC</th></tr></thead><tbody><tr><td>Base（小红书生产基线）</td><td>-</td><td>0</td></tr><tr><td>Base + Notellm2-Like Embed（主流多模态 embed）</td><td>v1</td><td>+0.015%</td></tr><tr><td>Base + Static Vector（MLP mapping，CB2CF 风格）</td><td>v2</td><td>+0.02%</td></tr><tr><td>Base + IDProxy（Stage 1）</td><td>v3</td><td>+0.05%</td></tr><tr><td>Base + IDProxy（Stage 1+2，<strong>不复用结构</strong>）</td><td>v4</td><td>+0.08%</td></tr><tr><td>Base + IDProxy（Stage 1+2，完整）</td><td>v5</td><td><strong>+0.14%</strong></td></tr></tbody></table>
+<p>要点：v1（主流多模态 embed，类 NoteLLM2）和 v2（冻结 embed + MLP）因与 ID 分布失配只有微弱增益；v3 通过显式拟合 ID 分布 + MLLM 对齐已超过它们；v4 加端到端学习又涨；v5 把 IDProxy 灌进 ranker 的”原子 ID 槽位”复用其序列/特征交叉结构，达到 +0.14%——验证了让多模态特征<strong>继承 ID-based CTR 模型已训好的结构先验</strong>的价值。作者强调 ΔAUC 看似小，但在如此强的生产 Base 上已很有价值。</p>
+<p><strong>Q3 在线冷启（5 天 ΔAUC）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Day1</th><th>Day2</th><th>Day3</th><th>Day4</th><th>Day5</th></tr></thead><tbody><tr><td>Global Notes</td><td>+0.13%</td><td>+0.15%</td><td>+0.14%</td><td>+0.12%</td><td>+0.15%</td></tr><tr><td>New Notes（24h 内发布）</td><td>+0.24%</td><td>+0.32%</td><td>+0.23%</td><td>+0.27%</td><td>+0.31%</td></tr></tbody></table>
+<p>新 note 增益约为全局的 <strong>2 倍</strong>，证明 IDProxy 有效把语义迁移给了无交互历史的 item。</p>
+<p><strong>Q4 在线 A/B 业务指标</strong>（均在 1% 显著性水平显著）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>指标与增益</th></tr></thead><tbody><tr><td>Content Feed</td><td>Time Spent +0.22%，Reads(点击) +0.39%，Engagements +0.5%</td></tr><tr><td>Display Ads</td><td>Impression +1.28%，ADVV +1.93%，COST +1.73%，CTR +0.23%</td></tr></tbody></table>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>这篇做对了什么（对电商/搜推可借鉴）</strong>：</p>
+<ul>
+<li><strong>“代理 ID embedding”范式很务实</strong>。核心洞察是：不要去改 CTR 排序模型，而是把多模态表征”翻译”成 ranker 已经认识的 ID embedding 语言，从 ID 的”原子槽位”塞进去。这样冷启方案<strong>零改动复用</strong>整套成熟排序架构（target attention、cross network、序列建模），部署成本极低——这是工业落地能成的关键，比起另起炉灶的对齐目标更易推全量。</li>
+<li><strong>coarse-to-fine 解耦”对齐”与”任务”</strong>。Stage 1 只管把 MLLM 表征拉进 ID 分布（对比学习，静态 target），Stage 2 才在 CTR 目标下端到端精修并复用 ranker 演化结构。这种解耦回避了”对着持续演化的线上模型学静态 target”的不稳定问题，值得做生成式表征/Semantic ID 的团队参考。</li>
+<li><strong>多层 hidden state + k-means 分组</strong>。不只用 MLLM 最后一层，而是抽多层、按浅/中/深聚成三组多粒度融合，呼应”中间层语义更可迁移、有时深层反而该丢”的发现。这是一个轻量但有效的特征抽取技巧，可迁移到任何用 LLM/MLLM 做表征的下游任务。</li>
+<li><strong>两个工程细节值得抄</strong>：(1) 频次阈值 (\tau) 过滤低频 item 做对齐 target，保证 target 可靠；(2) L2 归一化去掉热度引入的模长 bias。这两点直接决定对齐质量。</li>
+</ul>
+<p><strong>局限 / 需要注意</strong>：</p>
+<ul>
+<li><strong>ΔAUC 绝对值很小</strong>（全量 +0.14%，全局在线 +0.12~0.15%），强 Base 下的真实增益主要体现在冷启子集和业务指标上，复现时需要在新 item 切片上单独评估，否则全局 AUC 容易”看不出来”。</li>
+<li><strong>保密导致不可完全复现</strong>。Base 架构、adaptor 维度 (\tilde{d})、(\tau)/(\tau_c) 具体取值、k-means 分组的层号、聚合 (g(\cdot)) 的 attention 细节均未给出，属于”思路可借鉴、参数需自调”。</li>
+<li><strong>residual gating 是否真去冗余、MLLM 推理成本</strong>（数十亿参数 MLLM 对每个新 item 跑一遍）等没有量化分析；论文靠”离线算一次写存储”绕过在线推理成本，但 MLLM 离线刷库的吞吐与新鲜度 trade-off 未讨论。</li>
+<li>论文仅 5 页（投稿中），消融较薄：没有对三层分组数量、是否需要 Stage 1 预热、对比温度等的 sensitivity 分析。</li>
+</ul>
+<p><strong>对 Agent/LLM4Rec 的启发</strong>：IDProxy 本质是”用大模型语义补结构化系统冷启”的通用模板——先把大模型表征对齐到下游系统已有的稠密空间，再端到端复用下游结构。这个”对齐到已有空间而非替换已有系统”的思路，对任何想把 LLM 接进成熟工业管线（推荐、广告、风控）的团队都有方法论价值。</p> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2603.01590" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

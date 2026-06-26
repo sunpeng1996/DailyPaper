@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过合成bug探测迭代优化仓库指南，使编码代理解决率提升4.7个百分点以上，增长源于覆盖扩大而非单一补丁精度提升"><meta property="og:title" content="Probe-and-Refine Tuning of Repository Guidance for Coding Agents"><meta property="og:description" content="通过合成bug探测迭代优化仓库指南，使编码代理解决率提升4.7个百分点以上，增长源于覆盖扩大而非单一补丁精度提升"><meta property="og:type" content="website"><title>Probe-and-Refine Tuning of Repository Guidance for Coding Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20512" target="_blank" rel="noopener">2606.20512</a>  </div> <h1>Probe-and-Refine Tuning of Repository Guidance for Coding Agents</h1> <p class="title-zh">编码代理仓库指南的探测-精炼调优</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 上下文指导自动优化</span> </div> <p class="affiliations">Williams College</p> <div class="meta">Asa Shepard, Jeannie Albrecht</div> <p class="one-liner">通过合成bug探测迭代优化仓库指南，使编码代理解决率提升4.7个百分点以上，增长源于覆盖扩大而非单一补丁精度提升</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/probe-and-refine">probe-and-refine</a><a class="tag" href="/DailyPaper/tag/repository guidance">repository guidance</a><a class="tag" href="/DailyPaper/tag/coding agent">coding agent</a><a class="tag" href="/DailyPaper/tag/LLM tuning">LLM tuning</a><a class="tag" href="/DailyPaper/tag/knowledge base">knowledge base</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>知识库迭代优化范式：借鉴 probe-and-refine 思路，在电商搜索、推荐等 Agent 系统中，通过自动生成探测任务（如合成搜索请求、推荐场景）诊断当前知识/指南的缺失，再用 LLM 自动生成补丁，实现领域知识的低成本持续优化。</li><li>提升覆盖率 &gt; 提升单点精度：实验表明性能提升来自让 Agent 触达正确信息源的比例增加，而非每次决策的准确率。在构建推荐/搜索 Agent 的上下文或工具描述时，更应关注覆盖哪些流程、边界条件，确保 Agent 能找到关键信息，而不是过度微调每一步的精准度。</li><li>轻量级调优，免于复杂 Agent 循环：调优过程仅使用单次 LLM 调用生成补丁，无需运行完整 Agent 流程，可大幅降低迭代成本。对于需要给 LLM Agent 配置系统指南、业务规则等文本的场景，可采用类似方法快速演进，无需复杂仿真环境。</li><li>步数预算与指导协同：更长的推理步骤只有在具备良好指导时才能正向收益。设计推荐/搜索 Agent 时，若允许动态步数，需同步提供高质量的上层指导，否则多余步数反而可能引入噪声或偏离任务。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM 编码代理需要代码之外的高层仓库知识（如哪些文件对应哪些子系统、如何运行测试、易错流程），工程师常维护 AGENTS.md 文件提供这类指导，但现有研究对其是否有效存在矛盾。核心问题转为<strong>如何生成有效的指导</strong>。</p>
+<p><strong>方法</strong>：提出 <strong>probe-and-refine 调优</strong>——用合成的 bug 修复探测任务，迭代诊断当前指导文件的不足，并通过单次 LLM 调用生成补丁来修正指导。调优过程不使用 agent 循环或工具，仅需少量 LLM 调用，初始化时利用静态知识库（如代码结构说明），随后逐步精炼。</p>
+<p><strong>关键结果</strong>：在 SWE-bench Verified 基准上，采用 Qwen3.5-35B-A3B 模型、200 步预算、四次独立试验，probe-and-refine 获得 <strong>33.0%</strong> 平均解决率，显著优于静态知识库的 28.3%（p&#x3C;0.001）和无指导基线的 25.5%。提升主要来自<strong>覆盖率</strong>：精炼后的指导使得 agent 能对多 14.5 个百分点的实例生成可评估补丁，但每个补丁的精度基本不变（约 59%，p=0.119），说明更好的指导帮助 agent <strong>到达正确文件</strong>而非改进修改质量。步数预算实验表明，更大的步数只有配合良好指导才能提高解决率；跨模型实验显示，当模型无法生成足够诊断性的输出时，调优环路会退化，但单补丁精度仍保持恒定。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20512&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20512" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20512" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20512" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

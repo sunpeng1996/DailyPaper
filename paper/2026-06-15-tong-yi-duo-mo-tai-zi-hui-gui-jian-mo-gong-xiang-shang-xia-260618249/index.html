@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用单一离散视觉分词器统一多模态理解与生成，实现自回归模型直接解读自身生成视觉token"><meta property="og:title" content="Unified Multimodal Autoregressive Modeling with Shared Context-Visual Tokenizer is Key to Unification"><meta property="og:description" content="用单一离散视觉分词器统一多模态理解与生成，实现自回归模型直接解读自身生成视觉token"><meta property="og:type" content="website"><title>Unified Multimodal Autoregressive Modeling with Shared Context-Visual Tokenizer is Key to Unification</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-06-15">2026-06-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.18249" target="_blank" rel="noopener">2606.18249</a>  </div> <h1>Unified Multimodal Autoregressive Modeling with Shared Context-Visual Tokenizer is Key to Unification</h1> <p class="title-zh">统一多模态自回归建模：共享上下文视觉分词器是关键</p> <div class="dir-row"> <span class="direction-chip">🧭 统一多模态自回归架构</span> </div> <p class="affiliations">Institute of Trustworthy Embodied AI, Fudan University · Shanghai Innovation Institute · Qwen Team, Alibaba Inc.</p> <div class="meta">Wujian Peng, Lingchen Meng, Yuxuan Cai, Xianwei Zhuang, Yuhuan Yang, Rongyao Fang 等</div> <p class="one-liner">用单一离散视觉分词器统一多模态理解与生成，实现自回归模型直接解读自身生成视觉token</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Unified Multimodal">Unified Multimodal</a><a class="tag" href="/DailyPaper/tag/Autoregressive">Autoregressive</a><a class="tag" href="/DailyPaper/tag/Discrete Visual Tokenizer">Discrete Visual Tokenizer</a><a class="tag" href="/DailyPaper/tag/Lookup-Free Quantization">Lookup-Free Quantization</a><a class="tag" href="/DailyPaper/tag/Diffusion Decoder">Diffusion Decoder</a><a class="tag" href="/DailyPaper/tag/Image Generation">Image Generation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>统一视觉分词器设计可借鉴至电商商品多模态表征：单一离散token同时支持识别和生成任务，减少多套编码器的维护成本，对商品图搜索、审核、生成等场景具有统一表征潜力。</li><li>Lookup-free比特量化（bitwise quantization）扩展视觉词汇量的同时保持低开销，类似Semantic ID的思想可用于商品视觉ID构建，将图像转为紧凑离散码，便于在大规模召回或生成式推荐中作为条件。</li><li>并行比特预测（parallel bitwise prediction）大幅缩短视觉序列长度，加速图像生成推理，对实时性要求高的商品图生成或虚拟试穿等场景有实用价值。</li><li>若业务中需构建统一的多模态对话/导购助手，共享context的架构能避免重复编码生成结果，降低延迟，值得在Agent设计时参考。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有统一多模态模型在视觉理解与生成任务上各自使用独立的视觉分词器，导致表征空间割裂，难以真正共享上下文——即模型无法直接解读自己生成的视觉内容，需额外重编码。</p>
+<p><strong>方法</strong>：提出UniAR自回归框架，核心是用单个离散视觉分词器充当理解与生成的桥梁。该分词器基于预训练视觉编码器，引入多层级特征融合和无查找表的比特量化（lookup-free bitwise quantization），在几乎不增加开销的前提下扩展有效词汇量，同时保留高层语义和底层细节。自回归模型通过<strong>并行比特预测</strong>联合生成空间分组的多层级视觉码，显著缩短视觉序列长度，提升生成速度。最终由扩散解码器将离散token重建为高保真图像。训练策略包括大规模预训练、有监督微调和强化学习。</p>
+<p><strong>结果</strong>：在图像生成和图像编辑任务上达到SOTA，同时在多模态理解基准上保持竞争力，证明单一离散分词器能有效支撑视觉理解与生成的双向能力。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.18249&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.18249" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.18249" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.18249" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

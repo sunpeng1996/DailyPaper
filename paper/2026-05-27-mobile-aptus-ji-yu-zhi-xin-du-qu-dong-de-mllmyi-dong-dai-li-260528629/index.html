@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出通用置信度集成框架，结合有监督微调与基于语义相似检索和DPO的置信度偏差校正，同时缓解移动代理的过度执行和过度请求问题"><meta property="og:title" content="Mobile-Aptus: Confidence-Driven Proactive and Robust Interaction in MLLM-based Mobile-Using Agents"><meta property="og:description" content="提出通用置信度集成框架，结合有监督微调与基于语义相似检索和DPO的置信度偏差校正，同时缓解移动代理的过度执行和过度请求问题"><meta property="og:type" content="website"><title>Mobile-Aptus: Confidence-Driven Proactive and Robust Interaction in MLLM-based Mobile-Using Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.28629" target="_blank" rel="noopener">2605.28629</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Mobile-Aptus: Confidence-Driven Proactive and Robust Interaction in MLLM-based Mobile-Using Agents</h1> <p class="title-zh">Mobile-Aptus：基于置信度驱动的MLLM移动代理主动鲁棒交互框架</p> <div class="dir-row"> <span class="direction-chip">🧭 移动代理 · 置信度驱动交互</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Meta (GenAI)</p> <div class="meta">Zheng Wu, Pengzhou Cheng, Zongru Wu, Yuan Guo, Tianjie Ju, Aston Zhang 等</div> <p class="one-liner">提出通用置信度集成框架，结合有监督微调与基于语义相似检索和DPO的置信度偏差校正，同时缓解移动代理的过度执行和过度请求问题</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Mobile Agent">Mobile Agent</a><a class="tag" href="/DailyPaper/tag/Confidence Calibration">Confidence Calibration</a><a class="tag" href="/DailyPaper/tag/Human-Agent Interaction">Human-Agent Interaction</a><a class="tag" href="/DailyPaper/tag/DPO">DPO</a><a class="tag" href="/DailyPaper/tag/Multimodal LLM">Multimodal LLM</a><a class="tag" href="/DailyPaper/tag/Over-soliciting">Over-soliciting</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>可借鉴如何通过置信度分数让 agent 自主判断何时请求人工介入，避免因模型能力边界不清晰导致盲目执行或频繁打扰，适合电商售后、Agent 助理等场景，可复用 confidence-aware 的输出结构设计。</li><li>提出的两阶段训练流程（先 SFT 赋予置信度生成能力，再通过语义相似检索构建 DPO 对进行偏差校正）具有通用性，可直接迁移到推荐对话交互或生成式推荐中需要模型自省置信度的任务，提升模型自我评估的准确性。</li><li>在构建 DPO 正负例时，仅针对模型置信度预测错误的样本并利用语义相似度检索 top-k 相关样本构造对比对，能高效利用数据，避免全量标注；该数据增强 trick 可用于其他需要置信度校准的指令微调场景。</li><li>实验表明，用多智能体系统替代人工介入可在不牺牲任务成功率的前提下减少打断次数（TASK成功率提升32.91%，平均额外延迟仅0.56s），这为电商业务流程中人类介入环节的自动化提供了可行架构：部署一个云端多智体系统，在本地 agent 不确定时接管步骤。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：<br>
+全自动移动代理（如 GUI 操作）常因模型能力边界模糊而<strong>过度执行</strong>（over-execution），在应请求帮助时强行操作；现有交互式代理虽能请求人类干预，但又频繁<strong>过度请求</strong>（over-soliciting），造成不必要的打扰。这两个矛盾尚未被统一解决。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出<strong>通用置信度集成框架</strong>，分两阶段训练：自适应交互集成阶段和置信度偏差校正阶段。</li>
+<li><strong>第一阶段</strong>：利用 OS-Kairos 数据集中的置信度标注（对 OS-Atlas-Pro-7B 标注每个动作的置信度分数 1-5），通过有监督微调（SFT）使代理在预测动作的同时输出该动作的置信度分数，且不损害原有动作生成能力；训练目标为联合概率分解的下一 token 预测损失。</li>
+<li><strong>第二阶段</strong>：针对过度请求，设计<strong>基于语义相似检索的 DPO 置信度偏差校正</strong>。仅对置信度预测错误的样本，用文本和视觉编码器计算输入相似度，检索 top-k 最相似样本；当相似样本的置信度仍错误时，构造真值（ground-truth action+confidence）为 chosen，模型错误预测为 rejected；若相似样本置信度正确，则人为生成最远离真值的错误分数作为 rejected，形成 DPO 三元组进行偏好优化，鼓励模型在合适的时机才请求干预。</li>
+<li>最终模型 Mobile-Aptus 依据用户设定的干预阈值γ，灵活决定是否执行动作或请求干预。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 OS-Kairos、AITZ、Meta-GUI、AndroidControl 四个基准上，Mobile-Aptus 平均任务成功率（TSR）比最强基线提升<strong>17.47%</strong>，其中 OS-Kairos 上 TSR 达 68.32%（全自动 OS-Atlas 为 14.29%）。</li>
+<li>与交互式基线 OS-Kairos 相比，干预精度（IP）从 70.75% 提升到 84.83%，平均干预步数（AIF）从 1.59 降至 1.06，显著缓解过度请求。</li>
+<li>动态真机评估中，Mobile-Aptus 比 OS-Kairos 相对效率（RE）提升 6.67%，AIF 降低 0.32。</li>
+<li>用多智能体系统（GPT-4o）替代人工介入时，TSR 仍可提升 32.91%，且仅增加 0.56 秒延迟。</li>
+<li>消融实验验证了检索和 DPO 的贡献：仅 SFT 时 IP 71% 且 AIF 高，加入检索+DPO 后 IP 升至 84.83%，过度请求减半。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：通过让代理学会生成置信度并用语义相似检索+DPO 精调置信度判断，可同时解决“乱执行”和“乱求助”问题，为实际部署中的人机协作提供实用范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.28629&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.28629" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.28629" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.28629" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

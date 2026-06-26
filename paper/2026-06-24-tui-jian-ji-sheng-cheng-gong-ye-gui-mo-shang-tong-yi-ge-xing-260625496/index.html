@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 RaG 范式，以解耦语义 ID 连接生成式推荐与多智能体视频生成，在快手广告场景实现闭环优化并获得广告收入提升"><meta property="og:title" content="Recommendation as Generation: Unifying Personalized Video Generation and Recommendation at Industrial Scale"><meta property="og:description" content="提出 RaG 范式，以解耦语义 ID 连接生成式推荐与多智能体视频生成，在快手广告场景实现闭环优化并获得广告收入提升"><meta property="og:type" content="website"><title>Recommendation as Generation: Unifying Personalized Video Generation and Recommendation at Industrial Scale</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-24">2026-06-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.25496" target="_blank" rel="noopener">2606.25496</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Recommendation as Generation: Unifying Personalized Video Generation and Recommendation at Industrial Scale</h1> <p class="title-zh">推荐即生成：工业规模上统一个性化视频生成与推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · Semantic ID · 多智能体视频生成</span> </div> <p class="affiliations">Kuaishou Technology · Beihang University</p> <div class="meta">Yanhua Cheng, Bo Wang, Haotian Zhang, Xinyuan Gao, Zhihui Yin, Ben Xue 等</div> <p class="one-liner">提出 RaG 范式，以解耦语义 ID 连接生成式推荐与多智能体视频生成，在快手广告场景实现闭环优化并获得广告收入提升</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/GenRec">GenRec</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/Video Generation Agents">Video Generation Agents</a><a class="tag" href="/DailyPaper/tag/Reward Learning">Reward Learning</a><a class="tag" href="/DailyPaper/tag/Industrial Scale">Industrial Scale</a><a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>解耦语义 ID 作为推荐与生成的统一接口：将视频表征拆解为内容语义与创意风格两部分 ID，既用于用户兴趣建模，又直接驱动下游视频生成。电商推荐中，同样可以设计分离的语义码本，分别控制商品推荐逻辑与展示素材风格，实现从“选品”到“创品”的链路打通。</li><li>多智能体分层视频生成架构：用三个角色特化的 Agent（视觉规划、音频对齐、效果增强）顺序执行，共享一个 LLM 骨干并重用 KV-cache。在电商广告素材自动生成中，可借鉴 Agent 协作流程和 append-only 状态序列化的 KV-cache 复用，降低大批量素材生成的推理延迟。</li><li>带约束的多目标奖励优化（GDPO + PID Lagrangian）：将用户反馈作为主目标，内容对齐与视频质量作为约束，通过组内奖励归一化和 PID 控制的拉格朗日乘子更新，稳定优化三个异构奖励信号。适合多目标推荐场景，如在优化点击率时控制素材质量与相关性阈值。</li><li>近线生成 + 缓存策略解耦实时推理：视频生成延迟高，通过 SID 索引缓存已生成视频，在缓存命中时几乎零延迟返回，未命中时用最近邻视频占位并异步补全。对于个性化落地页、动态广告素材等非实时性要求稍低的场景，可采用“近线生成 + 分层缓存”架构，平衡生成质量与响应时间。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+传统推荐受限于固定素材池，当用户兴趣长尾或动态变化时，只能“搜已有”，无法“造所需”。短视频平台这类问题尤其突出。近期视频生成能力爆发，但直接将大模型接入推荐系统面临两大鸿沟：一是推荐模型处理离散行为数据，而生成模型需要连续多模态信号，难以贯通；二是面向数亿用户的个性化生图、生视频成本极高，工业部署不现实。RaG 正是要解决这两个问题，将推荐范式从“检索已有”推向“生成所需”。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>解耦语义编码 (D‑SIDs)</strong>：用多模态大模型编码视频，分离出内容语义（实体、话题）和创意风格（节奏、氛围），再经残差量化得到离散的 content SIDs 与 creative SIDs，形成推荐与生成共享的语义接口。</li>
+<li><strong>生成式推荐 (GRM)</strong>：基于用户画像与行为序列，自回归预测 future D‑SIDs，不再将 ID 用于检索，而是作为生成式兴趣表达直接进入内容生产。</li>
+<li><strong>指令模型 (IM)</strong>：将预测的 D‑SIDs 翻译成镜头级制作指令（场景、运镜、节奏等），用 Gemini 2.5 Pro 蒸馏的监督数据微调 Qwen3-8B，通过三阶段训练（投影对齐→全参微调→RL）提升指令质量。</li>
+<li><strong>视频生成智能体 (VGAs)</strong>：三个 Agent 共享一个 Qwen2.5-32B 骨干，通过不同角色 prompt 和注意力掩码区分功能，顺序执行视觉规划→音频对齐→艺术特效，并基于 append-only 状态实现 KV-cache 复用，将单次推理延迟大幅压缩；同时引入两轮反思迭代提升跨模态一致性。</li>
+<li><strong>跨域协同奖励学习 (SCRL)</strong>：以用户反馈（点击、转化）为主目标，内容对齐与视频质量作为约束，用 GDPO 做组内奖励解耦归一化，采用 PID 控制的拉格朗日乘子动态调节约束强度，避免多目标训练震荡。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>在线 A/B 实验：在快手广告平台 4 亿+日活用户上，RaG 相比生产级 DLRM 基线广告收入提升 <strong>+5.462%</strong>，相比强 GRM 基线再提升 <strong>+1.870%</strong>，直接来自个性化视频生成。</li>
+<li>D‑SIDs 的 R@1 比最强多模态基线 <strong>+16.5%</strong>，压缩误差 <strong>-10.5%</strong>，碰撞率 <strong>15.6pp</strong> 更低。</li>
+<li>VGAs 对比手工作坊式工作流：自动评分均分提升 <strong>+14.3%</strong>，中位数提升 <strong>+22.6%</strong>，自动胜率 <strong>+41.4pp</strong>，用户研究胜率 <strong>+18.5pp</strong>。</li>
+<li>奖励消融：各质量子奖励独立提升胜率 18.6~24.0pp，联合优化提升 18.7pp；加兴趣对齐奖励后，对齐分数从 0.707 提升至 0.828。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.25496&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.25496" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.25496" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.25496" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

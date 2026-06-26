@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多模态技能包（状态卡片+关键帧+文本过程），并通过分支加载机制提升视觉Agent决策。"><meta property="og:title" content="MMSkills: Towards Multimodal Skills for General Visual Agents"><meta property="og:description" content="提出多模态技能包（状态卡片+关键帧+文本过程），并通过分支加载机制提升视觉Agent决策。"><meta property="og:type" content="website"><title>MMSkills: Towards Multimodal Skills for General Visual Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-13">2026-05-13</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.13527" target="_blank" rel="noopener">2605.13527</a>  </div> <h1>MMSkills: Towards Multimodal Skills for General Visual Agents</h1> <p class="title-zh">MMSkills：面向通用视觉智能体的多模态技能框架</p> <div class="dir-row"> <span class="direction-chip">🧭 视觉智能体 · 多模态技能复用</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Xiaohongshu Inc. · Southeast University</p> <div class="meta">Kangning Zhang, Shuai Shao, Qingyao Li, Jianghao Lin, Lingyue Fu, Shijian Wang 等</div> <p class="one-liner">提出多模态技能包（状态卡片+关键帧+文本过程），并通过分支加载机制提升视觉Agent决策。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Agents">Multimodal Agents</a><a class="tag" href="/DailyPaper/tag/Skill Reuse">Skill Reuse</a><a class="tag" href="/DailyPaper/tag/GUI Navigation">GUI Navigation</a><a class="tag" href="/DailyPaper/tag/Visual Grounding">Visual Grounding</a><a class="tag" href="/DailyPaper/tag/Procedural Knowledge">Procedural Knowledge</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>可借鉴多模态技能包构建方式：将电商操作流程（如商品搜索、下单）封装为文本过程+关键状态截图+状态描述卡片，减少Agent推理时的图像上下文开销。</li><li>利用非评测的用户交互轨迹（如公开的购物会话）自动生成可复用技能库，通过工作流分组和视觉接地减少人工标注成本。</li><li>分支加载机制可集成到电商Agent中：在临时上下文里对比当前界面与技能包中的关键帧，对齐状态后才给出操作建议，避免直接参考静态截图导致的过锚定。</li><li>多模态过程知识对外部技能库的补充思路，可推广到生成式推荐中的多模态用户意图理解，用类似状态卡片描述用户当前搜索上下文。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有Agent技能的复用主要依赖文本或代码，而视觉任务中的过程知识天然要求多模态——不仅要知道执行什么操作，还要识别界面状态、判断进展与失败条件。因此需要一种多模态技能包，并解决三个问题：(I) 包内应包含什么内容；(II) 从何处获取；(III) 推理时如何高效运用多模态证据而不引入过多图像上下文或过拟合参考截图。</p>
+<p><strong>方法</strong>：提出MMSkills框架。技能包为紧凑的状态条件化结构，将文本过程与运行时状态卡片、多视角关键帧耦合。利用公开的非评测交互轨迹，通过工作流分组、过程归纳、视觉接地和元技能引导审核，自动生成可复用的多模态技能。使用时，引入分支加载机制：在临时分支中检查选定的状态卡片和关键帧，与实时环境对齐，提炼为结构化指导注入主Agent。</p>
+<p><strong>结果</strong>：在GUI操作与游戏两类视觉Agent基准上，MMSkills均带来一致的性能提升，无论是前沿大模型还是较小规模的多模态模型均受益，表明外部多模态过程知识能有效补充模型内部先验。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.13527&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.13527" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.13527" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.13527" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

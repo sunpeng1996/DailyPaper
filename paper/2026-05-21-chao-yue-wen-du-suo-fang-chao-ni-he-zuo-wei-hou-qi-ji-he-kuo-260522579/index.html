@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="揭示超拟合通过动态排序重排而非分布锐化提升生成多样性，并仅微调最后 5 层即可复现该效果"><meta property="og:title" content="Beyond Temperature: Hyperfitting as a Late-Stage Geometric Expansion"><meta property="og:description" content="揭示超拟合通过动态排序重排而非分布锐化提升生成多样性，并仅微调最后 5 层即可复现该效果"><meta property="og:type" content="website"><title>Beyond Temperature: Hyperfitting as a Late-Stage Geometric Expansion</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22579" target="_blank" rel="noopener">2605.22579</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Beyond Temperature: Hyperfitting as a Late-Stage Geometric Expansion</h1> <p class="title-zh">超越温度缩放：超拟合作为后期几何扩展</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 微调 · 生成多样性 · 机制分析</span> </div> <p class="affiliations">Department of Statistics, LMU Munich · School of Computer and Information Engineering, Henan University · Munich Center for Machine Learning (MCML)</p> <div class="meta">Meimingwei Li, Yuanhao Ding, Esteban Garces Arias, Christian Heumann</div> <p class="one-liner">揭示超拟合通过动态排序重排而非分布锐化提升生成多样性，并仅微调最后 5 层即可复现该效果</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Hyperfitting">Hyperfitting</a><a class="tag" href="/DailyPaper/tag/Rank Reordering">Rank Reordering</a><a class="tag" href="/DailyPaper/tag/Late-Stage LoRA">Late-Stage LoRA</a><a class="tag" href="/DailyPaper/tag/Token Diversity">Token Diversity</a><a class="tag" href="/DailyPaper/tag/Greedy Decoding">Greedy Decoding</a><a class="tag" href="/DailyPaper/tag/Mechanistic Interpretability">Mechanistic Interpretability</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>终端层高效微调：Late-Stage LoRA 仅更新最后 5 层就能复现完整超拟合带来的多样性提升，在 1.5B-2B 模型上减少约 78-83% 训练参数，大幅节省 GPU 小时，可快速迁移到电商对话或商品文案生成。</li><li>过拟合亦可有益：在极小数据集（2000 条）上训练到近零损失，反而增强了贪婪解码的词汇多样性与连贯性，这提示我们在数据稀缺场景（如特定品类描述）可主动推进过度拟合以打破重复模式，而非提前停止。</li><li>确定性解码的多样性诊断：通过跟踪 token 的来源排名分布（Top-1 一致率、深层尾 token 提升比例）和最终层有效维度变化（∆Dim ≈ +80），可量化模型是否学到真正的“排序重排”，避免仅依赖困惑度等指标误导，可用于监控推荐文案生成质量。</li><li>上下文感知的多样性提升：静态偏置注入实验表明，超拟合不是全局词汇偏置，而是动态、语境相关的排序改变。这暗示在电商推荐中，若想生成多样化的商品描述，应避免简单规则（如禁止重复 n-gram），而应通过微调让模型在不同上下文中自主决定何时使用高频词或长尾词。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+语言模型在贪婪解码时普遍陷入重复循环，近期发现“超拟合”（在极小数据集上训练到近零损失）反而能显著提升词汇多样性（TTR）并降低重复率，但其机制未明。一个直接假设是它等价于降低解码温度（分布锐化），但若如此则不能解释为什么相同熵水平下多样性仍大幅领先。本文旨在 1) 证伪温度缩放假设，2) 揭示真正的机制——排序重排与几何扩展，3) 利用发现提出更高效的微调策略。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>严格对照实验</strong>：熵匹配实验——找到温度 T≈0.59 使原模型输出熵与超拟合模型相同，对比 TTR、重复率。</li>
+<li><strong>排序分析</strong>：跟踪超拟合模型每次 greedy decode 的 Top‑1 token 在原模型中的原始排名，观察来自深层尾巴（Rank>10）的比例。</li>
+<li><strong>静态偏置消融</strong>：抽取超拟合模型中提升最大的 500 个 token 的平均 logit 偏移，注入原模型，验证是否为全局偏置。</li>
+<li><strong>层间机制定位</strong>：逐层计算余弦相似度、L2 距离、参与比率（有效维度），定位“终端扩展”现象。</li>
+<li><strong>Late-Stage LoRA</strong>：基于发现仅将 LoRA adapter 加在最后 5 层，冻结其余部分，复现超拟合效果。</li>
+</ul>
+<p><strong>关键实验与结果</strong></p>
+<ul>
+<li>在 TinyLlama-1.1B 上，超拟合后 TTR 从 0.40 升至 0.68，而熵匹配的温度缩放模型 TTR 仅 0.40，且 bigram 重复率 0.60（超拟合仅 0.14），证明非简单锐化。</li>
+<li>超拟合后 39.1% 的生成 token 来自原排序非 Top‑1，其中 12.9% 来自 Rank>10 的深层尾 token，温度缩放无法做到。</li>
+<li>静态偏置注入在任意 α 下均恶化重复和多样性，说明排序重排是动态、上下文依赖的。</li>
+<li>层间分析发现最终 transformer 块（Layer 22）L2 距离由 21 层的 22.0 跳升至 81.6，有效维度扩张 ∆Dim≈+80.8，前期层几乎不变。</li>
+<li>Late-Stage LoRA 在 TinyLlama 上 Top‑1 一致率 0.517（Full LoRA 0.523），bigram 重复率 0.345；在更深的 Qwen2.5-1.5B 上甚至超越 Full LoRA（TTR 0.591 vs 0.575，重复率 0.213 vs 0.248），且 LLM-as-Judge 评估显示连贯性提升 16.1 个百分点。</li>
+</ul>
+<p><strong>值得记住的一句话</strong><br>
+超拟合并非简单增加信心，而是通过最终层约 +80 维的几何扩展，动态地将深层尾候选 token 提升到 Top‑1，仅需微调最后 5 层就能以极低成本复现这一效应。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22579&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22579" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22579" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22579" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

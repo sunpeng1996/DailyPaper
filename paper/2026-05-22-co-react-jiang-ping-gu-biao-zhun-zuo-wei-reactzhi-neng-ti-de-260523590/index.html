@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="训练一个基于评分标准的生成器，以步骤级方式指导ReAct智能体的搜索决策，并通过列表式GRPO优化与专家排名的一致性，显著提升深度研究任务性能。"><meta property="og:title" content="Co-ReAct: Rubrics as Step-Level Collaborators for ReAct Agents"><meta property="og:description" content="训练一个基于评分标准的生成器，以步骤级方式指导ReAct智能体的搜索决策，并通过列表式GRPO优化与专家排名的一致性，显著提升深度研究任务性能。"><meta property="og:type" content="website"><title>Co-ReAct: Rubrics as Step-Level Collaborators for ReAct Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23590" target="_blank" rel="noopener">2605.23590</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Co-ReAct: Rubrics as Step-Level Collaborators for ReAct Agents</h1> <p class="title-zh">Co-ReAct：将评估标准作为ReAct智能体的步骤级协作者</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 步骤级评估标准引导</span> </div> <p class="affiliations">Qwen Applications Business Group of Alibaba · Tsinghua University</p> <div class="meta">Jiazheng Kang, Bowen Zhang, Zixin Song, Jiangwang Chen, Xiao Yang, Da Zhu 等</div> <p class="one-liner">训练一个基于评分标准的生成器，以步骤级方式指导ReAct智能体的搜索决策，并通过列表式GRPO优化与专家排名的一致性，显著提升深度研究任务性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Rubric">Rubric</a><a class="tag" href="/DailyPaper/tag/ReAct">ReAct</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Listwise Ranking">Listwise Ranking</a><a class="tag" href="/DailyPaper/tag/Step-level Guidance">Step-level Guidance</a><a class="tag" href="/DailyPaper/tag/Agentic Search">Agentic Search</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商搜索Agent构建中，可引入步骤级评分标准（rubric）明确每步目标（如“需覆盖2023-2025年新品”、“指定英文源”），提升信息收集的精准度与全面性。</li><li>训练一个轻量评判标准生成器，用列表式RL微调使其输出具有甄别力的准则，可作为即插即用组件注入现有ReAct、Best-of-N等方案，平均提升1-15%性能且无需改动原有决策机制。</li><li>注入+验证+重试机制：动作执行前用生成的标准进行校验，未达标则带反馈重试，此模式可有效降低错误动作率，适用于推荐系统的分步式查询扩展或多轮决策。</li><li>排名对齐的列表式奖励设计（Spearman相关系数）对生成式推荐中Semantic ID排序、候选动作评估等场景有借鉴意义，用全局排名代替逐对偏好能提供更丰富的梯度信号。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：ReAct风格的多步搜索智能体主要依赖自身判断决定搜索什么、何时停止，常产生冗余浅层的轨迹，缺乏外部步骤级质量信号。先前工作将评估标准（rubric）作为训练奖励或事后评估器，是评估性的而非动作指导性的。Co-ReAct重新定位评估标准为推理时步骤级动作选择信号，以解决深度研究中搜索决策不精准的问题。</p>
+<p><strong>方法</strong>：1) 偏好数据采集：从真实ReAct轨迹的分支点采样候选动作，由多模型专家（Claude、Gemini、GPT）进行列表式排名并聚合为共识排序，用于监督。2) 评估标准生成器训练：基于Qwen3-14B，使用GRPO优化，奖励为生成的标准诱导的动作排名与专家排名的斯皮尔曼等级相关系数，使用列表式而非成对比较，鼓励标准具有区分力而非仅表面合理。3) 推理流程：采用注入-验证-重试五元组（Rubric, Reason, Act, Verify, Observe）。每步先由生成器产生条件化的评估标准并注入上下文；动作提出后由独立验证器对照标准检查，若未通过则带反馈重试一次，从而纠正错误动作。</p>
+<p><strong>关键结果</strong>：在DeepResearchBench和SQA-CS-V2上，Co-ReAct在Qwen3-8B/14B上与Self-Refine、Best-of-N、Step-Back、CRITIC对比，8B模型上改善约0.9%，14B模型上改善显著（DRB +7.9%，SQA +4.6%）。消融实验表明列表式训练、RL优化和验证三者必不可少；未训练的评估标准甚至损害性能。评估标准生成器可作为即插即用组件改进Best-of-N、Step-Back等基线（最高+14.8%）。Co-ReAct显著增加了检索文档量和引用来源（+66%），且利用率最高。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23590&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23590" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23590" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23590" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

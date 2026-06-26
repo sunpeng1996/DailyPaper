@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用学习到的句子间注意力构建二叉分块树，实现无外部LLM调用的多粒度层次检索，平均信息效率提升6.1%"><meta property="og:title" content="SproutRAG: Attention-Guided Tree Search with Progressive Embeddings for Long-Document RAG"><meta property="og:description" content="利用学习到的句子间注意力构建二叉分块树，实现无外部LLM调用的多粒度层次检索，平均信息效率提升6.1%"><meta property="og:type" content="website"><title>SproutRAG: Attention-Guided Tree Search with Progressive Embeddings for Long-Document RAG</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-06-16">2026-06-16</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.18381" target="_blank" rel="noopener">2606.18381</a>  </div> <h1>SproutRAG: Attention-Guided Tree Search with Progressive Embeddings for Long-Document RAG</h1> <p class="title-zh">SproutRAG：注意力引导的树搜索与渐进式嵌入用于长文档RAG</p> <div class="dir-row"> <span class="direction-chip">🧭 RAG长文档检索 · 层级树状检索</span> </div> <p class="affiliations">University of British Columbia · ServiceNow Research</p> <div class="meta">Amirhossein Abaskohi, Issam H. Laradji, Peter West, Giuseppe Carenini</div> <p class="one-liner">利用学习到的句子间注意力构建二叉分块树，实现无外部LLM调用的多粒度层次检索，平均信息效率提升6.1%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RAG">RAG</a><a class="tag" href="/DailyPaper/tag/Hierarchical Retrieval">Hierarchical Retrieval</a><a class="tag" href="/DailyPaper/tag/Attention-Guided Chunking">Attention-Guided Chunking</a><a class="tag" href="/DailyPaper/tag/Tree Search">Tree Search</a><a class="tag" href="/DailyPaper/tag/Multi-Granularity">Multi-Granularity</a><a class="tag" href="/DailyPaper/tag/End-to-End Training">End-to-End Training</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对于电商RAG场景（如长商品描述、用户评论聚合），可借鉴其基于句子级注意力自动构建语义树的方法，替代昂贵的LLM分块，降低索引延迟和成本。</li><li>多粒度beam search在召回侧能同时捕捉细节与上下文，可应用于广告文案生成中的多尺度信息检索，提升信息覆盖度。</li><li>端到端联合训练embedding与树结构的思想，可迁移到推荐系统的层级user/item表征学习，如构建多粒度的Semantic ID树，提升检索效率与效果。</li><li>注意力头选择的机制暗示了在特定领域（如商品属性）可预先分析哪些注意力模式更有效，定制化剪枝或微调，避免重复推理。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有RAG方法在长文档检索中面临粒度与连贯性的权衡，要么依赖昂贵的LLM进行分块或摘要，要么仅使用单一粒度扩展，造成信息丢失或成本增加。</p>
+<p><strong>方法</strong>：SproutRAG提出一种端到端的层次化框架。首先，利用预训练语言模型的句子间注意力，学习哪些注意力头与层最能捕捉语义结构，据此构建二叉分块树，将句子级片段自底向上聚合成逐渐增大的语义连贯单元，整个过程无需额外LLM调用。检索时，采用层次化束搜索，在多个粒度上召回候选，捕获跨句子的相关性。框架联合优化嵌入表示与树结构。</p>
+<p><strong>结果</strong>：在四个涵盖科学、法律、开放领域的数据集上，SproutRAG的信息效率(IE)比最强基线平均提升6.1%。相比依赖LLM分块或单粒度扩展的基线，该方法在检索质量与计算开销间取得更好平衡。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.18381&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.18381" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.18381" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.18381" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用一个共享编码器同时生成推荐用的语义ID和搜索用的自然语言Query，并通过对比对齐弥补语义鸿沟"><meta property="og:title" content="OneFeed: A Unified Generative Framework for Feed ContentEnhancement and Query Generation"><meta property="og:description" content="用一个共享编码器同时生成推荐用的语义ID和搜索用的自然语言Query，并通过对比对齐弥补语义鸿沟"><meta property="og:type" content="website"><title>OneFeed: A Unified Generative Framework for Feed ContentEnhancement and Query Generation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-06">2026-06-06</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07972" target="_blank" rel="noopener">2606.07972</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OneFeed: A Unified Generative Framework for Feed ContentEnhancement and Query Generation</h1> <p class="title-zh">OneFeed：统一生成式框架同时建模商品推荐与搜索Query生成</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · Semantic ID 联合 Query 生成</span> </div>  <div class="meta">Guo Xun</div> <p class="one-liner">用一个共享编码器同时生成推荐用的语义ID和搜索用的自然语言Query，并通过对比对齐弥补语义鸿沟</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/Query Generation">Query Generation</a><a class="tag" href="/DailyPaper/tag/Contrastive Alignment">Contrastive Alignment</a><a class="tag" href="/DailyPaper/tag/Closed-Loop Self-Enhancement">Closed-Loop Self-Enhancement</a><a class="tag" href="/DailyPaper/tag/Unified Architecture">Unified Architecture</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>统一 Feed 与搜索的生成范式：共享行为编码器同时产生 Semantic ID 和自然语言 Query，可以借鉴到电商的「千人千面」Feed 流中，让一个模型既做推荐又做搜索类目/query 推送，减少维护两套系统的成本。</li><li>SID-Query 对齐的设计：用对比学习让离散的语义 ID 和自然语言 Query 共享嵌入空间，这样生成的 Query 可以直接检索到与语义 ID 对应的商品候选，推荐和搜索的候选池可以无缝融合。在业务里可尝试将商品聚类码与用户搜索词进行对齐，提升跨链路触达。</li><li>闭环自增强范式：利用生成内容获得的隐式反馈（点击/跳过/转化）同时监督两个生成头，无需人工标注。可以复用到 Agent/多智体场景中，Agent 生成的推荐物料或查询被用户反馈后，作为训练信号自举提升。</li><li>弱监督 Query 构造：在只有商品文本元数据的场景下，用标题、类目、高频词拼接伪 Query，为没有搜索日志的业务线提供了一种低成本冷启动搜索式推荐的思路。注意严格防泄露：训练时只用历史时间窗口前的元数据，测试集不参与聚类和共现校准。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现代信息获取中，Feed 推荐（基于隐式反馈）和搜索（基于显式 Query）虽紧密耦合但被独立建模，导致用户意图理解割裂，冷启动与长尾场景下尤其严重。生成式推荐（如 Semantic ID）为统一建模提供了可能，但现有方法未显式利用推荐与搜索的互补性。论文提出 OneFeed，用一个生成式框架同时完成未来内容语义 ID 的生成和意图 Query 的生成，使推荐流可获得搜索式候选补充，搜索意图可从浏览行为中提升。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>共享行为编码器</strong>：将用户异构行为（点击、搜索、时长等）映射为统一嵌入，供两个生成头共用。</li>
+<li><strong>分层 Semantic ID 构造</strong>：基于文本聚类和行为共现校准生成层级 ID token。</li>
+<li><strong>Feed SID 生成器</strong>：自回归生成下一物品的语义 ID，用于推荐候选检索。</li>
+<li><strong>Intent Query 生成器</strong>：条件于同一行为表示生成自然语言 Query，发往搜索引擎获取候选。</li>
+<li><strong>SID-Query 对齐</strong>：对比学习拉近匹配的语义 ID 和 Query 表示，跨任务知识迁移。</li>
+<li><strong>候选增强一致性损失</strong>：要求生成的 Query 检索到的候选能获得正向用户反馈。</li>
+<li><strong>闭环自增强</strong>：线上反馈信号同时优化两路生成，离线通过重放模拟迭代自训练。</li>
+<li><strong>弱监督 Query 构造</strong>：在无真实搜索日志的公开数据集上，用商品标题、类目、高频词构造伪标签，并严格防泄露（时间分割、元数据不回视、测试集零参与）。</li>
+</ul>
+<p><strong>实验设计</strong><br>
+在 KuaiRec、Amazon Reviews、MovieLens-1M 上定义了完整协议：时间切分、弱监督 Query 构造、层级 SID 构建。对比基线包括 GRU4Rec、SASRec、BERT4Rec、P5、OneRec 等推荐模型，以及关键词抽取、T5、BART、GPT2 等 Query 生成模型。评测指标涵盖推荐 Recall/NDCG、Query BLEU/ROUGE-L/BERTScore/Distinct-n 和检索可达率、候选覆盖度、长尾召回、搜索补充率等。论文目前给出基于已知基线的预期性能（标记 †），例如 OneFeed 在 Amazon Reviews 上预期 Recall@10 超过 0.119，Query 可达率超过 0.719，融合候选重放 NDCG 超过 0.088，消融实验显示去掉对齐或一致性损失后指标下降。同时提供了合成数据集上的最小原型验证管道可执行性。</p>
+<p><strong>核心记忆点</strong><br>
+“OneFeed 证明：让一个模型同时生成推荐品的语义 ID 和搜索 Query，并用对比学习对齐两者，就能让 Feed 和搜索的候选池互相补充，形成闭环自进化。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07972&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07972" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07972" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07972" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

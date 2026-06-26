@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在 Plan-Execute 工业 Agent 中，时序语义缓存命中达 30.6 倍加速，MCP 工作流优化降低 40% 延迟，并揭示纯语义缓存在参数丰富查询中的失效模式。"><meta property="og:title" content="Evaluating Temporal Semantic Caching and Workflow Optimization in Agentic Plan-Execute Pipelines"><meta property="og:description" content="在 Plan-Execute 工业 Agent 中，时序语义缓存命中达 30.6 倍加速，MCP 工作流优化降低 40% 延迟，并揭示纯语义缓存在参数丰富查询中的失效模式。"><meta property="og:type" content="website"><title>Evaluating Temporal Semantic Caching and Workflow Optimization in Agentic Plan-Execute Pipelines</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-19">2026-05-19</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.20630" target="_blank" rel="noopener">2605.20630</a>  </div> <h1>Evaluating Temporal Semantic Caching and Workflow Optimization in Agentic Plan-Execute Pipelines</h1> <p class="title-zh">工业 Agent 管道中的时序语义缓存与工作流优化</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 执行加速与缓存优化</span> </div> <p class="affiliations">Columbia University · IBM · IBM Research</p> <div class="meta">Alimurtaza Mustafa Merchant, Krish Veera, Sajal Kumar Goyla, Shambhawi Bhure, Dhaval Patel, Kaoutar El Maghraoui</div> <p class="one-liner">在 Plan-Execute 工业 Agent 中，时序语义缓存命中达 30.6 倍加速，MCP 工作流优化降低 40% 延迟，并揭示纯语义缓存在参数丰富查询中的失效模式。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/temporal semantic cache">temporal semantic cache</a><a class="tag" href="/DailyPaper/tag/MCP workflow optimization">MCP workflow optimization</a><a class="tag" href="/DailyPaper/tag/plan-execute">plan-execute</a><a class="tag" href="/DailyPaper/tag/industrial agent">industrial agent</a><a class="tag" href="/DailyPaper/tag/latency reduction">latency reduction</a><a class="tag" href="/DailyPaper/tag/cache failure mode">cache failure mode</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>依赖感知并行执行：在电商多智体（如导购 + 库存 + 物流 Agent）的 Plan-Execute 管道中，分析工具调用间的依赖关系，并行执行无依赖步骤（如同时查询商品详情和用户画像），可直接降低端到端延迟，类似于本文的 1.67 倍加速。</li><li>带参数感知的时序缓存：对于生成式推荐/商品问答等参数敏感场景，避免使用纯语义缓存；设计缓存键应包含时间戳、用户 ID、商品 ID 等维度，并设置合理的 TTL，防止因忽略参数而返回过期或错误结果。</li><li>工具发现结果持久化：在多 MCP 工具场景下，将工具列表和 schema 缓存到磁盘，避免每次请求都重新获取工具清单，减少 LLM 规划前的准备开销，工程实现简单但效果明显。</li><li>缓存正确性评估：引入缓存命中时的结果验证机制（如通过工具返回的最新数据校验），确保加速的同时不牺牲答案正确性，尤其适合金融级或库存实时性要求高的 Agent 系统。</li> </ul> </div> <div class="content"> <p>工业资产运营中，Agent 的 Plan-Execute 管道因工具发现、LLM 规划、MCP 工具执行与总结等环节产生高延迟，传统 KV-cache 或语义缓存无法处理时间、设备等参数敏感性。</p>
+<p>方法上，引入两层优化：</p>
+<ol>
+<li><strong>时序语义缓存</strong>：在语义相似度基础上，将查询参数（时间戳、资产 ID、传感器代号）编码进缓存键，并设定动态过期策略，确保仅当语义与参数均匹配时才返回缓存结果。</li>
+<li><strong>MCP 工作流优化</strong>：包括磁盘持久化的工具发现缓存（避免重复 schema 拉取）和基于依赖图的并行步骤执行（将无数据依赖的工具调用并发执行）。</li>
+</ol>
+<p>在 AssetOpsBench 基准上，MCP 工作流优化取得 1.67 倍整体加速，中位端到端延迟降低约 40.0%；时序语义缓存在缓存命中时中位加速达 30.6 倍。同时，实验暴露纯语义缓存因忽略参数维度导致输出错误，强调了工业 Agent 场景中缓存机制必须与正确性评估协同设计。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.20630&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.20630" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.20630" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.20630" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

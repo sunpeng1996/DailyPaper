@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 TRACE，把用户矫正编译成运行时强制检查，克服记忆检索却仍违反偏好的“访问‑合规”差距"><meta property="og:title" content="Getting Better at Working With You: Compiling User Corrections into Runtime Enforcement for Coding Agents"><meta property="og:description" content="提出 TRACE，把用户矫正编译成运行时强制检查，克服记忆检索却仍违反偏好的“访问‑合规”差距"><meta property="og:type" content="website"><title>Getting Better at Working With You: Compiling User Corrections into Runtime Enforcement for Coding Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13174" target="_blank" rel="noopener">2606.13174</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Getting Better at Working With You: Compiling User Corrections into Runtime Enforcement for Coding Agents</h1> <p class="title-zh">更好地与你协作：将用户矫正编译为编码 Agent 的运行时执行规则</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 个性化 · 运行时规则编译与强制执行</span> </div> <p class="affiliations">University of Notre Dame · IBM Research · Tencent AI Lab</p> <div class="meta">Yujun Zhou, Kehan Guo, Haomin Zhuang, Xiangqi Wang, Yue Huang, Zhenwen Liang 等</div> <p class="one-liner">提出 TRACE，把用户矫正编译成运行时强制检查，克服记忆检索却仍违反偏好的“访问‑合规”差距</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Runtime Enforcement">Runtime Enforcement</a><a class="tag" href="/DailyPaper/tag/Personalization">Personalization</a><a class="tag" href="/DailyPaper/tag/Coding Agent">Coding Agent</a><a class="tag" href="/DailyPaper/tag/User Correction">User Correction</a><a class="tag" href="/DailyPaper/tag/Access-Compliance Gap">Access-Compliance Gap</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>从反馈到硬约束：在电商或推荐 Agent 中，用户反馈（如“别再推这类商品”）若仅记入 memory，后续仍可能违反。可借鉴 TRACE 将反馈编译为可执行规则，在排序前、回复生成前用钩子（hook）校验，强制执行，减少用户重复纠正。</li><li>规则生命周期管理：面对持续的用户修正，通过五类动作（new/update/supersede/split/noop）动态维护规则库，避免冲突和退化，适用于个性化策略的增量演化。</li><li>记忆与强制互补：系统可同时保留记忆存储（上下文感知）和规则引擎（强制执行）。对于成本敏感的推荐场景，对关键偏好（如明确过滤条件）施加编译检查，对软性偏好仍用记忆提示，二者非替代关系。</li><li>轻量规则提取：使用小型 LLM 自动从用户反馈中提取原子规则和验证正则（如检测“debug 文件清理”的命令模式），在电商 Agent 中可自动生成“取消订单后禁止推荐同类商品”的触发条件和校验逻辑，降低人工配置成本。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：交互 coding agent 即使通过记忆记住了用户的矫正（如“清理调试文件”），在后续会话中仍频繁违反，迫使用户重复纠正。文章量化了这一“访问‑合规”差距：在真实用户交互构建的诊断基准上，即使偏好被检索并放入上下文，agent 也仅满足不到一半的检查（Mem0 条件下 57.5% 违规率，纯记忆无法实现可靠遵守）。根本原因在于，记忆将矫正保留为自然语言建议，而非执行时必须满足的条件。</p>
+<p><strong>方法关键点</strong>：提出 <strong>TRACE</strong>（Test‑time Rule Acquisition and Compiled Enforcement）作为 coding agent 运行时的即插即用技能层。其流程包括：</p>
+<ol>
+<li><strong>矫正信号检测</strong>：用轻量 LLM（Gemma 4 31B）实时扫描会话，判断用户消息是否包含持久偏好信号。</li>
+<li><strong>规则原子化</strong>：将矫正提取为原子规则，包含应用条件和验证标准，例如“当任务可能创建临时文件时，完成前清理调试日志”。</li>
+<li><strong>规则生命周期管理</strong>：通过五动作决策（new, update, supersede, split, noop）将新规则与用户现有规则库调和，防止冲突并支持增量更新。</li>
+<li><strong>编译强制执行</strong>：每条规则编译为三个组件——适用性检查、行为指令、验证器。验证器通过挂钩（tool‑use、文件写入、终端等事件）嵌入 agent 执行流程，不满足条件时中断运行并反馈给 agent 修正，限定重试次数。实验中的 47 条规则全部采用 verify‑retry 模式。</li>
+</ol>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li><strong>诊断基准</strong>：基于 19 个真实用户任务、29 项偏好检查，对比 No Rules / All Rules / Mem0 / Relevant Rules / Compiled Rules。编译规则合规率 <strong>70.1%</strong>，远高于 Mem0（42.5%）和 Relevant Rules（54.0%），证实访问≠合规。</li>
+<li><strong>ClawArena 模拟用户评测</strong>：TRACE 将分布内（ID）违规从 100% 降至 <strong>37.6%</strong>，分布外（OOD）降至 <strong>2.0%</strong>（三款模型零违规），任务通过率与无记忆基线持平；用户干预轮次由 2.0 降至 ID 1.37、OOD 1.02，且不增加运行时延。</li>
+<li><strong>MemoryArena</strong>：TRACE 实现最高任务通过率（17.3% vs. 最高内存基线 12.2%）和最低违规率（60.5%），证明当约束是任务成功条件的一部分时，编译强制直接转化为性能提升。</li>
+</ul>
+<p><strong>一句话结论</strong>：个性化不应止于记住偏好，而应决定何时必须约束执行并提供运行时强制机制——记忆与强制是互补的底盘，而非替代方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13174&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13174" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13174" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13174" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

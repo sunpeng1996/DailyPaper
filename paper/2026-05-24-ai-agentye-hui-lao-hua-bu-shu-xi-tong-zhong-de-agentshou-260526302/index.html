@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次定义Agent老化并构建纵向可靠性基准AgingBench，通过四种机制和诊断探针实现组件级归因。"><meta property="og:title" content="Your Agents Are Aging Too: Agent Lifespan Engineering for Deployed Systems"><meta property="og:description" content="首次定义Agent老化并构建纵向可靠性基准AgingBench，通过四种机制和诊断探针实现组件级归因。"><meta property="og:type" content="website"><title>Your Agents Are Aging Too: Agent Lifespan Engineering for Deployed Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-24">2026-05-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26302" target="_blank" rel="noopener">2605.26302</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Your Agents Are Aging Too: Agent Lifespan Engineering for Deployed Systems</h1> <p class="title-zh">AI Agent也会老化：部署系统中的Agent寿命工程</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent系统寿命工程与老化诊断</span> </div> <p class="affiliations">The University of Texas at Austin</p> <div class="meta">Jianing Zhu, Yeonju Ro, John Robertson, Kevin Wang, Junbo Li, Haris Vikalo 等</div> <p class="one-liner">首次定义Agent老化并构建纵向可靠性基准AgingBench，通过四种机制和诊断探针实现组件级归因。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent Aging">Agent Aging</a><a class="tag" href="/DailyPaper/tag/Lifespan Engineering">Lifespan Engineering</a><a class="tag" href="/DailyPaper/tag/Memory Degradation">Memory Degradation</a><a class="tag" href="/DailyPaper/tag/Longitudinal Benchmark">Longitudinal Benchmark</a><a class="tag" href="/DailyPaper/tag/Counterfactual Diagnosis">Counterfactual Diagnosis</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>部署后的纵向监控：Agent可靠性会随时间退化，仅靠单次基准不足。电商推荐Agent（如长期对话助手）应建立老化曲线和半衰期指标，监控事实精度衰减。</li><li>写时值保留策略：压缩老化表明摘要会丢弃关键细节（如金额、约束）。在记忆写入时，可注入明确保留指令，或用结构化字段保存数值，防止“每日服药”这类泛化丢失。</li><li>干扰诊断与检索增强：干扰老化源于相似记忆混淆，可借鉴counterfactual探针区分是写入遗漏还是检索失败。对应到多用户推荐中，需对相似实体的记忆做硬性区分（如user ID后缀），并诊断是向量检索不准还是记忆未写入。</li><li>维护后回归检测：memory recompaction等操作会引发性能断崖。Agent上线后应在每次维护操作后运行关键事实的回归探测，对突变指标自动告警，类似软件CI/CD流程。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：AI Agent正从单次对话转向跨会话长期运行，但现有评测只看模型“首日能力”，忽略部署后随时间积累的记忆、压缩、修订等导致的可靠性退化——即“Agent老化”。实际系统中，即使模型权重冻结，Agent的状态仍在变化，行为测试可能正常而事实精度已悄然衰减。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出<strong>Agent寿命工程（ALE）</strong>，定义四种老化机制：压缩老化（写时摘要丢弃未来相关细节）、干扰老化（相似记忆积累导致检索混淆）、修订老化（事实更新未正确传播）和维护老化（memory flush/recompaction等操作触发回退）。</li>
+<li>构建<strong>AgingBench</strong>：使用程序化生成器搭建带时间依赖DAG的多会话任务流，控制依赖密度、更新率、链深度、干扰对数量等老化压力，产出纵向老化曲线。</li>
+<li><strong>Counterfactual诊断</strong>：通过三个探针阶梯（P1基线下运行，P2将检索替换为oracle，P3将写入+检索均替换为oracle）将端到端错误分解为Write Error、Read Error和Utilization Error，定位修复目标。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在7种场景、14个模型上，行为合规率（CVR）可能保持为0，而事实精度从0.90降至0.37，存在“沉默退化”。</li>
+<li>修订老化并不随模型增大而单调改善，根源在于衍生状态（如累计预算）未显式维护。</li>
+<li>自主Agent（OpenHands/Claude Code）中，工作区保真度始终高于下游召回准确率，表明瓶颈更多在Utilization阶段而非存储。</li>
+<li>同一表面错误可能在写入/检索/利用三阶段不均衡分布，通用“增加内存”处方无效，需按诊断画像定向修复。</li>
+</ul>
+<p><strong>核心洞见</strong>：Agent的可靠性是整个系统harness的寿命属性，而非基础模型的快照指标；只有通过机制分解与组件级归因，才能让Agent优雅地老化。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26302&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26302" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26302" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26302" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

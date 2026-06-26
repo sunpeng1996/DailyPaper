@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过种群冠军广播和失败触发反思，无梯度更新下将LLM Agent在POMDP中的表现提升1.7-7.7倍"><meta property="og:title" content="FORGE: Self-Evolving Agent Memory With No Weight Updates via Population Broadcast"><meta property="og:description" content="通过种群冠军广播和失败触发反思，无梯度更新下将LLM Agent在POMDP中的表现提升1.7-7.7倍"><meta property="og:type" content="website"><title>FORGE: Self-Evolving Agent Memory With No Weight Updates via Population Broadcast</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.16233" target="_blank" rel="noopener">2605.16233</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>FORGE: Self-Evolving Agent Memory With No Weight Updates via Population Broadcast</h1> <p class="title-zh">FORGE：群体广播实现无权重更新的Agent自进化记忆</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 记忆演化与群体广播</span> </div> <p class="affiliations">Carleton University · Defence R&amp;D Canada · Cistel Technology</p> <div class="meta">Igor Bogdanov, Chung-Horng Lung, Thomas Kunz, Jie Gao, Adrian Taylor, Marzia Zaman</div> <p class="one-liner">通过种群冠军广播和失败触发反思，无梯度更新下将LLM Agent在POMDP中的表现提升1.7-7.7倍</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Population-Based Training">Population-Based Training</a><a class="tag" href="/DailyPaper/tag/Memory Evolution">Memory Evolution</a><a class="tag" href="/DailyPaper/tag/Prompt-Only Learning">Prompt-Only Learning</a><a class="tag" href="/DailyPaper/tag/Agent Self-Improvement">Agent Self-Improvement</a><a class="tag" href="/DailyPaper/tag/CybORG CAGE-2">CybORG CAGE-2</a><a class="tag" href="/DailyPaper/tag/POMDP">POMDP</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>冠军广播机制加速多Agent学习：在Agent集群中，定期选出表现最优实例的文本记忆，替换掉所有其他实例的记忆。这一群体级选择压力能显著压缩策略方差，对电商推荐Agent或对话Agent的群体自改进场景非常实用。</li><li>文本记忆表示的选择与成本权衡：规则（Rules）型记忆成本低（~40%更少token），示例（Examples）型记忆性能更优（3/4模型取得最高返回），混合型居中。在生成式推荐或商品搜索Agent中，可根据计算预算灵活选择记忆形式。</li><li>毕业制度节省大规模Agent训练成本：提前冻结已收敛（解决任务）的实例，避免在后续广播中被覆盖或继续消耗token，可直接迁移到需要大量并行Agent训练的电商场景，如多路策略探索后的收敛管理。</li><li>无梯度、无强模型的自改进范式：利用Reflexion循环从失败轨迹自动提炼结构化知识，完全依赖同模型反思，适合无法微调基座模型的业务环境，例如基于闭源API的智能客服Agent的持续优化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM Agent在随机、部分可观测、长时程的序贯决策任务（如网络防御）中，缺乏可靠的记忆与学习机制——零样本表现灾难性，梯度更新又往往不可行。现有prompt-only自改进方法多限于单实例反射，缺乏群体层面的知识传播与选择压力，且缺乏对记忆表示的系统性对比。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>提出FORGE协议，含三个阶段组件：(1) 层级式ReAct Agent架构，规划器下挂分析师和动作选择子Agent，动态注入文本记忆；(2) 内部Reflexion循环：当单步奖励低于阈值时，中止episode并调用反思Agent（相同LLM）分析失败轨迹，生成规则（Rules）或示例（Examples）等知识artifact，追加到记忆；(3) 外部种群循环：N个实例并行训练，每阶段结束后选出评估最高的实例作为冠军，将其全部记忆广播给所有活跃实例，并冻结超过毕业阈值的实例以节省计算。</li>
+<li>三种记忆表示：Rules（条件启发式文本）、Examples（结构化交互演示）和混合形式，均通过提示注入。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在CybORG CAGE-2（13主机网络防御POMDP，30步，对抗B_line攻击者）上评估。四种模型家族（Gemini-2.5-Flash-Lite, Grok-4-Fast, Llama-4-Maverick, Qwen3-235B）。零样本平均奖励严重为负（-103至-190）。</li>
+<li>FORGE提升平均奖励1.7-7.7倍（最强配置下Gemini从-189.6到-24.5），比Reflexion单实例基线提升29-72%（所有12种模型-表示组合）。</li>
+<li>Examples表示在3/4模型中取得最佳返回（如Gemini -24.5），Rules表示token成本低约40%且毕业率更高。</li>
+<li>消融实验表明冠军广播是性能增益的核心，移除广播后退化为Reflexion; 毕业主要降低计算量（活跃实例数减半）。</li>
+<li>弱模型受益更显著：基线越差的模型改善倍数越高（Gemini 7.7× vs Grok 1.7×）。</li>
+</ul>
+<p><strong>最值得记住</strong>：在无法更新LLM参数时，通过群体层面的冠军记忆广播，能让Agent群凝聚到少数高效策略上，大幅提升决策性能，这种机制适用于任何多Agent并行探索的文本策略优化任务。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.16233&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.16233" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.16233" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.16233" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

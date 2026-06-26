@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将稀疏转化标签转化为漏斗层级偏好对，结合LLM语义理解与边际感知Bradley-Terry目标，实现线索的精确排序与校准"><meta property="og:title" content="Rethinking Sales Lead Scoring with LLM-based Hierarchical Preference Ranking"><meta property="og:description" content="将稀疏转化标签转化为漏斗层级偏好对，结合LLM语义理解与边际感知Bradley-Terry目标，实现线索的精确排序与校准"><meta property="og:type" content="website"><title>Rethinking Sales Lead Scoring with LLM-based Hierarchical Preference Ranking</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.04387" target="_blank" rel="noopener">2606.04387</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Rethinking Sales Lead Scoring with LLM-based Hierarchical Preference Ranking</h1> <p class="title-zh">基于LLM的分层偏好排序重新思考销售线索评分</p> <div class="dir-row"> <span class="direction-chip">🧭 销售漏斗转化预测 · 学习排序 · 偏好优化</span> </div> <p class="affiliations">Li Auto Inc.</p> <div class="meta">Chenyu Zhang, Yiwen Liu, Yin Sun, Xinyuan Zhang, Yuji Cao, Junming Jiao 等</div> <p class="one-liner">将稀疏转化标签转化为漏斗层级偏好对，结合LLM语义理解与边际感知Bradley-Terry目标，实现线索的精确排序与校准</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Sales Lead Scoring">Sales Lead Scoring</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Preference Optimization">Preference Optimization</a><a class="tag" href="/DailyPaper/tag/Learning to Rank">Learning to Rank</a><a class="tag" href="/DailyPaper/tag/Bradley-Terry">Bradley-Terry</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>漏斗层级偏好对构建：借鉴将用户行为序列转化为偏好对（如加购&gt;浏览&gt;点击）的思路，在电商推荐中可利用用户行为深度构造软标签，配合边际参数表达业务知识（如高意向行为给予更大margin），缓解长周期转化中正负样本粗糙的问题。</li><li>三头LLM判别式架构：语义头（防止遗忘）、点估计头（校准）、排序头（相对序）的联合设计可迁移到Agent多任务场景：在LLM基础上挂接多个预测头，用不同的损失函数同时优化生成、校准和排序能力，配合差异化学习率避免过拟合。</li><li>LLM+LoRA提取文本表示注入传统模型：将LLM编码的对话嵌入注入Wide&amp;Deep、DeepFM等CTR模型，可无痛提升传统模型对非结构化文本的理解，适合已有CTR基建的团队快速引入LLM语义能力，无需推翻原有架构。</li><li>在线实验设计与评估：分层抽样+按能力层级与历史转化指标分组的A/B测试方案，以及关注前0.1%线索精准度的业务导向指标（P@0.1%），对推荐系统线上评估中如何衡量头部排序质量有直接参考意义。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+汽车、房地产等长周期销售领域，客户决策链长达数周甚至数月，最终的锁单转化标签极度稀疏，且无法区分咨询、试驾等中间行为所隐含的意向差异。传统线索评分方法——规则打分、机器学习二分类以及深度CTR模型——都将未成交线索同等视作负样本，丢弃了销售漏斗中的过程信号，并且对CRM日志中非结构化对话的语义理解不足。通用LLM虽能理解对话语义，但输出文本而非可比分数，也不具备对齐漏斗优先级的排序机制。因此，需要一种既能利用LLM语义能力，又能将稀疏终端监督转化为密集漏斗感知信号的判别式框架。</p>
+<p><strong>方法</strong>
+提出三层判別式架构asLLR（LLM-based Lead Ranking）：以Qwen作为语义骨干，通过LoRA高效微调；在最后隐藏层并联三个输出头——语义头（保留语言建模能力防遗忘）、点估计头（输出校准后的转化概率）、排序头（输出用于相对比较的分数）。核心创新HPRO（Hierarchical Preference Ranking Optimization）根据漏斗阶段（锁单 > 试驾 > 仅通话 > 战败）自动构造偏好对，并引入边际感知的Bradley-Terry目标进行优化：偏好概率P(x_w ≻ x_l) = σ(s_pair(x_w) - s_pair(x_l) - m)，其中m为不同配对层级（全局优势、关键动作、软信号）预设的边际值，显式注入业务先验。总损失=点估计BCE损失+HPRO损失+语义CE损失，并通过差异化学习率（头部5e-5，骨干2.5e-6）防止过拟合。</p>
+<p><strong>实验</strong>
+在NEV品牌的两个数据集上验证：Benchmark数据集（340k样本）对比Wide&#x26;Deep、DeepFM、xDeepFM、DCN等CTR基线，asLLR+HPRO取得AUC 0.8161，较最优基线DeepFM（0.7917）提升2.3%，行外注入文本表示使传统模型平均AUC提升0.007；工业数据集（6.14M样本）上，前0.1%线索查准率P@0.1%从18.44%提升至25.76%，相对提升39.7%；132天省级A/B测试带来9.5%的销量提升（p&#x3C;0.001）。</p>
+<p><strong>关键洞察</strong>
+漏斗信息最适合作为结构化偏好监督注入排序目标，而非硬性排序规则；LLM的语义表示可泛化迁移至传统模型，而HPRO通过边际设计将业务知识平滑融入损失，在保证校准的同时显著强化顶部排序精度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.04387&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.04387" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.04387" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.04387" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个统一评估全模态感知、主动响应与多任务能力的流式视频基准，揭示音频利用差异、长程退化与非语音音频薄弱"><meta property="og:title" content="OmniPro: A Comprehensive Benchmark for Omni-Proactive Streaming Video Understanding"><meta property="og:description" content="首个统一评估全模态感知、主动响应与多任务能力的流式视频基准，揭示音频利用差异、长程退化与非语音音频薄弱"><meta property="og:type" content="website"><title>OmniPro: A Comprehensive Benchmark for Omni-Proactive Streaming Video Understanding</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-17">2026-05-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.18577" target="_blank" rel="noopener">2605.18577</a>  </div> <h1>OmniPro: A Comprehensive Benchmark for Omni-Proactive Streaming Video Understanding</h1> <p class="title-zh">面向全模态主动流式视频理解的综合基准 OmniPro</p> <div class="dir-row"> <span class="direction-chip">🧭 全模态主动流式视频理解基准与评估</span> </div> <p class="affiliations">Renmin University of China · WeChat Vision, Tencent Inc.</p> <div class="meta">Ruixiang Zhao, Jie Yang, Zijie Xin, Tianyi Wang, Fengyun Rao, Jing LYU 等</div> <p class="one-liner">首个统一评估全模态感知、主动响应与多任务能力的流式视频基准，揭示音频利用差异、长程退化与非语音音频薄弱</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/streaming video">streaming video</a><a class="tag" href="/DailyPaper/tag/proactive">proactive</a><a class="tag" href="/DailyPaper/tag/omni-modal">omni-modal</a><a class="tag" href="/DailyPaper/tag/audio-visual">audio-visual</a><a class="tag" href="/DailyPaper/tag/evaluation">evaluation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>双模式评估协议（Probe/Online）可直接迁移至直播带货场景的智能客服主动干预评估：Probe 模式验证时机准确性，Online 模式测量线上自主决策能力</li><li>84% 样本依赖音频信号的发现提醒电商视频理解必须融合语音与非语音音频，避免纯视觉方案漏判用户意图</li><li>长程性能退化（随时间显著下降）指向实际系统需引入记忆或状态刷新机制，以支持长达数小时的直播流</li><li>非语音音频（环境音、背景声）是当前模型最弱项，电商场景中如店铺背景噪声、产品操作声可能被忽略，需针对性增强</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：全模态主动流式视频理解（omni-proactive）要求模型从连续音视频流中自主决定何时说话和说什么，但现有基准依赖视觉信号、使用轮询或固定时间戳，且任务覆盖窄，无法可靠评估和区分这类模型。</p>
+<p><strong>方法</strong>：推出 OmniPro 基准，包含 2700 个人工验证样本，覆盖 9 个子任务、3 个认知层级和 6 类基础视频理解能力；84% 样本需要音频（语音或非语音），并标注模态隔离标签以支持细粒度多模态分析。设计双模式评估协议：Probe 模式在 ground-truth 触发时刻前后查询模型以评估内容理解，Online 模式让模型在流式输入中自主决定响应时机。</p>
+<p><strong>关键结果</strong>：在 11 个代表性模型上评估发现：① 音频提供一致增益但模型间利用率差异巨大；② 性能随时间显著退化，模型长期鲁棒性差；③ 非语音音频感知是最薄弱维度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.18577&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.18577" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.18577" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.18577" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

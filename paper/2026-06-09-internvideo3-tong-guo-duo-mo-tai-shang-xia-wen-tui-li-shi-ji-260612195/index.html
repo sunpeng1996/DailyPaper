@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出多模态上下文推理（MCR）与多头潜在注意力（M²LA），将开放视频模型推向长程视觉智能体"><meta property="og:title" content="InternVideo3: Agentify Foundation Models with Multimodal Contextual Reasoning"><meta property="og:description" content="提出多模态上下文推理（MCR）与多头潜在注意力（M²LA），将开放视频模型推向长程视觉智能体"><meta property="og:type" content="website"><title>InternVideo3: Agentify Foundation Models with Multimodal Contextual Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12195" target="_blank" rel="noopener">2606.12195</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>InternVideo3: Agentify Foundation Models with Multimodal Contextual Reasoning</h1> <p class="title-zh">InternVideo3：通过多模态上下文推理实现基础模型智能体化</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态 Agent · 长视频推理</span> </div> <p class="affiliations">Shanghai AI Laboratory · Shanghai Innovation Institute · Nanjing University</p> <div class="meta">Ziang Yan, Sheng Xia, Jiashuo Yu, Yue Wu, Tianxiang Jiang, Songze Li 等</div> <p class="one-liner">提出多模态上下文推理（MCR）与多头潜在注意力（M²LA），将开放视频模型推向长程视觉智能体</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Agent">Multimodal Agent</a><a class="tag" href="/DailyPaper/tag/Video Understanding">Video Understanding</a><a class="tag" href="/DailyPaper/tag/Long-context">Long-context</a><a class="tag" href="/DailyPaper/tag/MCR">MCR</a><a class="tag" href="/DailyPaper/tag/M2LA">M2LA</a><a class="tag" href="/DailyPaper/tag/Agentic AI">Agentic AI</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>MCR 闭环范式可用于多步商品理解：将商品多模态信息、用户查询、工具调用结果维护在统一上下文中，递归观察-推理-动作，适合直播切品、复杂选品等需要动态环境交互的场景，可直接借鉴其对证据积累和信念更新的设计。</li><li>M²LA 可降低多模态 Agent 的 KV Cache 开销：通过潜在注意力压缩保留全部视觉 token 的同时减少缓存内存，对于需要长对话历史、多轮商品对比或超长视频分析的电商客服 Agent 很实用，可尝试类似低秩映射和模态自适应适配器来优化线上成本。</li><li>分阶段训练配方可复用：先通过 M²LA 转换后的 continued pretraining 恢复能力，再用短到长的课程 SFT、基于规则验证的 RL 和 on-policy 蒸馏，这种组合对公开基座模型增强长程推理和工具使用能力路径清晰，适合在自身业务基座上微调推理能力。</li><li>层次化记忆与递归验证可提升回答可靠性：论文中的分层记忆（帧/片段/场景）、问题路由、检索与自我验证机制，可用于商品视频问答或导购 Agent 中，降低幻觉并强制答案有据可依，特别是遇到不确定时重新检索证据再修正答案的思路值得实现。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：开放模型在文本主导的智能体任务上已有长足进步，但在视频等长程多模态场景中仍以单次问答为主，缺乏持续观察、工具交互、证据积累与验证的能力。真实世界的长视频分析、监控回顾、自我中心感知等任务需要模型在长时序中动态推理，这正是多模态智能体的核心挑战。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>多模态上下文推理（MCR）</strong>：将观察、推理过程、工具动作、反馈和记忆统一在一个动态上下文中，实现闭环的“观察-推理-动作-反馈-更新信念”流程，而非单次推断。</li>
+<li><strong>M²LA 高效注意力</strong>：将 KV Cache 从按头存储改为按潜在向量压缩存储，在解码时动态重建多头键值，同时通过 RoPE 感知聚合、低秩分解和模态自适应处理，在保留全部视觉 token 的情况下大幅降低内存，支撑更长 rollout。</li>
+<li><strong>分阶段训练</strong>：M²LA 转换后进行 continued pretraining 恢复能力；短到长短课程 SFT（至 256k token 上下文）；在可验证任务（视频 QA、时间定位）上用规则奖励的组序列策略优化（GSPO）做 RL；最后用 on-policy 蒸馏从更强教师模型（Qwen3‑235B）迁移复杂推理行为。</li>
+<li><strong>数据</strong>：构建了大规模长视频 SFT 数据集（379K 视频，平均 15.8 分钟），通过层次化注释（片段字幕→场景汇总→全局叙事）合成逾 100 万 QA 对，覆盖感知、时空推理、事件链和全局语义。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 <strong>Video‑MME 上达 73.8</strong>，MLVU 上 <strong>77.3</strong>，VRBench <strong>69.4</strong>，EgoSchema <strong>76.6</strong>，均为开源模型中最佳，相比上一代 InternVideo2.5‑7B 提升显著（如 Video‑MME +8.7，EgoSchema +12.7）。</li>
+<li>短视频综合平均得分 <strong>69.0</strong>（NextQA 85.5，PerceptionTest 81.4），超越所有同规模开源基线，证明长程优化未损害短程能力。</li>
+<li>视频 Agent 实例中，结合检索和递归验证能产生更稳健的证据支撑推断。</li>
+</ul>
+<p><strong>核心价值</strong>：通过“压缩注意力缓存 + 闭环上下文推理 + 强化学习与蒸馏”的组合，把 8B 规模开放模型提升到接近甚至超越某些大闭源模型的水平，为构建实用长程视觉 agent 提供了高效的架构和训练方案。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12195&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12195" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12195" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12195" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

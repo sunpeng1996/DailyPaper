@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过 harness 引导主 Agent 分解并委托子任务，再用 SFT 内化委托行为，在 30B 规模实现长程搜索 SOTA"><meta property="og:title" content="SearchSwarm: Towards Delegation Intelligence in Agentic LLMs for Long-Horizon Deep Research"><meta property="og:description" content="通过 harness 引导主 Agent 分解并委托子任务，再用 SFT 内化委托行为，在 30B 规模实现长程搜索 SOTA"><meta property="og:type" content="website"><title>SearchSwarm: Towards Delegation Intelligence in Agentic LLMs for Long-Horizon Deep Research</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-08">2026-06-08</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.09730" target="_blank" rel="noopener">2606.09730</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SearchSwarm: Towards Delegation Intelligence in Agentic LLMs for Long-Horizon Deep Research</h1> <p class="title-zh">SearchSwarm：训练长程深度搜索 Agent 的委托智能</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 长程任务委托与上下文管理</span> </div> <p class="affiliations">Ant Group · Tsinghua University · Peking University · Renmin University of China</p> <div class="meta">Pu Ning, Quan Chen, Kun Tao, Xinyu Tang, Tianshu Wang, Qianggang Cao 等</div> <p class="one-liner">通过 harness 引导主 Agent 分解并委托子任务，再用 SFT 内化委托行为，在 30B 规模实现长程搜索 SOTA</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Delegation Intelligence">Delegation Intelligence</a><a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/Deep Research">Deep Research</a><a class="tag" href="/DailyPaper/tag/Context Management">Context Management</a><a class="tag" href="/DailyPaper/tag/SFT">SFT</a><a class="tag" href="/DailyPaper/tag/Search Agent">Search Agent</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>Harness 设计可直接迁移到电商多 Agent 场景：主 Agent 负责商品调研、竞品分析等长程任务时，借鉴「写简报必须含任务背景、已确认事实、未解决疑点」的原则，让子 Agent 有足够上下文产出高质量结果，减少主 Agent 令牌消耗和重复探索。</li><li>SFT 数据合成策略：利用强模型当主 Agent 搭配弱模型当子 Agent 收集轨迹，迫使主模型学会更严谨的任务分解与结果验证，可用于训练电商客服、供应链优化等场景中的协调 Agent。</li><li>委托能力泛化证明单 Agent 推理也能受益：即使去掉子调用工具，训练后的模型在单 Agent 任务上表现仍有提升，说明通过多 Agent 轨迹 SFT 可增强模型的结构化问题分解能力，适用于推荐系统复杂查询的逐步推理。</li><li>强制引用报告可提升溯源可信度：要求子 Agent 报告附带行内引用，主 Agent 最终回答也需附来源，这对电商商品推荐、信息核查等需要可解释输出场景有直接借鉴意义；实现方式是在 prompt 中约束输出格式并以此过滤训练数据。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：大模型用于长程深度研究时，上下文窗口有限，被动压缩或丢弃历史信息容易丢失关键证据。主动委托（main-distributes, sub-executes）能让主 Agent 只保留摘要，但需要一种“委托智能”——知道何时分解任务、如何写简报、如何整合子结果。该类训练数据在自然文本中稀缺，如何系统性合成并训练模型获得该能力尚属开放问题。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>设计一套 <strong>harness</strong>（工具集+系统 prompt），引导主 Agent 使用 <code>call_sub_agent</code> 工具将检索密集子任务委派给子 Agent，同时贯彻四条原则：鼓励委托、写全面简报（含背景、已确定事实、未解决疑点）、保留核心判断（主 Agent 独立决策方向）、要求子 Agent 报告附来源引用。</li>
+<li>利用 harness 在开源查询集上收集 Agent 轨迹，其中主 Agent 正确作答且行为规范的正确轨迹被保留成 <strong>SFT 数据</strong>；还采用强弱模型配对（强主弱子）收集轨迹，迫使主模型加强任务分解与验证。</li>
+<li>对基座模型 Tongyi DeepResearch-30B-A3B 做 full-weight SFT（仅计算模型输出 token 的损失，环境返回被 mask），得到 <strong>SearchSwarm-30B-A3B</strong>。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 BrowseComp（68.1）、BrowseComp-ZH（73.3）、GAIA（82.5）、xbench-DeepSearch（80.8）上全面超越同规模轻量模型，其中 BrowseComp 超 MiroThinker-1.7-mini 0.2 点，超基座模型 24.7 点。</li>
+<li>能力泛化：即使禁用子 Agent 工具，SearchSwarm 在 BrowseComp 子集上仍比基座提升 8.5 点；在开放域长回答基准 ScholarQA-v2 等上也平均提升 14.2 点，证明委托训练赋予的结构化分解与证据综合能力具有迁移性。</li>
+</ul>
+<p><strong>核心设计思想</strong>：通过周密 harness 引导委托行为，再将成功轨迹精炼为训练数据，让模型权重直接学会“何时委托、如何委托、如何整合”——这是一条可复现的从行为引导到能力内化的技术路线。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.09730&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.09730" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.09730" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.09730" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

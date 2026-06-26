@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把 Diffusion Language Model 的「连续」推到极致——从 token embedding 起，整条 denoise 轨迹都待在连续 embedding 空间，只在最后一步 t=1 才离散化；而且 denoiser 和 decoder 共享同一份网络权重（用 mode token 切分支），没有独立 decoder。配合 x-prediction + Flow Matching 的 rectified-flow 路径，让 image-domain 的 CFG / SDE 采样器自然迁移过来。"><meta property="og:title" content="ELF: Embedded Language Flows · 论文沉淀"><meta property="og:description" content="把 Diffusion Language Model 的「连续」推到极致——从 token embedding 起，整条 denoise 轨迹都待在连续 embedding 空间，只在最后一步 t=1 才离散化；而且 denoiser 和 decoder 共享同一份网络权重（用 mode token 切分支），没有独立 decoder。配合 x-prediction + Flow Matching 的 rectified-flow 路径，让 image-domain 的 CFG / SDE 采样器自然迁移过来。"><meta property="og:type" content="website"><title>ELF: Embedded Language Flows · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🧠 LLM通用</span> <span class="sep">·</span><time>2026-05</time> <span class="sep">·</span><span>arXiv preprint</span>  </div> <h1>ELF: Embedded Language Flows</h1> <p class="archive-authors">Keya Hu*, Linlu Qiu*, Yiyang Lu, Hanhong Zhao, Tianhong Li, …, Kaiming He (8 人; *Equal)</p> <p class="affiliations">MIT</p> <p class="one-liner">把 Diffusion Language Model 的「连续」推到极致——从 token embedding 起，整条 denoise 轨迹都待在连续 embedding 空间，只在最后一步 t=1 才离散化；而且 denoiser 和 decoder 共享同一份网络权重（用 mode token 切分支），没有独立 decoder。配合 x-prediction + Flow Matching 的 rectified-flow 路径，让 image-domain 的 CFG / SDE 采样器自然迁移过来。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Continuous DLM</span><span class="tag tag-static">Flow Matching</span><span class="tag tag-static">Embedding Space</span><span class="tag tag-static">Classifier-free Guidance</span><span class="tag tag-static">Shared Denoiser-Decoder</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>问题</strong>：连续扩散语言模型（continuous DLM）长期被离散 DLM（MDLM/Duo）碾压。作者的关键判断是——这不是「语言天生离散」的锅，而是已有连续派<strong>给连续轨迹加了太多 discrete leash</strong>（每步 rounding 损失、simplex 约束、中间步 token-level cross-entropy），把 flow dynamics 绑死在词表上。</p>
+<p><strong>关键 idea</strong>：让 denoising 轨迹整段都留在 <strong>unrestricted 连续 embedding 空间</strong>，只在 Flow Matching 的最后一个时间步 <code>t=1</code> 做离散化——而这一步<strong>天然就是 continuous→discrete 解码</strong>，于是不需要独立 decoder，可以用<strong>同一份网络权重</strong>既做去噪（denoise mode）又做解码（decode mode），靠一个 binary mode token 切分支。范式上三件套缺一不可：(1) 在冻结 T5 encoder 给出的 contextual embedding 上做 rectified-flow；(2) 用 <strong>x-prediction</strong>（预测干净 embedding）而非 v-prediction，让 MSE 去噪损失与最后一步的 CE 解码损失能在共享权重下兼容；(3) self-conditioning 充当 CFG 的 condition，把图像扩散里成熟的 <strong>classifier-free guidance、SDE 采样、x-prediction</strong> 整套工具无缝搬过来。结果：32 步、45B 训练 token、无 distillation，就压过 500B+ token 的离散 / 连续 baseline 及其 distilled 变体。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline（训练 + 推理共用一张网络 <code>net_θ(z, t, mode)</code>）：</p>
+<ol>
+<li><strong>编码</strong>：离散 token 序列 <code>s = [s_1,…,s_L] ∈ V^L</code> → 冻结 pretrained <strong>T5-small encoder</strong>（35M，512-d 上下文 embedding）→ 线性投到 <strong>128-d bottleneck</strong> 再投到模型 hidden（768）。encoder 只在训练用，推理不引入额外模块。先用 OWT 估计的 mean/std 对 clean embedding <code>x</code> 做归一化。</li>
+<li><strong>加噪（两分支，单 batch 用 mask 分流）</strong>：
+<ul>
+<li><em>denoise 分支</em>（80%）：任意 <code>t∈[0,1]</code>，线性插值 <code>z_t = t·x + (1−t)·ε</code>，target velocity <code>v = x − ε</code>。</li>
+<li><em>decode 分支</em>（20%，固定 <code>t=1</code>）：因 <code>z_t → x</code>（无信息），改用 <strong>per-token 损坏</strong> <code>z̃ = p·x + (1−p)·ε</code> 制造非平凡输入。</li>
+</ul>
+</li>
+<li><strong>self-conditioning + control token</strong>：把上一次预测 <code>x̂'</code>（或 0）沿 channel 维 concat 进 <code>z_t</code>，linear 投回原维得 <code>ẑ_t</code>；再 prepend control token（time / CFG scale / model-mode）。</li>
+<li><strong>ELF 网络</strong>：标准 DiT（SwiGLU+RMSNorm+RoPE+qk-norm，in-context conditioning 取代 adaLN-Zero），双向 self-attention，输出 <code>x̂</code>。</li>
+<li><strong>损失</strong>：denoise 分支 <code>L_MSE</code>（带 <code>(1−t)^{-2}</code> 权重），decode 分支 <code>x̂</code> 过可学习 unembedding <code>W</code> 出 logits 算 <code>L_CE</code>。</li>
+<li><strong>推理</strong>：从 <code>z_0 ∼ N(0,I)</code> 起，按 logit-normal 时间网格用 ODE（Euler）或 SDE 采样器迭代 <code>z ← z + dt·v</code>（<code>v = (x̂ − z)/(1−t)</code>），最后一步切 decode mode → unembed → argmax 出 token。</li>
+</ol>
+<p><img src="/ai-papers-daily/figures/elf-embedded-language-flows/fig1.png" alt="ELF 总体架构：训练时 token→clean embedding x→加噪 z_t→ELF 网络出 x̂，按 mode 用 L_MSE 或 L_CE 监督；推理时从高斯噪声 z_0 迭代去噪，仅末步 t=1 切 decode 模式过 unembedding 出 token"></p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-embedding-空间构造encoder--bottleneck">1) Embedding 空间构造（encoder + bottleneck）</h3>
+<ul>
+<li><strong>输入/输出</strong>：token 序列 → 512-d T5-small contextual embedding → 128-d bottleneck → 768-d 模型空间。</li>
+<li><strong>为什么 bottleneck=128</strong>：假设自然语言数据落在高维 embedding 空间里的低维 manifold 上。消融对比 32/128/512：32 维 Gen.PPL 最低但 entropy 偏低（多样性差），512 维 entropy 高但 Gen.PPL 显著恶化，<strong>128 维是最佳折中</strong>。</li>
+<li><strong>embedding 选择消融结论</strong>（按 Gen.PPL–entropy 前沿排序）：pretrained T5 contextual ＞ scratch encoder（OWT 上 T5 目标自训）＞ pretrained T5 token（非上下文）＞ frozen Gaussian ＞ learnable（最差，联合优化 embedding+denoiser 太难）。<strong>上下文 embedding 是关键</strong>。</li>
+</ul>
+<h3 id="2-flow-matching--x-predictiondenoise-分支">2) Flow Matching + x-prediction（denoise 分支）</h3>
+<ul>
+<li>
+<p><strong>插值</strong>：<code>z_t = t·x + (1−t)·ε</code>，<code>t∈[0,1]</code>，<code>z_0∼p_noise</code>、<code>z_1∼p_data</code>；velocity <code>v = dz/dt = x − ε</code>。</p>
+</li>
+<li>
+<p><strong>x-prediction 损失</strong>（核心公式，<code>x_θ = net_θ(z_t,t)</code> 是网络直接输出）：</p>
+<p>$$L_{MSE} = \mathbb{E}<em>{t,x,\epsilon},|v</em>\theta(z_t,t)-v|^2 = \mathbb{E}<em>{t,x,\epsilon},\frac{1}{(1-t)^2},|x</em>\theta(z_t,t)-x|^2$$</p>
+<p>利用关系 <code>v(z_t,t) = (x − z_t)/(1−t)</code>。</p>
+</li>
+<li>
+<p><strong>为什么必须 x-prediction（而非 v / ε）</strong>：① 高维（768-d/token）下 ε-prediction 全面崩溃、v-prediction 在 512-d 可用但 768/1024-d 退化，x-prediction 跨维度稳定（符合「干净数据落低维 manifold」假设）；② <strong>x 预测天然对齐末步「预测干净 token」</strong>，让去噪 MSE 与解码 CE 能共享权重——若用 v-prediction，与末步离散化共享权重时经验上会崩。</p>
+</li>
+<li>
+<p><strong>time 采样</strong>：denoise 分支 <code>t</code> 从 <strong>logit-normal</strong> 采样：<code>t' ∼ N(P_mean, P_std²)</code>，<code>t = σ(t')</code>，全程 <code>P_mean=−1.5, P_std=0.8</code>；高斯噪声额外乘 <strong>noise scale 2.0</strong>。</p>
+</li>
+</ul>
+<h3 id="3-共享权重-decoderdecode-分支t1">3) 共享权重 decoder（decode 分支，t=1）</h3>
+<ul>
+<li><strong>输入/输出</strong>：per-token 损坏的 <code>z̃ = p·x + (1−p)·ε</code>（<code>p</code> 是 per-token 损坏度）→ 同一网络在 <code>mode="decode"</code> 下出 <code>x̂</code> → unembedding <code>W</code> → logits。</li>
+<li><strong>CE 损失</strong>：<code>L_CE = E_{z̃}[ CrossEnt(W·x_θ(z̃), s) ]</code>，推理时只在 <code>t=1</code> 评 <code>W·x_θ(z_t)</code> 再 argmax。</li>
+<li><strong>per-token 损坏调度</strong>：<code>p ∼ logit-normal(P_mean=0.8, P_std=0.8)</code>，<code>ε</code> 乘 noise scale（OWT 用 <strong>5.0</strong>，conditional 用 1.0）。同一句内各 token 损坏度不同，迫使 decoder 借<strong>上下文</strong>恢复被去噪器在推理时弄脏的不完美 embedding，提升末步离散化鲁棒性。</li>
+<li><strong>denoise vs decode 配比</strong>：单 batch 内用 mask 选分支，denoise 概率 <strong>0.8</strong>（消融：0.8 ＞ 0.5 ＞ 0.2，去噪需要足够训练，0.2 在 SDE 下明显恶化）。</li>
+<li><strong>shared vs separate decoder 消融</strong>：另训一个 separate decoder（冻结 encoder、mask 20% token、加 logit-normal 噪 <code>P_mean=0.5,P_std=1.0</code>、3 epoch）与 shared 权重前沿相近，但 shared 能延伸到更低 Gen.PPL 区且省一个训练阶段。</li>
+</ul>
+<h3 id="4-self-conditioning--training-time-cfg">4) Self-conditioning + training-time CFG</h3>
+<ul>
+<li>
+<p><strong>self-conditioning</strong>：第二次前传以前一步 <code>x̂'</code>（stop-grad）作 condition，<code>x̂ = net_θ(z_t | x̂', t)</code>，实现为 channel 维 concat <code>[z_t, x̂']</code> 再 linear 投回。训练时 50% 用 <code>x̂'</code>、50% 用 null 0；推理时直接用上一时间步预测，<strong>不增加前传次数</strong>。decode 分支恒用 0。</p>
+</li>
+<li>
+<p><strong>CFG</strong>：把 self-conditioning 的 <code>x̂'</code> 当 condition <code>c</code>。标准 CFG 是 <code>v_cfg(z_t|c) = ω·v(z_t|c) + (1−ω)·v(z_t|∅)</code>，需推理双前传。ELF 用 <strong>training-time CFG</strong>，让网络直接拟合 post-combination 量，regression target：</p>
+<p>$$v_{target} = x - \epsilon + \Big(1 - \tfrac{1}{\omega}\Big)\big(v_\theta^{cfg}(z_t|t,c,\omega) - v_\theta^{cfg}(z_t|t,\varnothing,\omega)\big)$$</p>
+<p><code>ω=1</code> 时退化为无 CFG。每样本从 <code>[0.5,5.0]</code>（偏小值的幂分布）采 self-conditioning CFG scale <code>w</code>，因为 x-prediction，v 都由 x 预测换算。</p>
+</li>
+<li>
+<p><strong>control token（in-context conditioning）</strong>：prepend 各 4 个 time / CFG-scale / model-mode token（连续值用 positional embedding 编码），共 12 个 control token。相比 adaLN-Zero：in-context <strong>略好且省参数</strong>（ELF-B 148M→105M）。</p>
+</li>
+<li>
+<p><strong>conditional 生成</strong>：把 condition 序列的 clean embedding（不加噪）prepend 在 control token 之后、target 之前，靠 self-attention 条件化；训练时 10% 概率 zero-out condition 以学无条件分支，支持 input-condition CFG。</p>
+</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/elf-embedded-language-flows/fig2.png" alt="ELF 训练流水线细节：clean embedding x 经 corrupt（denoise/decode 两种噪声调度）→ self-condition（concat 0 或上一步 x̂&#x27; 后 project 回原维）→ add control（time/CFG-scale/model-mode 三类 control token）→ ELF 出 x̂，按分支用 L_MSE 或 L_CE 监督"></p>
+<h3 id="5-采样器ode--sde">5) 采样器（ODE / SDE）</h3>
+<ul>
+<li><strong>ODE step</strong>：<code>x̂=net(z,t,denoise)</code>；<code>v=(x̂−z)/(1−t)</code>；<code>z ← z + dt·v</code>。</li>
+<li><strong>SDE step</strong>（每步注入小噪 + 把 t 往噪声侧 shift，等效单步随机扰动）：<code>α = 1 − γ·dt</code>；<code>t_back = α·t</code>；<code>z_back = α·z + (1−α)·ε</code>；<code>x̂=net(z_back, t_back, denoise)</code>；<code>v=(x̂−z)/(1−t)</code>；<code>z ← z + dt·v</code>。<code>γ=0</code> 退化为 ODE。</li>
+<li><strong>time schedule</strong>：推理用 logit-normal 网格（<code>P_mean=−1.5,P_std=0.8</code>，与训练对齐），t 近 0 处间隔更细——few-step 下比 uniform 显著更好。</li>
+<li><strong>γ 选择</strong>：消融 γ∈{0,0.1,0.5,0.75,1,1.5,2}，γ 调控 Gen.PPL–entropy 折中，默认 <strong>γ=1.0</strong>；system 级 8/16 步用 γ=2，32 步用 γ=1.5（长轨迹需更少随机纠正）。SDE 在 8–32 步显著优于 ODE（随机性纠正早期去噪误差，而非像 ODE 确定性放大）。</li>
+</ul>
+<h3 id="关键超参elf-b-默认">关键超参（ELF-B 默认）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th><th>项</th><th>值</th></tr></thead><tbody><tr><td>Encoder</td><td>T5-small (35M)</td><td>Optimizer</td><td>Muon</td></tr><tr><td>Emb dim / bottleneck / model dim</td><td>512 / 128 / 768</td><td>Learning rate</td><td>0.002</td></tr><tr><td>Sequence length</td><td>1024</td><td>Weight decay</td><td>0</td></tr><tr><td>Denoiser (P_mean,P_std) / noise scale</td><td>(−1.5, 0.8) / 2.0</td><td>Batch size</td><td>512</td></tr><tr><td>Decoder (P_mean,P_std) / noise scale</td><td>(0.8, 0.8) / 5.0</td><td>Epochs (OWT)</td><td>5 (≈95K steps)</td></tr><tr><td>Denoise vs decode prob</td><td>0.8 vs 0.2</td><td>LR schedule / warmup</td><td>constant / 0.5 ep</td></tr><tr><td>Self-cond prob / CFG range</td><td>0.5 / [0.5,5]</td><td>EMA decay</td><td>0.9999</td></tr><tr><td>#time / #mode / #CFG tokens</td><td>4 / 4 / 4</td><td>SDE γ</td><td>1.0</td></tr></tbody></table>
+<p>模型规模（Tab.3）：ELF-B 12 层/768/12 头/105M（5 ep）、ELF-M 24/1056/16/342M（4 ep）、ELF-L 32/1280/16/652M（3 ep）。训练于 TPU v5p×64，约 1.5h/epoch。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>无条件生成（OWT，9.04B token，L=1024）</strong>：生成 1000 样本，用 GPT-2 Large 评 <strong>Gen.PPL</strong>（越低越好）+ unigram <strong>entropy</strong>（多样性，越高越好，不用 validation PPL 因 flow 模型似然评估需额外训练）。</p>
+<p><strong>System-level（Fig.7）</strong>：ELF-B（105M，SDE + self-cond CFG=3）vs MDLM/Duo/FLM/LangFlow（~170M）。ELF <strong>32 步即达 Gen.PPL≈24</strong>，远少于对手的采样步数；无 distillation 就压过 distilled 的 MDLM+SDTT / Duo+DCD / FMLM；<strong>训练 token 仅 45.2B，对手 524–577B（10–13×）</strong>。</p>
+<p><img src="/ai-papers-daily/figures/elf-embedded-language-flows/fig3.png" alt="System-level 对比（Fig.7）：(a) ELF 在各采样步数下 Gen.PPL 都低于离散/连续 baseline；(b) 少步区压过对手的 distilled 变体；(c) 训练 token 仅 45B（1×），对手均 ~550B（11–13×）"></p>
+<p><strong>Scaling（Tab.7，64 步）关键数字</strong>（Gen.PPL / Entropy）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Sampler</th><th>SC CFG</th><th>ELF-B 105M</th><th>ELF-M 342M</th><th>ELF-L 652M</th></tr></thead><tbody><tr><td>SDE</td><td>1.0</td><td>29.50 / 5.23</td><td>33.45 / 5.30</td><td>31.82 / 5.37</td></tr><tr><td>SDE</td><td>2.0</td><td>22.53 / 5.14</td><td>25.34 / 5.23</td><td>26.47 / 5.32</td></tr><tr><td>SDE</td><td>3.0</td><td>19.72 / 5.10</td><td>21.69 / 5.18</td><td>23.31 / 5.28</td></tr><tr><td>ODE</td><td>1.0</td><td>65.30 / 5.40</td><td>62.47 / 5.44</td><td>49.72 / 5.45</td></tr><tr><td>ODE</td><td>3.0</td><td>26.62 / 5.15</td><td>28.80 / 5.24</td><td>26.57 / 5.29</td></tr></tbody></table>
+<p>放大模型一致推动 Gen.PPL–entropy 前沿（同 entropy 下更低 PPL）；SC CFG>3 收益递减。System few-step（Tab.6，6 seed）：8 步 67.3、16 步 33.7、32 步 24.1，步数越多 SE 越小。</p>
+<p><strong>条件生成（Tab.1）</strong>：WMT14 De-En（L=128，BLEU）+ XSum（L=1088，ROUGE）。最佳配置：64 步 ODE + self-cond CFG=1 + input-condition CFG=2。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Size</th><th>De-En BLEU↑</th><th>XSum R-1↑</th><th>R-2↑</th><th>R-L↑</th></tr></thead><tbody><tr><td>AR</td><td>99M</td><td>25.2</td><td>30.5</td><td>10.2</td><td>24.4</td></tr><tr><td>MDLM</td><td>99M</td><td>18.4</td><td>33.4</td><td>11.6</td><td>25.8</td></tr><tr><td>Duo</td><td>170M(+35M)</td><td>21.3</td><td>31.4</td><td>10.1</td><td>25.0</td></tr><tr><td>E2D2</td><td>99M</td><td>24.8</td><td>28.4</td><td>8.3</td><td>22.0</td></tr><tr><td>CDCD</td><td>–</td><td>24.9</td><td>–</td><td>–</td><td>–</td></tr><tr><td><strong>ELF (ours)</strong></td><td><strong>105M(+35M)</strong></td><td><strong>26.4</strong></td><td><strong>36.0</strong></td><td><strong>12.2</strong></td><td><strong>27.8</strong></td></tr></tbody></table>
+<p>ELF 在两个任务全面最优。条件 CFG 消融（Fig.16）：CFG 1→2 显著涨点，<strong>CFG=2 最佳</strong>，过强反降。</p>
+<p><strong>其他消融结论</strong>：① prediction target：x ＞ v（高维退化）＞ ε（全维崩）；② in-context ＞ adaLN-Zero（略好且省参）；③ Muon ＞ AdamW（同步数更低 loss、更优前沿，尤其 SDE 下）；但换 AdamW 仍超 baseline，说明强不是靠优化器。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：① 主网络依赖 35M T5 encoder 提供 data manifold——宣传「无额外 inference module」成立，但训练侧 dependency 真实存在，embedding 质量是隐性天花板（scratch encoder 略差于 pretrained）；② 评估仍是 unconditional OWT + WMT/XSum 传统三件套，缺 instruction tuning / reasoning / 长文 QA / chat；③ few-step 下限仍 16–32 步，真正单步生成还得 distill，相对 AR per-token 单 step 仍有差距；④ 末步 token-level CE 只占 20% 训练，长尾词 / OOV 表现未探；⑤ 方法当前停在 seq2seq，离 LLaDA 式 chat 还有距离。</p>
+<p><strong>对电商 / 生成式推荐</strong>：若 item embedding 已稳定（类比 T5 给出 fixed manifold），生成式推荐可<strong>直接在 item embedding 空间做 flow，末步 argmax 出 item id</strong>，绕开为超大 vocabulary 设计 categorical diffusion 的难题。x-prediction + shared denoiser-decoder 范式天然契合「label space 巨大但 embedding 已稳」的电商场景；bottleneck（128-d）思路也提示：item 表征落低维 manifold 时，压缩去噪空间能同时提质量与多样性。</p>
+<p><strong>对搜索推荐</strong>：CFG 在 conditional 生成上「适度引导（scale=2）涨点、过强反降」的规律可直接迁到「query/context 引导的候选生成」；training-time CFG 让引导强度变成一个<strong>推理时可调的 input</strong>（不增前传），等价于一个可在线调的「相关性 vs 多样性」旋钮，对召回/重排的探索-利用很实用。</p>
+<p><strong>对 Agent / RL</strong>：当前 reasoning RL 几乎都在 token space 跑 GRPO，ELF 暗示「在连续 embedding 上 iterative refine + 末步出 token」的 reasoning chain 可能更样本高效（轨迹不被词表绑死、SDE 注噪纠错）；mean-flow / training-time CFG 也为 prompt 优化 / preference alignment 提供了新的连续侧 entry point。与同期字节 Cola DLM 互为镜像（Cola 学 latent prior 再投 token，ELF 直接在原 embedding flow + 末步合一），两条路径都拒绝 token-space diffusion，相互佐证「连续派可行」。</p> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2605.10938" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/lillian039/ELF" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="统一特征空间与任务空间的联合缩放，实现快手线上观看时长+0.7%~1.1%提升，推理加速48%"><meta property="og:title" content="UniFormer: Efficient and Unified Model-Centric Scaling for Industrial Recommendation"><meta property="og:description" content="统一特征空间与任务空间的联合缩放，实现快手线上观看时长+0.7%~1.1%提升，推理加速48%"><meta property="og:type" content="website"><title>UniFormer: Efficient and Unified Model-Centric Scaling for Industrial Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-25">2026-06-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.27058" target="_blank" rel="noopener">2606.27058</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>UniFormer: Efficient and Unified Model-Centric Scaling for Industrial Recommendation</h1> <p class="title-zh">UniFormer：统一的模型中心缩放框架用于工业推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 模型中心缩放 · 统一特征与任务交互</span> </div> <p class="affiliations">Kuaishou Technology</p> <div class="meta">Bo Chen, Jinlong Jiao, Tijian Hu, Ruihao Zhang, Yanzhi Liu, Chenghou Jin 等</div> <p class="one-liner">统一特征空间与任务空间的联合缩放，实现快手线上观看时长+0.7%~1.1%提升，推理加速48%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Model Scaling">Model Scaling</a><a class="tag" href="/DailyPaper/tag/Unified Architecture">Unified Architecture</a><a class="tag" href="/DailyPaper/tag/Multi-task">Multi-task</a><a class="tag" href="/DailyPaper/tag/Attention">Attention</a><a class="tag" href="/DailyPaper/tag/User-Item Decoupling">User-Item Decoupling</a><a class="tag" href="/DailyPaper/tag/Kuaishou">Kuaishou</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>语义分组 tokenization 实现用户-物品解耦：将无序列特征分为与候选物品独立/依赖两组，推理时独立部分计算一次复用所有候选，大幅降低时延；可借鉴于电商推荐中用户画像、上下文等请求级特征的重用。</li><li>多视图 FFN 灵活分配参数：为序列（S-FFNs）、无序列（NS-FFNs）、任务（T-FFNs）分别配备独立 FFN，避免容量瓶颈，支持定向扩容；在广告排序模型中可对不同特征类型（行为、属性、任务）配置可独立扩展的模块。</li><li>多序列交叉注意力防止偏好塌缩：短/长行为序列分离交叉注意并自适应融合，保留异构兴趣；电商场景可对点击、收藏、加购等不同长度序列独立建模后再融合，提升个性化。</li><li>任务 token 参与注意力交互：将任务特征作为 query 与高阶特征做交叉注意力，再自注意力捕获任务间关系，可替代传统 MMoE 等多任务模块，便于统一缩放。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：工业推荐模型通常采用组件中心缩放——单独放大行为建模、特征交互或任务建模模块，导致模块间割裂、计算资源浪费。近期工作尝试在特征空间内联合缩放序列与交互，但尚未纳入任务空间。为此，需一种统一的模型中心缩放框架，同时兼顾训练/推理效率、预防偏好塌缩和灵活参数分配。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>整体架构</strong>：堆叠的 Feature‑space Interaction Module (FIM) 和 Task‑space Interaction Module (TIM)，均使用标准注意力+FFN，实现特征与任务空间的联合缩放。</li>
+<li><strong>语义 tokenization</strong>：将序列特征（短期、长期压缩）和 non‑seq 特征按是否依赖候选物品分组，推理时可一次计算用户侧 token 并复用，实现用户‑物品解耦。</li>
+<li><strong>FIM</strong>：多序列交叉注意力分别处理短/长行为序列（用可学习系数自适应融合），再通过自注意力增强特征交互；之后用 NS‑FFNs 处理 non‑seq 特征，防止序列偏好塌缩。</li>
+<li><strong>TIM</strong>：任务 token 对 FIM 的输出做交叉注意力捕获任务‑特征关系，再通过自注意力 + T‑FFNs 建模任务间依赖，类似可扩展的 MMoE。</li>
+<li><strong>多视图 FFN</strong>：S‑FFNs（序列）、NS‑FFNs（non‑seq）、T‑FFNs（任务）各自专用，实现精细化容量扩充。</li>
+<li><strong>工程优化</strong>：用户级公共特征压缩减少冗余；可变长 FlashAttention 消除 padding；BF16 训练；推理时通过 attention mask 解耦用户与物品，QPS 提升 48%。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>离线：快手工业数据集上，UniFormer 在 Effective‑view / Long‑view / Like / Follow 四项任务的 GAUC 均显著超过最强基线 MixFormer，其中 Effective‑view GAUC 提升 0.53%（MixFormer 为 0.43%），Like 提升 0.53%（0.33%）；参数增至 1B 后仍有稳定提升，呈现缩放规律。</li>
+<li>线上 A/B：在快手和快手 Lite 两个场景，应用停留时长分别 +0.101%/+0.260%，观看时长 +0.729%/+1.113%，互动指标（点赞、评论、收藏等）也有显著正向提升。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.27058&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.27058" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.27058" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.27058" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

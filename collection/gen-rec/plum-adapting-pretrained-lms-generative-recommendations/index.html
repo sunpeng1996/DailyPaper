@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把预训练 LLM（Gemini-1.5 MoE）改造成 YouTube 工业级生成式召回模型。三阶段：Semantic ID 物品 token 化（SID-v2，多模态融合+多分辨率码本+共现对比）、领域续训 CPT（SID 词表对齐文本）、生成式召回 SFT（beam search 自回归生成下一视频 SID）。相比大 embedding 表召回模型，样本效率更高、有效曝光多样性大幅提升，已上线 YouTube 服务十亿级用户。"><meta property="og:title" content="PLUM: Adapting Pre-trained Language Models for Industrial-scale Generative Recommendations · 论文沉淀"><meta property="og:description" content="把预训练 LLM（Gemini-1.5 MoE）改造成 YouTube 工业级生成式召回模型。三阶段：Semantic ID 物品 token 化（SID-v2，多模态融合+多分辨率码本+共现对比）、领域续训 CPT（SID 词表对齐文本）、生成式召回 SFT（beam search 自回归生成下一视频 SID）。相比大 embedding 表召回模型，样本效率更高、有效曝光多样性大幅提升，已上线 YouTube 服务十亿级用户。"><meta property="og:type" content="website"><title>PLUM: Adapting Pre-trained Language Models for Industrial-scale Generative Recommendations · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2025-10</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>PLUM: Adapting Pre-trained Language Models for Industrial-scale Generative Recommendations</h1> <p class="archive-authors">Ruining He, Lukasz Heldt, Lichan Hong, Raghunandan Keshavan, et al. (23 人)</p> <p class="affiliations">Google DeepMind × YouTube</p> <p class="one-liner">把预训练 LLM（Gemini-1.5 MoE）改造成 YouTube 工业级生成式召回模型。三阶段：Semantic ID 物品 token 化（SID-v2，多模态融合+多分辨率码本+共现对比）、领域续训 CPT（SID 词表对齐文本）、生成式召回 SFT（beam search 自回归生成下一视频 SID）。相比大 embedding 表召回模型，样本效率更高、有效曝光多样性大幅提升，已上线 YouTube 服务十亿级用户。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">generative-retrieval</span><span class="tag tag-static">semantic-id</span><span class="tag tag-static">LLM4Rec</span><span class="tag tag-static">RQ-VAE</span><span class="tag tag-static">continued-pretraining</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>工业推荐长期被「大 embedding 表」范式主导（LEM, Large Embedding Models）：item ID / 高基数类别特征用海量 embedding 表表征，绝大部分参数压在 embedding 层，神经网络很薄。这套范式擅长「记忆」用户-物品交互，但与 LLM 的 scaling 方向（把参数压在神经网络、把输入压成紧凑 token）背道而驰，且训练大 Transformer 需要海量数据、成本高。</p>
+<p>PLUM 的核心主张：<strong>把物品表示从 embedding 表迁移到离散 token（Semantic ID），让模型复杂度从输入 embedding 转移到神经网络本体，从而能直接复用预训练 LLM 的序列建模能力和世界知识。</strong> 整个 pipeline 三段式，对齐 LLM 训练范式：</p>
+<ol>
+<li><strong>Item tokenization（SID-v2）</strong>：每个 item → 一串离散 codeword（语义 ID），用 RQ-VAE 量化。在 TIGER/RQ-VAE 基础上做三项改进：多模态内容融合、多分辨率码本+渐进掩码、共现对比正则。</li>
+<li><strong>Continued Pre-Training（CPT）</strong>：扩充预训练 LLM 词表加入 SID token，在「领域 item 数据 + 用户行为序列 + 通用文本」混合语料上继续 next-token 预训练，把 SID 这个新模态对齐到 LLM 既有知识。</li>
+<li><strong>Task-specific SFT（生成式召回）</strong>：decoder-only 模型自回归生成用户下一个会交互视频的 SID，beam search 解码出候选集，再映射回真实视频。无需维护独立 item 索引，也绕开了 embedding 召回的点积表达力上限。</li>
+</ol>
+<p>关键工程结论：PLUM 召回模型 dense 参数是 LEM 的 100 倍，但因为收敛快、样本效率高，<strong>整体训练成本与 LEM 相当</strong>（&#x3C; 0.55x FLOPs，每天只训 ~250M 样本 vs LEM 的数十亿），已在 YouTube 长视频和 Shorts 多个核心场景上线。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/plum-adapting-pretrained-lms-generative-recommendations/fig1.png" alt="Semantic ID 模型（SID-v2）总体架构：两路多模态视频 embedding 分别过 DNN Encoder 编码后 Concat &#x26; Project，经 5 级 Residual Quantization 多分辨率码本量化为分层 codeword，并以渐进掩码加权求和；右侧 DNN Decoder 重建各模态（Reconstruction Loss），同时用 MLP 投影对共现视频对（Co-occurring Pairs）施加 Contrastive Loss。"></p>
+<p>三阶段串联，每阶段产出下游阶段的输入：</p>
+<ul>
+<li><strong>SID 模型</strong>离线训练好后，对全量 item corpus 做量化，得到每个 video 的 SID 元组（5 级 codeword）。这套 SID 词表是后续所有阶段的「物品语言」。</li>
+<li><strong>CPT</strong> 在通用预训练 LLM checkpoint（Gemini-1.5 MoE 家族）基础上，把 SID token 加入词表，用混合语料续训。产出一个「SID 与文本语义已对齐」的 base checkpoint，本身已具备基于用户历史生成下一视频 SID 的能力，还保留了 few-shot in-context learning（能在 SID 上下文里续写合理文本）。</li>
+<li><strong>生成式召回 SFT</strong> 从 CPT checkpoint 出发，引入更丰富的实时上下文特征、用 reward 加权采样，专门优化召回任务。线上用 beam search 解码多条 SID 序列作为候选。</li>
+</ul>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-semantic-idsid-v2">1. Semantic ID（SID-v2）</h3>
+<p>SID 是从 item 内容特征导出的离散 codeword 元组，两阶段：(a) 把高层内容特征编码成稠密语义 embedding；(b) 把该 embedding 量化成分层 codeword 元组。基于 RQ-VAE（Residual-Quantized VAE）。三项改进：</p>
+<p><strong>(a) 多模态内容融合（Fused Multi-Modal）</strong></p>
+<ul>
+<li>输入：每个 item 一组异构 embedding 向量 ${x_m}_{m=1}^{M}$（如视频的文本元数据 / 视觉 / 音频 embedding）。</li>
+<li>每个模态 $x_m$ 过独立 embedding encoder $E_m$ 编码成隐向量 $z_m$，再 concat $\tilde{z}=[z_1,\dots,z_M]$，过一个 projection 得到统一特征向量 $z$。</li>
+<li>与 MMQ（每模态生成不同 token）不同，PLUM 直接 concat 多个 content embedding 再用 MLP 编码，灵活支持任意多个 embedding 源。</li>
+</ul>
+<p><strong>(b) 分层量化精炼</strong></p>
+<ul>
+<li><strong>多分辨率码本（Multi-Resolution Codebooks）</strong>：放弃 prior 的固定均匀分辨率码本（导致 SID 空间巨大且稀疏、大量码字组合从未被分配）。码本基数随量化层级递减：$\text{cardinality} = 2048 / 2^{level-1}$。即 level0=2048、level1=1024、level2=512…前几级高分辨率最具判别力，后续级编码低熵残差用低分辨率，SID 更紧凑高效。</li>
+<li><strong>渐进掩码（Progressive Masking）</strong>：强化分层可解释性。定义二值掩码 $m_l \in {0,1}$，$l$ 为码本层级，$m_l = \mathbb{1}_{l&#x3C;r}$，其中 $r \in [1,L]$ 是随机整数、$L$ 是总码本层数。训练时随机只选前 $r$ 级码本参与（强迫前缀层级自身可重建）。</li>
+</ul>
+<p><strong>(c) 共现对比正则（Co-occurrence Contrastive）</strong></p>
+<ul>
+<li>动机：纯内容导出的 SID 不一定符合「用户视角的相似」。常被一起观看的视频往往语义相关。多数 prior 把 CF item embedding 融进 content embedding，但 CF embedding 随热度动态变化、需频繁重训量化器；PLUM 改用 CF 信号作对比损失目标来引导量化器，避免重训。</li>
+<li>损失（batch 内 $N_b$ 个视频，$2N_b$ 是含正样本对的展开）：</li>
+</ul>
+<p>$$\mathcal{L}<em>{con} = -\sum</em>{i=1}^{2N_b} \frac{\exp(sim(p_i, p_i^+))}{\sum_{j=1}^{2N_b}\exp(sim(p_i,p_j))}$$</p>
+<p>其中 $p_i$ 是 batch 内某视频表示，$p_i^+$ 是与视频 $i$ 共现的视频表示，$sim$ 是点积相似度。鼓励共现视频生成相似 SID、推远不共现的。</p>
+<p><strong>(d) 总损失</strong></p>
+<p>$$\mathcal{L} = \mathcal{L}<em>{recon} + \mathcal{L}</em>{rq} + \mathcal{L}_{con}$$</p>
+<ul>
+<li>重建：$\mathcal{L}<em>{recon}=\sum</em>{m=1}^{M}|x_m-\hat{x}_m|^2$（每个模态各自重建）。</li>
+<li>残差量化：$\mathcal{L}<em>{rq}=\sum</em>{l=1}^{L}\beta|r_l - sg[e_l^<em>]|^2 + |sg[r_l]-e_l^</em>|^2$，$e_l^<em>$ 是第 $l$ 级码本中最近码字，$r_l = r_{l-1}-e_l^</em>$ 是递归残差（$r_0=z$），$sg$ 为 stop-gradient。</li>
+<li>最终量化向量带渐进掩码加权求和：$\hat{z}=\sum_{l=1}^{L}m_l, e_l^*$，再喂给每个解码器 $D_m$ 重建 $\hat{x}_m$。</li>
+</ul>
+<h3 id="2-continued-pre-trainingcpt">2. Continued Pre-Training（CPT）</h3>
+<p>目标：建立一个 SID token 语义已 grounding、且与 base LLM 文本 token 对齐的 base checkpoint。next-token 预测，语料两类各占 50%：</p>
+<ul>
+<li><strong>用户行为数据</strong>（个性化 / watch history）：每条样本是用户观看历史 + watch 特征。schema 示例：
+<code>wh = &#x3C;sid_1> &#x3C;channel_name> &#x3C;watch_ratio> &#x3C;watch_time> &#x3C;hours_since_final_watch> &#x3C;sid_2> &#x3C;channel_name> ... || &#x3C;sid_n></code></li>
+<li><strong>视频元数据语料</strong>（建立 SID↔文本关联）：每条含视频 SID、title、description、ASR 字幕、channel 名、合成数据。schema 示例：
+<ul>
+<li>SID+title：<code>Video &#x3C;sid> has title (en): &#x3C;video_title></code></li>
+<li>SID+topics：<code>The topics in video &#x3C;sid> are: &#x3C;topics></code></li>
+</ul>
+</li>
+</ul>
+<p><strong>训练配置</strong>：50%/50% 混合；1M steps，batch size 16，约 <strong>260B tokens</strong>。评测三块：基于用户历史生成 SID 的性能、held-out 视频元数据上 SID+语言联合建模能力、标准文本 benchmark 上通用语言能力退化追踪。CPT 后模型保留自由文本生成 + few-shot ICL 能力（附录例子：能在「The video <sid> is about ___」few-shot prompt 下续写语义合理的短语；而随机初始化的相同 recs 续训模型无法形成连贯短语、分不清 SID 与文本 token）。</sid></p>
+<h3 id="3-生成式召回-sft">3. 生成式召回 SFT</h3>
+<p><img src="/ai-papers-daily/figures/plum-adapting-pretrained-lms-generative-recommendations/fig2.png" alt="生成式召回示意：输入 prompt 是 SID token、文本特征、数值特征 custom token 交错的序列（watch_history + user features + context_video），喂给 Decoder-only LLM 自回归生成下一个视频的 SID（如 A5 B25 … H55 + EOS），beam search 解码出候选。"></p>
+<p>从 CPT checkpoint 出发，标准自回归最大似然，预测 ground-truth 视频（用户日志中 clicked 视频）的 SID token：</p>
+<p>$$\mathcal{L}<em>{SFT} = -\sum</em>{t=1}^{L} r(user, v_{click})\cdot \log P(sid_t \mid \text{Context}<em>{user}, \text{History}</em>{user}, sid_{&#x3C;t})$$</p>
+<ul>
+<li>$[sid_1,\dots,sid_L]$ 是 clicked 视频 $v_{click}$ 的 SID，$r(user,v_{click})$ 是每次 click 的手工 reward 信号。</li>
+<li>实操：按 reward 采样训练样本，采样后在 loss 里等权（而非直接 reward 加权），控成本。</li>
+<li>输入 prompt 是 SID token、数值特征 custom token、文本特征交错的序列，格式：<code>watch history | user features | context video features</code>，watch history 是按时序的观看序列（每次观看=SID token+其他特征 token concat）。本研究固定输入序列长 <strong>1,536 tokens</strong>，约覆盖最近 100 次观看 + 其他特征。SFT label 用 YouTube 上的 next watch，按用户 engagement/satisfaction 信号下采样。</li>
+</ul>
+<p><strong>推理</strong>：beam search 解码多条 SID 序列作为召回候选，每条 SID 映射回十亿级 corpus 中真实视频。可能产生无效 SID（hallucination）或 SID→video 碰撞，但实测 SFT 后 hallucination 率 &#x3C; 5%，SID→video 映射唯一性高。beam search 比随机解码效果好（牺牲一些多样性）。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<h3 id="主实验生成式召回-vs-lem-生产模型">主实验：生成式召回 vs LEM 生产模型</h3>
+<ul>
+<li><strong>模型</strong>：从 Gemini-1.5 MoE 家族训的 <strong>900M 激活参数</strong> PLUM 模型（总参约 4.2B），同时覆盖长视频 LFV 和 Shorts，从 Gemini warm-start，持续 fine-tune 新 engagement 数据，beam search 解码。</li>
+<li><strong>Baseline（LEM）</strong>：当前生产最优召回模型，高度优化（可溯到 Chen et al. 2019），同为 Transformer 但参数主要在 embedding 层，input/output item ID 词表 O(10M)。LEM 神经网络仅占总参 <strong>0.4%</strong>，PLUM 占 <strong>90%</strong>。</li>
+</ul>
+<p><strong>推荐质量</strong>（数字均为 PLUM/LEM 比值）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>LFV</th><th>Shorts</th></tr></thead><tbody><tr><td>Effective Vocab Size（覆盖 95% 曝光所需 unique 视频数）</td><td>2.60x</td><td>13.24x</td></tr><tr><td>CTR</td><td>1.42x</td><td>1.33x</td></tr><tr><td>WT/View（观看时长）</td><td>0.72x</td><td>1.13x</td></tr><tr><td>WF/View（观看比例）</td><td>1.32x</td><td>1.03x</td></tr></tbody></table>
+<p>PLUM 有效词表大幅扩大（更利于个性化长尾发现），用户反应指标整体有竞争力（LFV 上 WT/View 略低）。</p>
+<p><strong>线上 A/B</strong>（把 PLUM 召回加入候选池；为公平，给生产最优召回模型加同等 quota 作为 baseline LEM+，报相对 LEM+ 的变化）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>LFV</th><th>Shorts</th></tr></thead><tbody><tr><td>Engaged Users</td><td>+0.07%</td><td>+0.28%</td></tr><tr><td>Panel CTR</td><td>+0.76%</td><td>+4.96%</td></tr><tr><td>Views</td><td>+0.80%</td><td>+0.39%</td></tr><tr><td>Satisfaction</td><td>+0.06%</td><td>+0.39%</td></tr></tbody></table>
+<p>证明 PLUM 能在现有系统之上贡献增量价值，且是 YouTube 首个无大 embedding 表的神经召回模型。</p>
+<p><strong>样本效率</strong>：900M MoE 每天训 ~250M 样本，LEM 每天数十亿；训练 &#x3C; 0.55x FLOPs（单样本训练成本更高，但收敛快总成本相当）。</p>
+<h3 id="sid-v2-消融">SID-v2 消融</h3>
+<p>900M MoE PLUM 召回（无 CPT、去掉 prompt 中 watch history 的简化设置）。报 SID 唯一性 + Video Recall@10：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SID Model</th><th>SID Uniqueness</th><th>VID Recall@10</th></tr></thead><tbody><tr><td>SIDv1（baseline，prior TIGER）</td><td>94.0%</td><td>12.3%</td></tr><tr><td><strong>SIDv2（本文）</strong></td><td><strong>96.7%</strong></td><td><strong>14.4%</strong></td></tr><tr><td>Ablate Multi-Resolution</td><td>94.8%</td><td>13.2%</td></tr><tr><td>Ablate Multi-Embedding</td><td>96.9%</td><td>12.8%</td></tr><tr><td>Ablate Co-occurrence</td><td>91.8%</td><td>12.6%</td></tr></tbody></table>
+<p>所有改进都提升召回；其中<strong>共现对齐对 SID 唯一性和 recall 提升最大</strong>（去掉后唯一性掉到 91.8%、recall 掉到 12.6%）。</p>
+<h3 id="cpt-与预训练-llm-影响22-消融moe-900m">CPT 与预训练 LLM 影响（2×2 消融，MoE-900M）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>预训练 LLM</th><th>CPT</th><th>Recall@10（第 8 天）</th></tr></thead><tbody><tr><td>R1</td><td>No</td><td>No</td><td>0.19</td></tr><tr><td>R2</td><td>Yes</td><td>No</td><td>0.23</td></tr><tr><td>CR1</td><td>No</td><td>Yes</td><td>0.27</td></tr><tr><td>CR2（完整 PLUM）</td><td>Yes</td><td>Yes</td><td>0.28</td></tr></tbody></table>
+<p>结论：(1) <strong>CPT 帮助巨大</strong>（R1→CR1：0.19→0.27；R2→CR2：0.23→0.28），且带 CPT 的模型收敛快得多——多下游任务共享同一 CPT 模型时尤其划算。(2) <strong>从预训练 LLM 初始化一致优于随机初始化</strong>（无论有无 CPT），作者推测来自 LLM 既有的自然语言理解 / 通用序列处理能力可直接迁移到推荐。</p>
+<h3 id="scaling-研究">Scaling 研究</h3>
+<p>Gemini-1.5 MoE 四档：MoE-110M / 370M / 900M / 3B（激活参数），总参 &#x3C;1B 到 >10B。数据：YouTube「下一个看什么」场景，候选生成阶段，corpus 十亿级视频。输入序列固定 1,536 token；训练用 2025 年 7 月连续 7 天 shuffle 数据，评测第 8 天。硬件：1,024 块 v6e TPU（32GB HBM），4 个 trainer 并行各 256 TPU。所有模型从各自 CPT checkpoint（Iso-FLOPS $1\times10^{22}$）warm-start，CPT FLOPs 不计入。</p>
+<p><strong>超参（恒定学习率，batch 饱和 HBM）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Learning Rate</th><th>Global Batch Size</th></tr></thead><tbody><tr><td>MoE-110M</td><td>1e-4</td><td>25,600</td></tr><tr><td>MoE-370M</td><td>7e-5</td><td>15,360</td></tr><tr><td>MoE-900M</td><td>5e-5</td><td>7,680</td></tr><tr><td>MoE-3B</td><td>2e-5</td><td>3,584</td></tr></tbody></table>
+<p>发现：(1) 训练 loss 对 Iso-FLOPS 呈幂律，随预算增加最优模型尺寸从 110M→370M→900M 逐步右移；(2) 评测 loss 也幂律但最终饱和，且<strong>评测 loss 前沿比训练 loss 更早移向大模型</strong>——大模型对未来数据分布泛化更好；(3) 评测 Recall@10 放缓迹象更弱，随算力持续提升；小模型已过多个 epoch（MoE-110M 训了 4.24 epoch 仍无过拟合）。</p>
+<p><strong>局限</strong>：MoE-3B 在所考虑算力预算下<strong>未超过 MoE-900M</strong>。原因可能是超参未调优——同等训练资源下大模型 batch 被迫更小（HBM 限制），训练末 MoE-3B 只过了 0.57 epoch（约 5B 样本），比第二大模型差 2x+。结论：generative retrieval 的 compute-optimal 训练需要<strong>训练样本量与模型尺寸同步 scaling</strong>。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>对电商 / 搜推的可借鉴点：</strong></p>
+<ol>
+<li>
+<p><strong>「embedding 表 → 离散 SID + 厚神经网络」的迁移路径是工业可行的</strong>，且关键卖点不是绝对指标碾压，而是<strong>样本效率 + 有效词表多样性</strong>。电商场景 item 长尾、冷启动严重，PLUM 把 LEM 的 13x Effective Vocab Size（Shorts）拉起来，对长尾商品曝光分发很有参考价值。本文也是「首个无大 embedding 表的上线神经召回」，给想摆脱海量 item embedding 表运维负担的团队一个落地样本。</p>
+</li>
+<li>
+<p><strong>SID-v2 三件套都可直接拿来用</strong>：多模态 concat+MLP 融合（比 MMQ 的逐模态 token 更灵活）、多分辨率码本（$2048/2^{level-1}$，省 SID 空间）、<strong>共现对比正则（消融里增益最大）</strong>。尤其「用 CF 信号做对比损失目标、而非把动态 CF embedding 融进 content」这招，规避了量化器频繁重训——电商热度变化快，这个工程考量很实在。</p>
+</li>
+<li>
+<p><strong>CPT 是被严重低估的一步</strong>：2×2 消融显示 CPT 的增益（0.19→0.27）大于预训练 LLM 初始化的增益（0.19→0.23），且 CPT 模型收敛快、可被多个下游任务（召回 / 排序 / 个性化搜索）共享。对想搭统一推荐 foundation model 的团队，CPT 是核心枢纽而非可选项。</p>
+</li>
+<li>
+<p><strong>生成式召回绕开点积上限 + 不维护独立索引</strong>，beam search hallucination &#x3C; 5% 在工业级 corpus 上是可接受的，这打消了「生成式召回会大量产无效 ID」的顾虑。</p>
+</li>
+</ol>
+<p><strong>局限与开放问题：</strong></p>
+<ul>
+<li>主实验只报相对 LEM 的<strong>比值</strong>，无绝对数；A/B 增量偏小（多数 +0.x%，Shorts Panel CTR +4.96% 是亮点）。LFV 上 WT/View 0.72x 说明长视频观看时长仍弱于 LEM，并非全面碾压。</li>
+<li><strong>Scaling 在 3B 处失败</strong>（未超 900M），作者归因于超参/batch 受限而非方法上限，但这意味着「scaling 必然更好」尚未被证实，落地选型仍需按算力预算挑最优档。</li>
+<li>模型是 Gemini-1.5 MoE + 1024 TPU + 260B token CPT，<strong>复现门槛极高</strong>，无开源代码。中小团队更现实的是借鉴 SID-v2 设计 + CPT 思想，用更小的开源 LLM 试。</li>
+<li>只做了召回，排序 / 个性化搜索 / SID 与自然语言无缝混合生成、候选多样性新解码策略都列为 future work——这些恰是电商 Agent 化推荐（生成式排序、对话式推荐）可接力的方向。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2510.07784" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

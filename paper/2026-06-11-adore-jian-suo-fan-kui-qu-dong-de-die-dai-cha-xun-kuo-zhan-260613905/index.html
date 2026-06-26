@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将检索结果转化为结构化相关性反馈，在迭代中不断纠正扩展方向，显著提升查询扩展的检索效果"><meta property="og:title" content="ADORE: Iterative Query Expansion with Retrieval-Grounded Relevance Feedback"><meta property="og:description" content="将检索结果转化为结构化相关性反馈，在迭代中不断纠正扩展方向，显著提升查询扩展的检索效果"><meta property="og:type" content="website"><title>ADORE: Iterative Query Expansion with Retrieval-Grounded Relevance Feedback</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/QueryRec">QueryRec</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13905" target="_blank" rel="noopener">2606.13905</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>ADORE: Iterative Query Expansion with Retrieval-Grounded Relevance Feedback</h1> <p class="title-zh">ADORE：检索反馈驱动的迭代查询扩展</p> <div class="dir-row"> <span class="direction-chip">🧭 检索增强的迭代查询改写</span> </div> <p class="affiliations">University of Waterloo · Mila – Quebec AI Institute · University of Toronto · University of California, Berkeley</p> <div class="meta">Amin Bigdeli, Negar Arabzadeh, Radin Hamidi Rad, Sajad Ebrahimi, Charles L. A. Clarke, Ebrahim Bagheri</div> <p class="one-liner">将检索结果转化为结构化相关性反馈，在迭代中不断纠正扩展方向，显著提升查询扩展的检索效果</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/query expansion">query expansion</a><a class="tag" href="/DailyPaper/tag/retrieval-grounded feedback">retrieval-grounded feedback</a><a class="tag" href="/DailyPaper/tag/relevance assessment">relevance assessment</a><a class="tag" href="/DailyPaper/tag/iterative refinement">iterative refinement</a><a class="tag" href="/DailyPaper/tag/LLM-as-judge">LLM-as-judge</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>检索结果作为显式反馈信号：不直接把召回文档喂给生成器，而是让 LLM 先对文档做分级相关性评估（0-3 分），再将正负例中的有效词汇和噪声词汇显式告诉模型，指导下一轮生成。电商搜索或推荐场景中的 query 改写、自动补全可借鉴此范式，用点击/转化信号自动生成结构化反馈。</li><li>分级反馈池与词汇锚定：从高分文档中提取 named entity、数字、单位等“词汇锚点”，在下一轮伪文档生成时要求模型原样复用，避免同义词置换导致匹配失败。该 trick 可直接用于电商商品搜索的 query 扩展，确保扩展词与库存索引的精确匹配，减少召回漂移。</li><li>自适应终止策略：通过质量饱和（所有 top-10 已获最高分）和覆盖率饱和（连续两轮新文档数低于阈值）自动停止迭代，避免固定轮次浪费算力。Agent 或多步推理系统中可复用此思想，在规划或检索循环中设置早期停止条件，平衡效果与延迟。</li><li>解耦生成与评估：将 reformulator 和 relevance assessor 角色分离，并使用同一 LLM 但不同 prompt，即使换用开源模型也能保持稳定。推荐系统中可借鉴此分离设计，用单独的评估模块对生成的推荐理由或扩展 query 打分，提升可控性和可解释性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+现有 LLM 驱动的查询扩展大多仅依赖生成，不观察检索结果，无法判断生成的扩展词是否真的提升了检索质量。部分方法开始引入语料信号，但只把召回文档作为上下文喂给生成器，并未将其转化为显式的反馈信号。迭代式方法如 ThinkQE 虽多次检索，但缺少对每轮效果的验证，可能强化错误词语导致漂移。因此，亟需一种能将检索结果转化为可指导下一步生成的结构化反馈机制，让查询扩展成为一个迭代的、由检索效果驱动的修正过程。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>三阶段循环</strong>：每轮包含（1）Adapt：根据前一轮反馈生成伪文档；（2）Observe：用生成文本构造新查询，在目标语料上检索 top-K 文档；（3）Evaluate：用 LLM 评估检索结果与原始查询的相关性，将文档分为 4 级（0~3）。</li>
+<li><strong>反馈池构建</strong>：按得分将文档归入“强化证据”（得分 3）、部分相关（2）、漂移/不相关（1/0），并在下一轮的 prompt 中要求模型复用高分文档的精确词汇（如技术术语、数字、命名实体），同时避免低频噪声词。</li>
+<li><strong>原始查询锚定</strong>：所有相关性评估始终以原始查询为准，防止迭代导致语义漂移。</li>
+<li><strong>自适应终止</strong>：当新检索文档已全为最高分，或连续两轮未出现足够新增文档时提前停止，至多运行 5 轮。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>数据集：TREC DL 2019/2020/DL-Hard（段落检索）、BEIR 5 个子集（跨域）、BRIGHT 7 个子域（推理密集检索）。</li>
+<li>基线：BM25、BM25+RM3，以及 GenQR、Query2Doc、MUGI、ThinkQE 等 SOTA 扩展方法，全部使用 GPT-4.1 作为 backbone，以 BM25 作底层检索器。</li>
+<li>主要结果：在 BEIR 上平均 nDCG@10 比 BM25 提升 24.5%，比最强基线 ThinkQE 提升 3.6%；在 BRIGHT 上分别提升 122.9% 和 9.2%；在 TREC DL 和 BEIR 上 BM25 经 ADORE 扩展后整体超越强稠密检索器 BGE-base-en-v1.5。</li>
+<li>消融：迭代收益主要在前 2~3 轮，R2 贡献最大；更换评估器或改写器为 DeepSeek-V3 或 Llama-3.3-70B 效果稳定；扩展后的 query 同样能提升 BGE/Contriever 稠密检索效果。</li>
+</ul>
+<p><strong>核心一句</strong>：ADORE 通过让 LLM 评估检索结果并将分级反馈注入下一轮生成，使查询扩展从“一次生成”转变为“检索结果驱动的迭代修正”，大幅提升了跨域和推理密集场景下的检索精度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13905&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13905" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13905" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13905" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

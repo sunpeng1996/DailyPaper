@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出Astra框架，通过RL训练VLM策略决定何时调用世界模拟器生成新视角图像，提升多视图空间推理能力"><meta property="og:title" content="Thinking with Imagination: Agentic Visual Spatial Reasoning with World Simulators"><meta property="og:description" content="提出Astra框架，通过RL训练VLM策略决定何时调用世界模拟器生成新视角图像，提升多视图空间推理能力"><meta property="og:type" content="website"><title>Thinking with Imagination: Agentic Visual Spatial Reasoning with World Simulators</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-04">2026-06-04</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.06476" target="_blank" rel="noopener">2606.06476</a>  </div> <h1>Thinking with Imagination: Agentic Visual Spatial Reasoning with World Simulators</h1> <p class="title-zh">基于想象力的思考：与世界模拟器协作的Agent视觉空间推理</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent视觉空间推理 · 世界模拟器</span> </div> <p class="affiliations">The University of Hong Kong · Shanghai AI Laboratory · Shanghai Jiao Tong University · Fudan University · Beihang University</p> <div class="meta">Chenming Zhu, Jingli Lin, Yilin Long, Peizhou Cao, Tai Wang, Jiangmiao Pang 等</div> <p class="one-liner">提出Astra框架，通过RL训练VLM策略决定何时调用世界模拟器生成新视角图像，提升多视图空间推理能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Spatial Reasoning">Spatial Reasoning</a><a class="tag" href="/DailyPaper/tag/World Simulator">World Simulator</a><a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/View Consistency">View Consistency</a><a class="tag" href="/DailyPaper/tag/Agentic AI">Agentic AI</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>工具调用的决策学习：Agent仅在想象观察优于直接回答时才调用世界模拟器，这种“何时使用工具”的策略可迁移到对话推荐Agent中，避免过度依赖外部信息导致延迟和误导。</li><li>两阶段RL课程设计：先通过行为克隆预热工具使用，再用RL优化调用决策，这种分阶段训练策略可用于训练推荐Agent学习何时调用知识检索或用户画像补充信息。</li><li>视一致性训练保证证据可靠：通过位姿和内容一致性约束训练世界模型，确保生成的观察与实际一致；类似地，在多模态推荐中生成商品描述或图像时，可引入一致性损失提升信息真实性。</li><li>Agent与环境交互的闭环框架：Astra将视觉推理转化为“观察-想象-推理”循环，在电商场景中，可构建模仿用户浏览行为的模拟环境，让推荐Agent主动探索生成更合理的推荐理由。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：VLMs在空间推理中受限于所见图像和文本链式思维，难以推断未观察布局、维持跨视角一致性或从替代视角推理。当仅提供少量自我中心观察时，模型常表现不佳。</p>
+<p><strong>方法</strong>：提出Astra框架，将空间推理转化为Agent与世界模拟器交互的想象过程。Astra包含两个核心组件：Astra-VL是基于Qwen3-VL的VLM策略，通过RL训练学会在需要时生成自然语言相机运动指令；Astra-WM是基于Bagel的世界模拟器，接收指令并生成新视角的想象观察。为确保想象证据可靠，Astra-WM经过视一致性微调，同时优化位姿和内容一致性。RL训练采用世界模拟器在环的两阶段课程：先行为克隆让模型学会工具使用范式，再通过RL优化调用时机，使其仅在想象优于直接回答时调用模拟器。</p>
+<p><strong>结果</strong>：在MMSI-Bench上，Astra-WM将模拟器增强的Gemini-3-Flash从45.1提升至49.5；Astra-VL将Qwen3-VL骨干从29.8提升至38.8。在MindCube上，从36.8提升至42.7。消融实验表明，世界模拟器与Agent策略缺一不可，有效的世界模型增强推理需要学习何时、何地及如何想象。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.06476&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.06476" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.06476" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.06476" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

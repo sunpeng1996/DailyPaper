@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出动态任务生成与轨迹‑产出联合评测框架，揭示技能可用≠有效使用，且收益强依赖模型与设计先验"><meta property="og:title" content="OpenSkillEval: Automatically Auditing the Open Skill Ecosystem for LLM Agents"><meta property="og:description" content="提出动态任务生成与轨迹‑产出联合评测框架，揭示技能可用≠有效使用，且收益强依赖模型与设计先验"><meta property="og:type" content="website"><title>OpenSkillEval: Automatically Auditing the Open Skill Ecosystem for LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23657" target="_blank" rel="noopener">2605.23657</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OpenSkillEval: Automatically Auditing the Open Skill Ecosystem for LLM Agents</h1> <p class="title-zh">OpenSkillEval：自动审计 LLM Agent 开源技能生态</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 技能生态审计与评估</span> </div> <p class="affiliations">Singapore Management University · Fudan University · JD</p> <div class="meta">Jiahao Ying, Boxian Ai, Wei Tang, Siyuan Liu, Yixin Cao</div> <p class="one-liner">提出动态任务生成与轨迹‑产出联合评测框架，揭示技能可用≠有效使用，且收益强依赖模型与设计先验</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Agent">Agent</a><a class="tag" href="/DailyPaper/tag/Skill">Skill</a><a class="tag" href="/DailyPaper/tag/Evaluation">Evaluation</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/Augmentation">Augmentation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>技能不一定带来提升，选型前需实测：许多社区高分技能在实际任务中并未超越无技能基线，且会增加 3‑5 倍 token 开销。在电商 Agent 中引入生成式推荐或工作流技能前，应先在自身任务上做成本‑性能对比。</li><li>设计先验比流程约束更重要：对视觉类输出（商品图、海报、详情页），技能内嵌的模板、参考代码等设计资产能有效拉高低能力模型的下限，而强约束（大量 MUST/NEVER）常导致多样性下降。可借鉴“资产优先”思路构建内部技能库。</li><li>推理密集型任务需提供分析框架：当前报表、数据洞察类技能因缺乏假设检验、对比分析等分析框架，增益有限。若用 Agent 做评论分析、销量归因，技能应嵌入因果推断步骤或统计检验模板，而非仅提供工具链。</li><li>动态评测比静态基准更贴近业务：论文自动从真实网页、数据集反向生成任务实例，保持用例与用户需求同步。电商场景可类似地利用商品链接、Campaign 素材自动构建 Agent 评测集，持续跟踪能力变化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+开源技能（Skills，即预定义的 agent 工作流指令）生态迅速膨胀，但技能质量参差不齐，不同模型‑框架组合如何真正利用技能、哪些技能在实践中能带来性能提升，均缺乏系统评估。静态基准无法反映动态变化的用户需求，也难以审计技能的真实效用。<br>
+<strong>方法</strong><br>
+作者提出 OpenSkillEval，包含三个核心组件：</p>
+<ul>
+<li><strong>动态任务生成</strong>：针对 PPT 生成、前端网页设计、海报生成、数据可视化和报告生成五类任务，从真实网页、设计获奖作品、数据平台等高质量成品反向推测用户意图，自动生成结构化任务实例（>600 个），并通过 LLM 验证一致性。</li>
+<li><strong>技能收集</strong>：从 clawhub.ai、skills.sh 等社区筛选 30 个下载量较高的技能，按任务归类。</li>
+<li><strong>双维度自动评估</strong>：分析 agent 执行轨迹（是否读取技能、遵循步骤），并用视觉/内容/功能打分评判最终产物，对网页还加入交互模拟，对报表和图表验证数据准确性。<br>
+<strong>关键结果</strong></li>
+<li>默认设置下，agent 仅 48% 情况下显式读取技能文件；强制指引后虽提升至 94%，但仍有 10‑30% 的步骤被跳过或违背。</li>
+<li>GPT‑5.5 和 Claude Opus 整体最强，GPT‑5.5 在 Codex 框架下 token 效率突出；DeepSeek V4 提供高性价比。</li>
+<li>技能并非普遍有效：视觉类任务中，资产丰富（模板、图标）的技能（如 ppt‑master）能将弱模型性能从 3.9 提升到 4.3 分，接近强模型无技能水平；但推理密集型任务（报表、数据洞察）几乎没有技能增益，大多数技能得分与无技能基线持平。</li>
+<li>输出多样性与约束强度负相关；丰富设计资产常伴随更高 token 消耗。<br>
+<strong>核心洞察</strong><br>
+技能可用不代表 agent 会有效使用，效果高度依赖模型本身能力与框架配合；当前技能的价值主要在视觉先验，缺乏深度分析增量。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23657&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23657" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23657" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23657" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出在线自适应算法 SOS，以最小化支持调用次数同时保证反事实漏支持误差可控"><meta property="og:title" content="Strategic Decision Support for AI Agents"><meta property="og:description" content="提出在线自适应算法 SOS，以最小化支持调用次数同时保证反事实漏支持误差可控"><meta property="og:type" content="website"><title>Strategic Decision Support for AI Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12587" target="_blank" rel="noopener">2606.12587</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Strategic Decision Support for AI Agents</h1> <p class="title-zh">AI 代理的战略决策支持：何时独自行动，何时寻求帮助</p> <div class="dir-row"> <span class="direction-chip">🧭 AI Agent 决策支持与自适应支持调用</span> </div> <p class="affiliations">University of Pennsylvania</p> <div class="meta">Shayan Kiyani, Sima Noorani, George Pappas, Hamed Hassani</div> <p class="one-liner">提出在线自适应算法 SOS，以最小化支持调用次数同时保证反事实漏支持误差可控</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Decision Support">Decision Support</a><a class="tag" href="/DailyPaper/tag/Online Learning">Online Learning</a><a class="tag" href="/DailyPaper/tag/Counterfactual Error Control">Counterfactual Error Control</a><a class="tag" href="/DailyPaper/tag/Calibration">Calibration</a><a class="tag" href="/DailyPaper/tag/Agentic AI">Agentic AI</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>Agent 工具调用的成本控制：在电商推荐、客服等 Agent 系统中，外部工具（数据库、知识库、人工审核）调用成本高，SOS 算法能自适应学习何时真正需要工具，使支持调用率大幅低于 LLM 自主决定基线，同时维持相同或更低的漏支持错误率，可直接嵌入 Agent 推理循环。</li><li>在线校准与反事实反馈：当反馈只能选择性获得（即只有调用支持时才得知其是否必要），随机探索+重要性加权更新阈值的机制可用于推荐系统中延迟或部分可观测的指标优化，例如判断何时需要人工审核高风险的推荐结果。</li><li>与现有 LLM 训练解耦的监督层：该框架作为无模型修改的外层监督，适用于任何黑盒 Agent，无需重训或微调 LLM，即可在线上实现错误率可控的支持决策，适合快速叠加强化已有 Agent 的可靠性。</li><li>分数设计启示：实验表明使用表示学习的参数化分数（线性探针、锚定分数）比纯置信度分数更稳定高效，尤其在初始信号不可靠时，可通过在线校准逐步改善分离度，为设计 Agent 中的支持价值估计函数提供实用参考。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现代 AI 代理（Agent）在复杂任务中经常需要工具、人工或额外信息支持，但错误的支持调用会带来成本，而不寻求必要的支持又会酿成严重错误。经典决策支持研究多关注人机协作中机器的辅助角色，角色反转后，需要重新思考 Agent 何时应当自主行动，何时必须寻求支持。</p>
+<p><strong>方法关键点</strong>：</p>
+<ol>
+<li>将问题建模为<strong>战略决策支持优化问题（SDS-Opt）</strong>：最小化支持调用频率，同时约束“反事实漏支持误差”——即当支持本来可以显著改善输出时 Agent 却未请求的概率。</li>
+<li>在群体层面证明最优策略是对“支持价值”做阈值判定。</li>
+<li>提出在线算法 <strong>SOS（Strategic Oversight for Support-seeking）</strong>：维护一个支持价值分数（s_θ）和决策阈值 λ_t，通过随机探索（概率 μ）获取部分反馈，利用重要性加权更新阈值和分数参数（校准-on-the-fly），实现分布无关的有限样本误差控制。</li>
+<li>三种分数设计：纯置信度、基于冻结嵌入的线性探针、以及以 LLM 自报置信度为锚点的组合分数。分数可通过在线梯度更新，逐步改善。</li>
+</ol>
+<p><strong>实验与结果</strong>：</p>
+<ul>
+<li>在四个场景（医疗诊断信息收集、WikiSQL 工具使用、VirtualHome 人机规划、MATH 推理协作）上，使用 Qwen-2.5-7B、Gemini-2.5-Flash 和 GPT-4o-mini 三款前沿 Agent。</li>
+<li>与 LLM 自主决定基线对比，SOS 在匹配相同漏支持误差的前提下，显著降低支持调用率：例如在信息收集任务中，调用率从基线的约 0.6 降至 0.3 以下；在工具使用和推理任务中亦有类似幅度下降。</li>
+<li>校准-on-the-fly 使表示学习类分数即使从无信息起点也能快速收敛至高效策略；锚定分数在初始锚点准确时可更快降低支持调用率，反之灵活回退。</li>
+</ul>
+<p><strong>核心洞见</strong>：Agent 即便擅长使用支持，也常常不擅长判断何时该用；可借助在线自适应阈值和部分反馈学习，在不修改 Agent 的前提下大幅减少冗余支持调用，同时将关键遗漏风险控制在预定水平。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12587&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12587" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12587" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12587" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

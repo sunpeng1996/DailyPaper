@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出BEAM，学习二值掩码实现token自适应专家稀疏激活，保留98%性能，MoE层FLOPs减85%，解码加速达2.5倍"><meta property="og:title" content="BEAM: Binary Expert Activation Masking for Dynamic Routing in MoE"><meta property="og:description" content="提出BEAM，学习二值掩码实现token自适应专家稀疏激活，保留98%性能，MoE层FLOPs减85%，解码加速达2.5倍"><meta property="og:type" content="website"><title>BEAM: Binary Expert Activation Masking for Dynamic Routing in MoE</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-05-13">2026-05-13</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14438" target="_blank" rel="noopener">2605.14438</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>BEAM: Binary Expert Activation Masking for Dynamic Routing in MoE</h1> <p class="title-zh">BEAM：通过二值掩码实现MoE动态专家路由</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM</span> </div> <p class="affiliations">Alibaba Group · Peking University</p> <div class="meta">Juntong Wu, Jialiang Cheng, Qishen Yin, Yue Dai, Yuliang Yan, Fuyu Lv 等</div> <p class="one-liner">提出BEAM，学习二值掩码实现token自适应专家稀疏激活，保留98%性能，MoE层FLOPs减85%，解码加速达2.5倍</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/MoE">MoE</a><a class="tag" href="/DailyPaper/tag/Dynamic Routing">Dynamic Routing</a><a class="tag" href="/DailyPaper/tag/Sparsity">Sparsity</a><a class="tag" href="/DailyPaper/tag/Inference Acceleration">Inference Acceleration</a><a class="tag" href="/DailyPaper/tag/Binary Mask">Binary Mask</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div>  <div class="content"> <h2 id="动机">动机</h2>
+<p>Mixture-of-Experts (MoE) 通过固定 Top-K 路由为每个 token 激活相同数量的专家，导致简单 token 进行冗余计算，限制推理速度。现有动态路由方法要么需要修改架构并 costly retrain，要么在高稀疏度下因训练-推理不匹配而性能剧烈下降；静态剪枝或合并专家则无法适应 token 级难度变化。因此需要一个即插即用、能在保持模型能力的同时实现极端稀疏加速推理的方案。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>二值掩码路由器</strong>：在原 Top-K 路由基础上，增加一个轻量可学习的 mask router <code>Wm</code>，对输入 token 生成原始掩码 <code>σ(xWm)</code>，通过阈值 0.5 二值化为掩码 <code>m ∈ {0,1}^N</code>，与 Top-K 权重 <code>g</code> 逐元素相乘得到最终路由权重 <code>ĝ = g ⊙ m</code>，实现选择性去激活冗余专家。</li>
+<li><strong>解耦设计</strong>：主路由器负责专家选择和负载均衡，掩码路由器仅控制激活数量，消除优化目标冲突，使模型能表达 Top-K 集合内更丰富的激活模式。</li>
+<li><strong>端到端训练</strong>：采用 Straight-Through Estimator (STE) 绕过二值化不可微问题；引入 L1 正则损失 <code>Lreg = (1/K)∑_{i∈TK} |ˆmi|</code>，推动掩码稀疏；整体目标 <code>L = L_lm + αL_bal + βL_reg</code>，通过 β 平滑控制稀疏度-准确率权衡。</li>
+<li><strong>即插即用的部署</strong>：将 BEAM 集成到 vLLM 推理框架，仅需少量 CUDA kernel 修改（掩码路由将-1写入专家ID，对齐时跳过-1入口），保持与现有优化兼容，无需改变模型结构。</li>
+</ul>
+<h2 id="关键结果">关键结果</h2>
+<ul>
+<li>在 Qwen1.5-MoE-A2.7B、DeepSeekV2-Lite、Qwen3-30B-A3B 三个 MoE 模型上评估，涵盖推理、知识、常识等 8 个 benchmarks。</li>
+<li><strong>极端稀疏</strong>：BEAM 在仅激活 0.11–0.56 个专家（原 K=4/6/8）时，仍保留原模型 85%–95% 性能，远超 Top-K Pruning/Reduced、MoE-Dynamic 和 AdaMoE。</li>
+<li><strong>加速效果</strong>：MoE 层 FLOPs 减少达 85%（无共享专家模型），解码 TPOT 最高加速 2.5 倍，吞吐量提升 1.4 倍。</li>
+<li><strong>β 参数</strong>：单一正则系数即可灵活控制稀疏度，无需手动调节阈值。</li>
+<li>分析表明 BEAM 能根据 token 语义丰富度、层深和作用域自适应分配计算，且保持专家负载均衡。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>：BEAM 通过解耦路由与稀疏控制，以即插即用的方式使 MoE 模型实现 token 级自适应专家激活，既保留超过 98% 的性能，又显著降低计算量并加速推理。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14438&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14438" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14438" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14438" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Actor 与 Judge 合一：模型用 LLM-as-a-Judge 给自己生成的多个回答打分，组成偏好对做迭代 DPO。Instruction following 和 Judge 能力同步上升。"><meta property="og:title" content="Self-Rewarding Language Models · 论文沉淀"><meta property="og:description" content="Actor 与 Judge 合一：模型用 LLM-as-a-Judge 给自己生成的多个回答打分，组成偏好对做迭代 DPO。Instruction following 和 Judge 能力同步上升。"><meta property="og:type" content="website"><title>Self-Rewarding Language Models · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🧠 LLM通用</span> <span class="sep">·</span><time>2024-01</time> <span class="sep">·</span><span>arXiv (later ICML 2024)</span>  </div> <h1>Self-Rewarding Language Models</h1> <p class="archive-authors">Weizhe Yuan, Richard Yuanzhe Pang, Kyunghyun Cho, …, Jason Weston</p> <p class="affiliations">Meta AI / NYU</p> <p class="one-liner">Actor 与 Judge 合一：模型用 LLM-as-a-Judge 给自己生成的多个回答打分，组成偏好对做迭代 DPO。Instruction following 和 Judge 能力同步上升。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Self-Reward</span><span class="tag tag-static">DPO</span><span class="tag tag-static">Iterative</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>问题一句话</strong>：传统 RLHF/DPO 的对齐信号上限被「人类偏好数据规模 + 一个训完即冻结的 reward model」锁死——reward model 的天花板就是人类标注员的天花板，且训练期间它不会再进步。要造「超人 agent」必须打破这个瓶颈。</p>
+<p><strong>关键 idea</strong>：不再把 reward model 和 policy 拆成两个模型，而是让<strong>同一个 LLM 同时扮演 Actor（生成回答）和 Judge（给自己打分）</strong>。具体范式：</p>
+<ul>
+<li>Actor：对新 prompt 采样 N 个候选回答；</li>
+<li>Judge：用 LLM-as-a-Judge prompt 给这 N 个回答各打 0–5 分，取最高/最低分组成偏好对；</li>
+<li>用这些自造偏好对做 DPO，得到下一代模型；新模型同时是更强的 Actor <strong>和</strong>更强的 Judge，于是可以再造一批质量更高的偏好数据——形成「自我奖励」的迭代闭环（Iterative DPO，但 reward 来自模型自身而非外部固定 RM）。</li>
+</ul>
+<p>核心命题被实证验证：随迭代进行，<strong>指令遵循能力</strong>和<strong>自我评判能力</strong>两条曲线同时单调上升，而不是出现「自评塌缩 / reward collapse」。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline 是「一次 SFT 初始化 + 多轮自指令构造/DPO」循环，模型序列记为 M0→M1→M2→M3：</p>
+<ol>
+<li><strong>初始化（SFT）</strong>：从 Llama-2-70B base（M0）出发，用两类种子数据做 SFT 得到 M1：
+<ul>
+<li>IFT（Instruction Fine-Tuning）数据：让模型会「答」；</li>
+<li>EFT（Evaluation Fine-Tuning）数据：让模型会「评」（即 LLM-as-a-Judge 能力）。</li>
+</ul>
+</li>
+<li><strong>自指令构造（Self-Instruction creation）</strong>，用当前模型 Mt：
+<ul>
+<li>生成新 prompt（few-shot self-instruct）；</li>
+<li>对每个 prompt 采样 N=4 个候选回答；</li>
+<li>用同一个 Mt 当 Judge，给每个回答打 0–5 分（每个评 3 次取平均降方差）。</li>
+</ul>
+</li>
+<li><strong>偏好对构造 + DPO 训练</strong>：每个 prompt 取最高分回答为 winner、最低分为 loser（分数相同则丢弃），构成 AIFT(Mt) 偏好数据集，对 Mt 做 DPO 得到 Mt+1。</li>
+<li><strong>迭代</strong>：M1 造数据 → 训出 M2；M2 造数据 → 训出 M3。Judge 与 Actor 始终是同一模型且同步更新，这是与旧 Iterative DPO（外部固定 RM，如 Pairwise Cringe Optimization）的本质区别。</li>
+</ol>
+<p><img src="/ai-papers-daily/figures/self-rewarding-language-models/fig1.png" alt="Self-Rewarding LM 总体架构：左半 Self-Instruction creation（模型 Mt 生成候选回答并给自己打分），select 出偏好对后右半做 DPO 训练得到 Mt+1，红色回环表示下一轮迭代"></p>
+<p>模型序列与训练数据对应关系：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>初始化自</th><th>训练数据</th><th>训练方法</th></tr></thead><tbody><tr><td>M0</td><td>—</td><td>无（Llama-2-70B base）</td><td>—</td></tr><tr><td>M1</td><td>M0</td><td>IFT + EFT 种子数据</td><td>SFT</td></tr><tr><td>M2</td><td>M1</td><td>IFT+EFT + AIFT(M1)</td><td>DPO</td></tr><tr><td>M3</td><td>M2</td><td>IFT+EFT + AIFT(M1) + AIFT(M2)</td><td>DPO</td></tr></tbody></table>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-种子数据ift--eft">1) 种子数据：IFT + EFT</h3>
+<p><strong>IFT 种子数据</strong>：取自 Open Assistant，沿用 Instruction Backtranslation（Li et al. 2024）的做法，只保留英文首轮对话且人工标注 rank 最高（rank 0）的高质量样本，共 <strong>3200 条</strong> (instruction, response)。只在这份数据上做 SFT 得到的模型称为 <strong>SFT Baseline</strong>。</p>
+<p><strong>EFT 种子数据</strong>：同样来自 Open Assistant（每个 prompt 有多条人工排序回答）。构造方式：</p>
+<ul>
+<li>把 (instruction, response) 套进 Figure 2 的 Judge prompt 模板（见下）作为输入；</li>
+<li>训练 target（CoT justification + 最终 0–5 分）数据集里没有现成的，于是用 <strong>SFT Baseline 自己生成</strong>评测输出，仅当生成分数的排序与人工 rank 一致时才采纳进训练集；</li>
+<li>因为很多样本被打 4 分导致分布偏斜，<strong>重采样</strong>丢掉部分最常见分数的样本；</li>
+<li>最终 <strong>1630 train + 541 eval</strong>，与 IFT 数据不重叠。</li>
+</ul>
+<blockquote>
+<p>EFT 不是必须的（光靠 IFT 模型也具备一定 Judge 能力），但加上能显著提升评判质量；t-SNE 显示 EFT 数据分布与 IFT 明显不同（位于 embedding 空间另一片区域），这正解释了「加 EFT 不损害指令遵循能力」。</p>
+</blockquote>
+<h3 id="2-llm-as-a-judge-promptreward-函数核心">2) LLM-as-a-Judge prompt（reward 函数核心）</h3>
+<p>这是整个方法的「reward 函数」，采用<strong>加性 5 分制</strong>（additive），而非多选题式打分。模型被要求对一条回答逐条累加：</p>
+<ul>
+<li>+1：相关、提供了部分相关信息（即使不完整）；</li>
+<li>+1：覆盖了用户问题的实质部分；</li>
+<li>+1：以有用的方式回答了基本要素；</li>
+<li>+1：清晰地以 AI 助手视角直接、全面回答，组织良好；</li>
+<li>+1：完美贴合、无冗余、体现专家知识。</li>
+</ul>
+<p>输出格式要求：先用 ≤100 词简述打分理由（CoT），最后一行写 <code>Score: &#x3C;total></code>。</p>
+<p><strong>这一 prompt 设计是关键超参</strong>：消融显示，用本文加性 prompt，SFT Baseline 的 pairwise accuracy 达 <strong>65.1%</strong>；换成 Li et al. (2024) 的多选桶式 prompt 只有 <strong>26.6%</strong>（Spearman 甚至为负 −0.18）。加性分解成子标准让模型更容易评分。</p>
+<h3 id="3-自指令构造self-instruction-creation">3) 自指令构造（Self-Instruction creation）</h3>
+<ul>
+<li><strong>生成新 prompt</strong>：用一个<strong>事先固定</strong>的 Llama-2-Chat-70B 做 8-shot self-instruct（6 个示例来自 IFT 数据、2 个来自模型生成数据），解码 T=0.6, p=0.9；套用 Self-Instruct 的非分类任务模板，并做 ROUGE-L 相似度过滤、关键词过滤、长度过滤。（附录 A.5 显示新训练的 Mt 自己也能 in-context 生成 prompt，但 M2/M3 会先生成一串指令再接答案，需后处理。）</li>
+<li><strong>生成候选回答</strong>：用<strong>当前正在训练的</strong> Self-Rewarding 模型采样 <strong>N=4</strong> 个回答，T=0.7, p=0.9。</li>
+<li><strong>评分</strong>：用同一个模型的 Judge 能力，对每个回答打分 rⁿᵢ∈[0,5]；因评分有方差，<strong>采样 3 次取平均</strong>。</li>
+</ul>
+<h3 id="4-偏好对构造--dpo-loss">4) 偏好对构造 + DPO loss</h3>
+<p>对每个 prompt 的 4 个评分，取最高分回答 yʷᵢ（winner）、最低分回答 yˡᵢ（loser）构成偏好对 (xᵢ, yʷᵢ, yˡᵢ)；<strong>分数相同则丢弃该 prompt</strong>。</p>
+<p>DPO 目标（Rafailov et al. 2023），符号含义：πθ 为待训 policy、π_ref 为参考模型（本轮起点）、β 控制偏离参考的强度、σ 为 sigmoid：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>L_DPO = − E_(x,yʷ,yˡ) [ log σ( β log (πθ(yʷ|x)/π_ref(yʷ|x)) − β log (πθ(yˡ|x)/π_ref(yˡ|x)) ) ]</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li>加入 AIFT(M1) 偏好对 <strong>3964 对</strong>训出 M2；</li>
+<li>加入 AIFT(M2) 偏好对 <strong>6942 对</strong>训出 M3。</li>
+</ul>
+<blockquote>
+<p>附录 A.4 的重要消融：只把打满分 (rⁿᵢ=5) 的样本当正例加入 SFT（ReST/正例增强式，11254 条）<strong>无任何提升</strong>（29% vs 30% 平手）；必须用<strong>偏好对 + DPO</strong>才有效。这说明「对比 loser」是收益来源，单纯加正样本不行。</p>
+</blockquote>
+<h3 id="5-训练超参可复现">5) 训练超参（可复现）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>关键超参</th></tr></thead><tbody><tr><td>SFT</td><td>lr 5.5e-6 → cosine 衰减到 1.1e-6；batch 16；dropout 0.1；只在 target token 上算 loss</td></tr><tr><td>DPO</td><td>lr 1e-6 → 衰减到 1e-7；batch 16；dropout 0.1；β=0.1</td></tr><tr><td>Early stopping</td><td>每 200 步存 checkpoint，用 Claude 2 在 253 条验证集上 pairwise 评估（AlpacaEval prompt 格式），与上一步生成比较</td></tr></tbody></table>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>Base 模型</strong>：Llama-2-70B。<strong>对齐数据来源</strong>：仅 Open Assistant 小种子集，不用任何蒸馏自更强模型的 target、也不用百万级私有标注。</p>
+<p><strong>评测两个维度</strong>：</p>
+<ul>
+<li>指令遵循：GPT-4 做 judge 的 head-to-head（256 条 IFT test，双向比对、不一致记平局）；AlpacaEval 2.0（805 prompt，对 GPT-4-Turbo 的 win rate）；MT-Bench（多轮，GPT-4 打 10 分）；9 个 NLP benchmark；外加作者人工盲评。</li>
+<li>Reward modeling：在 Open Assistant 留出集上测 Judge 与人工排序的一致性——pairwise accuracy、5-best%（被打满分 5 的回答确实是人类最高排序的比例）、exact match%、Spearman、Kendall τ。</li>
+</ul>
+<h3 id="指令遵循结果">指令遵循结果</h3>
+<p>GPT-4 head-to-head（见下图 Figure 3）：M2 对 M1 是 <strong>55.5% vs 11.7%</strong>，M3 对 M2 是 <strong>47.7% vs 12.5%</strong>，M3 对 SFT Baseline 高达 <strong>62.5% vs 9.8%</strong>——逐轮显著增益。值得注意的是 <strong>M1（IFT+EFT）与 SFT Baseline（仅 IFT）几乎打平</strong>（30.5% vs 30.9%），证明加入「会评判」的 EFT 能力<strong>不损害</strong>「会回答」的能力。</p>
+<p><img src="/ai-papers-daily/figures/self-rewarding-language-models/fig2.png" alt="Figure 3：GPT-4 head-to-head 胜率。上组为 M1/M2/M3 各自 vs SFT Baseline（绿=Self-Rewarding 胜，蓝=平局，红=Baseline 胜），M3 达 62.5% 胜率；下组为 M3 vs M2、M2 vs M1、M3 vs M1 的逐轮对比，均大幅领先"></p>
+<p><strong>AlpacaEval 2.0 win rate（对 GPT-4-Turbo）</strong>——逐轮上升，M3 超过 Claude 2 / Gemini Pro / GPT-4 0613：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>Win Rate</th><th>用蒸馏 target</th><th>用私有数据</th></tr></thead><tbody><tr><td>Self-Rewarding M1</td><td>9.94%</td><td>—</td><td>—</td></tr><tr><td>Self-Rewarding M2</td><td>15.38%</td><td>—</td><td>—</td></tr><tr><td><strong>Self-Rewarding M3</strong></td><td><strong>20.44%</strong></td><td>—</td><td>—</td></tr><tr><td>GPT-4 0314</td><td>22.07%</td><td></td><td>✓</td></tr><tr><td>Mistral Medium</td><td>21.86%</td><td></td><td>✓</td></tr><tr><td>Claude 2</td><td>17.19%</td><td></td><td>✓</td></tr><tr><td>Gemini Pro</td><td>16.85%</td><td></td><td>✓</td></tr><tr><td>GPT-4 0613</td><td>15.76%</td><td></td><td>✓</td></tr><tr><td>GPT-3.5 Turbo 0613</td><td>14.13%</td><td></td><td>✓</td></tr><tr><td>LLaMA2 Chat 70B</td><td>13.87%</td><td></td><td>✓</td></tr></tbody></table>
+<p><strong>MT-Bench（满分 10）</strong>：整体 6.78(M1)→7.01(M2)→7.25(M3)。增益主要在 humanities/STEM/roleplay/writing/extraction，math/code/reasoning 增益小（归因于 Open Assistant 种子 prompt 偏弱于推理）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Overall</th><th>Math/Code/Reasoning</th><th>Humanities/STEM/Roleplay/Writing</th></tr></thead><tbody><tr><td>SFT Baseline</td><td>6.85</td><td>3.93</td><td>8.60</td></tr><tr><td>M1</td><td>6.78</td><td>3.83</td><td>8.55</td></tr><tr><td>M2</td><td>7.01</td><td>4.05</td><td>8.79</td></tr><tr><td>M3</td><td>7.25</td><td>4.17</td><td>9.10</td></tr></tbody></table>
+<p><strong>人工盲评</strong>（50 条指令、3 标注员多数投票）与 GPT-4 判断一致：M1/M2/M3 vs SFT Baseline 胜率 28%/56%/66%，逐轮拉开。</p>
+<h3 id="reward-modeling-能力自评不退化的核心证据">Reward Modeling 能力（自评不退化的核心证据）</h3>
+<p>Judge 与人工排序的一致性逐轮上升，且<strong>没有再喂 EFT 数据</strong>——纯靠「指令遵循变强带动评判变强」：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标</th><th>SFT Baseline (IFT)</th><th>M1 (IFT+EFT)</th><th>M2</th><th>M3</th></tr></thead><tbody><tr><td>Pairwise acc. ↑</td><td>65.1%</td><td>78.7%</td><td>80.4%</td><td>81.7%</td></tr><tr><td>5-best % ↑</td><td>39.6%</td><td>41.5%</td><td>44.3%</td><td>43.2%</td></tr><tr><td>Exact Match % ↑</td><td>10.1%</td><td>13.1%</td><td>14.3%</td><td>14.3%</td></tr><tr><td>Spearman ↑</td><td>0.253</td><td>0.279</td><td>0.331</td><td>0.349</td></tr><tr><td>Kendall τ ↑</td><td>0.233</td><td>0.253</td><td>0.315</td><td>0.324</td></tr></tbody></table>
+<p>两段增益分别来自：① EFT 数据（65.1%→78.7%，SFT 阶段）；② 自训练迭代（78.7%→81.7%，DPO 阶段，无新 EFT）。</p>
+<h3 id="关键消融结论">关键消融结论</h3>
+<ul>
+<li><strong>EFT 是否必要</strong>：去掉 EFT 只用 IFT 起步（M′ 序列），因为模型常打不出规范分数、分数收敛到 4，每轮能收集的有效偏好对极少（541 / 429 对 vs 3964 / 6942），最终 M′2/M′3 虽也超 SFT Baseline 但<strong>显著弱于</strong> M2/M3，且差距随迭代越拉越大。</li>
+<li><strong>DPO vs 仅加正例</strong>：仅加满分正例做 SFT 无效（见上），偏好对 + DPO 才有效。</li>
+<li><strong>代价与隐患</strong>：NLP benchmark（ARC/HellaSwag/GSM8K/MMLU/NQ 等）整体大致持平、部分轻微下降（「alignment tax」）；生成长度逐轮显著变长（M1≈1092 → M2≈1552 → M3≈2552 字符），存在 length bias 风险。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>只跑了 3 轮、单一设置，缺乏「迭代 scaling law」与长期是否 reward collapse 的证据；M2→M3 在 AlpacaEval 上增益已收窄（15.38→20.44，且部分 reward 指标如 5-best% 在 M3 反降），暗示存在天花板。</li>
+<li>强依赖 base 模型自身的 LLM-as-a-Judge 起点能力（加性 prompt 65.1% 才跑得动），弱模型起步会失败。</li>
+<li>训练 reward 与最终评测（GPT-4）都用 LLM，length bias + 潜在 reward hacking 未深入分析；未做安全性评测。</li>
+<li>增益集中在「更好地调用已有知识」（写作/角色扮演），对数学/推理几乎无效——说明它放大已有能力而非注入新能力。</li>
+</ul>
+<p><strong>对电商/搜索推荐/Agent 方向的可借鉴点</strong>：</p>
+<ul>
+<li><strong>Judge 与 Policy 合一、随训练共同进化</strong>：在缺少大规模人工偏好标注的电商场景（商品文案生成、客服回复、搜索 query 改写），可让同一个模型既生成又用结构化 rubric 自评，迭代造偏好对——绕过「先训一个固定 RM」的重投入。</li>
+<li><strong>加性 rubric 化打分</strong>比笼统多选打分稳得多（65.1% vs 26.6%）：做 LLM-as-a-Judge / 离线评测时，应把业务质量拆成可累加的子标准（相关性/覆盖度/可用性/清晰度/专业度），而非让模型直接给一个总分；多次采样取平均降方差也值得照搬。</li>
+<li><strong>偏好对 > 正例增强</strong>：自蒸馏数据飞轮里，构造「最好 vs 最差」对比对、用 DPO，远胜只把高分样本当 SFT 正例——对推荐/搜索的 rerank、生成式推荐里的偏好对齐有直接启示。</li>
+<li><strong>要监控的反模式</strong>：length bias、alignment tax（通用能力回退）、增益饱和。落地时应固定长度归一化的 judge、并在每轮保留通用能力 holdout 集做回归监控。</li>
+<li>该工作是 Self-Reward 范式从概念到实证的里程碑，直接催生了 SPIN、SPPO、Meta-Rewarding LMs 等后续路线，并引出「Judge 是否也该用 RL 训练」的新课题。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2401.10020" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

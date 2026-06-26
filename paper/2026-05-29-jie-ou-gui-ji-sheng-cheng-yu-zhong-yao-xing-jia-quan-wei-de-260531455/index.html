@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过将KL正则化RL目标等价为重要性加权SFT，以监督效率实现多轮推理的强化学习性能"><meta property="og:title" content="DRIFT: Decoupled Rollouts and Importance-Weighted Fine-Tuning for Efficient Multi-Turn Optimization"><meta property="og:description" content="通过将KL正则化RL目标等价为重要性加权SFT，以监督效率实现多轮推理的强化学习性能"><meta property="og:type" content="website"><title>DRIFT: Decoupled Rollouts and Importance-Weighted Fine-Tuning for Efficient Multi-Turn Optimization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31455" target="_blank" rel="noopener">2605.31455</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DRIFT: Decoupled Rollouts and Importance-Weighted Fine-Tuning for Efficient Multi-Turn Optimization</h1> <p class="title-zh">解耦轨迹生成与重要性加权微调的高效多轮优化</p> <div class="dir-row"> <span class="direction-chip">🧭 多轮交互优化 · 加权监督微调</span> </div> <p class="affiliations">The Hong Kong University of Science and Technology (Guangzhou) · The Chinese University of Hong Kong, Shenzhen</p> <div class="meta">Jian Mu, Tianyi Lin, Chengwei Qin, Zhongxiang Dai, Yao Shu</div> <p class="one-liner">通过将KL正则化RL目标等价为重要性加权SFT，以监督效率实现多轮推理的强化学习性能</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-turn optimization">Multi-turn optimization</a><a class="tag" href="/DailyPaper/tag/Weighted SFT">Weighted SFT</a><a class="tag" href="/DailyPaper/tag/KL-regularized RL">KL-regularized RL</a><a class="tag" href="/DailyPaper/tag/Offline RL">Offline RL</a><a class="tag" href="/DailyPaper/tag/Self-correction">Self-correction</a><a class="tag" href="/DailyPaper/tag/Importance sampling">Importance sampling</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>离线轨迹 + 重要性权重替代在线RL：在对话式推荐、智能客服等需多轮交互的场景，可离线采样参考策略的轨迹，按指数回报加权后做SFT，避免每次模型更新都重跑多轮对话，显著降低训练成本。</li><li>奖励塑形设计：用折扣因子鼓励尽早成功，并加入重复惩罚防止模型原地打转，这种回报定义可直接复用于需要逐步修正输出的Agent任务（如多轮搜索、工具调用）。</li><li>仅监督最后一轮：在“正确即停”的交互协议下，只对轨迹的最终响应施加权重，跳过已被验证器否定的中间尝试，简单有效地改善了偏差-方差权衡，适用于类似纠错场景的轨迹数据利用。</li><li>Prompt 级权重归一化：对同一prompt下的多条轨迹独立计算分区函数进行归一化，保证权重只在局部比较相对好坏，稳定训练，这一技巧可推广至其他基于rollout重要性采样的微调方法。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：LLM在多轮交互中需要自纠正能力，但现有方法要么采用在线RL（效果强但每步更新都需生成完整轨迹，成本极高），要么用离线SFT（高效但会遭遇分布偏移和行为崩溃）。DRIFT旨在留住RL的训练信号，同时保有SFT的训练效率。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>理论等价</strong>：推导出KL正则化RL的目标与重要性加权SFT等价，将最优轨迹分布表示为参考分布的指数倾斜。</li>
+<li><strong>完全解耦</strong>：分两阶段实现——①离线轨迹生成：用固定参考策略采样多条多轮交互轨迹，按设计的回报（折扣奖励+重复惩罚）计算指数权重，仅保留最后一轮及其权重。②加权SFT：在预收集的数据集上做token级加权交叉熵训练，权重由轨迹回报决定。</li>
+<li><strong>终端步保留</strong>：因交互在首次正确时终止，仅对最终回答施加权重，避免给中间错误步骤分配正向信号。</li>
+<li><strong>稳定技巧</strong>：采用prompt级分区函数归一化，缓解低β时权重方差过大问题。</li>
+</ul>
+<p><strong>关键实验</strong>：在MetaMathQA的MATH子集上训练，评估数学（MATH, MATH500, TheoremQA）和通用推理（MMLU-Redux, MMLU-Pro, GPQA）基准。Qwen2.5-3B和Llama3.1-8B下，DRIFT-5turn的multi@5准确率平均达到60.5%和55.6%，分别比UFO-5turn高0.5%和略低0.5%，但训练GPU时间节省数十小时。首轮和第2轮校正率明显高于其他方法。超参分析表明β=0.1、γ较小（如0.3）时效果最佳。</p>
+<p><strong>最值得记住的一句话</strong>：KL正则化RL下的最优策略可以通过对参考策略的轨迹做指数回报加权并执行SFT来逼近，从而把昂贵的在线多轮rollout彻底从训练循环中剥离。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31455&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31455" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31455" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31455" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

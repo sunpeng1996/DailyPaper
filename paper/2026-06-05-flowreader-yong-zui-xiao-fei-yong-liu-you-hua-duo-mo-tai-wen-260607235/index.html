@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将多模态文档的证据组装建模为最小费用流问题，统一控制评分、路由、选择和自适应计算"><meta property="og:title" content="FLOWREADER: Min-Cost Flow Optimization for Multi-Modal Long Document Q&#38;A"><meta property="og:description" content="将多模态文档的证据组装建模为最小费用流问题，统一控制评分、路由、选择和自适应计算"><meta property="og:type" content="website"><title>FLOWREADER: Min-Cost Flow Optimization for Multi-Modal Long Document Q&amp;A</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.07235" target="_blank" rel="noopener">2606.07235</a>  </div> <h1>FLOWREADER: Min-Cost Flow Optimization for Multi-Modal Long Document Q&amp;A</h1> <p class="title-zh">FLOWREADER：用最小费用流优化多模态长文档问答的证据组装</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态RAG · 图优化证据路由</span> </div> <p class="affiliations">Ca&#39; Foscari University of Venice</p> <div class="meta">Ambuj Mehrish, Sebatiano Vascon</div> <p class="one-liner">将多模态文档的证据组装建模为最小费用流问题，统一控制评分、路由、选择和自适应计算</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RAG">RAG</a><a class="tag" href="/DailyPaper/tag/multimodal QA">multimodal QA</a><a class="tag" href="/DailyPaper/tag/min-cost flow">min-cost flow</a><a class="tag" href="/DailyPaper/tag/evidence assembly">evidence assembly</a><a class="tag" href="/DailyPaper/tag/long document">long document</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>证据组装的图建模思路可迁移到电商多模态信息聚合：将商品标题、详情图、表格参数、用户评价等视为异构节点，用最小费用流从碎片化来源中筛选最优证据组合，代替简单的 Top-K 检索，提升回答或推荐理由的完整性。</li><li>统一评分向量h控制多目标：通过一个共享的评分向量同时驱动 MMR 去重、相关性筛选和长度感知的可回答性评估，可用于 Agent 的任务规划中，动态权衡信息收集的多样性、可靠性与成本。</li><li>熵正则化复制者动态（replicator dynamics）用于紧凑子集选择：在 Agent 多智体场景下，从多个候选证据路径中选出无冗余的紧凑集合，可避免信息重复，提升 RAG 或决策模块的效率。</li><li>双过程门控与自适应 System-2 精炼：当生成一致性低或流图容量紧张时触发二次精炼，电商 Agent 可借鉴这种「成本感知的浅层回答 + 条件化深层推理」模式，优化 API 调用开销与回答质量。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：长文档、多模态 QA 中，证据分散在文本、表格、图片、幻灯片等碎片中，传统 Top-K 分块检索独立处理每个碎片，无法建模证据间的连接与多跳依赖，导致回答不完整或错误。</p>
+<p><strong>方法</strong>：将证据组装转化为多模态节点图上的最小费用流问题。用一个共享评分向量 h 统一控制：① 源节点选择（基于 MMR，平衡相关性与多样性）；② 汇节点选择（长度感知的可回答性代理）；③ 边的成本与容量。最优流分解为候选证据路径，再用熵正则化复制者动态筛选紧凑无冗余子集。最后，并行 VLM 工作器在双过程门控下生成答案：仅当回答一致性低或流图容量紧张时，触发一次 System-2 精炼，实现自适应计算。</p>
+<p><strong>关键结果</strong>：在 VisDoMBench 上，FLOWREADER 在证据高度碎片化的 PaperTab 子集上达到 58.40（+1.30），SlideVQA 子集 72.93（+0.62），五子集宏平均 65.47，与最强基线 G²-Reader（66.21）仅差 0.74。表明最小费用流在碎片化多模态证据上显著优于 Top-K 检索，且提供了评分、路由、选择、计算统一的控制框架。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.07235&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.07235" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.07235" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.07235" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

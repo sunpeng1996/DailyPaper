@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出基于竞技场量化双极论证（A-QBAF）的竞争性多智能体辩论框架，实现透明可争议的多模态验证"><meta property="og:title" content="Contestable Multi-Agent Debate with Arena-based Argumentative Computation for Multimedia Verification"><meta property="og:description" content="提出基于竞技场量化双极论证（A-QBAF）的竞争性多智能体辩论框架，实现透明可争议的多模态验证"><meta property="og:type" content="website"><title>Contestable Multi-Agent Debate with Arena-based Argumentative Computation for Multimedia Verification</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14495" target="_blank" rel="noopener">2605.14495</a>  </div> <h1>Contestable Multi-Agent Debate with Arena-based Argumentative Computation for Multimedia Verification</h1> <p class="title-zh">面向多媒体验证的竞技场式多智能体辩论计算框架</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体辩论与结构化论证推理</span> </div>  <div class="meta">Truong Thanh Hung Nguyen, Vo Thanh Khang Nguyen, Hoang-Loc Cao, Phuc Ho, Van Pham, Hung Cao</div> <p class="one-liner">提出基于竞技场量化双极论证（A-QBAF）的竞争性多智能体辩论框架，实现透明可争议的多模态验证</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-agent Debate">Multi-agent Debate</a><a class="tag" href="/DailyPaper/tag/Argumentation">Argumentation</a><a class="tag" href="/DailyPaper/tag/Multimedia Verification">Multimedia Verification</a><a class="tag" href="/DailyPaper/tag/Multimodal LLM">Multimodal LLM</a><a class="tag" href="/DailyPaper/tag/A-QBAF">A-QBAF</a><a class="tag" href="/DailyPaper/tag/Uncertainty-aware">Uncertainty-aware</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多智能体辩论的轻量裁决机制：将全局论辩分解为小型局部论证图，通过选择性冲突解决避免全量计算，适合电商中多模态商品审核、虚假评论检测等需要快速结论的场景。</li><li>证据到论据的结构化转换：把多源证据转化为带出处和强度评分的支持/攻击关系，可借鉴到推荐系统的可解释性生成，让模型给出带置信度的正反理由。</li><li>不确定性感知的递进式仲裁：在冲突无法自动化解时触发人工审核或更强模型，这种分层决策思路可直接用于Agent客服的争议处理流水线。</li><li>透明可编辑的章节级报告：生成分块验证报告允许人工修正，适合生成式推荐中需要用户可见且可干预的决策说明。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多媒体真伪验证不仅要求结论准确，更需要推理过程透明、可质疑。现有方法缺乏结构化论辩与多源证据的对抗性融合，难以在复杂场景下给出可靠且可审查的判断。</p>
+<p><strong>方法</strong>：该工作提出竞争性多智能体辩论框架，整合多模态大语言模型、外部验证工具与基于竞技场的量化双极论证（A-QBAF）。流程上，首先将待验证案例分解为以主张为中心的独立章节，针对每项主张检索相关证据；随后将证据自动编码为结构化的支持或攻击论元，每项论元附带出处链与强度评分。所有论元被送入局部论证图，通过选择性冲突解决机制快速识别关键矛盾，并对无法自动裁决的高不确定性节点进行升级处理（调用更强模型或标记人工介入）。最终生成章节级可编辑验证报告，所有中间论据均可追溯。</p>
+<p><strong>结果</strong>：系统作为ICMR 2026多媒体验证挑战赛的提交方案，公开了完整实现。框架在小规模论证图上实现了低延迟的透明推理，实验表明其结构化的论辩输出具备良好的可读性与可操作性，且计算开销可控，适用于真实多媒体验证场景。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14495&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14495" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14495" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14495" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

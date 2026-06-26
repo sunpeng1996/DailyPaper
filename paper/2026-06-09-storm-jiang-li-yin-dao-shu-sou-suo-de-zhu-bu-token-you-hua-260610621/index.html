@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将检索奖励转化为 token 级信号，通过奖励引导束搜索训练 LLM 生成高效关键词，在不改变索引下大幅提升 BM25"><meta property="og:title" content="STORM: Stepwise Token Optimization with Reward-Guided Beam Search"><meta property="og:description" content="将检索奖励转化为 token 级信号，通过奖励引导束搜索训练 LLM 生成高效关键词，在不改变索引下大幅提升 BM25"><meta property="og:type" content="website"><title>STORM: Stepwise Token Optimization with Reward-Guided Beam Search</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/QueryRec">QueryRec</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.10621" target="_blank" rel="noopener">2606.10621</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>STORM: Stepwise Token Optimization with Reward-Guided Beam Search</h1> <p class="title-zh">STORM：奖励引导束搜索的逐步 token 优化查询扩展</p> <div class="dir-row"> <span class="direction-chip">🧭 查询改写与词汇扩展 · 奖励引导束搜索</span> </div> <p class="affiliations">MILA – Quebec AI Institute &amp; ILLS · Université Paris-Saclay &amp; CentraleSupélec &amp; CNRS · Air Liquide · Sorbonne Université &amp; ISIR &amp; CNRS · Sapienza, University of Rome</p> <div class="meta">Arthur Satouf, Giulio D&#39;Erasmo, Yuxuan Zong, Habiboulaye Amadou Boubacar, Pablo Piantanida, Benjamin Piwowarski</div> <p class="one-liner">将检索奖励转化为 token 级信号，通过奖励引导束搜索训练 LLM 生成高效关键词，在不改变索引下大幅提升 BM25</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Query Rewriting">Query Rewriting</a><a class="tag" href="/DailyPaper/tag/Beam Search">Beam Search</a><a class="tag" href="/DailyPaper/tag/Lexical Expansion">Lexical Expansion</a><a class="tag" href="/DailyPaper/tag/Self-Supervised">Self-Supervised</a><a class="tag" href="/DailyPaper/tag/BM25">BM25</a><a class="tag" href="/DailyPaper/tag/Reward Guidance">Reward Guidance</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>奖励信号粒度下放：将检索质量指标（如 nDCG）转化为 token 级反馈，在生成过程中实时剪枝，解决序列级奖励延迟与稀疏问题。这一思路可直接用于电商搜索/推荐中的 query 改写、标题优化、对话式 Agent 的关键词生成，用业务指标（CTR、转化率）替换 nDCG 即可训练。</li><li>低成本高效重写：STORM 训练的 LLM 输出短关键词串，推理延迟接近 BM25，适合在线实时场景。电商搜索可部署为轻量级改写模块，不增加检索延迟，却显著提升召回与相关性。</li><li>自监督训练摆脱人工标注：无需人工改写对，只需相关性判断或近似信号（如点击日志、伪标签）。可借鉴其利用交叉编码器伪标签蒸馏到生成式改写器的方法，在标注稀缺的电商场景快速冷启动。</li><li>多语言零样本迁移：仅用英文 MS-MARCO 训练，即可迁移到多语言 BM25 索引，效果超越专用多语言稠密检索器。对跨国电商平台，可简化多语 query 改写部署，无需额外训练。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+词汇不匹配严重限制稀疏检索（BM25）效果，现有 LLM 重写器（如 HyDE、MuGI）生成冗长伪文档，解码与检索成本高，且仅获得序列级奖励信号，难以分辨哪些词真正提升检索。强化学习类方法（如 QUESTER）同样面临延迟反馈和探索效率低的问题。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>奖励引导的束搜索（reward-guided beam search）</strong>：在每一步生成时，对当前候选序列用 BM25 索引打分，保留高奖励分支，将检索奖励转化为 token 级剪枝信号，集中探索检索有效词汇。</li>
+<li><strong>自监督训练框架</strong>：借鉴 GCN，用 BM25 的 nDCG 作为判别器，训练 LLM 以最小化 KL 散度。提议分布由 ε-混合（ε 核采样 + (1-ε) 束搜索中选最高奖励序列）组成，通过重要性采样更新策略，无需人工改写。</li>
+<li><strong>奖励函数设计</strong>：nDCG@100（用交叉编码器伪标签代替稀疏 MS-MARCO 标签）、文档频率惩罚（避免高频泛词）、对数似然长度正则，共同引导生成高质量关键词。</li>
+<li><strong>推理高效</strong>：生成约 32-128 tokens 的逗号分隔关键词串，用 BM25 索引一次检索，延迟极低。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>数据集：MS-MARCO 训练（~80k 查询），评估涵盖 TREC DL 19/20、MS-MARCO Dev、BEIR 12 集合、MIRACL 18 语言。</li>
+<li>基线：BM25、RM3、SPLADE-v2、Qwen3 上的 HyDE/MuGI/W2P/QUESTER，以及 GPT-4.1 上的多个重写器。</li>
+<li>结果：STORM-8B 在 BEIR 平均 nDCG@10 达 47.5，超过所有同尺寸 LLM 重写器，并比 GPT-4.1 最强基线高 0.3；在 MIRACL 上零样本迁移平均 48.4，超越专用多语言稠密检索器 mColBERT。推理延迟仅 4.4 秒（8B）且检索时间与 BM25 持平。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.10621&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.10621" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.10621" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.10621" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

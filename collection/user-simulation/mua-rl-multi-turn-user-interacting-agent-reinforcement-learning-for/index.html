@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次把 LLM 模拟用户接进 agent 的 RL rollout 里。GRPO + 真实数据库环境验证 tool call 结果，并配两条 cold-start 数据合成 pipeline（LLM 模拟工具响应 vs. 真实 MCP server）。"><meta property="og:title" content="MUA-RL: Multi-turn User-interacting Agent Reinforcement Learning for Agentic Tool Use · 论文沉淀"><meta property="og:description" content="首次把 LLM 模拟用户接进 agent 的 RL rollout 里。GRPO + 真实数据库环境验证 tool call 结果，并配两条 cold-start 数据合成 pipeline（LLM 模拟工具响应 vs. 真实 MCP server）。"><meta property="og:type" content="website"><title>MUA-RL: Multi-turn User-interacting Agent Reinforcement Learning for Agentic Tool Use · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>👥 User Simulator</span> <span class="sep">·</span><time>2025-08</time> <span class="sep">·</span><span>arXiv / OpenReview</span>  </div> <h1>MUA-RL: Multi-turn User-interacting Agent Reinforcement Learning for Agentic Tool Use</h1> <p class="archive-authors">Weikang Zhao, Xili Wang, Chengdi Ma, Lingbin Kong, Zhaohua Yang, Mingxiang Tuo, Xiaowei Shi, Yitao Zhai, Xunliang Cai</p> <p class="affiliations">Meituan</p> <p class="one-liner">首次把 LLM 模拟用户接进 agent 的 RL rollout 里。GRPO + 真实数据库环境验证 tool call 结果，并配两条 cold-start 数据合成 pipeline（LLM 模拟工具响应 vs. 真实 MCP server）。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">User Simulator</span><span class="tag tag-static">GRPO</span><span class="tag tag-static">Tool Use</span><span class="tag tag-static">Multi-turn RL</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>问题一句话</strong>：在 agent 与用户的多轮交互中，用户需求是动态、不确定、随机的——用户会根据 agent 的回复改主意、补信息、提新约束。现有 tool-use 的 RL 方法（Retool / SkyRL / RAGEN 等）训练时只面对<strong>预先写死的 query 和静态环境</strong>，rollout 里没有真正会变的用户，所以学不到”边对话边纠偏、边调工具”的能力。</p>
+<p><strong>关键 idea</strong>：MUA-RL 第一次把 <strong>LLM 模拟的”用户”直接塞进 RL 的 rollout 循环</strong>里。一次 rollout 同时编织四种信号——agent 的文本生成、工具调用、<strong>模拟用户的回话</strong>、以及<strong>真实数据库返回的工具执行结果</strong>。reward 只看<strong>最终任务是否完成</strong>（0/1），不奖励中间格式 / 工具名匹配 / 调用成功率。范式 = 轻量 cold-start（SFT）建立基础工具调用能力 → GRPO 在”用户 + 真实 DB”的动态环境里端到端 self-iteration。</p>
+<p>一句话：把”用户模拟器”从<strong>评测</strong>搬进<strong>训练 loop</strong>，让 agent 与会变的用户共演化。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline 分两阶段：</p>
+<p><strong>阶段一 · Cold-start（SFT）</strong>：用两条数据合成 pipeline 造约 2000 条多轮 tool-using 轨迹（覆盖 9 个场景 = 5 个 LLM 合成场景 + 4 个真实 MCP server 场景），让 base model（Qwen3-8B/14B/32B Non-thinking）先具备”会调陌生工具、会边对话边纠错”的基础能力。</p>
+<p><strong>阶段二 · MUA-RL（GRPO）</strong>：基于 VeRL（HybridFlow）搭多轮用户交互 RL 框架，<strong>接入一个真实可运行的数据库环境</strong>来验证工具调用结果。每个 query 采 G 个 rollout，rollout 内部是一个完整对话：</p>
+<ul>
+<li>任务形式化为元组 (T, M, O)：T 是工具集空间，M 是消息空间，O = O_db ∪ O_user 是观测空间（数据库观测 + 用户观测）。</li>
+<li>给定用户首条 query o₁,user，轨迹按 turn 展开：每个 turn 里 agent 自主决定是否调工具、调几个；调工具→真实 DB 返回 o_db，或→发文本消息 m 给模拟用户→模拟用户返回 o_user。</li>
+<li>三种 rollout 范式对比见下图：(a) 纯文本 rollout（数学题那种，无工具）；(b) multi-step rollout（有工具但 query 静态、无真用户，如 Retool/Search-R1）；(c) MUA-RL 的 <strong>multi-turn user-interacting rollout</strong>——文本 + 工具 + 用户消息 + 工具结果四者交织，动态性/随机性/不确定性最高。</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/mua-rl-multi-turn-user-interacting-agent-reinforcement-learning-for/fig1.png" alt="Figure 4：三种 rollout 范式对比。(a) 纯文本 rollout，无工具调用；(b) multi-step rollout，有工具执行但 query 静态、无真用户；(c) MUA-RL 的多轮用户交互 rollout，Policy LLM 与&#x22;模拟用户(LLM)&#x22;对话、并对真实数据库调工具，把文本生成/工具调用/用户消息/工具结果四类信号交织在一条轨迹里。图例：紫=agent 消息、灰=工具调用、淡紫=用户消息、红=工具结果、绿=最终结果。"></p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="子模块-a--任务形式化与多轮轨迹">子模块 A · 任务形式化与多轮轨迹</h3>
+<p>一条多轮轨迹（公式 1）：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>(o₁,user → t₁ → o₁,db → ... → m₁)        ← turn 1</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span>(o_k,user → t_j → o_j,db → ... → t_{j+jk} → o_{j+jk},db → m_k)   ← turn k</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li><code>t_i ∈ T</code>：第 i 次工具调用；<code>o_i,db</code>：调用 t_i 后数据库返回的观测；<code>o_i,user</code>：用户观测（用户发来的话）；<code>m_i ∈ M</code>：agent 发给用户的消息。</li>
+<li>每个 turn 内 agent 可连续调多个工具（t_j … t_{j+jk}），再以一条 m_k 结束本 turn 给用户。</li>
+<li>这是 RL 要优化的”动作序列”载体。</li>
+</ul>
+<h3 id="子模块-b--cold-start-数据合成两条-pipeline">子模块 B · Cold-start 数据合成（两条 pipeline）</h3>
+<p>下图为两条 pipeline 的结构（见 fig2）：</p>
+<p><strong>B1 · 工具响应由 LLM 模拟（5 个合成场景）</strong>：</p>
+<ol>
+<li>先选一个 domain，设计<strong>最简数据库 schema</strong> + 对应工具（受真实业务启发并简化）。</li>
+<li>工具的描述/参数、domain policy 由 LLM 生成 → 人工校订 + 迭代精修。</li>
+<li>三个 LLM 协作生成轨迹：一个演 <strong>agent</strong>、一个演 <strong>user</strong>、最关键一个演 <strong>tool</strong>。构造 query 时用 LLM 生成一个符合 schema 的小型合成数据库（充当 memory）喂给 tool LLM；agent 调某工具时把工具名+参数传给 tool LLM，tool LLM 据 memory 产出工具响应。</li>
+</ol>
+<p><strong>B2 · 工具响应由真实 MCP server 给（4 个真实场景）</strong>：流程大幅简化——所有工具由 MCP server 预先暴露、自动执行，无需手设计 schema/工具。只需生成对应 domain 的用户 query，再由 agent LLM ↔ user LLM ↔ MCP server 三方交互产出轨迹。</p>
+<p><strong>质量控制</strong>：所有 cold-start 数据走 <strong>dual-verification = 人工专家标注 + DeepSeek-R1 评估</strong>，过滤无效轨迹。最终 ~2000 条，跨 9 场景。</p>
+<p><img src="/ai-papers-daily/figures/mua-rl-multi-turn-user-interacting-agent-reinforcement-learning-for/fig2.png" alt="Figure 3：两条 cold-start 数据合成 pipeline。(a) 工具响应由 LLM 模拟——Tasks 与&#x22;合成数据库(memory)&#x22;喂入，User LLM ↔ Agent LLM ↔ Tool LLM 三方交互产出轨迹；(b) 工具响应由真实 MCP server 提供——Agent LLM ↔ MCP server 直接执行。两条都经 Verifiers 过滤得到 Filtered Trajectories。"></p>
+<p><strong>Cold-start 超参</strong>：batch size 128，2 epochs，AdamW，初始 lr 5e-6，cosine 衰减。</p>
+<h3 id="子模块-c--grpo-优化器">子模块 C · GRPO 优化器</h3>
+<p>采用 <strong>Group Relative Policy Optimization</strong>（无 value/critic，组内相对优势替代）。给定旧策略 π_old、参考策略 π_ref，对每个 query q 从 π_old 采样一组响应 {y₁,…,y_G}，最大化：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>J_GRPO(θ) = E[ (1/G) Σ_i min( ρ_i·A_i , clip(ρ_i, 1-ε, 1+ε)·A_i ) − β·D_KL(π_θ ‖ π_ref) ]</span></span>
+<span class="line"><span>其中 ρ_i = π_θ(y_i|q) / π_old(y_i|q)</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>组内优势（公式 3）：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>A_i = ( r_i − mean({r_j}) ) / std({r_j})</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li><code>ε</code>：PPO-style 裁剪系数；<code>β</code>：KL 惩罚系数（论文设 <strong>β = 0.001</strong>）。</li>
+<li>用组内 reward 的均值/标准差做归一化得 advantage，省掉 value function，降训练成本、稳。</li>
+</ul>
+<h3 id="子模块-d--multi-turn-user-interacting-rollout核心">子模块 D · Multi-turn user-interacting Rollout（核心）</h3>
+<ul>
+<li>rollout 内：模拟用户由 <strong>GPT-4o-2024-11-20</strong> 扮演（注意是训练期 user simulator）；工具结果由<strong>真实可运行 DB 环境</strong>返回。</li>
+<li>agent rollout temperature = <strong>1.0</strong>（鼓励探索）。</li>
+<li>每个 query rollout 数 = <strong>8</strong>；序列长度上限 <strong>32768</strong> tokens；单任务交互上限 <strong>30 turns</strong>（防失控）。</li>
+</ul>
+<h3 id="子模块-e--reward-设计极简">子模块 E · Reward 设计（极简）</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>r = 1   当且仅当 agent 按 system prompt 成功完成任务</span></span>
+<span class="line"><span>r = 0   其它</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>刻意不要 format reward / 工具名·参数名匹配 reward / 工具执行成功率 reward。两大好处：</p>
+<ul>
+<li><strong>对对话路径不变</strong>：只要最终结果对，允许任意对话轨迹与工具调用顺序 → 鼓励大胆多样探索。</li>
+<li><strong>抗 reward hacking</strong>：agent 无法靠堆格式/调用语法骗分，只有真正解决任务才得分。</li>
+</ul>
+<blockquote>
+<p>训练数据用 TAU1-Bench 的 115 条 retail + 50 条 airline。论文还<strong>特意简化了 TAU1 原 reward</strong>：原版若”没在对话里说出某些必需信息”（如告诉用户库存几件）也判 r=0；MUA-RL <strong>去掉了对话内容要求</strong>，只要任务完成即 r=1——因为实测发现”对话内容要求”会<strong>妨碍模型学正确的工具调用模式</strong>。</p>
+</blockquote>
+<h3 id="子模块-f--loss-mask-策略">子模块 F · Loss mask 策略</h3>
+<p>loss 计算时 <strong>mask 掉工具执行结果 token 和用户消息 token</strong>——只在 agent 自己生成的 token 上算 loss，避免把”环境/用户产生的内容”当成要拟合的目标。</p>
+<h3 id="rl-训练总超参一览">RL 训练总超参一览</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>backbone</td><td>Qwen3-8B / 14B / 32B Non-thinking</td></tr><tr><td>算法</td><td>GRPO，β(KL)=0.001</td></tr><tr><td>epochs</td><td>25</td></tr><tr><td>batch size</td><td>32</td></tr><tr><td>rollout 数 / query</td><td>8</td></tr><tr><td>序列长度上限</td><td>32768 tokens</td></tr><tr><td>最大交互 turns</td><td>30</td></tr><tr><td>agent rollout 温度</td><td>1.0</td></tr><tr><td>训练期 user simulator</td><td>GPT-4o-2024-11-20</td></tr><tr><td>训练数据</td><td>TAU1-Bench 115 retail + 50 airline</td></tr><tr><td>框架</td><td>VeRL (HybridFlow) + 真实 DB 环境</td></tr></tbody></table>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>Benchmarks（4 个多轮 tool-use 集）</strong>：</p>
+<ul>
+<li><strong>TAU1 / TAU2-Bench</strong>：模拟真实用户-agent 多轮交互，需 domain-specific 工具调用 + 遵守 policy。TAU2 比 TAU1 工具集改动、policy/reward 更严，并新增 <strong>TAU2 Telecom 双控（dual-control）域</strong>——agent 与 user 都能调工具，最难。</li>
+<li><strong>BFCL-V3 Multi Turn</strong>：含 Base + Miss Param + Miss Func + Long Context，用 Executable Function Accuracy 评。</li>
+<li><strong>ACEBench Agent</strong>：含 Multi-step + Multi-turn 两类。</li>
+</ul>
+<p><strong>评测设置</strong>：TAU 系列用 <strong>GPT-4.1</strong> 当 user simulator（与训练期 GPT-4o 不同，验证泛化）；每个 test set 跑 4 次取平均；全部 FC（Function Calling）模式；推理 temperature=0.0、non-thinking、确定性保证可复现。TAU2 Telecom 额外引入 <strong>TCR（Task Completion Rate）</strong>= 满足的验证准则数 / 总准则数，对部分完成给连续度量：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>TCR(q) = |{c_i ∈ C_q : satisfied(c_i)}| / |C_q|</span></span>
+<span class="line"><span></span></span></code></pre>
+<h3 id="主结果--tau1--tau2accuracytelecom-tcr-单列">主结果 · TAU1 &#x26; TAU2（accuracy；Telecom TCR 单列）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>TAU1 Retail</th><th>TAU1 Airline</th><th>TAU2 Retail</th><th>TAU2 Airline</th><th>TAU2 Telecom</th><th>Telecom TCR</th></tr></thead><tbody><tr><td>GPT-4o-2024-11-20</td><td>63.0</td><td>45.5</td><td>67.3</td><td>46.9</td><td>24.1</td><td>–</td></tr><tr><td>GPT-4.1</td><td>66.5</td><td>42.5</td><td>70.2</td><td>53.0</td><td>38.9</td><td>–</td></tr><tr><td>DeepSeek-V3-0324</td><td>70.4</td><td>42.4</td><td>64.7</td><td>37.0</td><td>32.9</td><td>–</td></tr><tr><td>Qwen3-235B-A22B (NT)</td><td>65.2</td><td>32.0</td><td>64.9</td><td>36.0</td><td>24.6</td><td>–</td></tr><tr><td>Qwen3-8B (NT, base)</td><td>40.0</td><td>11.0</td><td>41.0</td><td>12.5</td><td>19.1</td><td>22.9%</td></tr><tr><td>Qwen3-8B Cold-start</td><td>36.7</td><td>12.0</td><td>31.4</td><td>16.0</td><td>9.0</td><td>12.1%</td></tr><tr><td><strong>MUA-RL-8B</strong></td><td>56.5</td><td>29.5</td><td>49.8</td><td>19.0</td><td>21.8</td><td>25.2%</td></tr><tr><td>Qwen3-14B (NT, base)</td><td>46.9</td><td>13.0</td><td>43.1</td><td>14.8</td><td>29.9</td><td>46.6%</td></tr><tr><td>Qwen3-14B Cold-start</td><td>50.8</td><td>23.0</td><td>53.7</td><td>24.0</td><td>23.5</td><td>32.9%</td></tr><tr><td><strong>MUA-RL-14B</strong></td><td>65.9</td><td>42.0</td><td>66.0</td><td>38.0</td><td><strong>33.4</strong></td><td><strong>54.3%</strong></td></tr><tr><td>Qwen3-32B (NT, base)</td><td>47.6</td><td>18.5</td><td>50.2</td><td>23.5</td><td>24.8</td><td>23.7%</td></tr><tr><td>Qwen3-32B Cold-start</td><td>58.9</td><td>36.0</td><td>58.2</td><td>31.1</td><td>19.3</td><td>21.6%</td></tr><tr><td><strong>MUA-RL-32B</strong></td><td><strong>72.6</strong></td><td><strong>46.5</strong></td><td><strong>67.3</strong></td><td>45.4</td><td>28.3</td><td>45.1%</td></tr></tbody></table>
+<p>要点：(1) MUA-RL 在每个 scale 上都明显超 base 与 cold-start。(2) <strong>MUA-RL-32B 在 TAU Retail/Airline 上超 Qwen3-235B-A22B、DeepSeek-V3-0324、GPT-4o</strong>，体量小一个数量级。(3) <strong>Cold-start 在 Telecom 域反而掉点</strong>（8B 19.1→9.0、32B 24.8→19.3）——SFT 引入了 domain bias 难泛化到差异大的新域；而 RL 能<strong>纠偏 SFT 引入的偏置</strong>，MUA-RL-14B Telecom 反超 GPT-4o/DeepSeek-V3。(4) TCR 显示即便没完整完成，MUA-RL 的部分完成能力也更强（14B 32.9%→54.3%）。</p>
+<h3 id="主结果--bfcl-v3-multi-turn--acebench-agent">主结果 · BFCL-V3 Multi Turn &#x26; ACEBench Agent</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>BFCL Base</th><th>Miss Func</th><th>Miss Param</th><th>Long Ctx</th><th>BFCL Overall</th><th>ACE Multi-Turn</th><th>ACE Multi-Step</th><th>ACE Overall</th></tr></thead><tbody><tr><td>GPT-4.1</td><td>48.0</td><td>34.0</td><td>35.0</td><td>45.5</td><td>40.5</td><td>83.3</td><td>90.0</td><td>86.7</td></tr><tr><td>DeepSeek-V3-0324</td><td>41.0</td><td>21.0</td><td>23.0</td><td>34.5</td><td>29.8</td><td>73.3</td><td>75.0</td><td>74.2</td></tr><tr><td>Qwen3-235B-A22B (NT)</td><td>42.5</td><td>23.5</td><td>28.5</td><td>25.5</td><td>30.0</td><td>63.3</td><td>80.0</td><td>71.7</td></tr><tr><td>MUA-RL-8B</td><td>21.0</td><td>11.5</td><td>15.0</td><td>11.0</td><td>14.6</td><td>46.7</td><td>60.0</td><td>53.3</td></tr><tr><td>MUA-RL-14B</td><td>40.5</td><td>14.0</td><td>25.0</td><td>21.5</td><td>25.3</td><td>56.7</td><td>100.0</td><td>78.3</td></tr><tr><td>MUA-RL-32B</td><td>42.0</td><td>20.0</td><td>30.0</td><td>21.5</td><td><strong>28.4</strong></td><td>70.0</td><td>95.0</td><td><strong>82.5</strong></td></tr></tbody></table>
+<p>MUA-RL-32B 的 BFCL Overall 28.4 逼近 DeepSeek-V3（29.8）；ACEBench 82.5 仅次于 GPT-4.1（86.7），证明跨 benchmark 泛化。</p>
+<h3 id="消融mua-rl-32b去阶段">消融（MUA-RL-32B，去阶段）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>TAU2 Retail</th><th>TAU2 Airline</th><th>TAU2 Telecom</th><th>BFCL Overall</th></tr></thead><tbody><tr><td>Qwen3-32B (NT)</td><td>50.2</td><td>23.5</td><td>24.8</td><td>19.6</td></tr><tr><td>+ MUA-RL w/o RL（只 cold-start）</td><td>58.2</td><td>31.1</td><td>19.3</td><td>26.0</td></tr><tr><td>+ MUA-RL w/o cold-start（直接 RL）</td><td>61.6</td><td>41.0</td><td>28.1</td><td>19.3</td></tr><tr><td><strong>MUA-RL-32B（全 pipeline）</strong></td><td><strong>67.3</strong></td><td><strong>45.4</strong></td><td><strong>28.3</strong></td><td><strong>28.4</strong></td></tr></tbody></table>
+<p>结论：去掉任一阶段都明显掉点。w/o cold-start 在 TAU2 上比 w/o RL 强，但在 BFCL 上更弱；<strong>只有 cold-start + RL 全 pipeline 在所有 benchmark 上都最好</strong>——两阶段缺一不可。</p>
+<h3 id="训练动态分析figure-5">训练动态分析（Figure 5）</h3>
+<p><img src="/ai-papers-daily/figures/mua-rl-multi-turn-user-interacting-agent-reinforcement-learning-for/fig3.png" alt="Figure 5：MUA-RL 系列 RL 训练学习曲线（9 个子图）。(a) KL Loss 随训练上升（偏离 cold-start），8B 波动远大于 14B/32B；(b) Entropy，8B 早期快速下降（探索→利用）；(c) Grad Norm 平稳无爆炸；(d) Reward 上升；(e) Rollout Turns 先升后稳在 ~21-23 turns；(f) Response Length 基本不变；(g) Unique 4-gram Ratio，32B 持续下降（靠工具能力而非措辞多样性）；(h) All Correct Query Ratio 上升；(i) All Wrong Query Ratio 下降。"></p>
+<p>关键观察：(1) <strong>rollout turns 稳定在 21-23、response length 几乎不变</strong>——性能提升不是靠”输出更长/test-time scaling”，而是靠<strong>更结构化的多轮交互</strong>（与 GLM-4.5 观察一致）。(2) <strong>All Correct↑ / All Wrong↓</strong>：从偶尔做对变成稳定做对，并压制彻底失败案例。(3) 通用工具（Calculate / Think / Transfer-to-Human）调用频率<strong>全程下降</strong>——RL 减少了对低贡献工具的依赖，决策路径更短更高效。(4) 8B 因容量小，KL/entropy 波动大；大模型平滑。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>训练期用户由通用 LLM（GPT-4o）直接扮演，<strong>用户行为缺乏稳定 persona/goal</strong>，存在 goal drift（后续 UGST 等正是补这个）；工业级长尾用户行为覆盖有限。</li>
+<li>评测仍集中在 tool-use 单一任务族；reward 是粗粒度 0/1，无 turn-level credit assignment。</li>
+<li>训练 simulator（GPT-4o）与评测 simulator（GPT-4.1）不同虽证明了泛化，但也意味着结果对 simulator 选型敏感，复现需注意。</li>
+<li>绝对分数仍不高（TAU2 Telecom ~28、BFCL ~28），说明动态多轮 tool-use 远未解决。</li>
+</ul>
+<p><strong>对电商 / 搜推 / Agent 的可借鉴点</strong>：</p>
+<ol>
+<li><strong>把”用户模拟器”升格为训练信号源</strong>：和 reward / environment 并列。电商客服 / 导购 agent 训练时，用一个会改主意、会补需求、会砍价的 user simulator 做 rollout 环境，比静态 query 集更贴近线上多轮转化场景。</li>
+<li><strong>极简 outcome-only reward + loss mask</strong> 是低成本可复制范式：不用费力设计 format/工具匹配 reward，只在 agent 自生成 token 上算 loss、mask 掉环境与用户 token——直接抗 reward hacking，适合工具/接口频繁变的电商后台。</li>
+<li><strong>真实 DB/MCP 环境闭环验证</strong>：工具调用结果由真实库返回而非 LLM 幻觉，对”下单/改地址/查库存”这类有副作用的电商动作至关重要；两条数据合成 pipeline（LLM 模拟 vs 真实 MCP）给冷启动提供可直接套用的模板。</li>
+<li><strong>RL 纠 SFT 偏置</strong>的现象值得注意：cold-start 在 OOD 域（Telecom）掉点、RL 反超——提示工业落地里”先 SFT 灌业务知识、再 RL 泛化”比纯 SFT 更稳，尤其面对新品类/新政策。</li>
+<li><strong>性能靠”更结构化交互”而非更长输出</strong>：对成本敏感的线上 agent 友好——可在不增加 token 开销的前提下提升任务完成率。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2508.18669" target="_blank" rel="noopener">📄 paper</a> <a href="https://huggingface.co/zzwkk/MUA-RL-32B" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

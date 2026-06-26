@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出状态自适应记忆框架 SAM，通过记忆线索与意图驱动回忆让智能体从长历史中重建决策支撑信息，无需重训练骨干模型"><meta property="og:title" content="SAM: State-Adaptive Memory for Long-Horizon Reasoning Agent"><meta property="og:description" content="提出状态自适应记忆框架 SAM，通过记忆线索与意图驱动回忆让智能体从长历史中重建决策支撑信息，无需重训练骨干模型"><meta property="og:type" content="website"><title>SAM: State-Adaptive Memory for Long-Horizon Reasoning Agent</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.24468" target="_blank" rel="noopener">2605.24468</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SAM: State-Adaptive Memory for Long-Horizon Reasoning Agent</h1> <p class="title-zh">SAM: 面向长程推理智能体的状态自适应记忆</p> <div class="dir-row"> <span class="direction-chip">🧭 长程推理 Agent 记忆管理 · 状态自适应记忆</span> </div> <p class="affiliations">GSAI, Renmin University of China · Beijing Academy of Artificial Intelligence</p> <div class="meta">Yuyang Hu, Hongjin Qian, Shuting Wang, Jiongnan Liu, Ziliang Zhao, Jiejun Tan 等</div> <p class="one-liner">提出状态自适应记忆框架 SAM，通过记忆线索与意图驱动回忆让智能体从长历史中重建决策支撑信息，无需重训练骨干模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/State-Adaptive Memory">State-Adaptive Memory</a><a class="tag" href="/DailyPaper/tag/Long-Horizon Agent">Long-Horizon Agent</a><a class="tag" href="/DailyPaper/tag/Context Management">Context Management</a><a class="tag" href="/DailyPaper/tag/OAT-GRPO">OAT-GRPO</a><a class="tag" href="/DailyPaper/tag/Episodic Recall">Episodic Recall</a><a class="tag" href="/DailyPaper/tag/Memory Augmentation">Memory Augmentation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>独立的记忆模块与主干解耦：记忆模型独立训练、跨主干复用，适合在已有电商对话/推荐 Agent 上植入长程记忆，避免改造主干模型。</li><li>分页存储 + 轻量线索：将冗长的交互历史分页并压缩为 compact cues，仅保留线索在上下文，释放 context window；可借鉴到多轮对话或搜索推荐场景的长序列管理中。</li><li>意图驱动的按需回忆：只有在需要时才根据当前状态选择线索召回原始页面并重建所需信息，比一把摘要或窗口截断更精准，适合电商场景中先分散探索、后期需综合早前信息的任务。</li><li>OAT-GRPO 训练范式：将记忆调用建模为树结构，用专家委员会评估可恢复性并奖励下游任务成功，为训练独立的记忆模块提供了一种闭环方案，可迁移到需要优化长期决策质量的 Agent 训练中。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：长程智能体推理（如深度搜索、多步浏览）面临交互历史不断增长、信息分散在不同时间步的挑战。现有方法或截断历史、或全局摘要、或简单检索，但均未根据智能体当前决策状态自适应地提供所需信息。作者将长程上下文管理重新定义为 <strong>状态自适应记忆</strong> 问题：智能体在任意时刻需要的是当前决策状态相关的支持信息，而非完整历史。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>分页存储与记忆线索（cues）</strong>：将轨迹按 token 预算切分为页面，对每个页面生成一个 compact cue 作为轻量指针，并保留原始页面在外部存储。Cues 留在上下文作为持久的历史索引，避免重复传递完整页面。</li>
+<li><strong>意图驱动的回忆</strong>：当需要访问过去信息时，智能体根据当前意图选择相关 cues，记忆模型从对应页面重建最相关的决策支撑内容并注入上下文，实现按需、状态条件化的信息访问。</li>
+<li><strong>独立记忆模块优化</strong>：记忆模型与 Agent 主干解耦，训练分两阶段：
+<ol>
+<li><strong>专家监督微调</strong>：利用前沿模型（Claude-4.5-Opus、GPT-5.4）在正确轨迹上生成线索和回忆结果作为标记，对记忆模型进行 SFT。</li>
+<li>** OAT-GRPO 强化学习**：设计树状记忆调用展开，在每次回忆处分支采样，并引入由专家委员会评估的可恢复性奖励和最终任务奖励，按动作级优势更新记忆模型。</li>
+</ol>
+</li>
+</ul>
+<p><strong>关键结果</strong>：在 BrowseComp、BrowseComp-ZH、WideSearch、HLE 四个长程基准上，SAM 在两个 Agent 主干（GLM-4.7、Qwen3.5-35B-A3B）上均全面超越无记忆基线及其他上下文管理策略（最近k步、摘要、丢弃工具输出）。以 GLM-4.7 为例，BrowseComp 上 SAM 达到 56.5，比无管理（43.5）提升 13 个百分点，比最佳启发式 summary（53.5）仍有显著优势。消融表明 SFT 与 OAT-GRPO 互补，意图驱动的回忆是关键增益来源，而非简单的页面压缩；方法对页面大小（32K–96K）鲁棒，且在长轨迹（>80 轮）上优势更明显。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.24468&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.24468" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.24468" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.24468" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

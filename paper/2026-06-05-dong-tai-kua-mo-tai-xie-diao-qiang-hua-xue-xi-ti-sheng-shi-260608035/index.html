@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过对齐token功能角色与实际注意力分配，改进RLVR中的跨模态协调"><meta property="og:title" content="DyCo-RL: Dynamic Cross-Modal Coordination for Visual Reasoning"><meta property="og:description" content="通过对齐token功能角色与实际注意力分配，改进RLVR中的跨模态协调"><meta property="og:type" content="website"><title>DyCo-RL: Dynamic Cross-Modal Coordination for Visual Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-06-05">2026-06-05</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.08035" target="_blank" rel="noopener">2606.08035</a>  </div> <h1>DyCo-RL: Dynamic Cross-Modal Coordination for Visual Reasoning</h1> <p class="title-zh">动态跨模态协调强化学习提升视觉推理</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态大模型视觉推理训练优化</span> </div> <p class="affiliations">University of Trento · BAAI · Singapore Management University · IQuest Research</p> <div class="meta">Hangui Lin, Yan Shu, Zhengyang Liang, Chi Liu, Xiangrui Liu, Minghao Qin 等</div> <p class="one-liner">通过对齐token功能角色与实际注意力分配，改进RLVR中的跨模态协调</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/Visual Reasoning">Visual Reasoning</a><a class="tag" href="/DailyPaper/tag/MLLMs">MLLMs</a><a class="tag" href="/DailyPaper/tag/Cross-modal Coordination">Cross-modal Coordination</a><a class="tag" href="/DailyPaper/tag/Fisher-Rao Geodesic">Fisher-Rao Geodesic</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多模态电商/推荐系统（如商品图文联合推理）可借鉴 token 功能角色划分思想，显式建模视觉感知与文本推理步骤的交替，减少幻觉或不一致。</li><li>在强化学习训练中，可引入基于注意力对齐的中间过程信号作为辅助奖励或重要性权重，而不仅依赖最终结果奖励，有助于提升生成序列的合理性。</li><li>Fisher-Rao geodesic 距离可用于分析序列生成时模态内的注意力转移模式，作为一种新的可解释性工具，诊断多模态 Agent 的信息流问题。</li><li>对多模态 Agent 的 CoT 推理设计，可显式区分“提取视觉证据”步与“文本上下文推理”步，并加入对齐约束，提高决策准确性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有 RLVR 方法训练多模态大模型（MLLM）进行视觉推理时，仅优化最终答案正确性，忽略了生成过程中动态跨模态协调。作者通过 token 级分析发现，CoT 推理中模型常未能正确交替执行“提取视觉证据”与“合成文本上下文”，这种协调失效与推理错误有因果关联。</p>
+<p><strong>方法</strong>：提出 DyCo-RL，将动态跨模态协调融入 RLVR 优化。首先，利用 Fisher-Rao geodesic 距离度量同一模态内相邻 token 的注意力偏移，据此为每个 token 分配视觉倾向或文本倾向的功能角色。然后，计算 token 实际注意力分配与其指定角色的对齐分数。最后，将该对齐分数作为优势重加权的引导项，在策略梯度中调整 token 更新幅度，使优化过程更关注协调良好的 token。</p>
+<p><strong>结果</strong>：在 Qwen2.5-VL-3B/7B 上，将 DyCo-RL 应用于 GRPO、DAPO、Dr.GRPO 和 DeepEn-Thinker 四种主流 RLVR 算法，在 7 个视觉中心与数学推理基准上均取得一致性提升，证明了方法的算法无关性和有效性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.08035&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.08035" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.08035" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.08035" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

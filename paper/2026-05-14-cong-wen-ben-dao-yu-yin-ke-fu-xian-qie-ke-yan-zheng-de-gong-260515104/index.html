@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出将文本工具调用基准转化为受控音频评估的框架，保留原始标注，实现配对文本-音频对比，发现语音性能损失高度依赖模型与任务"><meta property="og:title" content="From Text to Voice: A Reproducible and Verifiable Framework for Evaluating Tool Calling LLM Agents"><meta property="og:description" content="提出将文本工具调用基准转化为受控音频评估的框架，保留原始标注，实现配对文本-音频对比，发现语音性能损失高度依赖模型与任务"><meta property="og:type" content="website"><title>From Text to Voice: A Reproducible and Verifiable Framework for Evaluating Tool Calling LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.15104" target="_blank" rel="noopener">2605.15104</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>From Text to Voice: A Reproducible and Verifiable Framework for Evaluating Tool Calling LLM Agents</h1> <p class="title-zh">从文本到语音：可复现且可验证的工具调用 LLM 智能体评估框架</p> <div class="dir-row"> <span class="direction-chip">🧭 Eval</span> </div> <p class="affiliations">Dialpad Inc.</p> <div class="meta">Md Tahmid Rahman Laskar, Xue-Yong Fu, Seyyed Saeed Sarfjoo, Quinten McNamara, Jonas Robertson, Shashi Bhushan TN</div> <p class="one-liner">提出将文本工具调用基准转化为受控音频评估的框架，保留原始标注，实现配对文本-音频对比，发现语音性能损失高度依赖模型与任务</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Tool Calling">Tool Calling</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Audio">Audio</a><a class="tag" href="/DailyPaper/tag/Evaluation">Evaluation</a><a class="tag" href="/DailyPaper/tag/TTS">TTS</a><a class="tag" href="/DailyPaper/tag/Omni-modal">Omni-modal</a> </div>  <div class="content"> <p><strong>动机</strong>
+当前语音智能体需从语音输入可靠调用工具，但主流工具调用基准（如 Confetti、When2Call）均为文本形式，无法直接评估端到端全模态模型在语音场景下的表现。企业若自行从头构建音频基准，需重新标注工具模式和金标准标签，成本高昂。因此，迫切需要一种低成本、可复现的方式，将已验证的文本基准快速转换为受控语音评估，同时保留原始标注与评分协议，以支持级联与端到端架构的早期诊断。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>TTS 转换流水线</strong>：利用 Gemni‑2.5‑Flash‑TTS、Pro‑TTS 和 GPT‑4o‑Mini‑TTS 将原始文本查询合成语音，覆盖多种性别与音色，并注入 DEMAND 环境噪声（SNR 5‑20 dB）。</li>
+<li><strong>配对实例保留标注</strong>：每一条语音均来自原始文本，完全继承工具模式、金标准标签和现有评分协议，实现受控的文本‑音频对比。</li>
+<li><strong>多模态模型评估</strong>：在音频版本的 Confetti 与 When2Call 上评测七款全模态模型，包括 GPT‑4o/1.5/Mini‑Realtime、Gemini‑2.5/3.1‑Flash‑Live、Qwen3‑Omni 和 Phi‑4‑Multimodal，并与干净文本、ASR→文本级联两种设定对比。</li>
+<li><strong>配对错误分解</strong>：利用相同实例的文本‑音频对，将失败归因于决策错误、工具选择错误、参数模式错误和参数值错误四类。</li>
+<li><strong>参考自由 LLM 裁判</strong>：引入 GPT‑5 与 Gemini‑2.5‑Pro 裁判进行无参考评估，并验证开源 Qwen3 裁判与专有裁判的一致性。</li>
+</ul>
+<p><strong>关键结果数字</strong></p>
+<ul>
+<li>Confetti 上 Gemini‑3.1‑Flash‑Live 准确率达 <strong>70.4%</strong>，When2Call 上 GPT‑Realtime‑1.5 F1 达 <strong>71.9%</strong>。</li>
+<li>文本到语音准确率下降幅度显著模型依赖：Qwen3‑Omni 仅下降 <strong>1.8 点</strong>，GPT‑Realtime‑1.5 下降 <strong>4.8 点</strong>。</li>
+<li>错误分析表明，参数值理解错误占大多数（Gemini‑3.1‑Flash‑Live 为 57.2%，GPT‑Realtime‑1.5 为 54.3%），表明模型常保留工具调用框架但听错具体值。</li>
+<li>Qwen3 裁判在 <strong>8B</strong> 以上参数规模与专有裁判一致性超过 <strong>80%</strong>，提供隐私友好评估路径。</li>
+<li>模糊查询重构压力测试下，Qwen3‑Omni 文本准确率从 62.2% 暴跌至 37.6%（‑24.6 点），提示任务表述也能成为性能瓶颈。</li>
+</ul>
+<p><strong>核心洞见</strong>
+语音工具调用性能无法仅凭架构判断优劣，级联与端到端的相对优势取决于具体模型和任务上的文本‑语音能力差距。该框架为企业在自有数据上做出级联 vs. 全模态诊断提供了低门槛、可复现的首阶段工具。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.15104&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.15104" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.15104" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.15104" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

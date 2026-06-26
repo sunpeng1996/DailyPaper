@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出即插即用框架REVEAL，通过反馈引导视觉提取和自适应视觉学习提升多模态序列推荐中视觉信号的利用率。"><meta property="og:title" content="Teach Multimodal Recommendation Model to See via Personalized Visual Extraction and Adaptive Learning"><meta property="og:description" content="提出即插即用框架REVEAL，通过反馈引导视觉提取和自适应视觉学习提升多模态序列推荐中视觉信号的利用率。"><meta property="og:type" content="website"><title>Teach Multimodal Recommendation Model to See via Personalized Visual Extraction and Adaptive Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-08">2026-06-08</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.09082" target="_blank" rel="noopener">2606.09082</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Teach Multimodal Recommendation Model to See via Personalized Visual Extraction and Adaptive Learning</h1> <p class="title-zh">通过个性化视觉提取与自适应学习教会多模态推荐模型“看见”</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态序列推荐 · 视觉信号增强</span> </div> <p class="affiliations">Fudan University · Imperial College London</p> <div class="meta">Yutong Li, Xinyi Zhang, Ziyi Ye, Daoguo Dong, Yu-gang Jiang</div> <p class="one-liner">提出即插即用框架REVEAL，通过反馈引导视觉提取和自适应视觉学习提升多模态序列推荐中视觉信号的利用率。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multimodal Sequential Recommendation">Multimodal Sequential Recommendation</a><a class="tag" href="/DailyPaper/tag/Visual Feature Learning">Visual Feature Learning</a><a class="tag" href="/DailyPaper/tag/Modality Imbalance">Modality Imbalance</a><a class="tag" href="/DailyPaper/tag/Prompt Optimization">Prompt Optimization</a><a class="tag" href="/DailyPaper/tag/VLM">VLM</a><a class="tag" href="/DailyPaper/tag/Gradient Reweighting">Gradient Reweighting</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>视觉特征增强可复用：当业务中视觉内容（商品图、短视频封面）对CTR/CVR贡献不足时，可借鉴FVE思路——用任务反馈（如最终推荐 loss）迭代优化视觉提示词，无需微调VLM，将静态通用视觉特征转为用户偏好对齐的表示。</li><li>缓解模态不平衡的轻量方案：AVL通过计算单模态损失差距动态缩放视觉梯度，无需额外监督、不改变骨干结构。电商推荐中文本信息（标题、属性）常过强，可引入类似机制让模型更公平地学习图像、音频等弱模态。</li><li>即插即用与零推理开销：REVEAL仅在训练阶段生效，推理完全还原原始管道，非常适合业务已上线的模型做低成本升级。</li><li>提示词工程与反馈循环设计：FVE中利用VLM基于推荐错误分析优化提示词的范式，可迁移至生成式推荐（例如用LLM生成商品描述或创意文案时，以最终转化指标反馈迭代提示模板）。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：多模态序列推荐（MSR）虽同时使用文本和图像，但大量消融实验表明视觉模态贡献极小，往往只带来微弱增益甚至无增益。作者分析得出两个核心瓶颈：(1) 预训练视觉编码器（如CLIP）提取的是通用视觉特征，无法捕捉与用户偏好相关的细节（如图中复杂背景或装饰），导致视觉表示缺乏推荐任务所需的判别力；(2) 文本模态信息密度高、易学习，训练过程中占主导，严重抑制了视觉信号的有效优化。</p>
+<p><strong>方法</strong>：提出REVEAL，包含两个即插即用模块。</p>
+<ul>
+<li><strong>反馈引导视觉提取（FVE）</strong>：用可学习的提示词控制冻结的VLM（如Qwen2.5-VL）提取图像特征。提示词模板结合商品元数据与用户评论高频词来实例化。训练时交替进行“视觉编码→推荐→错误分析→提示词优化”循环：固定提示词下训练推荐模型至收敛，然后用VLM根据真实交互与推荐结果生成批评文本，再依据批评文本更新提示词，从而逐步引导VLM关注用户偏好的视觉属性。整个过程VLM参数冻结，仅更新提示词文本。</li>
+<li><strong>自适应视觉学习（AVL）</strong>：在训练推荐主网络时，每步计算纯视觉与纯文本单模态损失（通过屏蔽另一模态的零向量推理得到），定义视觉与文本损失差Δ，并用指数函数映射为缩放因子r。为了平滑，维护历史累积损失计算长期差距r̄。最终的梯度缩放系数K由当前r与历史r̄的偏差决定，若当前视觉差距大于历史平均值则放大视觉相关参数的梯度，反之缩小。该机制仅改变视觉参数梯度，不改变原推荐损失函数，也无额外监督。</li>
+</ul>
+<p><strong>实验</strong>：在Amazon Home、Beauty、Sports及Yelp四个数据集上实验，与SASRec、LightGCN、STOSA等传统模型以及VBPR、UniSRec、MMSR、HM4SR等SOTA多模态模型对比。以MISSRec、M3SRec、HM4SR为骨干时，REVEAL在所有数据集和指标上一致提升，例如Home上HM4SR的NDCG@10从0.0188升至0.0205（+9.04%），Sports上MISSRec的NDCG@10提升8.15%。消融实验证明FVE与AVL互补，视觉-Only条件下提升更为显著。分析显示REVEAL使视觉注意力集中于与偏好相关的区域，且未引入额外推理开销。</p>
+<p><strong>一句话</strong>：用推荐任务反馈迭代优化视觉提示词，并动态加权视觉梯度，能以零推理成本系统性提升多模态推荐中的视觉特征利用效率。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.09082&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.09082" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.09082" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.09082" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

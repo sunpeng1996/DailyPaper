@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把「自主科研」形式化成 Autonomous Optimization（AO）——给一个初始 artifact + 目标 + dev/test 评测器，让 agent 在无人逐步监督下迭代改进。核心是 Hypothesis-Tree Refinement（HTR）：用一棵持久化的「假设树」当研究状态，长寿命 coordinator 管全局策略（观察→构思→选择→派发→回传→决策六步循环），短寿命 executor 在隔离 git worktree 里实现单个假设并回传结构化证据；只有在 held-out test 上真正变好才 merge 进当前最优。把「一堆零散试验」变成「可累积、可审计、能跨任务迁移的科研过程」。六个真实科研任务上 held-out 全部最优，平均相对增益是 Codex / Claude Code 的 2.5×+；MLE-Bench Lite 用 GPT-5.5 拿 86.36% Any-Medal。"><meta property="og:title" content="Arbor: Toward Generalist Autonomous Research via Hypothesis-Tree Refinement · 论文沉淀"><meta property="og:description" content="把「自主科研」形式化成 Autonomous Optimization（AO）——给一个初始 artifact + 目标 + dev/test 评测器，让 agent 在无人逐步监督下迭代改进。核心是 Hypothesis-Tree Refinement（HTR）：用一棵持久化的「假设树」当研究状态，长寿命 coordinator 管全局策略（观察→构思→选择→派发→回传→决策六步循环），短寿命 executor 在隔离 git worktree 里实现单个假设并回传结构化证据；只有在 held-out test 上真正变好才 merge 进当前最优。把「一堆零散试验」变成「可累积、可审计、能跨任务迁移的科研过程」。六个真实科研任务上 held-out 全部最优，平均相对增益是 Codex / Claude Code 的 2.5×+；MLE-Bench Lite 用 GPT-5.5 拿 86.36% Any-Medal。"><meta property="og:type" content="website"><title>Arbor: Toward Generalist Autonomous Research via Hypothesis-Tree Refinement · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🔬 Agent Auto-Research</span> <span class="sep">·</span><time>2026-06</time> <span class="sep">·</span><span>arXiv (living technical report)</span>  </div> <h1>Arbor: Toward Generalist Autonomous Research via Hypothesis-Tree Refinement</h1> <p class="archive-authors">Jiajie Jin, Yuyang Hu, Kai Qiu, Qi Dai, …, Yutao Zhu, Zhicheng Dou (RUC + Microsoft Research, 18 人)</p> <p class="affiliations">中国人民大学高瓴人工智能学院 × Microsoft Research (MSRA)</p> <p class="one-liner">把「自主科研」形式化成 Autonomous Optimization（AO）——给一个初始 artifact + 目标 + dev/test 评测器，让 agent 在无人逐步监督下迭代改进。核心是 Hypothesis-Tree Refinement（HTR）：用一棵持久化的「假设树」当研究状态，长寿命 coordinator 管全局策略（观察→构思→选择→派发→回传→决策六步循环），短寿命 executor 在隔离 git worktree 里实现单个假设并回传结构化证据；只有在 held-out test 上真正变好才 merge 进当前最优。把「一堆零散试验」变成「可累积、可审计、能跨任务迁移的科研过程」。六个真实科研任务上 held-out 全部最优，平均相对增益是 Codex / Claude Code 的 2.5×+；MLE-Bench Lite 用 GPT-5.5 拿 86.36% Any-Medal。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Autonomous Research</span><span class="tag tag-static">Hypothesis Tree</span><span class="tag tag-static">Coordinator-Executor</span><span class="tag tag-static">Held-out Merge Gate</span><span class="tag tag-static">AI-Generating-AI</span> </div> <div class="content"> <blockquote>
+<p>这是一份 <strong>living technical report</strong>（作者声明会持续扩充评测）。系统名 <strong>Arbor</strong>，开源在 <code>github.com/RUC-NLPIR/Arbor</code>。Backbone 默认 <strong>Claude Opus 4.6</strong>（coordinator 与 executor 同款），也测了 GPT-5.5 / Gemini-3-Flash。注意它和「Agent 推荐 / 推荐系统」无关——是<strong>自主科研 / AI 造 AI</strong> 方向。</p>
+</blockquote>
+<h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：现在的 coding agent（Codex、Claude Code、OpenHands）能在真实 codebase 上连续干很多小时，但它们的「自主」基本只是<strong>持续执行任务</strong>——把每次试验当成一个孤立的局部尝试，长跑下来丢掉了科研的结构：哪些方向试过、失败给了什么教训、证据如何改变下一步该试什么。科学研究的累积性恰恰来自这个被丢掉的东西。</p>
+<p><strong>关键 idea / 范式</strong>：先把问题形式化为 <strong>Autonomous Optimization（AO）</strong>——<code>P = (M₀, O, E_dev, E_test)</code>，agent 从初始 artifact <code>M₀</code> 出发、在固定目标 <code>O</code> 与固定评测器下、<strong>无逐步人工监督</strong>地迭代改进，目标是返回在 held-out <code>E_test</code> 上最好的 artifact。再用 <strong>Hypothesis-Tree Refinement（HTR）</strong> 解决它：维护一棵<strong>持久化假设树</strong>当「研究状态」，它同时是 ① 搜索前沿（哪些方向 active / validated / pruned）、② 长期记忆（成功与失败的可复用证据）、③ 可审计记录（每个 artifact 改动都链回驱动它的假设与证据）。一个长寿命 <strong>coordinator</strong> 管这棵树的全局策略，一批短寿命 <strong>executor</strong> 在隔离 worktree 里实现单个假设。这样把「持续试错」变成「在持久研究状态上做证据驱动的精化」。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/arbor-generalist-autonomous-research-htr/fig2.png" alt="Arbor 总体框架：长寿命 coordinator 维护假设树作为持久研究状态，循环地构思想法、派发 executor 实现、用评测反馈精化树并更新当前最优 artifact"></p>
+<p>端到端 pipeline（见上图 Figure 2）：</p>
+<ul>
+<li><strong>输入接口（AO）</strong>：① Codebase / Repo（待改进的初始材料 <code>M₀</code>）；② Instruction / Goal（研究目标 <code>O</code>）；③ Evaluators（<code>E_dev</code> 给搜索做引导，<code>E_test</code> 做准入裁决）。</li>
+<li><strong>持久研究状态</strong>：中央那棵 <strong>Hypothesis Tree</strong>。根节点是粗粒度研究方向，越往下越具体到「可被 executor 实现并评测的干预」。每个叶子执行后把分数 / 结果 / artifact 引用 / 提炼出的 insight 写回，再把 insight <strong>向上传播</strong>到祖先，使局部实验结果变成方向级教训、最终汇成全局先验。</li>
+<li><strong>两级控制循环</strong>：coordinator 跑 <strong>Observe → Ideate → Select → Dispatch → Backpropagate → Decide</strong> 六步；每步选中的叶子被派给独立 executor，在 fresh git worktree 里实现+评测，回传<strong>紧凑结构化报告</strong>（dev 分、事实结果、提炼 insight、branch 引用）。</li>
+<li><strong>输出</strong>：合并进主干的改进 artifact + 累积的 insight（未来搜索的先验）+ 可复用约束（避免重复失败）+ 可审计 trace（树 + 决策）。</li>
+</ul>
+<p>设计上有三条硬约束驱动这个架构：<strong>有结构的分支</strong>（多个竞争假设并存但保持可比可操作，不退化成流水账）、<strong>全局策略 ∥ 局部执行分离</strong>（低层执行 trace 不污染全局研究状态，实验结果能归因到产生它的假设）、<strong>探索 vs held-out 准入</strong>（dev 反馈只引导搜索，artifact 级进步只在迁移到 test 时才承认）。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-假设树节点结构-n--hₙ-ιₙ-μₙ">1. 假设树节点结构 <code>n = ⟨hₙ, ιₙ, μₙ⟩</code></h3>
+<p>每个节点把「假设的语义内容 / 可复用证据 / 可执行接地」三件事正交拆开：</p>
+<ul>
+<li><strong>Hypothesis <code>hₙ</code></strong>：一个<strong>可验证/可证伪</strong>的主张——「怎么改材料能改进目标」。粒度随深度变化：近根=宽方向，近叶=可实现可评测的具体干预。</li>
+<li><strong>Insight <code>ιₙ</code></strong>：证据的<strong>可复用解释</strong>，不是执行 transcript。叶子节点：试了什么 / 发生了什么 / 为什么这结果支持或削弱或约束了该假设；内部节点：对子节点 insight 的抽象，是「语义记忆」供后续 ideation/selection 用。</li>
+<li><strong>Metadata <code>μₙ</code></strong>：把语义假设连到可执行证据——节点状态、dev 分、事实结果记录、实现引用（git branch / commit）、可选背景证据。<strong>材料本身不复制进树</strong>，只存对隔离 worktree 里外部 artifact 状态的引用，保证研究状态紧凑又可接地。</li>
+</ul>
+<p>内部「方向节点」与可执行「叶子节点」分离；叶子执行后写回 score/result/artifact ref/insight，insight 沿路径向上更新祖先。</p>
+<h3 id="2-coordinator--证据感知的前沿控制六步循环">2. Coordinator —— 证据感知的前沿控制（六步循环）</h3>
+<blockquote>
+<p>关键：<strong>LLM 策略只负责”怎么解读研究状态”，所有持久状态变更都表达为对假设树的受控 mutation</strong>（加节点 / 派 executor / 更新证据 / 传播 insight / 剪枝 / 合并）。</p>
+</blockquote>
+<ul>
+<li><strong>Observe</strong>：每个 cycle 开始读 Tree 的结构化投影（active frontier、近期返回证据、祖先 insight、当前最优 <code>M_best</code>）。<strong>让树成为 context 压缩后的权威状态</strong>，不依赖有损的对话历史。</li>
+<li><strong>Ideate</strong>：选一个父节点，在其下提一小撮子假设（refinement / 替代 / 修正），初始化为 pending。受树证据约束：validated insight 给可建立的假设、pruned 节点给负约束、近期 executor 报告提示哪些干预可行/欠测——不是自由 brainstorm。</li>
+<li><strong>Select</strong>：选 pending 节点去执行。<strong>不是单纯分数最大化</strong>，而是延迟反馈下的前沿控制——可能因为强先验证据、因为兄弟节点暴露未解歧义、或因为「它失败能澄清一个重要假设」而被选。</li>
+<li><strong>Dispatch</strong>：选中的假设派给独立 executor，并行跑兄弟假设以获得同方向内的对比证据（利于后续剪枝与抽象）。</li>
+<li><strong>Backpropagate</strong>：executor 报告回来，写进对应叶子并沿路径更新 insight。传播的不只是标量分数，还有<strong>因果归因、适用条件、可复用教训</strong>——叶子级的「数据接口不匹配」能升成方向级约束，最终变全局先验。</li>
+<li><strong>Decide</strong>：树吸收新证据后，决定继续扩展 / 剪掉被证伪子树 / 停止 / 尝试合并。合并由 <strong>held-out merge gate</strong> 把守：候选在 fresh worktree 上跑 <code>E_test</code>，<strong>只有在目标 <code>O</code> 下优于当前最优才 merge 进 <code>M_best</code></strong>。</li>
+</ul>
+<h3 id="3-executor--假设绑定的实验hypothesis-bound">3. Executor —— 假设绑定的实验（hypothesis-bound）</h3>
+<p>给定节点 <code>n</code>，executor 收到 <code>hₙ</code> + 祖先 insight + 当前最优 + <code>E_dev</code>，开一个隔离 worktree，施加实现 <code>hₙ</code> 所需的<strong>最小干预</strong>，跑评测，检查失败/未触发代码路径并<strong>自行修复实现</strong>（可多次 edit+rerun）。</p>
+<p><strong>关键契约：executor 全程绑定被指派的假设，metric 卡住时也不许改 hypothesis</strong>——否则回传的分数就不再是关于该节点的证据，祖先 insight 会变得无法解释。它只回传 coordinator 树接口要消费的四样：可比 dev 分（选择用）、事实结果（ideation 用）、提炼 insight（回传用）、branch 引用（held-out 验证用）。</p>
+<h3 id="4-htr-主算法algorithm-1伪代码">4. HTR 主算法（Algorithm 1，伪代码）</h3>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>输入: P=(M0,O,E_dev,E_test), 预算 B, 分支数 k</span></span>
+<span class="line"><span>初始化: Tree=({n0},∅), 节点0的 artifact ← M0, M_best ← M0</span></span>
+<span class="line"><span>while 预算未尽 且 存在 pending 叶子:</span></span>
+<span class="line"><span>    V ← Observe(Tree, M_best)              # 树形态、根 insight、剪枝/验证教训</span></span>
+<span class="line"><span>    p ← 在 V 下选父节点; 挂 k 个 pending 子节点 {n(i):h(i)} ← Ideate(p,V)</span></span>
+<span class="line"><span>    L ← Select(V) 下的 pending 叶子           # 前沿控制</span></span>
+<span class="line"><span>    {(s_n,r_n,ι_n,b_n)}_{n∈L} ← 并行 Executor(h_n, ι_anc(n), M_best)   # Dispatch</span></span>
+<span class="line"><span>    for n∈L, a∈path(n0→n):</span></span>
+<span class="line"><span>        写回 (s_n,r_n,ι_n,b_n); ι_a ← Abstract({ι_c}_{c∈children(a)})    # Backpropagate</span></span>
+<span class="line"><span>    n† ← argmax_{n∈L} s_n</span></span>
+<span class="line"><span>    if O(E_test(b_n†)) > O(E_test(M_best)): M_best ← merge(b_n†)        # held-out 准入</span></span>
+<span class="line"><span>    剪掉被 {ι_n} 证伪的子树; 持久化 Tree</span></span>
+<span class="line"><span>return M_best, Tree</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Procedure Executor(h_n, ι_anc(n), M_best):</span></span>
+<span class="line"><span>    fresh worktree W_n ← M_best</span></span>
+<span class="line"><span>    repeat:</span></span>
+<span class="line"><span>        Δ ← Implement(h_n, ι_anc(n), W_n);  (s_n,r_n) ← E_dev(apply(Δ,W_n))   # 只修 Δ，h_n 固定</span></span>
+<span class="line"><span>    until 运行成功 且 h_n 路径被触发, 或达上限</span></span>
+<span class="line"><span>    return (s_n, r_n, Distill(h_n,Δ,r_n), commit(W_n))</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>默认预算：<strong>20 个 coordinator cycle，树最大深度 2</strong>；executor 并行度受评测资源约束。</p>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>两类 benchmark</strong>：① 自建 <strong>AO Task Suite</strong>（6 个真实科研任务，跨 model training / harness engineering / data synthesis）；② <strong>MLE-Bench Lite</strong>（官方协议）。<strong>协议严格</strong>：数据与评测 harness 不可变，dev 集供迭代搜索，test 集只用于 merge / 最终验证，每个实验绑 branch 级 artifact 与假设树记录。<strong>baseline</strong>：Codex（GPT-5.5）、Claude Code（Claude Opus 4.6），同样的初始材料/目标/评测器/预算，<strong>48 小时墙钟</strong>，跑各自的 <code>/goal</code> 长任务模式。</p>
+<p><img src="/ai-papers-daily/figures/arbor-generalist-autonomous-research-htr/fig1.png" alt="Arbor at a glance：(a) 一次 Math-Reasoning 数据合成跑出的假设/想法树；(b) dev 分随实验 cycle 的提升（绿线 Arbor，虚线 Claude Code/Codex 天花板）；(c) 六个任务上归一化 held-out 增益对比"></p>
+<h3 id="主结果六个真实科研任务held-out-test">主结果（六个真实科研任务，held-out test）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>任务 (指标方向)</th><th>Initial</th><th>Codex</th><th>Claude Code</th><th><strong>Arbor</strong></th></tr></thead><tbody><tr><td>Optimizer Design (steps ↓)</td><td>3325</td><td>3325 (+0.0%)</td><td>3287.5 (+1.13%)</td><td><strong>3237.5 (+2.63%)</strong></td></tr><tr><td>Architecture Design (loss ↓)</td><td>1.098</td><td>1.083 (+1.37%)</td><td>1.033 (+5.92%)</td><td><strong>1.028 (+6.38%)</strong></td></tr><tr><td>Terminal-Bench 2.0 (pass ↑)</td><td>69.81</td><td>73.59 (+3.78)</td><td>71.70 (+1.89)</td><td><strong>77.36 (+7.55)</strong></td></tr><tr><td>BrowseComp (acc ↑)</td><td>45.33</td><td>50.00 (+4.67)</td><td>53.33 (+8.00)</td><td><strong>67.67 (+22.34)</strong></td></tr><tr><td>Search-Agent Data Synth (gap ↑)</td><td>5.00</td><td>9.00 (+4.00)</td><td>12.00 (+7.00)</td><td><strong>18.00 (+13.00)</strong></td></tr><tr><td>Math-Reasoning Data Synth (gap ↑)</td><td>1.04</td><td>6.25 (+5.21)</td><td>8.33 (+7.29)</td><td><strong>20.83 (+19.79)</strong></td></tr></tbody></table>
+<p><strong>六个任务 held-out 全部最优</strong>，同一个 controller + 树深度跨三类 artifact（训练算法 / agent harness / 数据生成 pipeline），只换初始材料和评测器——说明增益来自搜索过程本身而非任务定制。Math-Reasoning 上 +19.79 vs baseline 的 5.21/7.29，差距悬殊。</p>
+<p><strong>dev/test split 暴露过拟合</strong>：Terminal-Bench 上 Claude Code 拿了最高 dev 分（75.00）但 test 掉到 71.70；Arbor dev 更低（72.22）却 test 最高（77.36）——这正是 held-out merge gate 的动机：高 dev / 低 test 不算成功，而是「当前方向在刷评测信号」的证据。</p>
+<h3 id="mle-bench-lite官方协议">MLE-Bench Lite（官方协议，%）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>系统</th><th>Model</th><th>Above median</th><th>Gold</th><th><strong>Any medal</strong></th></tr></thead><tbody><tr><td>AIBuildAI</td><td>Claude-Opus-4.6</td><td>81.82</td><td>37.88</td><td>77.27</td></tr><tr><td>AI-Scientist</td><td>Gemini-3-Flash</td><td>86.36</td><td>31.82</td><td>81.82</td></tr><tr><td><strong>Arbor</strong></td><td>Gemini-3-Flash</td><td>86.36</td><td>40.90</td><td><strong>81.82</strong></td></tr><tr><td><strong>Arbor</strong></td><td><strong>GPT-5.5</strong></td><td><strong>95.45</strong></td><td><strong>77.27</strong></td><td><strong>86.36</strong></td></tr></tbody></table>
+<p>同 Gemini-3-Flash backbone 下追平最佳同 backbone 的 Any-Medal、Gold 更高；<strong>只换 backbone 到 GPT-5.5（controller/深度/调度/adapter 全不动）</strong>，Any-Medal 升到 86.36%、Gold 77.27%，全表最高。</p>
+<h3 id="消融与迁移关键">消融与迁移（关键）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>变体 (MLE-Bench Lite, Opus 4.6)</th><th>Valid sub.</th><th>Above median</th><th>Gold</th><th>Any medal</th></tr></thead><tbody><tr><td><strong>Full Arbor</strong></td><td>100</td><td>90.91</td><td>50.00</td><td><strong>81.82</strong></td></tr><tr><td>w/o tree（拍平成扁平实验队列）</td><td>100</td><td>72.72</td><td>31.82</td><td>63.64</td></tr><tr><td>w/o insight feedback（保留树但禁止 insight 上传）</td><td>100</td><td>77.27</td><td>36.36</td><td>54.54</td></tr></tbody></table>
+<ul>
+<li><strong>三者 Valid submission 都是 100%</strong> → HTR 改善的不是「能不能跑通」，而是<strong>后期研究精化质量</strong>（一旦有可运行解，树帮你决定该扩展/修正/放弃哪个方向）。</li>
+<li><strong>去掉 insight feedback 比去掉整棵树掉得更多</strong>（54.54 &#x3C; 63.64）→ <strong>光有层级结构不够，树必须能累积证据</strong>才有用；没有传播的教训，树只是语法上组织实验，提供不了语义记忆。两者互补。</li>
+<li><strong>跨任务迁移</strong>：在 BrowseComp 上跑出的 search harness 冻结后直接评未见任务——HLE 25.50%→31.50%、DeepSearchQA 61.00%→69.00%（这俩从没参与优化）→ 学到的是能扛分布漂移的 harness 级改动，不是只拟合源 benchmark。</li>
+<li><strong>成本</strong>：六个任务 Arbor 用 <strong>20.12M–43.19M tokens</strong>，和单轨迹 baseline 同量级 → 增益来自<strong>怎么组织预算</strong>（维护竞争假设、隔离执行、对比证据、更新树），不是单纯多花 token。节点统计显示很多节点 dev+ 但只有一小撮被 merge——held-out gate 过滤掉了「dev 涨但不迁移」的假进步。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：① 默认预算很小（20 cycle、树深 2），更长 horizon 下树的可扩展性/剪枝策略未充分压测；② executor「假设绑定、不许改 hypothesis」是干净的设计，但现实里假设本身设错时只能靠 coordinator 下一轮纠偏，浪费一次执行；③ held-out merge gate 要求每次合并都跑一遍 <code>E_test</code>，在评测昂贵（如训练任务）时成本不低；④ living report，部分任务样本量偏小（如 Optimizer Design test 只平均 2 个 seed）。</p>
+<p><strong>对电商 / 搜推 / Agent 方向可直接借鉴</strong>：</p>
+<ol>
+<li><strong>「持久研究状态 = 一棵带证据的树」是很通用的 agent 记忆范式</strong>。任何「离线评估→在线效果」的闭环优化（SEO 推词策略迭代、排序调参、simulator 优化）都能套：节点绑假设+实现 branch+评测证据+提炼 insight，insight 向上传播成方向级约束——比「不断膨胀的 context window」或「扁平 trajectory 记忆」更抗长 horizon 衰减。</li>
+<li><strong>held-out merge gate 是防「刷指标」的硬机制</strong>。我们做评估 / 调参 agent 时最大的坑就是 dev 涨 test 不涨（overfit 评测器）——把「dev 引导搜索、只有 test 迁移才承认进步」做成架构级门禁，比事后人工 review 可靠。dev/test 分歧本身就是「在刷信号」的信号。</li>
+<li><strong>coordinator(全局策略) / executor(局部接地) 分离 + executor 假设绑定</strong>，对多智能体编排是好范式：低层执行 trace 不污染全局状态、结果可归因到具体假设。和我之前看的 Sortify「LLM 当二阶元控制器、有边界的顾问」是同一类思想——别让 LLM 直接乱改底层，让它在受控接口上 mutate 结构化状态。</li>
+<li><strong>insight 必须可累积才有价值</strong>（消融最强的证据）：给 agent 加「记忆/树」时，如果只存结构不做语义抽象与传播，等于没加。这条对 simulator 驱动的实验循环（我自己在做的方向）是直接的警示。</li>
+</ol>
+<blockquote>
+<p>一句话总结：Arbor 把「自主科研」收敛成 AO 形式化问题，用一棵 <strong>coordinator 维护 / executor 接地 / held-out 准入</strong> 的持久假设树，把零散试错变成可累积、可审计、能跨任务迁移的研究过程——六任务 held-out 全胜、迁移成立、token 不超量、消融证明「树 + insight 传播」缺一不可，是 auto-research / AI 造 AI 方向上设计干净且证据扎实的一份进展。</p>
+</blockquote> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2606.11926" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/RUC-NLPIR/Arbor" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

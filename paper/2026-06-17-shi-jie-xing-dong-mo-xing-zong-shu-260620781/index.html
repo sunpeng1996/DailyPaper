@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="对具身预测-行动模型给出统一分类与设计权衡，强调“少预测未来、多聚焦控制”"><meta property="og:title" content="World Action Models: A Survey"><meta property="og:description" content="对具身预测-行动模型给出统一分类与设计权衡，强调“少预测未来、多聚焦控制”"><meta property="og:type" content="website"><title>World Action Models: A Survey</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-17">2026-06-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20781" target="_blank" rel="noopener">2606.20781</a>  </div> <h1>World Action Models: A Survey</h1> <p class="title-zh">世界行动模型综述</p> <div class="dir-row"> <span class="direction-chip">🧭 具身预测行动模型设计空间</span> </div> <p class="affiliations">National University of Singapore</p> <div class="meta">Qiuhong Shen, Shihua Zhang, Yue Liao, Qi Li, Zhenxiong Tan, Shizun Wang 等</div> <p class="one-liner">对具身预测-行动模型给出统一分类与设计权衡，强调“少预测未来、多聚焦控制”</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/World Models">World Models</a><a class="tag" href="/DailyPaper/tag/Video Generation">Video Generation</a><a class="tag" href="/DailyPaper/tag/Embodied AI">Embodied AI</a><a class="tag" href="/DailyPaper/tag/Action Prediction">Action Prediction</a><a class="tag" href="/DailyPaper/tag/Model-Based RL">Model-Based RL</a><a class="tag" href="/DailyPaper/tag/Survey">Survey</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>构建推荐环境用户仿真器（世界模型）时，可借鉴“生成更少未来，只保留控制所需信息”的设计原则，用潜在状态预测替代完整行为序列生成，降低计算与数据成本。</li><li>解耦预测基座与行动策略的设计模式可用于推荐 Agent：例如用轻量 Transformer 预测用户短期意图，将重计算留给策略决策，平衡延迟与丰富度。</li><li>从交互性、因果性、持久性等维度评估世界模型，可迁移到推荐系统 A/B 测试前的离线模拟器质量检查，特别关注分布外鲁棒性。</li><li>论文对视频生成 VS 潜在预测 VS 无生成推理的分支梳理，提示在搜索推荐 Agent 中也可根据场景（实时改价 vs 长期策略）选择不同程度的“未来预测”实现。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：视频生成、世界模型与视觉-语言-动作策略快速交叉融合，概念边界模糊，亟需统一术语与设计空间。<br>
+<strong>方法</strong>：定义世界行动模型（WAM）为“使预测未来直接服务于行动”的具身模型，并沿两条轴组织现有工作。一是按生成输出分类：完全渲染的未来帧、只在潜在空间预测未来、完全跳过视频生成的动作推理。二是按解剖结构分解：预测基座（视频/语言/多模态）、骨干网络、动作耦合方式（策略头、扩散条件等）、部署机制（离线训练 vs 在线规划）。在此框架下讨论交互性、因果性、持久性、物理合理性等关键属性，并剖析计算开销与标签成本间的权衡。<br>
+<strong>结果</strong>：发现 WAM 并非简单“视频生成器+动作头”，而是设计者在表现丰富度与效率（内存、延迟、标注代价）间的权衡。趋势走向“少预测未来，多聚焦控制：只生成控制必需的信息，而非多余的视频感知细节。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20781&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20781" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20781" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20781" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

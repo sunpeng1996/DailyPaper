@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="第一个可实时编辑的生成式检索框架：用 Keyword-Aligned Encoding(KAE) 把 item/query 编码成由「关键属性词」(而非量化 embedding)构成的 6-token 语义 ID，并预留一批 codebook 槽位，让运营像改倒排索引一样几小时内、不重训模型就注入新词/新品牌，从而有潜力用单个生成模型替换整个多路召回。深召回 HR@350 与最强生成基线 OneSearch 打平，干预命中率高一个数量级以上；线上替倒排分支订单 +0.71%。"><meta property="og:title" content="OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model · 论文沉淀"><meta property="og:description" content="第一个可实时编辑的生成式检索框架：用 Keyword-Aligned Encoding(KAE) 把 item/query 编码成由「关键属性词」(而非量化 embedding)构成的 6-token 语义 ID，并预留一批 codebook 槽位，让运营像改倒排索引一样几小时内、不重训模型就注入新词/新品牌，从而有潜力用单个生成模型替换整个多路召回。深召回 HR@350 与最强生成基线 OneSearch 打平，干预命中率高一个数量级以上；线上替倒排分支订单 +0.71%。"><meta property="og:type" content="website"><title>OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🔎 生成式搜索</span> <span class="sep">·</span><time>2026-06</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>OneRetrieval: Unifying Multi-Branch E-commerce Retrieval with an Editable Generative Model</h1> <p class="archive-authors">Xuxin Zhang, Ben Chen, Yue Lv, Chenyi Lei, Wenwu Ou, Kun Gai, et al. (17 人)</p> <p class="affiliations">Kuaishou (快手)</p> <p class="one-liner">第一个可实时编辑的生成式检索框架：用 Keyword-Aligned Encoding(KAE) 把 item/query 编码成由「关键属性词」(而非量化 embedding)构成的 6-token 语义 ID，并预留一批 codebook 槽位，让运营像改倒排索引一样几小时内、不重训模型就注入新词/新品牌，从而有潜力用单个生成模型替换整个多路召回。深召回 HR@350 与最强生成基线 OneSearch 打平，干预命中率高一个数量级以上；线上替倒排分支订单 +0.71%。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Generative Retrieval</span><span class="tag tag-static">Keyword-Aligned Encoding</span><span class="tag tag-static">Editable Codebook</span><span class="tag tag-static">E-commerce Search</span><span class="tag tag-static">Real-Time Intervention</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>工业电商搜索召回是<strong>倒排(词面)+向量(语义)+协同</strong>三路并联，手工调融合、无法联合优化。生成式检索(GR)想用单模型收口，但卡在一个**「可编辑性悖论」<strong>：倒排分支转化率低于平台均值，却删不掉——因为它是</strong>唯一<strong>能让运营在几小时内注入新词/爆款品牌(如 LABUBU)且</strong>不重训模型<strong>的分支。它活着不是因为召回好，而是因为</strong>可编辑**。</p>
+<p>现有 GR 结构性地不可编辑：闭码本(TIGER/DSI/OneSearch)每个槽绑定训练时固定的量化 embedding，新词进不来；开放词表(SEAL/GRAM)生成自由文本，新词能否路由全靠模型泛化，运营无显式绑定机制。</p>
+<p><strong>OneRetrieval 的关键 idea</strong>：开辟第三条标识符路线——<strong>可扩展码本(extensible codebook)</strong>。用 Keyword-Aligned Encoding(KAE) 把每个 SID token 锚定到一个<strong>可读的关键属性词</strong>(而非量化 embedding)，并在每个码本位置<strong>预留一批空槽</strong>；新词部署后才绑到预留槽。这样<strong>可编辑性沉到上游字典</strong>(和倒排一样)，而非藏在训练好的策略里。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/oneretrieval-unifying-multi-branch-e-commerce-retrieval-with/fig1.png" alt="Figure 1 — OneRetrieval 总体架构：(a) KAE 编码 / (b) 四阶段 SFT / (c) 在线服务 + 实时干预旁路"></p>
+<p>端到端把检索建模成<strong>对结构化语义 ID 的自回归生成</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>item/query 文本 ──[KAE 确定性字典匹配]──> 6-token SID</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span>        ▼</span></span>
+<span class="line"><span>   四阶段 SFT 训练策略 π_θ (BART-base + 9276 个 SID token)</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span>  在线: query ──KAE──> s_q ──[π_θ 无约束 beam search]──> top-K SID</span></span>
+<span class="line"><span>                                   │</span></span>
+<span class="line"><span>                          SID-to-item 查表 T (一对多) ──> 候选商品 ──> 预排序</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span>  旁路(实时干预，不训练): 运营给字典加新词→映射到预留槽→在 T 里把预留槽绑到目标商品集 → 几小时生效</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>形式化：item i 的 SID 为 <code>s_i = (s_i^1,…,s_i^L)</code>，第 ℓ 个 token 取自位置专属码本 <code>V_ℓ</code>。策略自回归分解 <code>π_θ(s|q,c_u)=∏_ℓ π_θ(s^ℓ | s^{&#x3C;ℓ}, q, c_u)</code>，最大似然训练(对每个位置求和)。在线 <code>R(q,c_u)=T(TopK_s π_θ(s|q,c_u))</code>，TopK 用无约束 beam search 近似，T 是预算好的 SID→item 索引(一对多，所以解析出的候选通常多于 K)。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-kae--关键字对齐编码">1. KAE — 关键字对齐编码</h3>
+<ul>
+<li><strong>输入</strong>：item 的标题 / 结构化属性 / 详情页 / 图片 OCR(拼接)，或 query。</li>
+<li><strong>匹配</strong>：用 <strong>Aho-Corasick 自动机</strong>把文本对一份<strong>生产属性字典 A</strong>(去重后约 <strong>1.08×10⁶</strong> 个 typed 属性词)做确定性匹配 → <strong>在线零神经推理</strong>(字典离线由内部属性抽取模型 bootstrap)。</li>
+<li><strong>分组与选代表</strong>：18 类属性合并成 <strong>6 组</strong>(见模块 2)；一组命中多个词时，用一张离线 <strong>importance table</strong> 选单一代表：① 主体优先(对每对同类共现词，离线问 LLM 谁是真正在卖的主体，如「ice cream / mold」选 mold)；② 行为后验重要性(PV/CTR)排序。</li>
+<li><strong>输出</strong>：拼接每组的槽 → 6-token SID。对 item 和 query <strong>对称</strong>编码；query SID 既是在线输入，也是 Stage 2/3 的协同训练信号。</li>
+</ul>
+<h3 id="2-信息论属性分组186">2. 信息论属性分组(18→6)</h3>
+<p><img src="/ai-papers-daily/figures/oneretrieval-unifying-multi-branch-e-commerce-retrieval-with/fig3.png" alt="Figure 2 — 累计信息损失 vs 组数 G，二阶差分拐点落在 6"></p>
+<p>18 类各占一位会让 L=18、推理成本线性爆炸且每位密度稀释。把每个类别 X 当 Bernoulli 激活变量(item 是否带该类属性词)，用<strong>对称条件熵</strong>度量把 X、Y 并到一位的信息损失：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL(X,Y) = ½[H(X|Y)+H(Y|X)] = ½[H(X)+H(Y)] − MI(X,Y)</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>它是 variation of information 的一半，构成类别上的度量；做凝聚聚类，信息损失曲线<strong>二阶差分拐点 G=6</strong>(ECOM6)。</p>
+<h3 id="3-可扩展码本四块布局--可编辑性的载体">3. 可扩展码本(四块布局 —— 可编辑性的载体)</h3>
+<p><img src="/ai-papers-daily/figures/oneretrieval-unifying-multi-branch-e-commerce-retrieval-with/fig2.png" alt="Figure 3 — ECOM6 属性密度 + 四块码本布局：empty / cluster / solo / reserved"></p>
+<p>每个位置 ℓ 的码本分四块：</p>
+<ul>
+<li><strong>empty 槽</strong>(index 0)：表示该组无属性词命中。</li>
+<li><strong>cluster 槽</strong>：k-means 质心，每个覆盖一簇同义尾词。</li>
+<li><strong>solo 槽</strong>：高频头词，约一词一槽(双语别名/常见拼写错合并)；密集位 <code>V_solo=1024</code>、轻位 512。</li>
+<li><strong>reserved 预留槽</strong>：每位 <strong>10 个(共 60)</strong>，训练时<strong>不绑任何词</strong>，部署后才绑新词；Stage 0–2 不出现，Stage 3 仅作为「身份路由」目标暴露。</li>
+</ul>
+<p><strong>密度感知非均匀分配 L6-D3</strong>：密集头 3 组各 <code>V_ℓ=2048</code>、轻尾 3 组各 1024 → 核心码本 ∑V_ℓ=<strong>9216</strong> + 预留 60 = 9276 个 token 加进 BART 词表。60 个预留位「足够吸收平台一周趋势周期」。</p>
+<h3 id="4-四阶段-sftbart-base质量与可编辑性近似解耦">4. 四阶段 SFT(BART-base，质量与可编辑性近似解耦)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>任务模板</th><th>作用</th></tr></thead><tbody><tr><td><strong>S0</strong> 属性–SID 对齐</td><td><code>属性词⟨attr⟩+类别⟨cate⟩→⟨a_v⟩</code> 及逆向，覆盖每个 solo/cluster 槽</td><td>锚定槽位语义，建立「词→对应位置」偏置(为可编辑性铺垫)</td></tr><tr><td><strong>S1</strong> 内容对齐</td><td>query/title ↔ SID 四个双向任务 + <code>q→cate_q</code>、<code>title→cate_i</code> 两个类别预测</td><td><strong>召回质量主力</strong>(供给绝大部分 query↔SID / item↔SID 对齐)</td></tr><tr><td><strong>S2</strong> 协同共现</td><td>click/order 的 (q,i)：表层 q↔title 两任务 + SID 层 <code>s_q↔s_i</code> 两任务</td><td><strong>可编辑性主力</strong>(建立 query-SID→item-SID 路由)</td></tr><tr><td><strong>S3</strong> 个性化检索</td><td><code>(q, s_q, hist_q, hist_s) → s_i</code>(s_i 为真实交互 item 的 SID)</td><td>产出部署策略；滑窗刷新对齐最新流量</td></tr></tbody></table>
+<p><strong>预留槽自路由监督</strong>(S3 内一小块，量级约 S3 的 10⁻⁵)：形如 <code>prefix(⟨ℓ_v⟩)→prefix(⟨ℓ_v⟩)</code>，教策略把任意预留前缀当<strong>恒等路由器</strong>；同时让从不作为目标的 token 不被负梯度抑制、保持可发射。</p>
+<h3 id="5-在线服务--实时干预三性质">5. 在线服务 + 实时干预(三性质)</h3>
+<ul>
+<li><strong>服务</strong>：query 经同一字典编码得 s_q(请求路径上除策略外无神经模块)；π_θ 无约束 beam search(<strong>beam size 512</strong>)解出 top-K SID，每个 SID 经 T <strong>物化最多 5 个 item</strong>，item 级算指标。</li>
+<li><strong>干预为何无需重训</strong>：(P1) 句法可达——beam search 任意位可发射任意码，预留槽是训练时已存在的字母表子集；(P2) 词无关身份路由——S3 自路由监督建立；(P3) 编码端确定性——Aho-Corasick 扫更新后字典，把新词确定映射到 ⟨ℓ_v⟩。运营只做两步增量编辑(字典加词→预留槽、T 里绑目标 item 集)，几小时随索引刷新生效，<strong>不动策略与码本结构</strong>。对照：RQ-VAE 量化码 P1–P3 全不满足，其 IHR@350 仅 0.0025(偶发碰撞)。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据</strong>：快手电商搜索 31 天；前 30 天采 <strong>500 万</strong>带交互请求作训练，第 31 天取 ~3 万 click + ~3 万 order 测试；去重后 query 侧 7.63M、item 侧 20.17M、属性词 1.08M。骨干 BART-base，H800 训练 / L20 服务。</p>
+<p><strong>指标</strong>：HR@K、MRR@K(K=10/100/350)；自造两个干预指标——<strong>IHR@K</strong>(item 级，目标换成伪造 item)、<strong>IAR@K</strong>(词级，注入词是否在 top-K 被激活，对标倒排)。</p>
+<p><strong>RQ1 召回质量(Table 2，HR@350)</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方法</th><th>Order HR@350</th><th>Click HR@350</th></tr></thead><tbody><tr><td>DPR(最强传统)</td><td>0.4346</td><td>0.5027</td></tr><tr><td>LC-Rec</td><td>0.3751</td><td>0.4164</td></tr><tr><td><strong>OneSearch</strong>(最强生成基线)</td><td><strong>0.5550</strong></td><td>0.6007</td></tr><tr><td><strong>OneRetrieval</strong></td><td>0.5482</td><td><strong>0.6055</strong></td></tr></tbody></table>
+<p>深召回与 OneSearch <strong>打平</strong>(click 反超)，但 MRR@350 远低(0.0880 vs 0.1333)——定位<strong>深列表覆盖</strong>而非 top 精排。</p>
+<p><strong>RQ3 编码范式(Table 5，同 L6 码本)</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>编码</th><th>Order HR@350</th><th>Click HR@350</th><th>total IHR@350</th></tr></thead><tbody><tr><td><strong>KAE</strong></td><td><strong>0.5452</strong></td><td><strong>0.6033</strong></td><td><strong>0.0806</strong></td></tr><tr><td>RQ-VAE</td><td>0.5075</td><td>0.5516</td><td>0.0025</td></tr><tr><td>RQ-kmeans</td><td>0.5355</td><td>0.5837</td><td>0.0030</td></tr><tr><td>RQ-OPQ</td><td>0.5376</td><td>0.5848</td><td>0.0021</td></tr></tbody></table>
+<p>KAE 召回最好，且干预命中<strong>高一个数量级以上</strong>。对比可编辑现任 BM25(Table 6)：IAR@350 0.553 vs 0.761(约 3/4)，但召回翻倍(HR@350 0.5482 vs 0.2215)。</p>
+<p><strong>RQ4 SFT 留一(Table 7，total IHR@350)</strong>：完整 0.1340；去 S2 → <strong>崩到 0.0030</strong>(可编辑性=S2)；去 S1 → 召回掉(质量=S1)；去 S0 → 0.1020。两目标近似不相交。</p>
+<p><strong>RQ5 线上 A/B(Table 8，out-of-mall search，†=p&#x3C;0.05)</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>配置</th><th>Item CTR</th><th>Buyer</th><th>Order</th></tr></thead><tbody><tr><td>替换倒排分支</td><td>+0.074%</td><td>+0.450%</td><td><strong>+0.710%†</strong></td></tr><tr><td>再替换向量分支(替近乎全部)</td><td><strong>+0.821%†</strong></td><td>−0.028%</td><td>+0.255%</td></tr></tbody></table>
+<p>16/20 行业 CTR 正向(均值 +1.00%)，人工 GSB 三轴全胜(relevance +0.82% / quality +1.36% / page good +0.54%)。已部署快手外搜，日数亿 PV。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：① 召回精度本身不超 OneSearch(打平)，卖点全在可编辑性；② 强依赖 108 万词的生产属性字典 + 抽取 pipeline，无此基建难复用；③ IAR 仍只有倒排 3/4，激活未追平；④「替换全部」时 Order/Buyer 不显著，差临门一脚，窗口仅 11 天单平台；⑤ 干预测试用 LLM 造 2000 词模拟，非真实运营分布；⑥ 骨干仅 BART-base。</p>
+<p><strong>对电商/广告/搜索推荐的可借鉴点</strong>：</p>
+<ol>
+<li><strong>「可编辑性」是 SID/生成式召回落地的隐形门槛</strong>——做 Semantic ID/生成式检索别只看 Recall，要把「运营能否几小时注入新词/新品/活动词」当一等公民；解法是把可编辑性沉到<strong>上游字典 + 预留槽</strong>，而非塞进模型，这个解耦极可迁移。</li>
+<li><strong>KAE 用属性词当 SID token</strong>，比 RQ-VAE 量化码可读可控，且能规避量化码本(尤其 CID)的热度偏置/结构茧房问题，是另一条编码路线。</li>
+<li><strong>非层级 + 全局共享码本 + 密度感知非均匀分配</strong> 是可直接抄的工业 GR 配置结论(层级化编码反而掉 1.3+ HR 点)。</li>
+<li>Kuaishou 线上系统(OneRec/OneSearch/OneRetrieval 一脉)，与字节 OneRec 系直接对标，跟踪价值高。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2606.13533" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/xuxinzhang/oneretrieval" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

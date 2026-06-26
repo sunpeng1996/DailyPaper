@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在权重空间随机采样扰动后，通过兼容性感知加权合并为一个可部署模型，避免推理时多模型投票"><meta property="og:title" content="Consolidating Rewarded Perturbations for LLM Post-Training"><meta property="og:description" content="在权重空间随机采样扰动后，通过兼容性感知加权合并为一个可部署模型，避免推理时多模型投票"><meta property="og:type" content="website"><title>Consolidating Rewarded Perturbations for LLM Post-Training</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31494" target="_blank" rel="noopener">2605.31494</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Consolidating Rewarded Perturbations for LLM Post-Training</h1> <p class="title-zh">通过合并奖励扰动实现LLM后训练</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM后训练 · 权重空间搜索与合并</span> </div> <p class="affiliations">Technical University of Munich · Munich Center for Machine Learning</p> <div class="meta">Zheyu Zhang, Shuo Yang, Gjergji Kasneci</div> <p class="one-liner">在权重空间随机采样扰动后，通过兼容性感知加权合并为一个可部署模型，避免推理时多模型投票</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Rewarded Perturbations">Rewarded Perturbations</a><a class="tag" href="/DailyPaper/tag/Model Merging">Model Merging</a><a class="tag" href="/DailyPaper/tag/Post-Training">Post-Training</a><a class="tag" href="/DailyPaper/tag/Low-Rank Structure">Low-Rank Structure</a><a class="tag" href="/DailyPaper/tag/Gradient-Free">Gradient-Free</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>直接可用在电商文案生成、对话Agent等有明确奖励信号（如转化率、用户评分）的LLM后训练中：只需采样少量随机扰动，用少量支持集奖励打分，即可通过CoRP合并成一个高质量模型，完全省去梯度计算，适合算力受限的业务场景。</li><li>合并策略中的兼容性感知重权重（alignment与orthogonal dispersion）可迁移到模型融合场景：当合并多个由同一基座微调得到的推荐模型或Agent时，可先构造奖励加权方向，再根据各模型与该方向的对齐度及正交散度赋权，以压制互斥结构。</li><li>提出的分半验证门控（held-out validation gate）可用于任何基于采样的模型更新过程，能自动放弃不可靠候选、减少退化，对线上模型迭代的稳定性很重要。</li><li>发现奖励扰动在低秩子空间存在可复现结构，这为用轻量级LoRA适配代替全量微调提供了依据，可尝试仅在奖励群体主方向所在的低秩子空间内更新参数，降低部署成本。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有LLM后训练方法（PPO/GRPO等）依赖梯度和大量采样，RandOpt虽通过权重空间随机扰动和推理时集成免去梯度，但需K个前向推理（K≈50）且难以用于自由生成任务。核心问题是：能否将扰动群体合并为一个可部署模型？本文通过分半诊断发现，多个模型-任务对上奖励扰动存在可复现的低秩结构，但简单的奖励加权平均往往失败，因为扰动间存在兼容性问题。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>两阶段合并</strong>：第一遍按奖励权重选出精英扰动方向；第二遍计算每个扰动与该方向的对齐度（alignment）和正交散度（orthogonal dispersion），将奖励与兼容性得分结合得到最终权重，归一化后得到单一更新方向。</li>
+<li><strong>验证门控</strong>：将支持集分成构建、验证、探针三部分，候选更新须在验证集上获得正向增益且置信下界>0才能被采纳，否则放弃更新，防止退化。</li>
+<li><strong>迭代搜索</strong>：采纳更新后，以新模型为中心再次采样扰动，协方差由历史奖励群体的方向调整，继续合并，形成逐步提升的链式更新。</li>
+</ul>
+<p><strong>关键实验</strong>：在5个模型（0.5B到8B，Qwen2.5/OLMo3/Llama3.1）和5个任务（数学推理、编程、创意写作）上，CoRP平均提升基座8.1分，仅用RandOpt十分之一的扰动预算（500 vs 5000）和一次推理，超过RandOpt K=1 6.5分，并恢复K=50多数投票集成一半以上的增益。PPO/GRPO在部分设置下仍最优，但CoRP以无梯度、低推理成本具备竞争力。分解显示增益不仅来自格式修正，也包含真实推理修复。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31494&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31494" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31494" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31494" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

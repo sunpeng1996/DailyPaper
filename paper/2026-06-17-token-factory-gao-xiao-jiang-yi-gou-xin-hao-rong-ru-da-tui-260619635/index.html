@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="把传统稠密/稀疏特征压缩为 soft token，大幅缩短 prompt 并提升训练与推理效率，保持质量"><meta property="og:title" content="Token Factory: Efficiently Integrating Diverse Signals into Large Recommendation Models"><meta property="og:description" content="把传统稠密/稀疏特征压缩为 soft token，大幅缩短 prompt 并提升训练与推理效率，保持质量"><meta property="og:type" content="website"><title>Token Factory: Efficiently Integrating Diverse Signals into Large Recommendation Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-17">2026-06-17</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.19635" target="_blank" rel="noopener">2606.19635</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Token Factory: Efficiently Integrating Diverse Signals into Large Recommendation Models</h1> <p class="title-zh">Token Factory：高效将异构信号融入大推荐模型</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态特征压缩与 soft token 融合</span> </div> <p class="affiliations">Google</p> <div class="meta">Xilun Chen, Shao-Chuan Wang, Baykal Cakici, Lukasz Heldt, Lichan Hong, Raghu Keshavan 等</div> <p class="one-liner">把传统稠密/稀疏特征压缩为 soft token，大幅缩短 prompt 并提升训练与推理效率，保持质量</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Soft Token">Soft Token</a><a class="tag" href="/DailyPaper/tag/Feature Compression">Feature Compression</a><a class="tag" href="/DailyPaper/tag/Large Recommendation Models">Large Recommendation Models</a><a class="tag" href="/DailyPaper/tag/PLUM">PLUM</a><a class="tag" href="/DailyPaper/tag/YouTube">YouTube</a><a class="tag" href="/DailyPaper/tag/Generative Retrieval">Generative Retrieval</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>特征压缩到 soft token 以控制 prompt 长度：对于电商推荐中的用户行为序列（点击、加购、下单），每步行为可携带大量稠密特征（停留时长、转化率、价格等），用 MLP 或轻量 Transformer 将每个行为压缩为 1 个 soft token，整段历史压缩为固定数量 token（如 200 条历史 → 200 个 token），避免文本化导致的序列爆炸。</li><li>固定预算的 prompt 设计：为不同类别的特征（用户侧、候选商品侧、上下文）分别设计 Token Maker，各自输出固定数量的 soft token，保证 prompt 总长度确定，有利于显存规划和 prefix caching。用户侧 token 在一次请求内可复用，显著降低推理延迟。</li><li>序列压缩的两种工程方案：当历史行为极长（如数千条），可先用 MLP 直接沿序列维度降维（如 500 → 50），或使用基于注意力池化的 K 项合并策略（每 K 个行为合并为 1 个 token），在召回或粗排中节省计算，并已验证 AUC 仍有正向收益。</li><li>特征融合优于丢弃：实验表明，即使序列已被压缩，在 soft token 中融合更多的稠密/稀疏特征（如商品类目、价格档位）仍能提升 CTR 预估；在召回侧，融合充分特征的 soft token 使新视频的 Unique Impressions 提升 67%，说明压缩不意味着牺牲信息，而是用更好的嵌入空间保留信号。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+工业界大推荐模型（LRM）通常依赖语义 ID 和文本化传统特征，但直接文本化会导致 prompt 极长，显存和计算开销过大。例如在 YouTube 视频推荐中，一条观看历史若用文本 SID 加稠密信号表示可占 10+ tokens，长历史直接压垮 Transformer。必须找到一种既保留信息又控制长度的方法。</p>
+<p><strong>方法</strong>
+论文提出 <strong>Token Factory</strong> 框架，核心是 <strong>Token Maker</strong>：将任意异构特征（稠密值、稀疏 ID、嵌入向量）通过可学习的映射（MLP 或更复杂网络）转换为固定数量的 <strong>soft token</strong>（直接作为 Transformer 的输入嵌入）。</p>
+<ul>
+<li><strong>WH Token Maker</strong>：把一条观看历史的多种特征（SID、频道、时长等）压缩为 1 个 soft token，整段历史变成 token 序列。</li>
+<li><strong>Query Token Maker</strong> 与 <strong>Candidate Token Maker</strong>：分别处理用户级与候选商品级特征，输出固定数量软 token，并在推理时利用 query 侧 token 的缓存复用。</li>
+<li><strong>序列进一步压缩</strong>：可通过 MLP 沿序列维度降维（如 500 条 → 50 个 token），或注意力池化每 K 个行为合并为 1 个 token，适应极长历史。</li>
+</ul>
+<p><strong>实验</strong>
+在 YouTube PLUM 框架上的排序和生成式检索任务验证。</p>
+<ul>
+<li>排序（CTR 预估）：Baseline 用文本 SID，每条历史 12 tokens，总 prompt 1536 tokens；Token Factory 将历史压缩为每条 1 token，总 prompt 降至 480 tokens。同样 batch size 下，初期 AUC 略低，但 1.5M steps 后追平，训练速度提升 200%；增大 batch size 后，AUC 反超 baseline。</li>
+<li>生成式检索（下一视频 SID 预测）：Token Factory 将 prompt 从 768 压缩至 256 tokens，召回率 +2.0%；线上实验 Unique Impressions +16.8%，其中一天新鲜视频的曝光 +67.1%，同时 Satisfied Watch Time +0.05%。</li>
+<li>消融实验：固定 480 tokens 时，soft token 相比文本 SID 能容纳更多历史，且融合更多特征的 soft token 优于仅用 SID 的版本；将历史从 200 扩至 500 并压缩为 30 tokens，AUC 再提升 0.08%。</li>
+</ul>
+<p><strong>核心观点</strong>
+异构传统信号通过 Token Factory 映射为 soft token，不仅能解耦 prompt 长度与特征数量，还能通过端到端训练让 Transformer 更均匀地关注各类信号，消除文本化导致的注意力冗余，实现高效且高质量的推荐。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.19635&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.19635" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.19635" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.19635" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将文档分解为语义类型原子并编译为 micro-LoRA，查询时动态路由组合相关原子，减少干扰并提升长文档推理性能。"><meta property="og:title" content="Doc-to-Atom: Learning to Compile and Compose Memory Atoms"><meta property="og:description" content="将文档分解为语义类型原子并编译为 micro-LoRA，查询时动态路由组合相关原子，减少干扰并提升长文档推理性能。"><meta property="og:type" content="website"><title>Doc-to-Atom: Learning to Compile and Compose Memory Atoms</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12400" target="_blank" rel="noopener">2606.12400</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Doc-to-Atom: Learning to Compile and Compose Memory Atoms</h1> <p class="title-zh">Doc-to-Atom: 学习编译和组合记忆原子</p> <div class="dir-row"> <span class="direction-chip">🧭 文档参数记忆 · 原子化知识组装</span> </div> <p class="affiliations">AI Center-Mountain View, Samsung Electronics · Dartmouth College</p> <div class="meta">Xingjian Diao, Wenbo Li, Yashas Malur Saidutta, Avinash Amballa, Lazar Valkov, Srinivas Chappidi</div> <p class="one-liner">将文档分解为语义类型原子并编译为 micro-LoRA，查询时动态路由组合相关原子，减少干扰并提升长文档推理性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/parametric memory">parametric memory</a><a class="tag" href="/DailyPaper/tag/context distillation">context distillation</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/atom decomposition">atom decomposition</a><a class="tag" href="/DailyPaper/tag/query routing">query routing</a><a class="tag" href="/DailyPaper/tag/long-document reasoning">long-document reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>长文档的知识原子化存储：对电商商品详情、政策法规等长文本，可预分解为独立语义原子（事实、属性、事件等），每个原子生成微型 LoRA 适配器，降低在线推理时的内存占用（文中内存减少 44-85%）。</li><li>查询相关性驱动的动态适配器组装：借鉴两阶段路由机制（近似索引 + 交叉编码器重排），只挑选与当前 query 最相关的 top-K 原子微调器组合，避免单一适配器对所有查询造成干扰，同时自然实现无关查询拒答（拒绝率可超 85%）。</li><li>稀疏门控与知识保护：利用稀疏掩码限制每个原子只写入部分层/模块，结合 L2 或 null-space 约束防止覆盖基础模型能力，这对在多任务环境下避免灾难性遗忘特别有用。</li><li>多目标训练与课程调度：同时优化蒸馏、路由、无关抑制、组合一致性等损失，并通过分阶段课程增加检索原子数，可稳定训练复杂参数记忆系统，相关损失设计可直接复用。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+长文档推理受限于 Transformer 的二次注意力复杂度，上下文蒸馏可将知识压缩到模型参数中，但现有方法（如 Doc-to-LoRA）为每个文档生成一个单一 LoRA，导致三方面问题：(1) 无关查询干扰——即使 query 不相关，适配器仍会修改隐藏状态；(2) 有限的组合召回——扁平低秩适配器难以选择性提取众多异构事实；(3) 长文档扩展性差——固定容量的适配器压缩全部内容会稀释关键信息。</p>
+<p><strong>方法</strong>
+Doc2Atom 把文档分解为语义类型的<strong>知识原子</strong>，每个原子作为最小的可检索和可写入单元，包含类型、内容、检索文本、答案承载标志等元数据。离线阶段，共享文本编码器（复用基座前几层）提取原子嵌入，再通过记忆编译器生成每个原子的<strong>溯源键</strong>、<strong>微 LoRA 因子</strong>、可选微 KV 原型以及<strong>稀疏掩码</strong>。在线阶段，查询编码后经两阶段路由（余弦最大内积搜索 + 可选交叉编码器重排）选出 top‑K 原子，其微 LoRA 因子按路由权重加权求和，并点乘稀疏掩码，组装成查询专属适配器注入冻结基座。
+训练采用教师‑学生范式：教师使用完整文档+查询，学生仅用查询加组装适配器，通过多目标损失联合优化（语言建模、KL 蒸馏、路由二元交叉熵、无关查询范数惩罚、知识保护 L2 约束、稀疏正则化、组合一致性对称 KL 等），并采用课程调度逐步增加检索原子数与损失权重。</p>
+<p><strong>关键结果</strong>
+在 Gemma‑2‑2B 和 Qwen3‑4B 两个基座上，于 SQuAD、DROP、ROPES、2WikiMultihopQA、QASPER 及 LongBench 八个子集上评估。Doc2Atom 整体 F1 在 Gemma 上达到 37.99（对比最佳单适配器变体 D2Latom 的 29.41），在 Qwen3 上达到 35.72（vs 29.30），且在 LongBench 上零样本 F1 最高提升 6 倍。无关查询拒绝 F1 普遍超过 85%，远超基线（常低于 40%）。同时，内部化时额外 GPU 内存减少 44‑85%，但编译延迟稍高（2.1s vs 0.31s）。</p>
+<p><strong>核心贡献一句话</strong>
+将文档内部化从单一适配器升级为可组合的原子记忆库，按查询需求选择性组装，显著提升了参数化记忆的精准度、抗干扰能力和长文本扩展性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12400&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12400" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12400" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12400" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

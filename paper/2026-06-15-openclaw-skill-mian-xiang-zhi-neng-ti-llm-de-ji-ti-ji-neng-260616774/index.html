@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用多模型集体智能构建结构化、多样且可迁移的技能树，并配合跨技能对比的强化学习，显著提升 LLM 智能体在长程工具使用任务上的表现"><meta property="og:title" content="OpenClaw-Skill: Collective Skill Tree Search for Agentic Large Language Models"><meta property="og:description" content="利用多模型集体智能构建结构化、多样且可迁移的技能树，并配合跨技能对比的强化学习，显著提升 LLM 智能体在长程工具使用任务上的表现"><meta property="og:type" content="website"><title>OpenClaw-Skill: Collective Skill Tree Search for Agentic Large Language Models</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-15">2026-06-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.16774" target="_blank" rel="noopener">2606.16774</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OpenClaw-Skill: Collective Skill Tree Search for Agentic Large Language Models</h1> <p class="title-zh">OpenClaw-Skill：面向智能体 LLM 的集体技能树搜索框架</p> <div class="dir-row"> <span class="direction-chip">🧭 集体技能树搜索与强化学习框架</span> </div> <p class="affiliations">The Hong Kong Polytechnic University · Nanyang Technological University · Tsinghua University · Royal Melbourne Institute of Technology · Beijing University of Aeronautics and Astronautics</p> <div class="meta">Tianyi Lin, Chuanyu Sun, Jingyi Zhang, Changxu Wei, Huanjin Yao, Shunyu Liu 等</div> <p class="one-liner">利用多模型集体智能构建结构化、多样且可迁移的技能树，并配合跨技能对比的强化学习，显著提升 LLM 智能体在长程工具使用任务上的表现</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Skill Tree">Skill Tree</a><a class="tag" href="/DailyPaper/tag/Collective Intelligence">Collective Intelligence</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/Tool Use">Tool Use</a><a class="tag" href="/DailyPaper/tag/Multi-Model">Multi-Model</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>复杂推荐流程的工序化拆解：将多步骤推荐任务（如 Query 理解→候选召回→重排序→解释生成）显式分解为子任务，对每个子任务构建技能节点，形成可组合的推荐技能树，避免长流程的碎片化推理。</li><li>多模型轨迹蒸馏生成多样技能：在电商/搜索场景中，利用多个不同偏好或规模的 LLM 对同一子任务生成执行轨迹，再蒸馏为候选技能，能显著提升技能覆盖度，防止技能集过度拟合单一模型的推理风格。</li><li>技能迁移性评估确保跨模型复用：采用「技能合成模型≠验证模型」的迁移性评分，可筛选出真正通用的推荐技能。这在推荐 Agent 需要部署在不同 backbone LLM 上时尤其有价值，避免反复定制。</li><li>技能条件下的跨分支对比 RL 训练：在推荐策略优化中，不局限于单个技能，而是对多个备选技能分别 rollout，并基于跨技能归一化优势进行 GRPO 更新，迫使策略学会在不同场景下自适应选择最优技能，避免陷入单一策略的局部最优。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>当前 LLM 智能体技能构建主要存在三个痛点：(1) 技能碎片化，仅捕获局部子任务的孤立过程，缺乏跨步骤的组合与依赖管理；(2) 技能多样性不足，通常由单一模型的轨迹提炼，带有明显偏好偏差；(3) 技能迁移性差，切换到不同 backbone LLM 时性能下降明显。这些问题限制了技能在长程交互环境（如 OpenClaw）中的复用与扩展。</p>
+<h3 id="方法">方法</h3>
+<p>提出 <strong>Collective Skill Tree Search (CSTS)</strong>，核心是利用多模型集体智能迭代搜索并构建结构化、多样且可迁移的技能树。</p>
+<ul>
+<li><strong>任务分解</strong>：将复杂任务拆分为有序子任务序列，确定技能树的层数。</li>
+<li><strong>集体技能节点生成 (CSN-Gen)</strong>：多个异构模型对同一子任务各自执行并产生轨迹，经统一的技能合成器提炼为候选技能节点，覆盖更广的规划、诊断与恢复模式。</li>
+<li><strong>集体技能节点评估 (CSN-Assess)</strong>：通过两个分数筛选节点——① 集体质量评分：多个裁判模型独立评价技能的清晰性、可执行性、完整性和相关性，取均值；② 集体迁移性评分：技能由模型 A 生成后，在其余模型上执行同一子任务并统计成功率，衡量技能跨模型的泛化能力。两者相加选出最优技能节点，形成子任务间的有序技能路径。</li>
+<li><strong>训练数据构建</strong>：用选出的最佳技能路径和对应轨迹构造 SFT 数据，进行监督微调。</li>
+<li><strong>集体技能强化学习 (CSRL)</strong>：对每个子任务，从技能集中采样多条技能条件 rollout，在集体 rollout 组内计算跨技能归一化优势，采用 GRPO 目标优化策略，使模型主动偏好更高效、可迁移的技能策略。</li>
+</ul>
+<h3 id="关键实验">关键实验</h3>
+<p>在 QwenClawBench 和 PinchBench（23/123 任务版本）上评估，覆盖文件操作、代码执行、网页交互、多步决策等。</p>
+<ul>
+<li>QwenClawBench：OpenClaw-Skill 将 Qwen3.5-9B 总分从 34.5 提升至 44.9（+10.4），Qwen3.5-4B 从 31.5 提升至 41.2（+9.7），尤其在 SVM（30.2→78.4）和 CS（33.2→70.9）等长程工具使用类别上提升巨大。</li>
+<li>PinchBench 123 任务版：9B 模型 best score 从 61.1→68.2，平均从 47.1→53.6；4B 模型平均从 45.9→47.6。</li>
+<li>消融证实 CSN-Gen 单步提升 5.3 分，加 CSN-Assess 再涨 3.0 分，最后 CSRL 带来额外 2.1 分，各组件均有效。</li>
+</ul>
+<h3 id="核心洞察">核心洞察</h3>
+<p>通过多模型集体搜索构建的树状技能结构和跨技能对比的强化学习，将长程任务的成功率瓶颈从「产生一个技能」转移到「从多样技能中自适应选择最优组合」，是对智能体可复用知识库设计的直接升级。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.16774&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.16774" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.16774" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.16774" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

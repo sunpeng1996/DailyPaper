@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用正确与错误答案的对比信号锐化token级信用分配，保留安全保证并显著提升多模态数学推理"><meta property="og:title" content="CEPO: RLVR Self-Distillation using Contrastive Evidence Policy Optimization"><meta property="og:description" content="用正确与错误答案的对比信号锐化token级信用分配，保留安全保证并显著提升多模态数学推理"><meta property="og:type" content="website"><title>CEPO: RLVR Self-Distillation using Contrastive Evidence Policy Optimization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.19436" target="_blank" rel="noopener">2605.19436</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>CEPO: RLVR Self-Distillation using Contrastive Evidence Policy Optimization</h1> <p class="title-zh">CEPO：基于对比证据策略优化的强化学习自蒸馏方法</p> <div class="dir-row"> <span class="direction-chip">🧭 强化学习验证奖励 · 对比证据信用分配</span> </div> <p class="affiliations">MBZUAI · Linköping University · Australian National University</p> <div class="meta">Ahmed Heakl, Abdelrahman M. Shaker, Youssef Mohamed, Rania Elbadry, Omar Fetouh, Fahad Shahbaz Khan 等</div> <p class="one-liner">用正确与错误答案的对比信号锐化token级信用分配，保留安全保证并显著提升多模态数学推理</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/Self-Distillation">Self-Distillation</a><a class="tag" href="/DailyPaper/tag/Credit Assignment">Credit Assignment</a><a class="tag" href="/DailyPaper/tag/Contrastive Evidence">Contrastive Evidence</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Multimodal Reasoning">Multimodal Reasoning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在Agent多步决策或生成式推荐推理链中，可借鉴CEPO对比正确与错误示例，自动识别并放大关键决策token的梯度，抑制填充词干扰，提升训练效率和推理质量。</li><li>负参考直接从已采样的错误rollouts中提取答案，无需额外采样成本，适合在线RL训练，可直接迁移到电商对话Agent或推荐解释生成中的reward shaping。</li><li>CEPO的stop-gradient和方向锚定设计避免了因引入特权信息（如最终答案）而导致的信息泄漏和训练崩溃，为在线自蒸馏提供安全的模板，适用于任何依赖最终正确标签的序列级强化学习场景。</li><li>超参数（λ线性衰减与ε_w裁剪）表现出强鲁棒性，且对比信号集中出现在关键推理步，可解释性强，有利于在业务中监控和调试信用分配质量。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>RLVR（如GRPO）对正确轨迹的每个token给予相同奖励，无法区分决定性推理步与语法填充词，导致信用分配粗糙、收敛慢。利用正确答案作为teacher进行自蒸馏能提供稠密信号，但现有方法或产生信息泄漏（OPSD、SDPO），或受限于单参考证据（RLSD），无法有效区分关键token（流利度混淆、单侧证据）。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>对比证据delta</strong>：将RLSD的单一证据比 $P^+_T/P_S$ 替换为对比比 $P^+_T/P^-_T$，其中 $P^-_T$ 以当前batch中得分最低的错误答案 $r^-$ 为条件，消除流利度混淆。</li>
+<li><strong>差分信念更新</strong>：该比值等于token同时提升对 $r^+$ 信度、降低对 $r^-$ 信度的量，自然锐化决定性token的信号。</li>
+<li><strong>安全集成</strong>：权重只用于缩放GRPO优势幅度，符号仍由verifier决定；stop-gradient确保无词汇表级梯度泄漏，理论上降级包含RLSD。</li>
+<li><strong>精准条件</strong>：仅当 $P^-_T(y_t) &#x3C; P_S(y_t)$ 时CEPO才比RLSD给正确token更激进信用，证明其锐化仅限于正确-错误教师意见相左的语义重要位置。</li>
+</ul>
+<h2 id="关键结果">关键结果</h2>
+<ul>
+<li>在Geo3k上训练，5个多模态数学推理基准测试（DynaMath, LogicVista, MathVision, MMMU, WeMath）上，2B模型平均准确率43.43%（GRPO 41.17%），4B模型60.56%（GRPO 57.43%）。</li>
+<li>OPSD/SDPO因信息泄漏跌到基线以下，证实结构性安全的必要性。</li>
+<li>Token级热力图显示CEPO将信用集中在代数推导与答案token，而对填充词权重近1，动态范围更大。</li>
+<li>仅比GRPO增加约10%训练时间，无需额外采样。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.19436&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.19436" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.19436" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.19436" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

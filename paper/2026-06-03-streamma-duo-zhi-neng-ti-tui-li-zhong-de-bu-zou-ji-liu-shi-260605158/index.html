@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将通信粒度从完整响应改为推理步骤，流式转发实现流水线并行，同时因步骤质量头部可靠尾部易错而提升效果。"><meta property="og:title" content="Streaming Communication in Multi-Agent Reasoning"><meta property="og:description" content="将通信粒度从完整响应改为推理步骤，流式转发实现流水线并行，同时因步骤质量头部可靠尾部易错而提升效果。"><meta property="og:type" content="website"><title>Streaming Communication in Multi-Agent Reasoning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.05158" target="_blank" rel="noopener">2606.05158</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Streaming Communication in Multi-Agent Reasoning</h1> <p class="title-zh">STREAMMA：多智能体推理中的步骤级流式通信协议</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体推理 · 流式通信协议</span> </div> <p class="affiliations">HKUST(GZ) · Alibaba Group · ZJU · HKUST</p> <div class="meta">Zhen Yang, Xiaogang Xu, Wen Wang, Cong Chen, Xander Xu, Ying-Cong Chen</div> <p class="one-liner">将通信粒度从完整响应改为推理步骤，流式转发实现流水线并行，同时因步骤质量头部可靠尾部易错而提升效果。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent Reasoning">Multi-Agent Reasoning</a><a class="tag" href="/DailyPaper/tag/Streaming Communication">Streaming Communication</a><a class="tag" href="/DailyPaper/tag/Pipeline Parallelism">Pipeline Parallelism</a><a class="tag" href="/DailyPaper/tag/Step-Level Scaling Law">Step-Level Scaling Law</a><a class="tag" href="/DailyPaper/tag/KV-cache Reuse">KV-cache Reuse</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多智能体协同推理系统可采用步级流式传输，减少端到端延迟，且利用推理步骤的头部可靠、尾部易错特性，仅用早期步骤即可让下游智能体形成独立推理路径，提升最终效果。</li><li>借鉴步级缩放律（Step-Level Scaling Law）：固定智能体数量，通过提示工程增加每智能体推理步数，可同时提升准确率和加速比，为多智能体推理扩展提供新维度。</li><li>KV-cache复用可大幅降低多智能体推理成本，结合现代推理引擎（vLLM、SGLang），相邻智能体共享上下文前缀，使解码成为主要开销，整体成本可比串行协议更低。</li><li>当任务可分解为多步推理（如商品信息分析、多步决策），可将智能体输出设计为“先可靠后弱化”模式，以释放Stream协议优势；若任务难度过高导致全链步骤不可靠，则单一智能体更优，需根据任务特性选择。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有生成式多智能体系统采用“生成后传输”串行协议，延迟与流水线深度线性增长，下游必须等待上游完成全部响应；同时多步推理中步骤质量非均匀，早期步骤更可靠，后期易出错。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li>提出 <strong>Stream 协议</strong>：将通信粒度从完整响应改为推理步骤，每个步骤生成后立即转发下游，实现流水线并行。</li>
+<li>建立统一分析框架：通过步级正确性概率 $p_j$ 定义三种模式（Stream、Serial、Single）的 sCorr 指标，推导六种有效排序定理（Theorem 1），以头部加权均值 $p_{head}$、均值 $\bar{p}$、尾部加权均值 $p_{tail}$ 与阈值 $p^*$ 的关系判定最优协议。</li>
+<li>给出加速比上限（Theorem 2）与精确成本比（Theorem 3），并在 KV-cache 复用下进一步降低成本。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>8 个基准（AIME 2025/2026、HMMT 2026、GPQA-Diamond、HLE、LiveCodeBench 子任务），2 个前沿 LLM（Claude Opus 4.6-high、GPT-5.4-medium），3 种拓扑（Chain、Tree、Graph）。</li>
+<li>STREAMMA 在 Claude 上平均超过 Serial <strong>+7.3 pp</strong>，峰值 <strong>+22.4 pp</strong>（HMMT 2026，Chain）。</li>
+<li>发现 <strong>步级缩放律</strong>：固定智能体数 A=64，将每智能体步数 S 从 LLM 自主决定扩大到 64，准确率从 68.2% 升至 73.5%，同时获得 <strong>26.9×</strong> 墙钟加速（达到理论上限的 83%）。</li>
+<li>成本-准确率帕累托前沿：Stream ×4 ($2.75, 90.9%) 优于 Serial ×16 ($5.46, 89.4%)，且 KV-cache 命中可将成本进一步压缩约 1.7×。</li>
+</ul>
+<p><strong>最值得记住</strong>：流式传输不仅降低延迟，更因多步推理中 <strong>“何时收到上下文”比“收到多少上下文”更重要</strong>——利用头部可靠、尾部易错的特性，稀释错误影响，实现效果提升。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.05158&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.05158" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.05158" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.05158" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

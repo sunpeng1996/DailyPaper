@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过自蒸馏将详细描述知识迁移到简洁指令模型，并结合VLM反馈RL超越教师"><meta property="og:title" content="World Model Self-Distillation: Training World Models to Solve General Tasks"><meta property="og:description" content="通过自蒸馏将详细描述知识迁移到简洁指令模型，并结合VLM反馈RL超越教师"><meta property="og:type" content="website"><title>World Model Self-Distillation: Training World Models to Solve General Tasks</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12072" target="_blank" rel="noopener">2606.12072</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>World Model Self-Distillation: Training World Models to Solve General Tasks</h1> <p class="title-zh">世界模型自蒸馏：无需任务标注训练指令跟随视频智能体</p> <div class="dir-row"> <span class="direction-chip">🧭 世界模型 · 自蒸馏 · 强化学习</span> </div> <p class="affiliations">Department of Computer Science, University of Bern</p> <div class="meta">Sebastian Stapf, Pablo Acuaviva Huertos, Aram Davtyan, Paolo Favaro</div> <p class="one-liner">通过自蒸馏将详细描述知识迁移到简洁指令模型，并结合VLM反馈RL超越教师</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/self-distillation">self-distillation</a><a class="tag" href="/DailyPaper/tag/video world model">video world model</a><a class="tag" href="/DailyPaper/tag/reinforcement learning">reinforcement learning</a><a class="tag" href="/DailyPaper/tag/VLM reward">VLM reward</a><a class="tag" href="/DailyPaper/tag/instruction following">instruction following</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>自蒸馏思路：用大模型生成丰富描述（如推荐理由、多模态内容），将其蒸馏到轻量指令跟随模型，降低线上成本。在电商文案生成或对话Agent中可复现。</li><li>VLM弱奖励+RL：利用VLM作为零样本评估器为生成结果打分，指导强化学习迭代，避免人工标注。适用于推荐解释、搜索query改写等生成任务。</li><li>蒸馏奖励与任务奖励混合：用教师模型提供密度正则化，防止RL策略崩溃，这一平衡技巧可迁移到基于LLM的推荐策略优化。</li><li>数据生成范式：用VLM从未标注图像自动产出任务-解方案对，类似用LLM从用户行为日志生成训练样本，缓解语义ID生成或交互推荐中的数据稀缺。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+预训练视频生成模型具有涌现任务解决能力，但需要详细文本描述，无法直接用于规划与决策。现有方法要么外包推理给语言模型，要么依赖昂贵的有监督微调数据。该工作探索一条无任务-执行视频标注的可扩展路径：将详细描述下的“演示者”转化为仅需简短指令的“执行者”，并利用VLM反馈进行强化学习，使执行者超越演示者。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>自蒸馏框架</strong>：演示者（教师）接收图像+详细执行描述生成视频；执行者（学生）仅接收图像+简短任务指令。通过分布匹配蒸馏，将演示者行为迁移到执行者，无需成对任务-执行视频。</li>
+<li><strong>蒸馏奖励</strong>：在学生轨迹上计算教师-学生速度场差异作为负奖励，鼓励学生轨迹与教师一致。</li>
+<li><strong>VLM任务奖励</strong>：用Qwen3.5-27B判断生成视频是否完成任务，输出对数概率差作为奖励，再利用一致性奖励抑制不合理生成。</li>
+<li><strong>复合训练目标</strong>：结合策略梯度RL（使用蒸馏奖励+任务奖励）和锚定损失（在采样状态上直接回归教师速度），防止策略漂移。</li>
+<li><strong>数据集</strong>：从MiraData筛选2万张图像，用VLM生成八组任务-解决方案对，构建包含14.6万条训练提示的WorldTasks数据集，并构建200个样例的WorldTasks-Bench评估基准。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>在WorldTasks-Bench上，LTX-2 8步模型+WMSD获得0.605任务完成率、0.691主体正确率、0.882物理一致性（平均0.726），远超基线。</li>
+<li>消融显示on-policy自蒸馏优于off-policy，结合RL后执行者超越演示者，而纯RL很快饱和。</li>
+<li>在DreamGen机器人基准上，零样本WMSD在Object/Behavior/Environment三项指标上均接近甚至超越部分有监督模型（如Cosmos SFT），展现跨领域泛化。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12072&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12072" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12072" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12072" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

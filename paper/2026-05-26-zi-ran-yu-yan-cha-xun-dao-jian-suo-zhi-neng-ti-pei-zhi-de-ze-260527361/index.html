@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 BRANE：用 LLM 提取查询特性并训练 per‑configuration 预测器，在推理时按准确率目标选择管道配置，大幅节省成本"><meta property="og:title" content="Natural Language Query to Configuration for Retrieval Agents"><meta property="og:description" content="提出 BRANE：用 LLM 提取查询特性并训练 per‑configuration 预测器，在推理时按准确率目标选择管道配置，大幅节省成本"><meta property="og:type" content="website"><title>Natural Language Query to Configuration for Retrieval Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-26">2026-05-26</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.27361" target="_blank" rel="noopener">2605.27361</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Natural Language Query to Configuration for Retrieval Agents</h1> <p class="title-zh">自然语言查询到检索智能体配置的动态选择</p> <div class="dir-row"> <span class="direction-chip">🧭 检索智能体配置优化</span> </div> <p class="affiliations">UC Berkeley · University of Washington · Microsoft Azure Research - Systems</p> <div class="meta">Melissa Z. Pan, Negar Arabzadeh, Mathew Jacob, Fiodar Kazhamiaka, Esha Choukse, Matei Zaharia</div> <p class="one-liner">提出 BRANE：用 LLM 提取查询特性并训练 per‑configuration 预测器，在推理时按准确率目标选择管道配置，大幅节省成本</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Query2Conf">Query2Conf</a><a class="tag" href="/DailyPaper/tag/Retrieval Agents">Retrieval Agents</a><a class="tag" href="/DailyPaper/tag/Configuration Optimization">Configuration Optimization</a><a class="tag" href="/DailyPaper/tag/Cost-Quality Tradeoff">Cost-Quality Tradeoff</a><a class="tag" href="/DailyPaper/tag/Workload-Specific Characteristics">Workload-Specific Characteristics</a><a class="tag" href="/DailyPaper/tag/Pareto Frontier">Pareto Frontier</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>动态配置替代固定管道：电商搜索、客服问答等场景可对每个查询动态选择检索策略、LLM、文档数等，用 BRANE 的成本‑质量帕累托曲线在满足准确率目标时降低成本。</li><li>LLM 生成的 workload‑specific 二值特征：比通用嵌入更能捕捉查询细粒度差异（如 FinanceBench 领域），可直接用作路由器的输入，节省特征工程成本。</li><li>轻量 per‑configuration 预测器：使用 tabular 模型（如 LightGBM）在小样本（几百条）下效果优于端到端微调 BERT 或 Qwen‑4B，适合需要快速冷启动的垂直领域。</li><li>模糊帕累托剪枝：在配置空间大时，只保留接近帕累托前沿的配置训练预测器，大幅减少训练和推理开销，适合多检索器、多 LLM 的商业系统。</li><li>无损重标定：上线后只需调整 λ 即可在准确率和成本之间切换，无需重新训练，适合随时切换预算模式（如大促期间优先准确，日常优先成本）。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>现代检索智能体（如 RAG 系统）有许多可配置选项：LLM 型号、检索器、返回文档数、合成策略等。通常这些是为整个工作负载固定调优，但不同查询的最优配置差异极大——简单的查询无需复杂管道，而复杂推理需要多步检索。静态配置会浪费成本或损失准确率。该工作提出 <strong>Query2Conf</strong> 问题：给定自然语言查询和准确率目标，从预定义的配置空间中选择满足目标且成本最低的管道。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>查询表征</strong>：用 LLM（如 GPT‑5‑mini）从少量样本中自动提出 workload‑specific 的二值特征（如 <code>involves_regional_cuisine</code>），然后用更便宜的 LLM 为所有查询打标，形成特征向量 <code>F(q)</code>。</li>
+<li><strong>Per‑configuration 预测器</strong>：对每个经模糊帕累托剪枝保留的配置 <code>c</code>，训练一个轻量分类器（逻辑回归、树模型等），输入 <code>F(q)</code>，输出 <code>c</code> 能正确回答查询的概率。</li>
+<li><strong>推理时选择</strong>：对于目标准确率，通过拉格朗日松弛选择使 <code>ˆp_c(f(q)) – λ·cost(c)</code> 最大的配置。λ 离线标定，线上可无训练重配。</li>
+<li><strong>模糊帕累托剪枝</strong>：只保留与帕累托前沿在准确率容差 τ_acc 和成本容差 τ_cost 内接近的配置，将需训练的预测器数量减少一个数量级。</li>
+</ul>
+<h3 id="关键实验">关键实验</h3>
+<ul>
+<li><strong>数据集</strong>：MuSiQue（多跳 QA）、BrowseComp‑Plus（深度研究）、FinanceBench（金融 QA）。</li>
+<li><strong>对比基线</strong>：静态最优配置（Murakkab）、LLM‑only 路由（Carrot）、规则调度（METIS）、检索策略选择（Adaptive‑RAG）、端到端微调 LLM。</li>
+<li><strong>核心结果</strong>：
+<ul>
+<li>在匹配最高准确率配置的精度下，BRANE 在 MuSiQue 节省 89.4%、BrowseComp‑Plus 节省 81.7%、FinanceBench 节省 8.1% 的成本。</li>
+<li>LLM 生成的 workload‑specific 特征是唯一在三个基准上均达到 100% 准确率目标的表征方式；通用嵌入在 BrowseComp‑Plus 和 FinanceBench 上无法达到该目标。</li>
+<li>轻量 per‑configuration 预测器在几乎全部成本节省单元格上优于端到端微调的 BERT/Qwen‑4B，特别是在小样本下。</li>
+</ul>
+</li>
+</ul>
+<h3 id="核心一句话">核心一句话</h3>
+<blockquote>
+<p>将查询离散化为 workload‑specific 的二值特征，再为每个管道配置训练一个轻量校正预测器，可以在不牺牲准确率的前提下将检索智能体的服务成本降低最高 89%。</p>
+</blockquote> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.27361&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.27361" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.27361" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.27361" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

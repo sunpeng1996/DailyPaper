@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="基于模型能力重新定义工具必要性，发现LLM内部认知与实际行动脱节，错配主因在认知到行动的转换阶段"><meta property="og:title" content="Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use"><meta property="og:description" content="基于模型能力重新定义工具必要性，发现LLM内部认知与实际行动脱节，错配主因在认知到行动的转换阶段"><meta property="og:type" content="website"><title>Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-12">2026-05-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">2605.14038</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use</h1> <p class="title-zh">模型自适应工具必要性揭示LLM工具使用中的知行鸿沟</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent工具使用决策·元认知检测</span> </div> <p class="affiliations">University of Maryland, College Park</p> <div class="meta">Yize Cheng, Chenrui Fan, Mahdi JafariRaviz, Keivan Rezaei, Soheil Feiz</div> <p class="one-liner">基于模型能力重新定义工具必要性，发现LLM内部认知与实际行动脱节，错配主因在认知到行动的转换阶段</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Tool Use">Tool Use</a><a class="tag" href="/DailyPaper/tag/Meta-cognition">Meta-cognition</a><a class="tag" href="/DailyPaper/tag/Knowing-Doing Gap">Knowing-Doing Gap</a><a class="tag" href="/DailyPaper/tag/Representation Probing">Representation Probing</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>1. 在电商Agent/多智体场景中，评估工具调用必要性时应改用模型自适应的阈值，而非人工静态标注——用多个采样运行的一致性（如N=10, T=0.7）判断模型是否真正需要工具，更贴合实际部署。</li><li>2. 可以通过隐藏状态线性探测快速诊断工具调用错配的根源：是模型认知不到必要（阶段1），还是认知到了但执行失败（阶段2）。若阶段2占比高，无需重新微调认知，重点应放在后期层对齐。</li><li>3. 后期层中认知与行动方向近乎正交，提示可在训练时加入对齐正则项，或在推理时对最后几个token的残差流进行干预（如转向认知方向），强制知行一致，减少无谓工具调用。</li><li>4. 系统设计里，与其依赖显式自我评估（会大幅改变行为），不如直接监测内部状态来触发工具，避免知行鸿沟，这对需要高可靠性的搜索、计算类工具尤其有用。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+当LLM需要自主决定是直接回答还是调用工具时，传统研究将工具必要性视为静态的、与模型无关的标注，忽略了一个关键事实：同一个问题对强模型可能无需工具，对弱模型可能必须借助外部能力。这种模型能力的差异造成了巨大的“知行错配”——模型的实际调用行为往往与真实需求不一致，严重影响Agent的可靠性。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>模型自适应必要性定义</strong>：对每个模型，对同一查询在无工具下运行N次（N=10, T=0.7），若某次失败则标记为tool-necessary，全部正确才为unnecessary。</li>
+<li><strong>两阶段分解</strong>：将工具使用拆分为内部认知（是否认为需要工具）和执行（是否实际输出调用token）。通过线性探测器从隐藏状态中解码出两个信号，再计算它们的余弦相似度与错配分布。</li>
+<li><strong>实验设置</strong>：4个模型（Qwen3-8B/4B, Llama-3.1-8B-Instruct, Llama-3.2-3B-Instruct），在算术混合数据集和TruthfulQA上分别配置计算器与搜索API。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>端到端行为错配率高达26.5%~54.0%（算术）和30.8%~41.8%（事实QA），且错误模式随模型和域变化剧烈。</li>
+<li>认知与行动信号在后期层、最后token位置几乎正交，意味着模型“知道但做不到”。</li>
+<li>逐样本轨迹显示，多数错配发生在认知到行动的转换阶段（stage-two error），而非认知阶段本身，形成显著的<strong>知行鸿沟</strong>。</li>
+<li>显式自我报告与内部状态探测结果差异大，且自我报告会大幅改变模型行为（up to 49%样本的工具调用发生变化），不适合实用场景。</li>
+</ul>
+<p><strong>核心结论</strong>：提升Agent工具使用可靠性不仅需要更强的元认知，更关键的是弥合认知与行动之间的鸿沟，让内部“知道该不该用”畅通地转化为实际的调用/不调用决策。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14038&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14038" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14038" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

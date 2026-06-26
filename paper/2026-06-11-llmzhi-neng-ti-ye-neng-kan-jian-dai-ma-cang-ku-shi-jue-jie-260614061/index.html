@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次系统评估多模态仓库可视化对LLM Agent任务解决的影响，发现视觉辅助可降26% token开销且不损精度。"><meta property="og:title" content="LLM Agents Can See Code Repositories"><meta property="og:description" content="首次系统评估多模态仓库可视化对LLM Agent任务解决的影响，发现视觉辅助可降26% token开销且不损精度。"><meta property="og:type" content="website"><title>LLM Agents Can See Code Repositories</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14061" target="_blank" rel="noopener">2606.14061</a>  </div> <h1>LLM Agents Can See Code Repositories</h1> <p class="title-zh">LLM智能体也能“看见”代码仓库：视觉结构提升效率的秘密</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态Agent · 代码仓库可视化</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Xi’an Jiaotong University · Zhejiang University</p> <div class="meta">Dongjian Ma, Silin Chen, Yufei Yang, Yulin Shi, Yanfu yan, Xiaodong Gu</div> <p class="one-liner">首次系统评估多模态仓库可视化对LLM Agent任务解决的影响，发现视觉辅助可降26% token开销且不损精度。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Multimodal">Multimodal</a><a class="tag" href="/DailyPaper/tag/Code Repository">Code Repository</a><a class="tag" href="/DailyPaper/tag/Vision">Vision</a><a class="tag" href="/DailyPaper/tag/Software Engineering">Software Engineering</a><a class="tag" href="/DailyPaper/tag/Efficiency">Efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>混合模态Agent架构：在电商/推荐Agent中，可将系统拓扑图、服务依赖图、商品知识图谱等可视化信息作为补充输入，与文本上下文结合，使Agent更高效地理解复杂环境结构，减少纯文本描述带来的冗长token消耗。</li><li>故障定位阶段的视觉加速：在推荐系统排障、多Agent协作调试等场景，提供可视化调用链路或状态快照，能帮助Agent更快定位问题来源，类似论文中视觉在fault localization阶段的突出效果。</li><li>自主探索深度控制：让Agent根据视觉结构的复杂程度自行决定探索深度，避免不必要的文本查询，可以迁移到Agent规划（如动态选择RAG查询层级、多级推荐链的探索）中，实现按需获取信息。</li><li>工程实现借鉴：论文的混合模态设计验证了“视觉结构图 + 文本浏览”的比纯视觉或纯文本更具性价比，可直接套用在需要Agent理解大型项目结构（如推荐pipeline、微服务架构）时，用图表快速建立全局认知，再用文本精读关键部分。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有LLM Coding Agent几乎完全以文本方式消费代码仓库，而人类开发者会利用文件夹层次、依赖关系等视觉结构来快速定位。随着多模态大模型（MLLM）的进步，一个自然的问题是：Agent能否从仓库的可视化表示中受益？本文首次系统性地研究了这一问题。</p>
+<p><strong>方法</strong>：作者在仓库级别 issue 解决任务上，对比了纯文本、纯视觉（如仓库结构截图）以及文本+视觉混合三种表示方式。实验涉及4个最新的多模态模型，并详细分析了在不同阶段（如故障定位）和不同探索策略下的表现。</p>
+<p><strong>关键结果</strong>：1）纯视觉设置导致准确率下降且token消耗上升，因为Agent缺乏符号细节，会反复进行视觉查询来补偿；2）将可视化结构图（如文件依赖图、目录树）作为文本界面的补充，可使输入token消耗减少高达26%，同时issue解决准确率维持甚至提升；3）可视化在故障定位阶段以及Agent自主控制探索深度时最为有效。</p>
+<p>这些发现指明了下一代Coding Agent混合模态设计的实用路径：用视觉快速把握全局结构，用文本精准获取细节，实现效率与效果的平衡。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14061&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14061" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14061" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14061" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过文件优先级设计结合实时通知，实现Claude与Codex在同一仓库无共享内存的长期开发与审查。"><meta property="og:title" content="tap: A File-Based Protocol for Heterogeneous LLM Agent Collaboration"><meta property="og:description" content="通过文件优先级设计结合实时通知，实现Claude与Codex在同一仓库无共享内存的长期开发与审查。"><meta property="og:type" content="website"><title>tap: A File-Based Protocol for Heterogeneous LLM Agent Collaboration</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-12">2026-06-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14445" target="_blank" rel="noopener">2606.14445</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>tap: A File-Based Protocol for Heterogeneous LLM Agent Collaboration</h1> <p class="title-zh">tap：异构LLM Agent基于文件系统的协作协议</p> <div class="dir-row"> <span class="direction-chip">🧭 多智能体协作 · 文件通信协议</span> </div> <p class="affiliations">HUA Labs</p> <div class="meta">Minseo Kim</div> <p class="one-liner">通过文件优先级设计结合实时通知，实现Claude与Codex在同一仓库无共享内存的长期开发与审查。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/multi-agent">multi-agent</a><a class="tag" href="/DailyPaper/tag/file-based protocol">file-based protocol</a><a class="tag" href="/DailyPaper/tag/heterogeneous agents">heterogeneous agents</a><a class="tag" href="/DailyPaper/tag/code review">code review</a><a class="tag" href="/DailyPaper/tag/self-applied operation">self-applied operation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>消息持久化与审计：在推荐Agent流水线（如生成式检索-&gt;精排-&gt;文案生成）中，可以模仿tap将中间消息（检索结果、特征拼接、决策理由）以文件形式落盘，既做审计又能用于失败重试，避免仅依赖内部状态。</li><li>异构模型配对产生多样性：实验发现不同模型（Claude/Codex）配对审查时检出缺陷率更高（69.8% vs 53.1%），这启示在多智能体推荐评估中，混合不同供应商的LLM作为“评审”可能减少群体思维，尤其适用于敏感规则审核、安全校验等任务。</li><li>无共享运行时的编排：通过独立git worktree和文件隔离，Agent无需共享内存或统一API网关，可直接用于现有微服务环境——每个推荐模块（召回、排序、解释生成）由不同厂商模型驱动，通过文件交换输出继续迭代。</li><li>自应用迭代机制：tap自身用自己开发，问题直接通过审查-&gt;mission-&gt;修复循环改进协议，这种“用Agent改进Agent系统”的模式能迁移到推荐引擎自动调参或策略进化，前提是操作日志与复盘记录结构化可回放。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+现有LLM多智能体开发系统（ChatDev、MetaGPT、AutoGen）通常假设所有Agent在同一模型家族、同一运行时或中央对话服务中运行，导致错误趋同、审查盲区。直接在异构环境（不同模型、不同执行环境）中协作需要一种不依赖共享内存与通用通信通道的轻量协议。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>文件优先级消息存储</strong>：Agent调用<code>tap_reply</code>时，先将含YAML元数据的Markdown消息写入<code>inbox/</code>目录，作为原始消息记录；实时通知路径（Tier 2）仅作为加速，不替代文件本体。</li>
+<li><strong>双通道通信</strong>：Tier 1 文件检查（MCP工具直接读文件），Tier 2 实时推送（Claude用MCP Channel，Codex用WebSocket）。即使实时通知丢失，文件仍可重读，消息不丢失。</li>
+<li><strong>环境定制配置</strong>：<code>tap add</code>命令自动适配Claude的<code>.mcp.json</code>、Codex的<code>config.toml</code>等不同配置格式，统一过程而不强制统一API。</li>
+<li><strong>工作区隔离</strong>：每个Agent使用独立git worktree，用<code>instanceId</code>分隔PID、日志与状态文件，支持并行运行。</li>
+<li><strong>恢复设计</strong>：写入文件后才尝试发送实时通知，接收方不信任通知载荷，直接重读<code>inbox/</code>文件处理，将通信失败转化为延迟而非消息丢失。</li>
+</ul>
+<p><strong>实验结果</strong><br>
+在为期27天、37代的自我应用（tap开发并审查tap自身）中，产生209个相关PR、717个工件。375个审查工件分析显示：异构模型配对（Claude审查Codex或反之）记载至少一处缺陷或修改请求的比例为69.8%，同构配对为53.1%。24个安全相关案例中有6个潜在运行时漏洞（如execSync注入）由跨模型审查发现。协议运行中暴露了路径前缀、日志冲突、命名碰撞等问题，通过文件记录->审查->修复循环在迭代中修正。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14445&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14445" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14445" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14445" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

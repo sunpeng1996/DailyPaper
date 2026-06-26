@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个通过原生在线流式推理评估全模态LLM的交互基准，系统衡量响应时机、中断处理和嵌套对话能力"><meta property="og:title" content="OmniInteract: Benchmarking Real-World Streaming Interaction for Real-Time Omnimodal Assistants"><meta property="og:description" content="首个通过原生在线流式推理评估全模态LLM的交互基准，系统衡量响应时机、中断处理和嵌套对话能力"><meta property="og:type" content="website"><title>OmniInteract: Benchmarking Real-World Streaming Interaction for Real-Time Omnimodal Assistants</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26485" target="_blank" rel="noopener">2605.26485</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>OmniInteract: Benchmarking Real-World Streaming Interaction for Real-Time Omnimodal Assistants</h1> <p class="title-zh">OmniInteract：面向实时全模态助手的流式交互评测基准</p> <div class="dir-row"> <span class="direction-chip">🧭 实时多模态交互评测 · 流式视频理解</span> </div> <p class="affiliations">CUHK MMLab · SJTU · NTU · McMaster · CityUHK</p> <div class="meta">Xudong Lu, Xueying Li, Annan Wang, Yang Bo, Jinpeng Chen, Zengliang Li 等</div> <p class="one-liner">首个通过原生在线流式推理评估全模态LLM的交互基准，系统衡量响应时机、中断处理和嵌套对话能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Omnimodal LLMs">Omnimodal LLMs</a><a class="tag" href="/DailyPaper/tag/Streaming Interaction">Streaming Interaction</a><a class="tag" href="/DailyPaper/tag/Online Inference">Online Inference</a><a class="tag" href="/DailyPaper/tag/Real-time Evaluation">Real-time Evaluation</a><a class="tag" href="/DailyPaper/tag/Full-duplex">Full-duplex</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>交互评估体系可直接复用：定义 interaction slot（trigger、response window、target answer）和 IA-QTF1 指标，综合衡量回答内容、时机和不当输出（spill、早响幻觉），可用于评估电商客服助手、直播推荐 Agent 的实时交互质量</li><li>原生在线推理范式对 Agent 部署有启发：要求模型仅依据已发生流内容决策，禁止未来窥探，这对构建真实场景下的生成式推荐或对话式 Agent 有直接指导，避免离线假设导致的性能高估</li><li>全双工中断与嵌套交互分析：通过 Interruption Diagnostic Suite 和 Nested Chain Completion Score，量化模型在被打断后的沉降与上下文恢复能力，可借鉴其设计思路优化多智体协作或用户频繁打断场景下的响应策略</li><li>离线能力≠在线表现：实验发现 MiniCPM-o 从离线到在线数学推理质量下降 0.3358，提示业务迁移时需专门评估在线流式性能，不能仅依赖离线基准</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>现有视频问答基准多采用离线全量或文本提示的流式推理，无法反映全模态实时助手面临的三大核心挑战：（1）从连续音视频流中自发识别语音意图；（2）在正确时机而非任意时刻给出回应；（3）处理用户打断、嵌套提问和上下文恢复。这些缺陷导致离线高性能模型未必能胜任真实交互。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>交互槽位设计</strong>：将连续流离散化为一系列 temporally grounded 响应机会，每个槽位由触发条件（trigger）、有效回答窗口（[t_start, t_end)）和目标答案组成，覆盖实时响应、主动监测、嵌套提问和连续多步监控四类场景。</li>
+<li><strong>数据集构建</strong>：自录制210个中文日常交互和英语数学解题视频，并利用现有步骤指导/错误检测数据构造40个长程监控视频，共250段视频、1,430个响应槽位，包含192个中断样例。所有用户查询以语音形式嵌入音频流，保留原始视觉事件与背景音。</li>
+<li><strong>评估指标</strong>：提出 IA-QTF1（Interaction-Aware Quality-Timeliness F1），通过软 TP 融合核心回答的语义质量与时序衰减，并对溢出、早响幻觉、漏回进行 FP/FN 惩罚。额外设计 Interruption Diagnostic Suite（NOR/PAQ/CSM）和 Nested Chain Completion Score，专项诊断中断与上下文恢复。</li>
+<li><strong>评估协议</strong>：要求模型通过其原生实时接口以在线流式方式推理，仅可感知过去与当前内容，不可访问未来帧或 ground-truth 边界。</li>
+</ul>
+<h2 id="关键结果">关键结果</h2>
+<ul>
+<li>在 1Q1A 场景中，最佳全局 IA-QTF1 仅 0.467（AURA）；在需要连续多步响应的 1QnA 场景中，所有模型均溃败，最高仅 0.052。</li>
+<li>中断处理：Gemini 倾向保守沉默（无输出率 85.94%），MiniCPM-o 回答更积极（PAQ 0.571）但溢出严重（条件溢出率 83.15%，平均时长 10.07s）。</li>
+<li>嵌套交互：MiniCPM-o 和 AURA 能部分完成内外回答链（NCCS 分别为 0.284/0.270），而 Gemini 和 Qwen3.5-Omni 在 119/120 对外层问题彻底遗忘。</li>
+<li>全双工能力退化：MiniCPM-o 在线流式数学推理质量较离线版本降低 0.3358，证明持续监听与并发生成严重损害推理性能。</li>
+</ul>
+<blockquote>
+<p>最值得记住的一句话：强离线多模态理解不等于鲁棒实时交互——全双工场景下的响应时机控制、中断处理与上下文恢复是当前模型的主要短板。</p>
+</blockquote> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26485&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26485" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26485" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26485" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

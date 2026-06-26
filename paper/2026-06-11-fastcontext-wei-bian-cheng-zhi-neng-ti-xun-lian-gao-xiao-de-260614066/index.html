@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将仓库探索与任务求解分离，用专用小模型子代理并行搜索，最高提升5.5%解决率并削减60% token消耗"><meta property="og:title" content="FastContext: Training Efficient Repository Explorer for Coding Agents"><meta property="og:description" content="将仓库探索与任务求解分离，用专用小模型子代理并行搜索，最高提升5.5%解决率并削减60% token消耗"><meta property="og:type" content="website"><title>FastContext: Training Efficient Repository Explorer for Coding Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14066" target="_blank" rel="noopener">2606.14066</a>  </div> <h1>FastContext: Training Efficient Repository Explorer for Coding Agents</h1> <p class="title-zh">FastContext：为编程智能体训练高效的仓库探索器</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent子代理专化与token效率优化</span> </div> <p class="affiliations">Microsoft · Shanghai Jiao Tong University</p> <div class="meta">Shaoqiu Zhang, Maoquan Wang, Yuling Shi, Yuhang Wang, Xiaodong Gu, Yongqiang Yao 等</div> <p class="one-liner">将仓库探索与任务求解分离，用专用小模型子代理并行搜索，最高提升5.5%解决率并削减60% token消耗</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Subagent">Subagent</a><a class="tag" href="/DailyPaper/tag/Token Efficiency">Token Efficiency</a><a class="tag" href="/DailyPaper/tag/Repository Exploration">Repository Exploration</a><a class="tag" href="/DailyPaper/tag/Coding Agent">Coding Agent</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/Parallel Tool Calls">Parallel Tool Calls</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在大模型推荐Agent中，可把商品库检索、用户画像查询等上下文探索任务交给专用小模型子代理，通过并行工具调用快速返回相关片段，避免主模型上下文爆炸和token浪费。</li><li>采用“强模型轨迹引导 + 任务奖励微调”两阶段训练法，利用大模型生成高质量探索路径，再在业务数据上微调小模型，低成本定制垂直领域（如电商搜索、广告定向）的探索器。</li><li>分离探索与推理的架构思想可直接迁移：设计“探索员-求解员”模式，探索员专注信息收集并返回带精确引用的证据，求解员仅做决策，可提升系统响应速度和决策准确性。</li><li>token消耗降低60%的结论提示，在线上高并发推荐或对话场景中，通过精简上下文输入可大幅降低推理成本，且小模型额外开销极小，适合成本敏感业务。</li> </ul> </div> <div class="content"> <p><strong>动机：</strong> LLM 编程智能体在解决仓库级任务时，探索代码仓库会消耗大量 token，并让无关片段污染上下文。现有方案常由同一模型负责探索和求解，效率低下。</p>
+<p><strong>方法关键点：</strong></p>
+<ul>
+<li><strong>架构分离：</strong> 将仓库探索抽象为专用子代理 FastContext，按需调用，与求解模型解耦。</li>
+<li><strong>并行高效：</strong> FastContext 并行发出工具调用，返回精确的文件路径和行范围作为聚焦上下文，而非冗长代码块。</li>
+<li><strong>训练策略：</strong> 使用 4B–30B 参数小模型，先用强参考模型（如大模型）的探索轨迹进行引导训练，再基于任务奖惩信号微调，涵盖首轮广搜、多轮证据收集和精准引用生成三种能力。</li>
+<li><strong>即插即用：</strong> 可直接接入现有智能体（如 Mini-SWE-Agent），无架构侵入。</li>
+</ul>
+<p><strong>关键结果：</strong> 在 SWE-bench Multilingual、SWE-bench Pro 和 SWE-QA 三个基准上，集成 FastContext 后，端到端任务解决率最高提升 5.5%，编码智能体的 token 消耗减少高达 60%，且额外计算开销极小。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14066&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14066" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14066" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14066" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

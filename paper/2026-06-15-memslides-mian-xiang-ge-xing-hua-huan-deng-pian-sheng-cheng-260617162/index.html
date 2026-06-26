@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出分层记忆框架（用户画像/工作/工具记忆）结合局部修改，实现多轮个性化幻灯片生成"><meta property="og:title" content="MemSlides: A Hierarchical Memory Driven Agent Framework for Personalized Slide Generation with Multi-turn Local Revision"><meta property="og:description" content="提出分层记忆框架（用户画像/工作/工具记忆）结合局部修改，实现多轮个性化幻灯片生成"><meta property="og:type" content="website"><title>MemSlides: A Hierarchical Memory Driven Agent Framework for Personalized Slide Generation with Multi-turn Local Revision</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-15">2026-06-15</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.17162" target="_blank" rel="noopener">2606.17162</a>  </div> <h1>MemSlides: A Hierarchical Memory Driven Agent Framework for Personalized Slide Generation with Multi-turn Local Revision</h1> <p class="title-zh">MemSlides：面向个性化幻灯片生成的分层记忆驱动Agent框架</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 记忆与个性化生成</span> </div> <p class="affiliations">Beijing University of Posts and Telecommunications · Tsinghua University · Shanghai Jiao Tong University</p> <div class="meta">Ye Jin, Yangyang Xu, Jun Zhu, Yibo Yang</div> <p class="one-liner">提出分层记忆框架（用户画像/工作/工具记忆）结合局部修改，实现多轮个性化幻灯片生成</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Hierarchical Memory">Hierarchical Memory</a><a class="tag" href="/DailyPaper/tag/Personalization">Personalization</a><a class="tag" href="/DailyPaper/tag/Slide Generation">Slide Generation</a><a class="tag" href="/DailyPaper/tag/Agent">Agent</a><a class="tag" href="/DailyPaper/tag/Local Revision">Local Revision</a><a class="tag" href="/DailyPaper/tag/Tool Memory">Tool Memory</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>分层记忆设计可直接迁移到对话式推荐/购物Agent：将用户长期偏好（用户画像记忆）与会话级临时约束（工作记忆）解耦，避免偏好混淆。</li><li>工具记忆（存储可复用的API调用或操作序列）在电商Agent中可用于缓存高频操作模式（如“按价格排序”“筛选品牌”），提高执行可靠性。</li><li>局部修改策略（scoped local revision）可应用于推荐列表的多轮调整：当用户要求“把第二个商品换成更低价的”时，只更新受影响的槽位，而非重新生成整个列表。</li><li>意图条件画像（intent-conditioned profiles）的思路可用于搜索/推荐场景：根据用户当前意图（如“比价”vs“发现新品”）动态选择不同的偏好画像，提升首轮个性化质量。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：个性化幻灯片生成要求Agent跨任务保持稳定的用户偏好，在多轮修改中记住新偏好与约束，并可靠执行局部编辑。现有系统缺乏持久个性化能力，常因重复生成整个幻灯片而效率低下。</p>
+<p><strong>方法关键点</strong>：MemSlides提出分层记忆框架，将记忆分为三类：</p>
+<ul>
+<li>用户画像记忆（长期）：存储意图条件下的用户档案，用于首轮个性化；</li>
+<li>工作记忆（短期）：跨修改轮次携带活跃偏好和会话约束；</li>
+<li>工具记忆（长期）：保存可复用的执行经验（如局部编辑操作）。
+配合<strong>scoped slide-local revision</strong>，修改仅作用于最小受影响区域（如单页滑块）而非整个演示文稿，实现精准局部更新。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在多角色多意图画像库上，用户画像记忆显著提升人格对齐度；</li>
+<li>工具记忆注入在诊断匹配对测试中改善了闭环修改行为；</li>
+<li>定性案例验证了工作记忆能跨轮次传递偏好。</li>
+</ul>
+<p>结论：个性化生成需分离持久档案、会话工作记忆与可复用执行经验。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.17162&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.17162" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.17162" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.17162" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

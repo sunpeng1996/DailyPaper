@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出POW3R框架，通过rollout对比自适应调整评分标准权重，将人类重要性与当前可学性解耦，提升GRPO训练效果与效率"><meta property="og:title" content="Not Every Rubric Teaches Equally: Policy-Aware Rubric Rewards for RLVR"><meta property="og:description" content="提出POW3R框架，通过rollout对比自适应调整评分标准权重，将人类重要性与当前可学性解耦，提升GRPO训练效果与效率"><meta property="og:type" content="website"><title>Not Every Rubric Teaches Equally: Policy-Aware Rubric Rewards for RLVR</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.20164" target="_blank" rel="noopener">2605.20164</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Not Every Rubric Teaches Equally: Policy-Aware Rubric Rewards for RLVR</h1> <p class="title-zh">POW3R：基于策略感知的动态评分标准奖励框架</p> <div class="dir-row"> <span class="direction-chip">🧭 RLVR · 动态奖励聚合</span> </div> <p class="affiliations">Scale AI · Persona</p> <div class="meta">Utkarsh Tyagi, Xingang Guo, MohammadHossein Rezaei, Daniel George, Anas Mahmoud, Jackson Lee 等</div> <p class="one-liner">提出POW3R框架，通过rollout对比自适应调整评分标准权重，将人类重要性与当前可学性解耦，提升GRPO训练效果与效率</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RLVR">RLVR</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Rubric Reward">Rubric Reward</a><a class="tag" href="/DailyPaper/tag/Dynamic Weighting">Dynamic Weighting</a><a class="tag" href="/DailyPaper/tag/Multi-Objective RL">Multi-Objective RL</a><a class="tag" href="/DailyPaper/tag/VLM">VLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多目标奖励的动态权重分配：在电商推荐或Agent的多维度评估中（如准确性、多样性、响应速度），可借鉴POW3R，根据策略当前表现动态调整各维度在奖励中的压力，避免固定权重导致学习停滞在已饱和或无法达标的目标上。</li><li>信息量驱动的训练信号筛选：利用rollout级别的方差（或评分者间分歧）识别哪些评估项对当前策略最具区分力，将训练压力集中于此，其他项保留基线权重，这能提升早期训练效率和最终性能，类似推荐系统中对困难用户或长尾商品的强化学习倾斜。</li><li>保持类别质量平衡的归一化设计：POW3R在类别内重新分配权重但保持类别总质量不变，这种设计可复用至Agent的多能力维度（规划、工具使用、解答准确性）训练，避免某一能力因梯度占优而掩盖其他能力的发展。</li><li>评估与训练奖励解耦：静态的人类重要性权重保留作为最终评估目标，训练时则使用动态权重提供更丰富的梯度信号。这种拆解对生成式推荐中多语义ID的优化同样适用：静态的语义重要度不直接等同于RL训练时的有效信号，可分别设计评价和训练两套权重。</li> </ul> </div> <div class="content"> <p><strong>动机</strong></p>
+<p>在LLM后训练中，基于评分标准（rubric）的奖励扩展了可验证奖励（RLVR）的应用范围，但标准的静态加权求和将人类分配的权重同时视为最终质量目标与当前训练信号，这隐含假设两者一致。实验显示，对于冻结的策略，约一半的评分标准要么已饱和（所有输出都通过），要么完全无法达到（无输出通过），此时标准对GRPO的优势信号贡献为零，而高人类权重的标准同样存在大量此类“无信号”情况。因此，静态聚合浪费了约45–51%的训练压力在无法学习的标准上，且人类重要性与当前可学习性脱节。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>策略感知因子</strong>：在每个训练步骤，根据同一提示下G个rollout的评判结果计算每个标准的 pass rate 和方差，方差高的标准具有更强的区分能力。</li>
+<li><strong>平滑与重归一化</strong>：对方差进行类别内归一化，并与人类权重混合（通过λ平衡先验与对比度），再经EMA更新和裁剪，得到动态因子α，用于缩放各标准的权重。</li>
+<li><strong>类别平衡保持</strong>：在类别内重分配压力，但保持类别总质量不变，确保不偏离人类定义的维度重要性。</li>
+<li><strong>无缝接入GRPO</strong>：仅改变奖励聚合方式，不修改优化器或基础设施，训练与评估的评分标准及人类权重均保持不变。</li>
+</ul>
+<p><strong>关键实验结果</strong></p>
+<p>在两个数据集（多模态MM和HealthBench）上，针对三种基模型（Qwen3-VL, Gemma等），POW3R在30项对比中赢了24项，平均rubric奖励和严格完成率（所有必要标准均通过的比例）均有提升，且达到同等性能所需的训练步数减少为2.5–4倍。例如，在Qwen3-VL-4B的多模态任务上，POW3R将测试rubric奖励从静态标量的47.1%提升至48.8%，严格完成率从17.9%提升至20.2%，训练效率显著提升。分析还显示，POW3R将训练压力从无信号标准转移到对比度高的标准上，并拓宽了rollout奖励的分布，减少了GRPO中因奖励全等而导致梯度为零的情况。</p>
+<p><strong>核心结论</strong>：“评分标准的聚合应区分‘最终答案中什么最重要’与‘当前策略能学到什么’，动态重权重能更有效地利用有限训练步骤。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.20164&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.20164" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.20164" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.20164" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

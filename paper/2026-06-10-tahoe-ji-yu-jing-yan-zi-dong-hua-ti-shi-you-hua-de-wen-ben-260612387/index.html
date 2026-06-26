@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将提示优化重构为持久化的数据管理问题，通过错误驱动的提示学习构建结构化提示库，实现高效、可迁移的 Text-to-SQL 生成。"><meta property="og:title" content="TAHOE: Text-to-SQL with Automated Hint Optimization from Experience"><meta property="og:description" content="将提示优化重构为持久化的数据管理问题，通过错误驱动的提示学习构建结构化提示库，实现高效、可迁移的 Text-to-SQL 生成。"><meta property="og:type" content="website"><title>TAHOE: Text-to-SQL with Automated Hint Optimization from Experience</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12387" target="_blank" rel="noopener">2606.12387</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>TAHOE: Text-to-SQL with Automated Hint Optimization from Experience</h1> <p class="title-zh">TAHOE：基于经验自动化提示优化的文本到 SQL 系统</p> <div class="dir-row"> <span class="direction-chip">🧭 Text-to-SQL · 持久化提示管理</span> </div> <p class="affiliations">ByteDance Inc. · Georgia Institute of Technology</p> <div class="meta">Zhiyi Chen, Jie Song, Peng Li</div> <p class="one-liner">将提示优化重构为持久化的数据管理问题，通过错误驱动的提示学习构建结构化提示库，实现高效、可迁移的 Text-to-SQL 生成。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Text-to-SQL">Text-to-SQL</a><a class="tag" href="/DailyPaper/tag/Hint Optimization">Hint Optimization</a><a class="tag" href="/DailyPaper/tag/Persistent Memory">Persistent Memory</a><a class="tag" href="/DailyPaper/tag/Agent">Agent</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>错误驱动的结构化记忆范式：在电商搜索、推荐查询改写等场景，可将编译/执行/用户反馈提炼为可复用的提示规则，避免每次重复试错，显著降低线上推理延迟和成本。</li><li>冲突策略显式建模：面对多义的用户意图（如“爆款”需包含并列），将不同解释存储为同一触发词下的竞争策略，并用成功/有害/惰性统计做运行时排序，这直接可迁移至生成式推荐中的目标锚定与意图消歧。</li><li>语法与语义解耦 + 分层作用域：在跨业务（多国多语言）的电商平台上，可分离通用逻辑与特定数据库/用户偏好，实现模型无关的热更新，无需微调即可适应新方言或新用户习惯。</li><li>两阶段推理（逻辑规划 + SQL 合成）：可借鉴到复杂生成任务中，先利用轻量检索整理冲突策略、形成连贯逻辑方案，再生成最终输出，有效缓解大型 prompt 的上下文噪声和注意力衰减问题。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：工业级 Text-to-SQL 面临严格方言约束、海量 schema 和动态用户意图三大挑战。现有方法要么依赖高成本的测试时扩展（agentic loop），要么因 SFT 导致僵化，抑或简单 RAG 引入上下文噪声，都无法在效率与适应性上取得平衡。TAHOE 的核心洞察是：与其重复在线纠错，不如将提示优化转化为一个离线的、持久化的数据管理问题。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>Hint Bank</strong>：结构化的外部知识库，解耦为 Syntax Hints（方言规则，如双引号引用）和 Semantic Hints（触发词→多个竞争策略），每条策略配有学习时间戳和事后归因统计（成功/有害/惰性）。</li>
+<li><strong>错误驱动的提示学习流水线</strong>：对每个训练样本，执行多样本推理 → 顺序语法/语义反馈 → 原子 diff 提取 → 簇化建议 → 更新临时提示库，成功或改善则合并至全局库，无效则丢弃。</li>
+<li><strong>两阶段推理</strong>：逻辑规划阶段根据检索策略的置信度排序、消歧，形成统一方案；SQL 合成阶段注入完整方言语法提示，生成最终可执行 SQL。</li>
+<li><strong>覆盖保证</strong>：为防止提示库偏向错误案例，筛选首次就成功的样本，提取其所用的“常规策略”并入库，保持公平竞争。</li>
+</ul>
+<p><strong>关键结果</strong>：在 Spider 2.0–Snow 的 113 条开发集上，基于 GPT-5.5 的通过率从 61.95% 提升至 79.42%，pass@4 从 72.57% 升至 87.61%，方言语法通过率达 100%，平均编译器反馈轮次从 2.79 降至 0.12。同一 Hint Bank 直接用于更弱的 Doubao-2.0-lite 模型，仍带来 +19.7pp 的通过率增益，验证了跨模型迁移性。在留出样本上语法迁移稳健，语义提升依赖于开发集对目标工作负载的覆盖度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12387&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12387" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12387" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12387" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="OneSearch 系列开山之作，也是首个工业级端到端生成式电商搜索框架(快手商城详情页 100% / 商城 50% / 主搜 20% 全流量)。三件套：① **KHQE 编码** = RQ-Kmeans 三层 hierarchical SID + OPQ 两层 残差独特属性 SID + AC 自动机关键词增强降噪；② **多视角行为序列注入** = behavior-构造 user ID + 显式 short seq + Q-Former 聚合的隐式 click/order/RSU 三类 long seq；③ **PARS** = 三阶段 SFT(语义对齐→共现同步→个性化) + 6 级行为分层 reward + Listwise DPO 两阶段 Hybrid Ranking(RM-guided→user interaction)。线上 item CTR +1.67% / Order +3.22% / Buyer +2.40%；OPEX 直降 75.40%, MFU 3.26%→27.32%(700% 相对提升)，给「单生成模型替代 MCA」首次工业证据。
+"><meta property="og:title" content="OneSearch: A Preliminary Exploration of the Unified End-to-End Generative Framework for E-commerce Search · 论文沉淀"><meta property="og:description" content="OneSearch 系列开山之作，也是首个工业级端到端生成式电商搜索框架(快手商城详情页 100% / 商城 50% / 主搜 20% 全流量)。三件套：① **KHQE 编码** = RQ-Kmeans 三层 hierarchical SID + OPQ 两层 残差独特属性 SID + AC 自动机关键词增强降噪；② **多视角行为序列注入** = behavior-构造 user ID + 显式 short seq + Q-Former 聚合的隐式 click/order/RSU 三类 long seq；③ **PARS** = 三阶段 SFT(语义对齐→共现同步→个性化) + 6 级行为分层 reward + Listwise DPO 两阶段 Hybrid Ranking(RM-guided→user interaction)。线上 item CTR +1.67% / Order +3.22% / Buyer +2.40%；OPEX 直降 75.40%, MFU 3.26%→27.32%(700% 相对提升)，给「单生成模型替代 MCA」首次工业证据。
+"><meta property="og:type" content="website"><title>OneSearch: A Preliminary Exploration of the Unified End-to-End Generative Framework for E-commerce Search · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🔎 生成式搜索</span> <span class="sep">·</span><time>2025-09</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>OneSearch: A Preliminary Exploration of the Unified End-to-End Generative Framework for E-commerce Search</h1> <p class="archive-authors">Ben Chen, Xian Guo, Siyuan Wang, Zihan Liang, Yue Lv, Chenyi Lei, Wenwu Ou, Han Li, Kun Gai, et al. (30 人)</p> <p class="affiliations">Kuaishou Technology</p> <p class="one-liner">OneSearch 系列开山之作，也是首个工业级端到端生成式电商搜索框架(快手商城详情页 100% / 商城 50% / 主搜 20% 全流量)。三件套：① **KHQE 编码** = RQ-Kmeans 三层 hierarchical SID + OPQ 两层 残差独特属性 SID + AC 自动机关键词增强降噪；② **多视角行为序列注入** = behavior-构造 user ID + 显式 short seq + Q-Former 聚合的隐式 click/order/RSU 三类 long seq；③ **PARS** = 三阶段 SFT(语义对齐→共现同步→个性化) + 6 级行为分层 reward + Listwise DPO 两阶段 Hybrid Ranking(RM-guided→user interaction)。线上 item CTR +1.67% / Order +3.22% / Buyer +2.40%；OPEX 直降 75.40%, MFU 3.26%→27.32%(700% 相对提升)，给「单生成模型替代 MCA」首次工业证据。
+</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Generative Search</span><span class="tag tag-static">KHQE</span><span class="tag tag-static">RQ-OPQ</span><span class="tag tag-static">Multi-view Behavior</span><span class="tag tag-static">E-commerce Search</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>传统电商搜索靠多级级联架构(MCA): recall(~10⁹) → pre-rank(~10⁴) → rank(~10²)，逐级漏斗权衡延迟与精度。但 MCA 有两大顽疾：<strong>fragmented compute</strong>(资源大头给通信/存储而非数值计算)与 <strong>objective collision</strong>(各阶段独立训练目标互打架，intent item 早期被砍后期救不回)。生成式检索(GR)用单模型 seq-to-seq 收口理论上能解，但电商搜索三个独特门槛挡住 GR 落地：item 信息冗长无序+卖家塞无关词噪声、query↔item 强相关约束、短 query/新品类下隐式意图挖掘。</p>
+<p><strong>OneSearch</strong> 是首个把这三道门槛一次解掉、并在 Kuaishou 电商搜索详情页全流量、商城 50%、主搜 20% 流量上落地的端到端生成式框架。核心三件套：</p>
+<ol>
+<li><strong>KHQE</strong>(Keyword-enhanced Hierarchical Quantization Encoding) —— RQ-Kmeans 三层 hierarchical SID + OPQ 两层残差独特属性 SID + AC 自动机抽核心关键词降噪；</li>
+<li><strong>Multi-view Behavior Sequence Injection</strong> —— behavior-constructed user ID + 显式 short seq + Q-Former 聚合 click/order/RSU 三类隐式 long seq；</li>
+<li><strong>PARS</strong>(Preference Aware Reward System) —— 三阶段 SFT(语义对齐→共现同步→个性化) + 6 级行为分层 reward + Listwise DPO + Hybrid Ranking 两阶段(RM-guided→user interaction)。</li>
+</ol>
+<p>线上 A/B：item CTR +1.67% / Order +3.22% / Buyer +2.40%(全 p&#x3C;0.05)，OPEX -75.40%、MFU 3.26%→27.32%(+700%)。本文是 Kuaishou「One系」(OneRec/OneSug/OneSearch/OneRetrieval/OneSearch-V2)在电商搜索方向的奠基级里程碑。</p>
+<h2 id="关键贡献">关键贡献</h2>
+<ul>
+<li>首个工业级端到端 GR 框架在电商搜索全流量落地，不再只做 recall 补丁；</li>
+<li>KHQE 把「hierarchical 量化 + 残差独特属性量化 + 关键词降噪」一次组合，给电商 GR 的 SID 设计立了工业基准；</li>
+<li>多视角行为注入(三路径)让冷启动用户 CTR 反而高于热用户(+2.50% vs +1.11%)；</li>
+<li>PARS 把「在线分布天花板」工程化(Phase1 RM-guided 对齐 MCA → Phase2 user interaction 突破)，是任何想替换在线系统的生成式方案可借鉴的模板；</li>
+<li>MFU/OPEX 当工业指标 —— 把节流推到业务面前，决策者更易批准上线。</li>
+</ul>
+<h2 id="实验亮点">实验亮点</h2>
+<ul>
+<li>HR@350 order 51.74%→66.46%(+14.72pp)，MRR 与 MCA 打平；</li>
+<li>RQ-OPQ(2/256) 是 sweet spot，继续往深加(4/256/4×2/4×4)反而崩；</li>
+<li>线上 A/B 全显著(p&#x3C;0.05)：item CTR +1.67% / PV CTR +3.14% / PV CVR +1.78% / Buyer +2.40% / Order +3.22%；</li>
+<li>OPEX -75.40%、MFU 翻 7 倍(3.26%→27.32%)；</li>
+<li>Top 30 行业 28/30 CTR 正向，长尾 query +1.33%，冷启 item +3.31% / 冷用户 +2.50%。</li>
+</ul>
+<h2 id="局限与延展">局限与延展</h2>
+<p>排序端仅打平 MCA(没赢)且依赖手工关键词字典 + 独立 RM + 不可编辑码本 —— 这三个口子正是 <strong>OneSearch-V2</strong>(加潜在推理+自蒸馏解 query 理解、加 TPMA-GRPO 干掉独立 RM)和 <strong>OneRetrieval</strong>(加可编辑码本解新词进不来)后续两篇正面解决的题。三篇对照读可以看到一条工业 GR 范式如何迭代成熟。</p> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2509.03236" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

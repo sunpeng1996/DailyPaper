@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 Arbor 框架，用持久协调器与孤立执行器配合假设树精化，把长期研究转化为累积性探索与验证"><meta property="og:title" content="Toward Generalist Autonomous Research via Hypothesis-Tree Refinement"><meta property="og:description" content="提出 Arbor 框架，用持久协调器与孤立执行器配合假设树精化，把长期研究转化为累积性探索与验证"><meta property="og:type" content="website"><title>Toward Generalist Autonomous Research via Hypothesis-Tree Refinement</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.11926" target="_blank" rel="noopener">2606.11926</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Toward Generalist Autonomous Research via Hypothesis-Tree Refinement</h1> <p class="title-zh">通过假设树精化实现通用自主研究框架</p> <div class="dir-row"> <span class="direction-chip">🧭 自主研究 · 假设树精化 · 分层 Agent 协作</span> </div> <p class="affiliations">Renmin University of China · Microsoft Research</p> <div class="meta">Jiajie Jin, Yuyang Hu, Kai Qiu, Qi Dai, Chong Luo, Guanting Dong 等</div> <p class="one-liner">提出 Arbor 框架，用持久协调器与孤立执行器配合假设树精化，把长期研究转化为累积性探索与验证</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Hypothesis Tree Refinement">Hypothesis Tree Refinement</a><a class="tag" href="/DailyPaper/tag/Autonomous Research">Autonomous Research</a><a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/Tree Search">Tree Search</a><a class="tag" href="/DailyPaper/tag/Self-Improvement">Self-Improvement</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>复杂 Agent 任务的持久状态管理：Arbor 将多步探索组织成一棵假设树，每次实验的结论和约束向上抽象传播，可以作为电商/推荐场景中连续 A/B 实验、策略迭代的状态记忆方案，避免仅靠对话历史丢失关键因果。</li><li>分层决策与隔离执行：Coordinator 负责全局策略与树更新，Executor 在独立 worktree 中实现单条假设并返回结构化证据。这种分离可用于多智体商品选品 / 生成式推荐流程——策略 Agent 规划方向，执行 Agent 独立测试文案或召回路线，结果写回共享记忆，隔离失败污染。</li><li>基于证据的搜索前沿控制：树的 Select/Prune/Merge 决策不只看指标，还结合祖先洞察、兄弟节点结果，类似多臂 Bandit 的树形版本。在自动化推荐排序策略搜索或 prompt 工程中，可借鉴这种结构化探索，利用失败实验反向约束后续假设生成。</li><li>“开发-测试”门控防止过拟合：Arbor 严格区分开发反馈与最终准入，只有提升 held-out 评估的候选才被合并。做离线推荐算法优化时可复用此思想：将历史数据切分为探索集和验证集，避免代理在开发集上投机取巧，保证线上泛化。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：自主科学研究需要长时间维持探索状态，不断根据实验反馈修正假设。现有 LLM 代理能长时间执行任务，但缺少将多次试验转化为累积研究进展的机制，容易陷入局部试错。论文提出 Autonomous Optimization（AO）范式，并设计 Arbor 框架，让代理能够持续记录、比较、精化假设，将研究变成一棵不断生长的证据树。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>假设树（Hypothesis Tree）</strong>：每个节点绑定一个假设、对应代码/制品版本、开发分数、失败原因及抽象洞察。树内部分为方向节点（抽象研究路线）和叶节点（可执行干预）。</li>
+<li><strong>分层结构</strong>：持久协调器（Coordinator）负责全局策略，观察树状态，选择父节点生成并派遣子假设；短寿执行器（Executor）在独立 git worktree 中实现具体假设并返回结构化报告，不修改全局状态。</li>
+<li><strong>六步循环</strong>：Observe（读取树前沿）、Ideate（基于证据生成新假设）、Select（选择叶节点）、Dispatch（并行执行）、Backpropagate（将实验结果抽象为洞察并向上传播）、Decide（根据 held-out 测试决定合并、剪枝或继续）。</li>
+<li><strong>开发-测试门控</strong>：只在候选分支通过 held-out 评估后才合并到主分支，防止过拟合开发集。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 6 个真实研究任务（模型训练、Harness 工程、数据合成）上，Arbor 均获得最佳 held-out 结果，平均相对增益是 Codex 和 Claude Code 的 2.5 倍以上。</li>
+<li>在 MLE-Bench Lite 上，用 GPT-5.5 时获得 86.36% 的 Any Medal，所有对比系统中最高；消融实验验证了树结构和洞察反馈的共同作用。</li>
+<li>跨任务迁移：在 BrowseComp 上优化的搜索 harness 直接迁移到 DeepSearchQA 和 HLE 上仍有提升。</li>
+</ul>
+<p><strong>核心记忆句</strong>：Arbor 不是更会写代码，而是把研究方向、实验证据和失败教训结构化存进树里，让长期探索变成可回溯、可复用的研究过程。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.11926&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.11926" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.11926" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.11926" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

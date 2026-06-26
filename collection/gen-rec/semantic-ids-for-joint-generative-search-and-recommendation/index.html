@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="在「搜索+推荐」统一生成式模型里，Semantic ID 该用哪种 embedding 来构造是决定性因素。任务专属 embedding（搜索调优 / 推荐调优）只在单任务上强、在另一任务上崩。用一个对搜索和推荐联合微调的 bi-encoder（Multi-task）产出共享 Semantic ID 空间，能在两任务间取得最佳折中，且不增加 token 预算。"><meta property="og:title" content="Semantic IDs for Joint Generative Search and Recommendation · 论文沉淀"><meta property="og:description" content="在「搜索+推荐」统一生成式模型里，Semantic ID 该用哪种 embedding 来构造是决定性因素。任务专属 embedding（搜索调优 / 推荐调优）只在单任务上强、在另一任务上崩。用一个对搜索和推荐联合微调的 bi-encoder（Multi-task）产出共享 Semantic ID 空间，能在两任务间取得最佳折中，且不增加 token 预算。"><meta property="og:type" content="website"><title>Semantic IDs for Joint Generative Search and Recommendation · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2025-08</time> <span class="sep">·</span><span>RecSys &#39;25</span>  </div> <h1>Semantic IDs for Joint Generative Search and Recommendation</h1> <p class="archive-authors">Gustavo Penha, Edoardo D&#39;Amico, Marco De Nadai, Enrico Palumbo, et al. (11 人)</p> <p class="affiliations">Spotify</p> <p class="one-liner">在「搜索+推荐」统一生成式模型里，Semantic ID 该用哪种 embedding 来构造是决定性因素。任务专属 embedding（搜索调优 / 推荐调优）只在单任务上强、在另一任务上崩。用一个对搜索和推荐联合微调的 bi-encoder（Multi-task）产出共享 Semantic ID 空间，能在两任务间取得最佳折中，且不增加 token 预算。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">semantic-id</span><span class="tag tag-static">generative-retrieval</span><span class="tag tag-static">joint-search-rec</span><span class="tag tag-static">llm4rec</span><span class="tag tag-static">rq-kmeans</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>在 LLM 驱动的生成式模型里，item 必须被映射成离散 token 才能被生成。传统做法用唯一 ID（SASRec）或启发式序列 ID（P5），都要随冷启动 item 重训、工业上不可用。近期主流是 <strong>Semantic ID</strong>：从预训练 item embedding 量化出一组离散 code，让内容相似的 item 共享 token，从而具备泛化和冷启动能力。</p>
+<p>但 Semantic ID 的好坏<strong>严重取决于用来构造它的 embedding 空间</strong>。已有工作（RIPOR / TokenRec）证明：为某个任务（搜索 or 推荐）专门微调 embedding，能在该任务上得到最好的 Semantic ID。本文要回答的关键问题是：</p>
+<blockquote>
+<p>当搜索和推荐被放进<strong>同一个</strong>生成式模型（Joint S&#x26;R）时，能不能造出一套对两个任务都好的 Semantic ID？</p>
+</blockquote>
+<p>核心发现（也是 Pareto 图 Figure 1 的结论）：</p>
+<ul>
+<li><strong>任务专属 embedding 存在根本性 trade-off</strong>：用推荐调优的 embedding，搜索 R@30 从 0.072 跌到 0.004（-94%）；用搜索调优的 embedding，推荐 R@30 从 0.062 跌到 0.026（-60%）。优化一个任务就牺牲另一个。</li>
+<li><strong>不是靠”每个任务造专属 ID”取胜</strong>，而是靠一个对搜索+推荐<strong>联合微调的 bi-encoder（Multi-task）<strong>先产出共享 embedding、再统一量化成一套 Semantic ID，能落在 Pareto 前沿、两任务都不差，且</strong>不膨胀 token 预算</strong>。</li>
+<li>量化器（tokenizer）层面，<strong>轻量的 RQ-KMeans 反而打败了 RQ-VAE 等学习型自编码量化器</strong>。</li>
+</ul>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/semantic-ids-for-joint-generative-search-and-recommendation/fig1.png" alt="Figure 1：联合生成式模型在不同 Semantic ID 构造方法下的 Search R@30 与 Rec R@30 散点（红=任务专属，蓝=跨任务，虚线=Pareto 前沿）。Multi-task 落在前沿、两任务都接近各自最优；Search/Rec based 各自只在单任务上强。"></p>
+<p><img src="/ai-papers-daily/figures/semantic-ids-for-joint-generative-search-and-recommendation/fig2.png" alt="Figure 2：两种任务专属 Semantic ID 构造流程。左侧 Search based：搜索数据微调 Bi-encoder 产出 item embedding，经 ID strategy 量化后喂入联合 S&#x26;R 生成模型；右侧 Rec. based：推荐数据训 ENMF（协同过滤）embedding 再量化。两者都只用单任务监督信号。"></p>
+<p>整条链路三段式：<strong>(1) 选 embedding 来源 → (2) 用 ID strategy（量化器）把 embedding 离散成 Semantic ID → (3) 把 Semantic ID 喂进一个对搜索和推荐联合训练的生成式模型（flan-t5-base）做生成式检索</strong>。本文唯一变量是第 1、2 段（embedding 来源 + 量化方法），第 3 段（生成模型）固定。</p>
+<p>作者把 embedding/ID 构造方法分两大族、共 7 种：</p>
+<ul>
+<li><strong>Task-specific（任务专属）</strong>：Search-based、Rec-based —— 只用单任务监督信号训 embedding。</li>
+<li><strong>Cross-task（跨任务）</strong>：Separate、Prefix-share、Fused_concat、Fused_SVD、Multi-task —— 显式引入两个任务的信息。</li>
+</ul>
+<p>所有方法产出的 Semantic ID 都进同一个 Joint S&#x26;R 生成模型，用同样的指标对比，从而隔离出”ID 构造方式”这一个因素的影响。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="数据集构造">数据集构造</h3>
+<ul>
+<li>基于 <strong>MovieLens-25M</strong>，沿用 Penha et al.[14] 的 S&#x26;R 数据集：62,138 部电影、1.24M user–item 交互（按时间切分，每个 user 最后一次交互作测试）。</li>
+<li><strong>搜索 query</strong>：每个 item 用 <strong>Gemini-2.0-flash</strong> 生成 20 条自然语言 query（10 train / 10 test）。prompt 要求 query 不含电影标题、描述电影内容/主题/类型，且半数是前半的同义改写。</li>
+<li>关键细节：每个 item 都有 10/10 条 query → <strong>搜索数据无热度偏置</strong>（uniform 分布）。这与推荐数据的热度分布差异很大，作者明确指出真实场景两分布更相似时结果应更乐观。</li>
+<li>内容类方法用 title、year、description、genres、tags、genome tags 拼接做 item 文本。</li>
+</ul>
+<h3 id="embedding-模型">Embedding 模型</h3>
+<ul>
+<li><strong>Content-based</strong>：直接用 <code>all-mpnet-base-v2</code>（sentence-transformers）对拼接 metadata 编码，不为任一任务微调。</li>
+<li><strong>Search（bi-encoder）</strong>：从同一预训练模型起，在搜索数据上用 in-batch 随机负例（MultipleNegativesRankingLoss）微调 —— 5 epoch、batch 512、LR 2e-5、Adam。产出 v_search（<strong>386 维</strong>）。</li>
+<li><strong>Recommendation（ENMF）</strong>：用 RecBole 训 Efficient Neural Matrix Factorization[2] —— 30 epoch、batch 512、embedding <strong>256 维</strong>、LR 0.001、Adam。产出 v_rec（256 维）。</li>
+</ul>
+<h3 id="cross-task-五种方法关键差异在在哪一层融合">Cross-task 五种方法（关键差异在”在哪一层融合”）</h3>
+<p><strong>1) Separate（token 分离）</strong>：直接给两套任务专属 ID 加任务前缀标签：
+<code>ID_sep = ⟨SEARCH:ID_search, REC:ID_rec⟩</code>。搜索 prompt 只输出 search token，推荐 prompt 只输出 rec token。
+代价：<strong>词表翻倍（共加 1024 个新 token）</strong>，且一个任务学到的知识无法迁移到另一任务的专属 token，丧失了 Penha et al.[14] 提的跨任务正则化效果。</p>
+<p><strong>2) Prefix-share</strong>：借鉴 Shi et al.[20]，分三套 codebook —— 一套 SHARED + 两套任务专属前缀。单个 encoder 吃拼接 embedding <code>[v_search; v_rec]</code>，两个 decoder 学各自 codebook 的重建。最终 ID = 共享 token + 任务专属 token 拼接。本文里 <strong>256 shared + 512 task-specific token</strong>。</p>
+<p><strong>3) Fused_concat（embedding 拼接）</strong>：对 v_search、v_rec 做 ℓ2 归一化后直接拼接：<code>v_concat = [v_search; v_rec]</code>，再量化。
+问题：两个空间维度不等（386 vs 256），<strong>维度大的空间会被过度表征</strong>。</p>
+<p><strong>4) Fused_SVD</strong>：先归一化，再用 truncated SVD 把高维降到相同维度 d，然后<strong>逐元素相加</strong>：<code>v_svd = v_search + v_rec</code>，再量化。相比 Fused_concat 提升了推荐、轻微降了搜索。</p>
+<p><img src="/ai-papers-daily/figures/semantic-ids-for-joint-generative-search-and-recommendation/fig3.png" alt="Figure 4：两类「embedding 融合」方法。左侧 Multi-task（本文推荐）：单个 Bi-encoder 同时吃搜索+推荐两路监督信号训练，产出共享 embedding 再统一量化成一套 Semantic ID；右侧 Fused：搜索 Bi-encoder 与推荐 ENMF 各出 embedding，先做 Fusion（concat / SVD 相加）再量化。"></p>
+<p><strong>5) Multi-task（本文推荐）</strong>：把 bi-encoder 同时在两种监督信号上训 —— 搜索的 query–item 对（来自 D_S）+ 推荐的 co-occurring item 对（来自 D_R），<strong>共享 encoder 用两个 contrastive loss 之和优化</strong>，产出同时携带检索与协同过滤线索的 v_mt，再统一量化成一套 Semantic ID。</p>
+<h3 id="量化id-tokenisation">量化（ID tokenisation）</h3>
+<ul>
+<li>默认 <strong>2 个 codebook，每个 size 256（共 512 token）</strong>。</li>
+<li>默认量化器：<strong>RQ-KMeans</strong>（FAISS residual quantizer）。</li>
+<li>消融对比：MiniBatchDictionaryLearning（sklearn）、ResidualLFQ、RQ-VAE（vector-quantize-pytorch）。</li>
+</ul>
+<h3 id="生成模型">生成模型</h3>
+<ul>
+<li><code>google/flan-t5-base</code>，对搜索+推荐<strong>联合训练</strong> 3 epoch（LR 0.002、batch 128、AdamW、weight-decay 0.01）。</li>
+<li>解码用 <strong>diversified beam search</strong>：beam 60、diversity penalty 0.25、30 groups —— 用于提高检索到的不同 item 数。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<ul>
+<li><strong>指标</strong>：Recall@30。每个模型 5 个随机种子跑 5 次取均值，配对 t 检验（95% 置信）+ Bonferroni 校正。</li>
+<li><strong>Head/Torso 切分</strong>：Head = 训练集中最热门 1% item，Torso = 其余。搜索数据无热度偏置。</li>
+</ul>
+<h3 id="动机表任务专属-embedding-的-trade-off">动机表：任务专属 embedding 的 trade-off</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Embedding 空间</th><th>Search R@30</th><th>Rec R@30</th></tr></thead><tbody><tr><td>Content-based (DSI/TIGER 类)</td><td>0.013</td><td>0.023</td></tr><tr><td><strong>Search based</strong> (RIPOR 类)</td><td><strong>0.072</strong></td><td>0.026</td></tr><tr><td><strong>Rec. based</strong> (TokenRec 类)</td><td>0.004</td><td><strong>0.062</strong></td></tr></tbody></table>
+<p>搜索调优把检索拉高约 5x，但推荐掉 60%；推荐调优反之。验证”优化一个就牺牲另一个”。</p>
+<h3 id="主结果table-2r30">主结果（Table 2，R@30）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>构造方法</th><th>Search (All)</th><th>Rec (All)</th><th>Rec (Head)</th><th>Rec (Torso)</th></tr></thead><tbody><tr><td>Task-specific · Search based</td><td><strong>0.072</strong></td><td>0.026</td><td>0.090</td><td><strong>0.070</strong></td></tr><tr><td>Task-specific · Rec. based</td><td>0.004</td><td><strong>0.062</strong></td><td><strong>0.170</strong></td><td>0.035</td></tr><tr><td>Cross · Separate</td><td>0.028</td><td>0.032</td><td>0.120</td><td>0.051</td></tr><tr><td>Cross · Prefix-share</td><td>0.007</td><td>0.021</td><td>0.058</td><td>0.010</td></tr><tr><td>Cross · Fused_concat</td><td>0.048</td><td>0.018</td><td>0.045</td><td>0.041</td></tr><tr><td>Cross · Fused_SVD</td><td>0.033</td><td>0.038</td><td>0.105</td><td>0.060</td></tr><tr><td>Cross · <strong>Multi-task</strong></td><td><u>0.046</u></td><td><u>0.049</u></td><td>0.135</td><td>0.024</td></tr></tbody></table>
+<p>要点：</p>
+<ul>
+<li><strong>Multi-task 是唯一两任务都接近各自最优的方法</strong>（Search 0.046、Rec 0.049），落在 Pareto 前沿；Fused_SVD 次之。</li>
+<li><strong>Separate</strong> 虽显式有两任务信息，但词表翻倍、跨任务知识不共享，反而不如先融合 embedding 再量化的方法。</li>
+<li><strong>Prefix-share 整体偏弱</strong>，主因是其底层量化方式在本数据上不灵（见下方量化消融）。</li>
+<li><strong>Fused_concat 的拼接缺陷</strong>：维度大的 bi-encoder(386) 压过 ENMF(256)，导致偏搜索；Fused_SVD 拉平维度后推荐变好、搜索略降。</li>
+<li><strong>Head/Torso 观察</strong>：Rec-based 在 Head（热门）极强（0.170）但 Torso 弱；Search-based 在 Torso 反而最强（0.070）。说明热度在推荐数据里很关键，长尾 item 更该依赖内容信号。</li>
+</ul>
+<h3 id="量化方法消融table-3固定-multi-task-embedding">量化方法消融（Table 3，固定 Multi-task embedding）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>量化方法</th><th>Search</th><th>Rec</th></tr></thead><tbody><tr><td><strong>RQ-KMeans</strong></td><td><strong>0.046</strong></td><td><strong>0.049</strong></td></tr><tr><td>Dictionary encoding</td><td>0.019</td><td>0.029</td></tr><tr><td>ResidualLFQ</td><td>0.018</td><td>0.023</td></tr><tr><td>RQ-VAE</td><td>0.002</td><td>0.024</td></tr></tbody></table>
+<p><strong>RQ-KMeans 全面胜出</strong>，尤其 RQ-VAE 在搜索上几乎崩（0.002）。与 Hong et al.[8] 一致 —— 他们也发现 RQ-VAE 不稳定、改用层次 k-means。作者把”为什么轻量 k-means 打败学习型自编码量化器”留作 future work。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>只在 MovieLens-25M 单数据集、单模型规模（flan-t5-base）上验证；搜索 query 是 LLM 合成且 uniform 分布（无真实搜索日志），与工业真实分布有 gap —— 作者自己承认真实分布下结果可能更乐观。</li>
+<li>指标只看 Recall@30，没有 NDCG/MRR 等位置敏感指标，也没线上实验。</li>
+<li>Multi-task 在 Rec-Torso（长尾推荐）上偏弱（0.024），说明联合 embedding 仍偏热门/搜索侧。</li>
+<li>未探索 Matryoshka 目标来对齐维度（作者点名留作 future work）。</li>
+</ul>
+<p><strong>对电商/搜推/Agent 的可借鉴点</strong>：</p>
+<ol>
+<li><strong>搜推一体生成式建模时，Semantic ID 的 embedding 来源是一等设计变量</strong>，别照搬”为单任务调 embedding 出最强 ID”的结论 —— 它在联合模型里会拖垮另一任务。电商里”搜索+推荐+广告”共用一套生成式 item token 时尤其要注意。</li>
+<li><strong>优先在 embedding 层做联合监督（Multi-task bi-encoder），而非在 ID/token 层做拼接或分离</strong>。“先融合 embedding 再统一量化”显著优于”各任务造专属 token 再拼前缀”，且不膨胀词表 —— 对工业级大词表很关键。</li>
+<li><strong>融合两套异构 embedding（内容/检索 vs 协同过滤）要先对齐维度</strong>，否则高维空间会主导量化；SVD 降维+相加是个便宜可用的折中。</li>
+<li><strong>量化器选型：先试 RQ-KMeans 这类轻量层次聚类，别默认上 RQ-VAE</strong>。多篇工作（本文 + EAGER-LLM）都报告 RQ-VAE 训练不稳，hierarchical k-means 更稳更强，工程落地更省事。</li>
+<li><strong>长尾 item 更依赖内容信号、热门 item 更依赖协同信号</strong>的 Head/Torso 观察，可指导电商里”对长尾商品给内容 embedding 更高权重”的融合策略。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2508.10478" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

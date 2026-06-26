@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出一个固定的停止谓词，通过重复答案和校准后的logit margin阈值，无需训练就能减少RAG中不必要的检索轮次"><meta property="og:title" content="TASR: Training-Free Adaptive Stopping for Iterative Retrieval"><meta property="og:description" content="提出一个固定的停止谓词，通过重复答案和校准后的logit margin阈值，无需训练就能减少RAG中不必要的检索轮次"><meta property="og:type" content="website"><title>TASR: Training-Free Adaptive Stopping for Iterative Retrieval</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13814" target="_blank" rel="noopener">2606.13814</a>  </div> <h1>TASR: Training-Free Adaptive Stopping for Iterative Retrieval</h1> <p class="title-zh">TASR：迭代检索的无训练自适应停止规则</p> <div class="dir-row"> <span class="direction-chip">🧭 迭代RAG · 无训练停止策略</span> </div> <p class="affiliations">San Diego State University · James Silberrad Brown Center for AI · Stanford University · Google DeepMind</p> <div class="meta">Adrian Kieback, Uyiosa Philip Amadasun, Aman Chadha, Aaron Elkins</div> <p class="one-liner">提出一个固定的停止谓词，通过重复答案和校准后的logit margin阈值，无需训练就能减少RAG中不必要的检索轮次</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/RAG">RAG</a><a class="tag" href="/DailyPaper/tag/adaptive stopping">adaptive stopping</a><a class="tag" href="/DailyPaper/tag/training-free">training-free</a><a class="tag" href="/DailyPaper/tag/calibration">calibration</a><a class="tag" href="/DailyPaper/tag/iterative retrieval">iterative retrieval</a><a class="tag" href="/DailyPaper/tag/multi-hop QA">multi-hop QA</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>可直接在现有RAG管线中插入一行代码作为停止条件：重复前轮归一化答案且 isotonically calibrated logit margin &gt; 0.25。对电商问答、多跳商品查询等场景，能在不损失太多精度的情况下大幅降低检索调用次数。</li><li>发现RLHF调优模型的verbalized置信度极度塌缩（96.5%输出最高分），而logit margin具有44倍的类条件分离度，这提示在依赖LLM自信度进行决策（如Agent中断、推荐解释可信度）时，应避免使用提示词直接索取的置信度分数，转向logit-level信号。</li><li>通过固定阈值实现跨模型、检索器、语料库的零次迁移，无需针对每个新模型或任务重新训练停止策略，降低了维护成本。对于多智体框架中调用外部工具的轮次控制，可以借鉴这种简单启发式规则作为默认基线。</li><li>论文从381个候选规则中筛选出Pareto最优规则，这种穷举评估再选择的范式，可以用来为其他agent决策点（如何时触发重排序、何时退出对话）设计低成本、可解释的启发式策略。</li> </ul> </div> <div class="content"> <p>动机：迭代检索增强生成（RAG）Agent常在答案已收敛后继续检索，浪费算力且不改变输出。现有停止策略需训练专用模型，不具备跨任务迁移性。</p>
+<p>方法：提出TASR，一行代码的停止谓词——当模型重复上一轮归一化后的答案，且等保校准（isotonic calibration）后的logit margin超过0.25时终止检索。无需学习任何分类器或价值头，阈值固定，适用于所有24种（模型×检索器×语料库）配置。</p>
+<p>结果：在3模型×2数据集的干扰测试中，TASR保留了固定k=5的94.8%宏F1，仅使用62.6%的调用量，比固定k=3高出3.42 F1。在9个BM25开放域和9个稠密检索扩展中，均无显著退化，且通用阈值跨配置直接有效。信号分析揭示：RLHF调优模型的verbalized置信度（1-5分）几乎坍缩到5（96.5%），熵仅0.182 nats；而logit margin的类条件分离度是前者的44倍，为规则设计提供了可测量的病理依据。TASR成为一个可审计、无训练的Pareto基线，供学习的停止控制器对比。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13814&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13814" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13814" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13814" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

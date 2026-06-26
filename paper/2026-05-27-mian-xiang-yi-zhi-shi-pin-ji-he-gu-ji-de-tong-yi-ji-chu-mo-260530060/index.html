@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过动态分块注意力实现流式与全序列视频几何估计的统一模型，并引入补全式数据精炼提升监督质量"><meta property="og:title" content="Towards Consistent Video Geometry Estimation"><meta property="og:description" content="通过动态分块注意力实现流式与全序列视频几何估计的统一模型，并引入补全式数据精炼提升监督质量"><meta property="og:type" content="website"><title>Towards Consistent Video Geometry Estimation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Other">Other</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.30060" target="_blank" rel="noopener">2605.30060</a>  </div> <h1>Towards Consistent Video Geometry Estimation</h1> <p class="title-zh">面向一致视频几何估计的统一基础模型 ViGeo</p> <div class="dir-row"> <span class="direction-chip">🧭 视频几何估计 · 动态分块注意力</span> </div> <p class="affiliations">Zhejiang University · Tongyi Lab, Alibaba Group · Shanghai Jiao Tong University · Fudan University</p> <div class="meta">Zhu Yu, Jingnan Gao, Runmin Zhang, Lingteng Qiu, Zhengyi Zhao, Rui Peng 等</div> <p class="one-liner">通过动态分块注意力实现流式与全序列视频几何估计的统一模型，并引入补全式数据精炼提升监督质量</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Video Geometry Estimation">Video Geometry Estimation</a><a class="tag" href="/DailyPaper/tag/Dynamic Chunking Attention">Dynamic Chunking Attention</a><a class="tag" href="/DailyPaper/tag/Depth Completion">Depth Completion</a><a class="tag" href="/DailyPaper/tag/Foundation Model">Foundation Model</a><a class="tag" href="/DailyPaper/tag/Temporal Consistency">Temporal Consistency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>动态分块注意力允许同一模型在训练后无缝切换双向/因果注意力模式，适合构建既能离线全量处理又能在线流式推理的序列模型（如用户行为序列建模），避免重复训练。</li><li>补全式数据精炼框架利用教师模型从稀疏、有噪标注生成稠密且时序一致的真值，可迁移至推荐系统中含噪 implicit feedback 或稀疏行为序列的伪标签生成，提升训练数据质量。</li><li>统一预测深度、法线、点图的多任务设计启示：在推荐模型中可对点击、转化、时长等多目标共享 backbone，以一致优化提升整体效果。</li><li>时序一致性约束的思想可启发推荐中的兴趣演变建模，例如在长序列用户行为中引入连贯性正则，避免短期噪声冲击。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：视频几何估计需要同时保证空间稠密和时序一致，但现有方法大多针对离线全序列或在线流式单独设计，难以统一；同时缺乏高质量稠密标注，限制了模型训练。</p>
+<p><strong>方法</strong>：提出 ViGeo，一个基于 plain transformer 的前馈基础模型。核心是<strong>动态分块注意力</strong>——训练时随机混合双向和因果注意力模式，测试时无需重训即可自适应切换，从而支持流式、全序列及长视频推理。为提升监督质量，设计<strong>补全式数据精炼框架</strong>：先训练一个视频深度补全教师模型，该模型以稀疏/噪声标注为条件，利用多视图时序信息生成稠密、一致、可靠的伪真值，用于训练学生 ViGeo。模型同时预测深度、表面法线和点图。</p>
+<p><strong>结果</strong>：仅使用公开数据集训练，在在线、离线及长视频深度估计、法线估计、点图估计上全面超越先前 SOTA，深度估计相对误差降低 8.3%–31.2%。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.30060&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.30060" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.30060" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.30060" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

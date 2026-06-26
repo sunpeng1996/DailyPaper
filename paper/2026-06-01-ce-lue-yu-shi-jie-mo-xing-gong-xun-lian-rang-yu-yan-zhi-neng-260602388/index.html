@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将 on-policy RL 的 rollout 同时用作世界模型的下一观测监督，通过动作熵过滤、裁剪 MAE 损失和奖励自适应权重实现稳定共训练，无需额外模型或推理开销"><meta property="og:title" content="Policy and World Modeling Co-Training for Language Agents"><meta property="og:description" content="将 on-policy RL 的 rollout 同时用作世界模型的下一观测监督，通过动作熵过滤、裁剪 MAE 损失和奖励自适应权重实现稳定共训练，无需额外模型或推理开销"><meta property="og:type" content="website"><title>Policy and World Modeling Co-Training for Language Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-01">2026-06-01</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.02388" target="_blank" rel="noopener">2606.02388</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Policy and World Modeling Co-Training for Language Agents</h1> <p class="title-zh">策略与世界模型共训练：让语言智能体在 RL 中学会预测动作后果</p> <div class="dir-row"> <span class="direction-chip">🧭 语言智能体 · 世界模型与强化学习共训练</span> </div> <p class="affiliations">Southern University of Science and Technology · Hong Kong University of Science and Technology · Hong Kong University of Science and Technology (Guangzhou) · Hong Kong Polytechnic University · LIGHTSPEED</p> <div class="meta">Ning Lu, Baijiong Lin, Shengcai Liu, Jiahao Wu, Haoze Lv, Yanbin Wei 等</div> <p class="one-liner">将 on-policy RL 的 rollout 同时用作世界模型的下一观测监督，通过动作熵过滤、裁剪 MAE 损失和奖励自适应权重实现稳定共训练，无需额外模型或推理开销</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/World Modeling">World Modeling</a><a class="tag" href="/DailyPaper/tag/On-policy RL">On-policy RL</a><a class="tag" href="/DailyPaper/tag/Co-Training">Co-Training</a><a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a><a class="tag" href="/DailyPaper/tag/MAE Loss">MAE Loss</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>复用现有 rollout 作为世界模型监督：在电商对话 Agent 或推荐交互 Agent 中，用户与系统的多轮交互（如搜索-浏览-下单）天然包含状态转移样本，可将每步动作对应的下一页面内容作为预测目标，无需额外构造模拟器。</li><li>动作熵过滤冗余样本：只保留策略熵较高的决策点（如用户提问模糊、候选商品多）的转移样本进行世界建模，避免大量确定性动作（如翻页）造成的低效训练，可显著提升样本效率。</li><li>用裁剪 MAE 替代 CE 应对噪声观测：在电商页面等富含随机 ID、产品名的文本环境中，MAE 损失能抑制不可预测 token 的梯度，配合置信度裁剪（pt,i &gt;ρ 的 token 不训练）可防止过拟合表面形式，使世界模型抓住核心动态。</li><li>奖励自适应权重平衡多任务：根据 rollout 组成败调整世界模型 loss 权重，低成功率组强化环境理解，高成功率组侧重策略优化，这种简单启发式可直接用于客服 Agent、推荐对话 Agent 的多目标 RL 训练。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：标准 RL 训练的语言智能体只优化动作以最大化奖励，缺乏对动作后果（环境动态）的理解，这导致智能体在长链路任务中脆弱，容易犯错或陷入不可逆状态。传统世界模型（WM）方法需要独立模拟器、额外训练阶段或推理时规划，成本高。本文观察到 on-policy RL rollout 已天然包含动作-下一观测配对，可直接作为 WM 监督信号，于是提出策略与世界模型共训练框架 PaW，在不改变推理范式的前提下，为 RL 智能体注入环境动态知识。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>数据复用</strong>：将每个 rollout transition (h_t, a_t, r_t, o_{t+1}) 中的 o_{t+1} 作为世界模型自回归预测目标，在同一次前向传播中同时计算 RL loss 和 WM loss，因果注意力避免下一观测影响动作 logit。</li>
+<li><strong>动作熵过滤</strong>：仅对当前策略动作熵较高的 transition 施加 WM 监督，因为高熵动作对应不确定性大的决策点，其观测更富含动态信息；通过保留 top-α 比例（α=0.75）减少冗余。</li>
+<li><strong>裁剪 MAE 损失</strong>：面向噪声化的文本观测（如 WebShop 中随机产品 ID），用 token 级 MAE (1−p_{t,i}) 替代 CE，避免低概率 token 梯度爆炸；并引入置信度掩码（p_{t,i} > ρ 的 token 停止训练），聚焦于未充分掌握的动态。</li>
+<li><strong>奖励自适应权重</strong>：λ_WM,g = 1−ar{R}_g/R_max，使低奖励 rollout 组获得更强的 WM 监督，高奖励组则专注策略精调。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>环境：ALFWorld（具身文本）与 WebShop（网页购物）的交互决策，以及搜索增强 QA（单跳/多跳）。</li>
+<li>基线：GRPO、GIGPO 等 strong RL 基线与 ReAct、Reflexion 等提示方法。</li>
+<li>结果：在 ALFWorld 上 GRPO + PaW 将成功率由 70.0% 提至 77.9%（1.5B），GIGPO 由 87.6% 提至 90.4%；WebShop 上 GRPO + PaW 成功率从 60.6% 升到 68.6%，GIGPO 从 66.2% 升到 75.3%。对 Llama3.2-3B 在 WebShop 上，PaW 将成功率从 4.0% 大幅提升至 62.2%，展现出在稀疏奖励场景下的拯救能力。训练额外开销仅 2% 左右。</li>
+</ul>
+<p><strong>核心一句话</strong>：on-policy RL rollout 天然可作世界模型监督，配合动作熵过滤、裁剪 MAE 和奖励自适应权重，就能几乎零成本地让语言智能体学会预测动作后果，全面提升长链路任务表现。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.02388&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.02388" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.02388" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.02388" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

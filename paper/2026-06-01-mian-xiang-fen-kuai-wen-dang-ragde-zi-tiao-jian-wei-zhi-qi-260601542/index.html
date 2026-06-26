@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过向分块嵌入追加位置编码并设计自条件双阶段查询，在不改动HNSW图结构的前提下缓解重叠区块检索冗余，并引入大规模人工审计评估证据质量"><meta property="og:title" content="Self-Conditioned Positional HNSW for Overlap-Aware Retrieval in Chunked-Document RAG Systems: Method and Industrial Evidence-Quality Audit"><meta property="og:description" content="通过向分块嵌入追加位置编码并设计自条件双阶段查询，在不改动HNSW图结构的前提下缓解重叠区块检索冗余，并引入大规模人工审计评估证据质量"><meta property="og:type" content="website"><title>Self-Conditioned Positional HNSW for Overlap-Aware Retrieval in Chunked-Document RAG Systems: Method and Industrial Evidence-Quality Audit</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-06-01">2026-06-01</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.01542" target="_blank" rel="noopener">2606.01542</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Self-Conditioned Positional HNSW for Overlap-Aware Retrieval in Chunked-Document RAG Systems: Method and Industrial Evidence-Quality Audit</h1> <p class="title-zh">面向分块文档RAG的自条件位置HNSW及其工业证据质量审计</p> <div class="dir-row"> <span class="direction-chip">🧭 RAG · 重叠感知检索 · 位置编码</span> </div> <p class="affiliations">eBay Inc.</p> <div class="meta">Nataraj Agaram Sundar, Tejas Morabia</div> <p class="one-liner">通过向分块嵌入追加位置编码并设计自条件双阶段查询，在不改动HNSW图结构的前提下缓解重叠区块检索冗余，并引入大规模人工审计评估证据质量</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/HNSW">HNSW</a><a class="tag" href="/DailyPaper/tag/RAG">RAG</a><a class="tag" href="/DailyPaper/tag/Positional Encoding">Positional Encoding</a><a class="tag" href="/DailyPaper/tag/Overlap-Aware Retrieval">Overlap-Aware Retrieval</a><a class="tag" href="/DailyPaper/tag/Human Evaluation">Human Evaluation</a><a class="tag" href="/DailyPaper/tag/Evidence Quality">Evidence Quality</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>位置编码轻量注入HNSW索引：在现有HNSW索引基础上仅扩展2维（半周期sin/cos位置码），不需要改图构建或遍历逻辑，适合在已有向量检索系统上低成本实施。</li><li>双阶段自条件查询降低冗余：第一轮纯语义检索估计 query 在文档中的大致位置，第二轮用估计的位置先验修正检索方向；此思路也可用于电商客服证据生成等场景，避免同一对话片段反复占据上下文窗口。</li><li>可审计的最小索引间隔选择器：引入参数 g 保证选入上下文的 chunk 索引差不小于 g，用简单规则通杀相邻重叠，工程实现十分轻量，且 g 值可解释、可审计。</li><li>人工审计框架直接参考：770条文本证据评分 + 70个OCR用例的多评估者校准方式（加权 Cohen’s κ、Fleiss’ κ）可直接复制到电商问答、商品描述生成的质量评估流程。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：RAG 系统常将长文档切分为有重叠的 chunk，但重叠导致向量语义近邻中大量相邻 chunk 重复相同信息，浪费有限的 prompt 预算且不增加证据覆盖面。现有 HNSW 仅按语义相似度召回，缺乏对文档位置结构的感知。该工作旨在以最小改动在 ANN 检索中引入位置感知，抑制相邻冗余。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><strong>索引阶段</strong>：每个 chunk 嵌入 <code>x_i</code> 追加 2 维半周期位置码 <code>ϕ(p_i) = [sin(π p_i), cos(π p_i)]</code>，与语义向量拼接后归一化，存入标准 HNSW 索引。位置编码起软偏置作用，不会将文档首尾误认为相邻。</li>
+<li><strong>两阶段自条件查询</strong>：第一轮用纯语义查询获得 top-k1 邻居，根据其索引和得分估算一个软位置先验 <code>μ</code>（加权平均）；第二轮将 <code>μ</code> 位置码与原始查询拼接后再次检索，得到融合了位置偏好的 top-k2 候选。</li>
+<li><strong>重叠感知最终选择</strong>：从候选列表中贪婪选取满足最小索引间隔 <code>g</code> 的 chunk 构建最终上下文，从而以可解释的参数直接消除相邻冗余。</li>
+</ul>
+<p><strong>结果</strong>：</p>
+<ul>
+<li>文本证据审计：770 条评论评分为 3/5 的占多数（574 条），仅 39 条落入 1–2 低分；结构化问题标签出现率 10.1%，远低于叙述性评论中软质量问题（74.5%），尤其标题对齐是主要显式失效模式。</li>
+<li>OCR 审计：70 个样例的切片通过率从清洁聊天截图的 95% 降至手写/模糊图片的 45%，Fleiss’ κ 从 0.68 降至 0.54，表明越复杂的文档模态一致性越差。</li>
+<li><strong>论文缺少对照实验</strong>：报告未提供 SCP-HNSW 与语义 HNSW、MMR 等基线在检索指标上的直接对比，仅呈现下游人工评估分布，故暂无法证明因果提升。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.01542&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.01542" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.01542" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.01542" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 CROP 方法，为推理步骤序列提供前缀污染风险的有限样本边际控制，保留有效中间推理以提升下游修复"><meta property="og:title" content="Conformal Certification of Reasoning Trace Prefixes"><meta property="og:description" content="提出 CROP 方法，为推理步骤序列提供前缀污染风险的有限样本边际控制，保留有效中间推理以提升下游修复"><meta property="og:type" content="website"><title>Conformal Certification of Reasoning Trace Prefixes</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.30085" target="_blank" rel="noopener">2605.30085</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Conformal Certification of Reasoning Trace Prefixes</h1> <p class="title-zh">推理轨迹前缀的保形认证</p> <div class="dir-row"> <span class="direction-chip">🧭 推理可靠性 · 保形风险控制</span> </div> <p class="affiliations">Rice University</p> <div class="meta">Matt Y. Cheung, Ashok Veeraraghavan, Hanjie Chen, Guha Balakrishnan</div> <p class="one-liner">提出 CROP 方法，为推理步骤序列提供前缀污染风险的有限样本边际控制，保留有效中间推理以提升下游修复</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Conformal Prediction">Conformal Prediction</a><a class="tag" href="/DailyPaper/tag/Reasoning Traces">Reasoning Traces</a><a class="tag" href="/DailyPaper/tag/Prefix Certification">Prefix Certification</a><a class="tag" href="/DailyPaper/tag/Risk Control">Risk Control</a><a class="tag" href="/DailyPaper/tag/Process Supervision">Process Supervision</a><a class="tag" href="/DailyPaper/tag/LLMs">LLMs</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在多步 Agent 决策中，可用 CROP 对已执行的步骤序列进行风险认证，返回风险可控的“安全前缀”，将剩余步骤交给人工审查或更高精度的修复模块，避免全盘回滚。</li><li>生成式推荐（GenRec）在生成物品序列（如购物车推荐）时，可以用类似前缀认证思路，将生成过程按步骤拆分，用 process reward model 标注风险，仅保留低风险前缀再继续生成，提高推荐列表的整体可信度。</li><li>工程实现上，CROP 是 verify-agnostic 的轻量校准层，只需将任意步骤级风险评分（PRM、logits、heuristics）输入即可获得保形保证，可直接插入现有的 LLM 推理管线，无需修改模型。</li><li>实验揭示了“步骤 AUROC 高 ≠ 前缀实用性好”这一重要现象，可迁移至电商搜索排序中：离线排序指标（如 AUC）可能无法反映线上截断位置的效用，评估应直接面向最终截断策略校准。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：语言模型的推理轨迹往往是“前半段正确、后半段崩掉”，但现有不确定性量化方法要么对整个回答做二元接受/拒绝，要么单独认证每个声明，无法给出“保留哪一部分步骤是安全的”统计保证。这导致错误传播后，有用的中间推理被丢弃，下游修复缺乏可靠的起点。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>定义 clean-prefix certification 问题：给定一个推理实例（问题+推理步骤）和步骤级误差标注，希望在控制“保留前缀包含错误”的边际概率 ≤ α 的情况下，返回最长的连续前缀。</li>
+<li>提出 CROP（Conformal Reasoning Output Prefixes）：利用任意步骤级风险代理（如 PRM 分数、似然度、表面特征），通过保形风险控制（CRC）校准一个阈值，使得超过该阈值的步骤被截断，保证前缀污染风险 ≤ α。</li>
+<li>理论保证：在实例级可交换性假设下，对边际前缀污染风险提供有限样本控制，且不要求风险代理本身校准良好。</li>
+<li>算法简单：对校准集计算每个阈值下的前缀污染损失，选最大可行阈值，应用到测试实例上。</li>
+</ul>
+<p><strong>关键实验</strong>：在 Arithmetic、GSM8K、ProcessBench、Math-Shepherd、PRMBench、PRM800K 六个过程标注数据集上评估。实验表明：</p>
+<ul>
+<li>标准步骤级 AUROC 不能完全预测固定风险下保留的前缀长度，存在高 AUROC 但保留更少前缀的倒挂情况。</li>
+<li>在 Arithmetic 上，CROP 的前缀边界偏差仅 1.1%，远低于全量拒绝（4.6%）和仅提问（95.8%），且过保留和欠保留均极低。</li>
+<li>下游修复精度：在多数模型上，CROP 前缀比整段喂入或仅提问输入带来显著提升，例如在 Arithmetic 上 DeepSeek-R1-0528-Qwen3-8B 修复准确率从 78.8% 提升到 85.0%。</li>
+</ul>
+<p><strong>核心洞见</strong>：错误步之前保留的连续前缀是高质量可复用上下文，用 CROP 可以在统计保证下精准定位信任边界，将传统“要么全信要么全扔”的二值化决策改为细粒度安全前缀输出。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.30085&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.30085" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.30085" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.30085" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

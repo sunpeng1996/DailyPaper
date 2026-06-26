@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出双输出编码器-解码器架构，同时生成离散语义ID用户令牌和稠密嵌入，在YouTube排名系统中实现互补增益"><meta property="og:title" content="TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems"><meta property="og:description" content="提出双输出编码器-解码器架构，同时生成离散语义ID用户令牌和稠密嵌入，在YouTube排名系统中实现互补增益"><meta property="og:type" content="website"><title>TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/GenRec">GenRec</a> <span class="sep">|</span> <time datetime="2026-06-23">2026-06-23</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.25147" target="_blank" rel="noopener">2606.25147</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>TokenMinds: Pretrained User Tokens and Embeddings for User Understanding in Large Recommender Systems</h1> <p class="title-zh">TokenMinds：基于语义ID与LLM的工业级双模态用户建模</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式用户建模 · Semantic ID</span> </div> <p class="affiliations">Google DeepMind · YouTube</p> <div class="meta">Qingyun Liu, Bo Yan, Yang Liu, Yuji Roh, Ekansh Sharma, Likang Yin 等</div> <p class="one-liner">提出双输出编码器-解码器架构，同时生成离散语义ID用户令牌和稠密嵌入，在YouTube排名系统中实现互补增益</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Semantic ID">Semantic ID</a><a class="tag" href="/DailyPaper/tag/User Modeling">User Modeling</a><a class="tag" href="/DailyPaper/tag/Generative Recommendation">Generative Recommendation</a><a class="tag" href="/DailyPaper/tag/Cross-Scenario">Cross-Scenario</a><a class="tag" href="/DailyPaper/tag/Industrial Scale">Industrial Scale</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>离散用户表示对齐候选集：将用户兴趣压缩为与物品共享的SID前缀，可用Prefix Embedding Mapping或可学习子词嵌入（LE）投影到稠密空间。电商场景可对商品SID做同样设计，直接用SID序列表示用户历史与意图，减少跨模态鸿沟，尤其适合图文、搜索词等多模态融合。</li><li>双输出设计平滑过渡：同时产出稠密嵌入和离散令牌，既兼容现有DNN排序模型，又注入离散语义信号。在现有推荐系统引入生成式用户建模时，可采用类似双通道策略，避免全量重构；稠密侧做主力特征，离散侧做互补特征，通过注意力池化等方式融合。</li><li>异步推理架构解耦成本：在用户行为服务（UBS）框架下离线生成用户表征并缓存，实时打分仅读取，将重生成延迟完全屏蔽。大模型上线时，可参照此模式以KV缓存和定时刷新实现超高吞吐，单用户推理339ms在后台完成，存储仅需1280B，这对电商/广告海量用户场景极具参考价值。</li><li>跨场景统一建模提效：通过&lt;LFV&gt;/&lt;SFV&gt;等场景条件令牌，以及多上下文解码（共享编码器一次前传、分支波束搜索），将长短期视频场景合入单模型，训练算力减半，推理算力降低31%。若业务存在多个推荐流（如猜你喜欢、购后推荐、首页Feeds），可用相同技术方案统一建模，降低维护成本并从异质信号迁移学习。</li><li>Token适配与训练技巧：训练时采用前瞻窗口采样（预测未来24h内多个目标，非下一项）、截断SID前缀（更粗粒度）、历史长度约1K watch即可饱和，这些都是可迁移的调参经验。可学习嵌入（N-gram/SPM）远优于静态前缀映射，下游模型重新学习SID语义空间能带来显著线上收益。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+工业推荐系统通常用固定维度稠密嵌入表示用户，难以捕捉细粒度兴趣；LLM生成的文本画像缺乏行为动态且难对齐物品属性。鉴于物品级语义ID（SID）已在检索中提升泛化，TokenMinds首次将SID范式拓展到用户建模，生成离散、语义接地且与物品共享词表的用户令牌，同时保留稠密嵌入以兼容现有下游模型。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>架构</strong>：基于Gemini V1.5 的370M MoE编码器 + 370M稠密解码器，沿用PLUM的持续预训练（CPT）对齐SID词表，再监督微调预测未来观看。</li>
+<li><strong>输入与表示</strong>：用户观看历史用SID前缀（取前4层码本）表示，配合观看时长、设备等特征软令牌，并交织搜索查询文本。</li>
+<li><strong>双输出</strong>：编码器经池化产出1,152维稠密嵌入；解码器通过波束搜索生成多个SID序列（截取前缀），作为离散兴趣令牌。</li>
+<li><strong>跨场景统一</strong>：在序列前加<lfv>/<sfv>条件令牌，实现长、短视频单一模型训练；推理时用多上下文解码共享编码器一次前传，分支解码不同场景令牌，算力降31%。</sfv></lfv></li>
+<li><strong>下游适配</strong>：离散令牌通过可学习嵌入（N-gram/SPM）转化为稠密向量，再经池化聚合，与编码器稠密嵌入共同喂入排序模型。</li>
+<li><strong>服务</strong>：采用异步UBS框架，用户表征离线生成并缓存，实时打分直接读取，解耦高延迟推理。</li>
+</ul>
+<p><strong>结果</strong></p>
+<ul>
+<li>离线消融：前瞻窗口采样与SID截断分别提升冷启动召回10%与17%（相对值）；CPT初始化+搜索信号使召回提升31.5%。</li>
+<li>在线A/B：短视频页同时加入稠密嵌入与离散令牌，核心用户指标+0.11%，满意度+0.62%；长视频页也显著正向。</li>
+<li>跨场景模型：新鲜内容互动提升0.19%~0.33%，训练算力降50%，上游服务算力降31%。</li>
+<li>工程开销：单用户生成339ms，令牌存储仅1,280B（比稠密嵌入小72%），缓存命中率96.4%。</li>
+</ul>
+<p><strong>核心一句话</strong>：SID令牌与稠密嵌入互补，双输出+异步服务让工业级排序模型可以同时享受离散语义表达与低成本实时接入。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.25147&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.25147" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.25147" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.25147" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

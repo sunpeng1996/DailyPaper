@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将近似注意力与 I/O 高效算法结合，使数据传输量几乎线性于序列长度，逼近理论下界"><meta property="og:title" content="Approaching I/O-optimality for Approximate Attention"><meta property="og:description" content="将近似注意力与 I/O 高效算法结合，使数据传输量几乎线性于序列长度，逼近理论下界"><meta property="og:type" content="website"><title>Approaching I/O-optimality for Approximate Attention</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-22">2026-05-22</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.23751" target="_blank" rel="noopener">2605.23751</a>  </div> <h1>Approaching I/O-optimality for Approximate Attention</h1> <p class="title-zh">逼近近似注意力计算的 I/O 最优性</p> <div class="dir-row"> <span class="direction-chip">🧭 I/O 高效近似注意力计算</span> </div> <p class="affiliations">Huawei Technologies</p> <div class="meta">Pál András Papp, Aleksandros Sobczyk, Anastasios Zouzias</div> <p class="one-liner">将近似注意力与 I/O 高效算法结合，使数据传输量几乎线性于序列长度，逼近理论下界</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Approximate Attention">Approximate Attention</a><a class="tag" href="/DailyPaper/tag/I-O Complexity">I-O Complexity</a><a class="tag" href="/DailyPaper/tag/FlashAttention">FlashAttention</a><a class="tag" href="/DailyPaper/tag/Lower Bound">Lower Bound</a><a class="tag" href="/DailyPaper/tag/LLM Training">LLM Training</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在长序列场景（如电商用户行为序列或 Agent 长时间交互记忆）中，可参考其近似框架，用多项式展开或低秩分解替代精确 softmax，大幅减少显存访问与传输量。</li><li>工程实现上，可将近似注意力与 tile 策略结合，在 GPU 共享内存有限的推理环境下获得比 FlashAttention 更低的 I/O 开销，适合边缘部署。</li><li>论文提供 I/O 下界分析，可用来评估自研注意力近似方案的数据搬运效率是否接近最优，指导算法选型（例如多项式次数、分块大小）。</li><li>对于生成式推荐中的语义 ID 序列建模，长上下文注意力是瓶颈，借鉴此近似方法有望在损失微小精度下换取显著的训练/推理速度提升。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有精确注意力实现（如 FlashAttention）虽然通过 tiling 避免完整注意力矩阵的物化，但其 I/O 复杂度仍与序列长度 n 呈二次相关，远高于仅需读取输入输出矩阵的平凡下界 Ω(nd)。当 n 极大时，数据搬运成为瓶颈。</p>
+<p><strong>方法</strong>：受 Alman &#x26; Song (NeurIPS 2023) 近似注意力框架启发，不显式计算 QK^T 矩阵，而是通过对 softmax 核进行多项式展开或低秩变换，将注意力计算分解为多次矩阵-向量乘法或小矩阵乘加操作。关键设计在于整个计算过程只处理大小为 d 的向量或低维中间结果，从而避开 n×n 量级的临时数据，使快慢存传输量几乎与 n 成线性关系。</p>
+<p><strong>关键结果</strong>：在大多数参数区域（n 较大，d ≪ n），I/O 成本为 Õ(nd)，仅比平凡下界多出对数因子，逼近理论最优。同时为各参数区证明匹配的下界，表明算法在 I/O 意义上接近无法再改进。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.23751&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.23751" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.23751" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.23751" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

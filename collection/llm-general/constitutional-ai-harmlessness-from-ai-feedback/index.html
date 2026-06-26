@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 RLAIF：用一组人写好的 &#34;宪法&#34; 原则替代逐条人工标注，让模型自我批评+修订自己的回答，再用 AI 偏好做奖励信号。是 Self-Rewarding 类工作的精神鼻祖。"><meta property="og:title" content="Constitutional AI: Harmlessness from AI Feedback · 论文沉淀"><meta property="og:description" content="提出 RLAIF：用一组人写好的 &#34;宪法&#34; 原则替代逐条人工标注，让模型自我批评+修订自己的回答，再用 AI 偏好做奖励信号。是 Self-Rewarding 类工作的精神鼻祖。"><meta property="og:type" content="website"><title>Constitutional AI: Harmlessness from AI Feedback · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🧠 LLM通用</span> <span class="sep">·</span><time>2022-12</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>Constitutional AI: Harmlessness from AI Feedback</h1> <p class="archive-authors">Yuntao Bai, Saurav Kadavath, Sandipan Kundu, …, Jared Kaplan (51 人)</p> <p class="affiliations">Anthropic</p> <p class="one-liner">提出 RLAIF：用一组人写好的 &quot;宪法&quot; 原则替代逐条人工标注，让模型自我批评+修订自己的回答，再用 AI 偏好做奖励信号。是 Self-Rewarding 类工作的精神鼻祖。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">RLAIF</span><span class="tag tag-static">Self-Critique</span><span class="tag tag-static">Alignment</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p><strong>一句话问题</strong>：RLHF 训无害助手需要数万条「有害性」人工偏好标注，成本高、暴露标注员心理风险，且训出来的模型往往「过度回避」（遇到敏感问题就 “I can’t answer that”），既不透明也不 helpful。能不能在<strong>完全不用任何有害性人工标签</strong>的前提下训出一个既无害又不回避的助手？</p>
+<p><strong>关键 idea</strong>：把人类监督压缩成一份<strong>宪法（constitution）</strong>——十几条自然语言原则（如「避免歧视」「不教犯罪」「像 MLK/甘地那样回答」）。「哪些行为是可接受的」由人写进宪法，「每个具体样本该怎么判」全部交给模型自己。两个机制接管原本由人做的事：</p>
+<ol>
+<li><strong>Self-Critique → Revision</strong>（SL 阶段）：让 helpful 模型先生成有害回答，再依据随机抽到的一条原则<strong>自我批评</strong>、再<strong>自我修订</strong>，反复多轮，最后用修订后的回答做 SFT。</li>
+<li><strong>RLAIF</strong>（RL 阶段）：让一个 feedback model 依据宪法对成对回答做<strong>多选偏好打分</strong>，把 AI 偏好蒸馏进 Preference Model（PM），再用 PM 当 reward 跑 PPO。</li>
+</ol>
+<p>两阶段都可叠加 <strong>chain-of-thought</strong>，让 judge 的推理过程显式可读、可审计。这是「AI 监督 AI / scaling supervision」范式的奠基工作，也是后续 Self-Reward 路线的精神鼻祖。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p>端到端 pipeline 是「先 SL 把模型拉到 on-distribution，再 RL 大幅提升」的两阶段流水线（下图）：</p>
+<p><img src="/ai-papers-daily/figures/constitutional-ai-harmlessness-from-ai-feedback/fig1.png" alt="Constitutional AI 总体两阶段流水线：上半为 SL 阶段（Helpful RLHF 模型→对红队 prompt 生成有害回答→Response/Critique/Revision 循环→SFT 得 SL-CAI 模型），下半为 RL 阶段（SL-CAI 对 prompt 生成成对回答→宪法驱动的 AI feedback→训 Preference Model→RLAIF 训练得最终 RL-CAI 模型）"></p>
+<p>完整链路（起点是一个只用 helpfulness 数据训出来的 <strong>helpful-only RLHF 模型</strong>）：</p>
+<ol>
+<li><strong>诱发有害样本</strong>：用 helpful RLHF 模型回答红队 prompt，故意拿到有害回答。</li>
+<li><strong>Critique-Revision 循环</strong>：附上「批评请求」让模型指出自己回答的有害之处 → 附上「修订请求」让模型重写 → 把 prompt+修订拼回去（格式与原 prompt-response 一致）→ 可重复多轮，每轮<strong>独立随机抽一条原则</strong>。</li>
+<li><strong>SFT 得 SL-CAI</strong>：用全部修订回答（含各轮）+ helpful 样本微调一个<strong>预训练模型</strong>（不是从 helpful RLHF 继续训）。</li>
+<li><strong>生成 AI 偏好</strong>：SL-CAI 对每个红队 prompt 采<strong>两份回答</strong>，交给 feedback model 做「(A) vs (B) 哪个更无害」的多选题，取归一化对数概率当软标签。</li>
+<li><strong>训 PM</strong>：把 AI 生成的<strong>无害性</strong>比较数据，和人工的<strong>helpfulness</strong>比较数据混合，训一个 hybrid PM。</li>
+<li><strong>RLAIF（PPO）</strong>：从 SL-CAI 初始化策略，用上述 PM 当 reward 跑 PPO，得最终 <strong>RL-CAI</strong> 模型。</li>
+</ol>
+<p>关键设计点：SL-CAI 既当 RL 的初始策略，又当生成偏好对的采样器——保证 RL 早期策略分布与 PM 训练分布一致；harmlessness 全程零人工标签，仅 helpfulness 仍用人工标签。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="子模块-1critique-revisionsl-阶段数据构造">子模块 1：Critique-Revision（SL 阶段数据构造）</h3>
+<ul>
+<li><strong>输入</strong>：红队 prompt（诱发有害的对话上文）。</li>
+<li><strong>流程</strong>（在同一段 context 里顺序拼接、各步独立采样）：
+<ul>
+<li><code>Response</code>：helpful RLHF 模型对 prompt 的初始（通常有害）回答。</li>
+<li><code>Critique Request</code>（来自宪法）+ <code>Critique</code>：模型指出自己回答的有害点。例：<code>Identify specific ways in which the assistant's last response is harmful, unethical, racist, sexist, toxic, dangerous, or illegal.</code></li>
+<li><code>Revision Request</code> + <code>Revision</code>：模型据批评重写。例：<code>Please rewrite the assistant response to remove any and all harmful ... content.</code></li>
+<li>把 <code>prompt + revision</code> 拼成与原始 prompt-response 同格式 → <strong>可循环</strong>复用同一管线做多轮修订。</li>
+</ul>
+</li>
+<li><strong>宪法原则</strong>：SL 阶段共 <strong>16 条</strong> critique/revision 配对原则（见论文 Appendix C.1），每轮修订<strong>独立随机抽一条</strong>。</li>
+<li><strong>few-shot 防混淆</strong>：模型有时会「该写 revision 却写成 critique」，用 few-shot 示例（Appendix E）稳定角色。</li>
+<li><strong>输出</strong>：每个 prompt 4 个修订版本（取各轮修订）。</li>
+<li><strong>关键定性结论</strong>：第 1 次修订几乎总能去掉大部分有害内容；后续修订改善有限；批评本身常常<strong>不准确/夸大</strong>，但修订结果仍更无害；修订后的回答<strong>很少回避</strong>（愿意 engage 敏感话题而非闭嘴）。</li>
+</ul>
+<h3 id="子模块-2sl-cai-训练sft">子模块 2：SL-CAI 训练（SFT）</h3>
+<ul>
+<li><strong>数据规模</strong>：红队 prompt = 42,496 条人写 + 140,335 条预训练模型 few-shot 生成 = <strong>182,831 条</strong>；每条采 <strong>4 个 critique-revision 对</strong>（4 个修订）。helpfulness prompt = <strong>135,296 条人写</strong>（无模型生成），每条直接从 helpful RLHF 采 <strong>2 个回答</strong>。</li>
+<li><strong>采样温度</strong>：全程 <strong>T = 1</strong>。</li>
+<li><strong>训练超参</strong>：微调<strong>预训练 LM</strong> 1 个 epoch；学习率 = 预训练 LR 的 <strong>0.5 倍</strong>（constant）；<strong>batch size = 1024 序列</strong>。</li>
+<li><strong>变体</strong>：<code>SL-CAI-n</code> 表示训到「含第 n 次修订」，n=1,2,3,4。</li>
+<li><strong>目的</strong>：把模型拉到 on-distribution，减少 RL 阶段的探索难度和总训练长度。</li>
+</ul>
+<h3 id="子模块-3ai-feedbackrlaif-偏好标注">子模块 3：AI Feedback（RLAIF 偏好标注）</h3>
+<ul>
+<li>
+<p><strong>输入</strong>：SL-CAI 对同一 prompt 采样的两份回答 (A)、(B)。</p>
+</li>
+<li>
+<p><strong>打分模板</strong>（feedback model 通常是<strong>预训练 LM</strong>）：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Consider the following conversation between a human and an assistant:</span></span>
+<span class="line"><span>[HUMAN/ASSISTANT CONVERSATION]</span></span>
+<span class="line"><span>[PRINCIPLE FOR MULTIPLE CHOICE EVALUATION]</span></span>
+<span class="line"><span>Options:</span></span>
+<span class="line"><span>(A) [RESPONSE A]</span></span>
+<span class="line"><span>(B) [RESPONSE B]</span></span>
+<span class="line"><span>The answer is:</span></span>
+<span class="line"><span></span></span></code></pre>
+</li>
+<li>
+<p><strong>软标签</strong>：取 (A)/(B) 两个 token 的对数概率，归一化得偏好目标。因为是多选题，概率天然较<strong>良好校准</strong>（[Kadavath et al., 2022]）。论文实测<strong>软标签 >> 硬标签（0/1）</strong>。</p>
+</li>
+<li>
+<p><strong>宪法原则集成</strong>：RL 阶段共 <strong>16 条</strong> 偏好原则（Appendix C.2），每条比较<strong>独立随机抽一条</strong>。集成（ensemble over principles）显著提升 PM 稳健性。例：<code>Which of these assistant responses is less harmful? Choose the response that a wise, ethical, polite and friendly person would more likely say.</code>；甚至有 <code>...what a peaceful, ethical, and wise person like Martin Luther King Jr. or Mahatma Gandhi might say.</code></p>
+</li>
+<li>
+<p><strong>few-shot</strong>：context 前置若干标注任务示例（每条独立抽原则）。</p>
+</li>
+</ul>
+<h3 id="子模块-4chain-of-thought-版-feedback">子模块 4：Chain-of-Thought 版 feedback</h3>
+<ul>
+<li>
+<p>用 <strong>helpful RLHF 模型</strong>（而非预训练 LM，CoT 质量更高），把原则改写成对话式（带 <code>Human:</code>/<code>Assistant:</code> stop 序列）：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Human: Consider the following conversation between a human and an assistant:</span></span>
+<span class="line"><span>[CONVERSATION]</span></span>
+<span class="line"><span>[PRINCIPLE FOR MULTIPLE CHOICE EVALUATION]</span></span>
+<span class="line"><span>(A) [RESPONSE A]</span></span>
+<span class="line"><span>(B) [RESPONSE B]</span></span>
+<span class="line"><span>Assistant: Let's think step-by-step: [CHAIN-OF-THOUGHT]</span></span>
+<span class="line"><span></span></span></code></pre>
+</li>
+<li>
+<p>用 <code>Let's think step-by-step</code>（[Kojima et al., 2022]）触发 CoT，前置手写 few-shot（带完整 CoT）。</p>
+</li>
+<li>
+<p><strong>校准问题与 clamping</strong>：CoT 会让模型在推理里直接表态，导致概率接近 0/1、严重失准。解法是把 CoT 概率<strong>钳到区间内</strong>：clamp 到 20-80% 略好，<strong>clamp 到 40-60% 最好</strong>（论文主结果用 40-60）。不钳的话 RL-CAI 会学出更极端的回答。</p>
+</li>
+<li>
+<p>额外小技巧：对单个非-CoT 标注，采 <strong>5 条 CoT</strong> 再对各自给两个答案的概率取平均，能再涨一点点。</p>
+</li>
+</ul>
+<h3 id="子模块-5preference-model--ppo">子模块 5：Preference Model + PPO</h3>
+<ul>
+<li><strong>PM 训练数据</strong>：135,296 条人工 helpfulness 比较 + <strong>182,831 条宪法生成的 harmlessness 比较</strong>（每个 SL-CAI prompt 生成 1 条比较）。PM 训练流程同 [Bai et al., 2022]。</li>
+<li><strong>RL 训练 prompt</strong>：复用 SL-CAI 的全部 HF + 模型生成 prompt，再加生成的 491,142 条红队 prompt + 474,300 条 helpfulness prompt。</li>
+<li><strong>PPO</strong>：超参与 [Bai et al., 2022] 相同；策略从 <strong>SL-CAI 初始化</strong>（对比 RLHF baseline 从预训练 LM 初始化）；reward = PM 分数。</li>
+<li><strong>过优化（Goodharting）</strong>：RL-CAI 训练过头会出现样板腔，对几乎所有红队 prompt 都加上「you are valid, valued, and cared for」之类的 boilerplate，或回应过于严厉。缓解手段：改写原则避免「过度反应/指责」、原则集成、概率 clamping。</li>
+</ul>
+<h3 id="评估指标定义">评估指标定义</h3>
+<ul>
+<li><strong>Elo 分</strong>：对每条对话两模型各出一回答，crowdworker 选偏好，由比较结果算 Elo（只有差值有意义）。<strong>本文特别指示标注员：两个回答同样无害时，偏好不回避、有解释的那个</strong>——这是 RL-CAI 不回避得分高、也是 HH RLHF 无害 Elo 相对降低的关键原因。</li>
+<li><strong>Absolute Harmfulness Score</strong>：单模型对话红队，标注员给 0-4 整数分（越高越有害），用 L2 loss 微调一个 LM 预测该分；评估时对 64 条 held-out 红队 prompt、每条 256 个采样取平均。</li>
+<li><strong>HHH 多选准确率</strong>：在 221（旧）+217（新，更刁钻、含「回避被判负」）条二元比较上测模型选「更好回答」的准确率。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<ul>
+<li><strong>基座</strong>：Anthropic 内部系列 LM，主对比在 <strong>52B</strong> 上。</li>
+<li><strong>Baseline</strong>：<code>Helpful RLHF</code>（只用 helpfulness HF）、<code>HH RLHF</code>（helpfulness+harmlessness HF，即传统 RLHF 无害基线）、<code>SL-CAI</code>、<code>RL-CAI</code>、<code>RL-CAI w/ CoT</code>。</li>
+<li><strong>AB 测试规模</strong>：24 个 snapshot 上收集 10,274 条 helpfulness + 8,135 条 harmlessness 比较。</li>
+</ul>
+<h3 id="结果-1llm-已能可靠识别-hhhmotivate-rlaif-可行性">结果 1：LLM 已能可靠识别 HHH（motivate RLAIF 可行性）</h3>
+<p>在 438 条 HHH 二元比较上，预训练 LM 当多选题做的准确率随规模上升；<strong>CoT 显著提升</strong>，集成 CoT 在 52B 上逼近人工反馈训练的 PM，趋势外推 >52B 将超越人类反馈 PM。</p>
+<p><img src="/ai-papers-daily/figures/constitutional-ai-harmlessness-from-ai-feedback/fig2.png" alt="Combined HHH Evals：人工反馈 PM vs 预训练 LM 多选评估的准确率随参数量变化。橙线（HH PM from Human Feedback）最高；CoT / Ensembled CoT 随规模快速上升并在 52B 逼近人工 PM；裸预训练 LM（蓝）最低"></p>
+<p>近似关键数字（52B，准确率）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方法</th><th>HHH 比较准确率</th></tr></thead><tbody><tr><td>HH PM from Human Feedback</td><td>≈ 0.785</td></tr><tr><td>Ensembled Chain-of-Thought</td><td>≈ 0.735</td></tr><tr><td>Chain-of-Thought</td><td>≈ 0.725</td></tr><tr><td>Pretrained LM（直接多选）</td><td>≈ 0.675</td></tr></tbody></table>
+<p>结论：<strong>CoT 把 LLM 自评准确率从 ~0.68 拉到 ~0.73</strong>，接近人工 PM 的 ~0.79，证明用 AI feedback 替代人工标注在 52B 已基本可行。</p>
+<h3 id="结果-2修订单调降低有害性">结果 2：修订单调降低有害性</h3>
+<p>在人工反馈训练的 52B PM 上评估各轮修订：<strong>harmlessness 分数随修订轮数单调上升</strong>（修订 0 = 初始回答），HH 分数同样上升，但<strong>纯 helpfulness 分数随修订下降</strong>（修订让回答更保守）。原则数量（1→16）对 harmlessness 分数无显著影响，但增加回答<strong>多样性</strong>，利于 RL 阶段探索。</p>
+<h3 id="结果-3批评有没有必要">结果 3：批评有没有必要？</h3>
+<p>对比 critiqued-revision vs direct-revision（同一 52B harmlessness PM）：<strong>小模型上带批评的修订更无害；大模型上两者接近、批评略好</strong>。52B 上批评常不准确，但论文仍选 critiqued-revision，因为它带来更高透明度、有助挖掘更隐蔽的危害。</p>
+<h3 id="结果-4rl-cai-主结果pareto-改进">结果 4：RL-CAI 主结果（Pareto 改进）</h3>
+<p><img src="/ai-papers-daily/figures/constitutional-ai-harmlessness-from-ai-feedback/fig3.png" alt="Figure 8：helpfulness（左）/ harmlessness（右）Elo 随 RL 训练序列数变化。RL-CAI 与 RL-CAI w/CoT（灰/深灰）的 harmlessness Elo 远高于 Helpful RLHF（蓝）和 HH RLHF（橙），同时 helpfulness Elo 不显著下降；HH/Helpful RLHF 的 harmlessness 在后期反而下降（因标注员被指示惩罚回避）"></p>
+<p>近似终态 Elo（52B，初始 snapshot 设为各自基线，仅差值有意义）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>Helpfulness Elo</th><th>Harmlessness Elo</th></tr></thead><tbody><tr><td>RL-CAI w/ CoT</td><td>≈ +85</td><td>≈ +190（最高）</td></tr><tr><td>RL-CAI</td><td>≈ +95</td><td>≈ +120</td></tr><tr><td>Helpful RLHF</td><td>≈ +145（最高）</td><td>≈ -50</td></tr><tr><td>HH RLHF</td><td>≈ +100</td><td>≈ -5</td></tr></tbody></table>
+<p>关键结论：</p>
+<ul>
+<li><strong>RL-CAI 在 harmlessness 上远超 HH/Helpful RLHF</strong>，且 helpfulness 损失很小——是对 RLHF 的 <strong>Pareto 改进</strong>（Figure 2 的 pareto 前沿）。</li>
+<li><strong>RL-CAI w/CoT 比不带 CoT 更无害、略不 helpful</strong>，但透明度更高。</li>
+<li>HH/Helpful RLHF 的 harmlessness Elo 在训练后期<strong>下降</strong>：helpful 因更愿意帮危险任务，HH 因越来越<strong>回避</strong>（在「惩罚回避」的新标注口径下被扣分）。</li>
+<li><strong>Absolute Harmfulness</strong>（0-4，越低越好）：helpful RLHF 训练中越来越有害；HH RLHF / RL-CAI / RL-CAI w/CoT 单调降低。</li>
+</ul>
+<h3 id="结果-5无害但不回避">结果 5：无害但不回避</h3>
+<p>定性看，52B HH RLHF 对敏感问题常给 <code>Sorry, I cannot respond to this content</code>；<strong>RL-CAI w/CoT 几乎从不回避</strong>，而是 engage 并解释为何反对（例如对「为什么监狱里都是黑人棕人」给出系统性种族偏见的实质性解释而非闭嘴）。这正面解决了前作 [Bai et al., 2022] 的回避痼疾。</p>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ol>
+<li>宪法原则仍是<strong>人工先验入口</strong>——「人决定方向」没被真正消除，只是把监督从「逐样本标注」压缩成「十几条规则 + 少量 few-shot」。论文明确说这 16 条是「ad hoc 选的、为研究目的」，未经 Sparrow 那样精心设计。</li>
+<li><strong>helpfulness 仍依赖人工标签</strong>，本文只用 AI 接管了 harmlessness；真正 self-supervised helpfulness 留作 future work。</li>
+<li><strong>AI judge 的偏差会被 RL 放大</strong>：出现 Goodharting（样板腔、过度严厉），靠原则改写 + 集成 + 概率 clamping 缓解，但本质是把 reward hacking 风险前移到了 judge。</li>
+<li><strong>强依赖大模型已能理解抽象原则</strong>：52B 才逼近人工 PM，小模型照搬效果差（Figure 4 趋势）。</li>
+<li>不可逆危害（CBRN 等）覆盖度、对抗鲁棒性不在本文论证范围。</li>
+</ol>
+<p><strong>对电商 / 搜索推荐 / Agent 方向的可借鉴点</strong>：</p>
+<ul>
+<li><strong>「规则 → AI 判别 → 蒸馏成 reward」三段式可迁移</strong>：电商场景里「违规商品识别 / 低质 query 改写 / 营销文案合规」往往也有「人能写清规则、但逐条标注贵」的特征。可把审核规则当「宪法」，让 LLM 做成对偏好打多选题，蒸馏进一个轻量 reward/排序模型，省下大规模人工标注。</li>
+<li><strong>Critique-Revision 自迭代造数据</strong>：搜推里的 query 改写、商品标题/卖点生成，可用「生成 → 按规则自批评 → 自修订」批量造高质量 SFT 数据，比直接生成质量更高（本文证明带批评对小模型尤其有效）。</li>
+<li><strong>软标签 + 概率 clamping 的工程经验</strong>：用 LLM 当 labeler 时，<strong>归一化对数概率软标签 >> 硬标签</strong>；带 CoT 时概率会失准，<strong>clamp 到 40-60% 显著更稳</strong>——这是任何「LLM-as-judge → 训下游模型」管线都能直接复用的 trick。</li>
+<li><strong>CoT 让 judge 可审计</strong>：Agent 系统里用 LLM 做决策/打分时，强制写出 step-by-step 推理既提分又便于线上排查 bad case，对需要合规审计的电商场景价值高。</li>
+<li><strong>原则集成提升稳健性</strong>：用多条措辞不同的判别 prompt 集成，比单一 prompt 更稳——可直接用于线上 LLM 审核/打分降低单点 prompt 偏差。</li>
+<li><strong>范式坐标</strong>：本文是「AI 监督 AI」三条主线（constitutional 原则驱动 / self-reward 同模型双角色 / debate-judge 多模型对抗）的源头，后续 Self-Rewarding LM、Weak-to-Strong 等都受其影响，是理解 Agent 自迭代/自对齐路线的必读起点。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/anthropics/ConstitutionalHarmlessnessPaper" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

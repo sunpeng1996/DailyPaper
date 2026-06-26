@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="实证证明单向量聚合使金融文档区分度崩溃，全局纹理主导是关键原因"><meta property="og:title" content="A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval"><meta property="og:description" content="实证证明单向量聚合使金融文档区分度崩溃，全局纹理主导是关键原因"><meta property="og:type" content="website"><title>A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RAG">RAG</a> <span class="sep">|</span> <time datetime="2026-05-14">2026-05-14</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.14581" target="_blank" rel="noopener">2605.14581</a>  </div> <h1>A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval</h1> <p class="title-zh">一图胜千言？视觉金融文档检索聚合策略实证研究</p> <div class="dir-row"> <span class="direction-chip">🧭 视觉RAG · 文档嵌入聚合</span> </div>  <div class="meta">Ho Hung Lim, Yi Yang</div> <p class="one-liner">实证证明单向量聚合使金融文档区分度崩溃，全局纹理主导是关键原因</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Visual RAG">Visual RAG</a><a class="tag" href="/DailyPaper/tag/Embedding Aggregation">Embedding Aggregation</a><a class="tag" href="/DailyPaper/tag/Financial Documents">Financial Documents</a><a class="tag" href="/DailyPaper/tag/Semantic Shift">Semantic Shift</a><a class="tag" href="/DailyPaper/tag/Patch Tokens">Patch Tokens</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>电商涉及数字敏感文档（价比、标价图）时，避免直接用单向量检索全页图像，应保留 patch 级特征或结合 OCR 文本。</li><li>视觉 RAG 检索金融类图像时可改用多向量（如后期交互 ColBERT 风格），仅聚合会丢失细粒度数字变化。</li><li>全局纹理主导提示：均值池化洗掉局部关键信号，可试注意力池化、稀疏 patch 选择或区域编码。</li><li>商品图搜索若依赖局部细节（LOGO、规格数字），全局向量易误匹配，需强化局部特征权或加 OCR。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：视觉 RAG 将文档作为图像编码，虽保留排版等视觉上下文，但每个文档产生数百个 patch token，在向量库中存储和检索成本过高。实际部署通常聚合成单个向量，然而金融文档中单一数字的微小变化可能导致完全不同的业务含义，这种聚合是否丢失关键信息尚不明确。</p>
+<p><strong>方法</strong>：构建金融文档诊断基准，故意制造仅一位数字不同的文档对，形成语义显著变化的场景。对比单向量聚合（均值池化等）与 patch 级表示在区分上述文档时的表现，通过向量余弦相似度衡量区分度。进一步分析聚合失效的根因，并测试不同模型规模、检索优化嵌入及多种缓解策略（如加权池化、投影）是否改善。</p>
+<p><strong>关键结果</strong>：单向量聚合使原本语义不同的文档获得几乎相同的向量（相似度>0.99），而 patch 级表示能明显区分（相似度约0.3）。根本原因是全局纹理（背景、布局）在单向量中占主导，淹没了重要的局部数字细节。该结论在 ViT-B/310M 到 ViT-L/650M 等不同规模模型、检索微调嵌入及增强局部注意等策略下均稳健成立，表明单向量聚合在金融文档检索中存在系统风险，不应直接用于数字敏感场景。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.14581&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.14581" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.14581" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.14581" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

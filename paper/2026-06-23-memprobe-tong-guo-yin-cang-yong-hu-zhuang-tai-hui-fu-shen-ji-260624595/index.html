@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将 Agent 记忆视为可审计产物，从遗留记忆重建隐藏用户状态，直接量化记忆质量"><meta property="og:title" content="MEMPROBE: Probing Long-Term Agent Memory via Hidden User-State Recovery"><meta property="og:description" content="将 Agent 记忆视为可审计产物，从遗留记忆重建隐藏用户状态，直接量化记忆质量"><meta property="og:type" content="website"><title>MEMPROBE: Probing Long-Term Agent Memory via Hidden User-State Recovery</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-06-23">2026-06-23</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.24595" target="_blank" rel="noopener">2606.24595</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>MEMPROBE: Probing Long-Term Agent Memory via Hidden User-State Recovery</h1> <p class="title-zh">MEMPROBE：通过隐藏用户状态恢复审计 Agent 长期记忆</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent长期记忆的可审计评估</span> </div> <p class="affiliations">University of Illinois Chicago · KU Leuven · UC San Diego</p> <div class="meta">Enze Ma, Yufan Zhou, Wei-Chieh Huang, Jie Yang, Huanhuan Ma, Zixuan Wang 等</div> <p class="one-liner">将 Agent 记忆视为可审计产物，从遗留记忆重建隐藏用户状态，直接量化记忆质量</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Long-term Memory">Long-term Memory</a><a class="tag" href="/DailyPaper/tag/Agent Evaluation">Agent Evaluation</a><a class="tag" href="/DailyPaper/tag/Memory Recovery">Memory Recovery</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a><a class="tag" href="/DailyPaper/tag/LLM Agent">LLM Agent</a><a class="tag" href="/DailyPaper/tag/User State Reconstruction">User State Reconstruction</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>恢复审计评估：对电商客服、推荐对话等 Agent 系统，定期从记忆库中重构已知用户属性（如偏好、历史事实），与真实值比对，而非仅看下游任务指标，直接暴露记忆质量。</li><li>分离写入与检索诊断：采用“全量导出（dump_all） vs 系统 top-k 检索”的双模式对比，快速定位是记忆写入遗漏还是检索索引不足，指导优化写入策略或检索模块。</li><li>强化情景记忆绑定：针对用户单次关键交互（如退货纠纷原因），要求记忆系统不仅存储事件表面，还要保留事件与后果的因果链，提升后续个性化推荐的上下文深度。</li><li>检索感知的整合策略：在写入时即考虑后续检索场景，将原始对话转化为简洁、可检索的结构化摘要，确保关键偏好能在有限的 top-k 召回中命中，避免“存储了却拿不出”的困境。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>当前 Agent 长期记忆的评估几乎完全依赖下游行为（问答正确性、个性化回复质量），即便无记忆的 Agent 也能在这些指标上几乎饱和。这无法反映记忆系统真正形成的持久用户模型，也未能分离“证据写入”与“检索可达”两个关键环节。为直接衡量记忆本身，本文提出将记忆视为可审计的后交互产物，通过从 Agent 遗留记忆中重建隐藏的用户状态来评估记忆质量。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>隐藏用户状态银行</strong>：构建 50 个合成用户，每个携带 31 个隐藏维度（涵盖技能、知识、片段事件、自我模型、交互偏好），基于 O*NET、HEXACO 等真实来源生成，作为评测基准。</li>
+<li><strong>防泄漏任务生成</strong>：每个维度对应一个日常协助任务，任务描述不得直接透露目标维度；通过盲审批评筛选，确保答案无法从任务本身直接猜出。</li>
+<li><strong>交互与记忆记录</strong>：合成用户与配备记忆的 Agent 完成多轮对话，Agent 仅在交互过程中读写记忆，隐藏状态从不暴露。</li>
+<li><strong>双模式恢复评分</strong>：交互结束后，从最终记忆库中用两种方式重建每个维度：全量导出（dump_all）和系统自身的 top-5 检索（retrieve）。通过填空模型+LLM 裁判给出 0–1 分，并计算类别平衡的恢复得分 (B)。</li>
+<li><strong>失败归因</strong>：对低分维度进行三阶段归因，区分任务设计缺陷、Agent 诱导不足、用户模拟器过于保守或纯粹记忆故障。</li>
+</ul>
+<h3 id="关键结果">关键结果</h3>
+<ul>
+<li>所有系统（包括无记忆基线）任务完成率均接近 100%，但全量恢复得分 (B) 仅在 0.61–0.62（amem、longctx_full、mem0），top-k 检索下更降至 0.47–0.54。</li>
+<li>全量存储最强的 longctx_full 在检索模式下被 amem 反超，说明原始证据保留不等于可检索。</li>
+<li>失败归因表明，多数不可恢复案例属于记忆故障（证据已出现但未写入或无法检索），存储的证据中有大量在检索时不可达。</li>
+<li>类别难度分化：交互偏好类维度最易恢复，片段记忆（Episodic Memory）最难，其恢复率仅为偏好的 1/3~1/2，根源在于系统难以绑定事件与其因果后果。</li>
+</ul>
+<p><strong>核心启示</strong>：任务成功不代表形成了可恢复的用户状态，长期记忆需要从存储产物本身评估，并着力解决检索可达性与片段因果绑定的问题。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.24595&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.24595" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.24595" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.24595" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

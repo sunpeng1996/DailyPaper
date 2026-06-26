@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="形式化提示组合Agent中的行为泄漏(CBL)，提出三通道探测协议并确认内容通道产生显著干扰效应"><meta property="og:title" content="Instruction Bleed: Cross-Module Interference in Prompt-Composed Agentic Systems"><meta property="og:description" content="形式化提示组合Agent中的行为泄漏(CBL)，提出三通道探测协议并确认内容通道产生显著干扰效应"><meta property="og:type" content="website"><title>Instruction Bleed: Cross-Module Interference in Prompt-Composed Agentic Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-24">2026-06-24</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.26356" target="_blank" rel="noopener">2606.26356</a>  </div> <h1>Instruction Bleed: Cross-Module Interference in Prompt-Composed Agentic Systems</h1> <p class="title-zh">指令渗漏：提示组合智能体系统的跨模块干扰</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 提示组合干扰评估</span> </div> <p class="affiliations">University of Illinois Urbana-Champaign</p> <div class="meta">Ching-Yu Lin, Yifan Liu</div> <p class="one-liner">形式化提示组合Agent中的行为泄漏(CBL)，提出三通道探测协议并确认内容通道产生显著干扰效应</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Prompt Composition">Prompt Composition</a><a class="tag" href="/DailyPaper/tag/Agent Evaluation">Agent Evaluation</a><a class="tag" href="/DailyPaper/tag/Cross-Module Interference">Cross-Module Interference</a><a class="tag" href="/DailyPaper/tag/Behavioral Leakage">Behavioral Leakage</a><a class="tag" href="/DailyPaper/tag/LLM Safety">LLM Safety</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>构建多模块提示组成的搜索/推荐 Agent 时，需评估模块间干扰：无共享变量也可能通过上下文窗口的自注意力产生行为泄漏，建议在部署前对模块组合进行联合测试。</li><li>可直接复用三通道探测协议（volume、content、form）来量化生产 Agent 的 CBL，其中 content 通道最易触发干扰，可作为最小可行测试集。</li><li>效应虽未引起单次推荐翻转（Cohen’s d=0.63），但在高吞吐场景下微小偏移会随决策次数积累，评估时不能只看 QA 准确率，必须监控分布级偏移。</li><li>工程上可在提示编排中引入明确的分隔标记或模块隔离策略（如约束注意力范围），以减少非预期的跨模块信息混合。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：从业者发现，在提示组合式 Agent（如 OpenClaw）中编辑一个提示模块会悄然改变其他模块行为，尽管无共享变量或依赖。根源是 Transformer 自注意力在拼接模块间缺乏形式隔离，该干扰被形式化为组合行为泄漏（CBL）。</p>
+<p><strong>方法</strong>：在一个已部署的职位评估 Agent（Claude Sonnet 4.6）上，设计可复用的三通道探测协议：扰动非焦点模块的 volume（长度）、content（语义）和 form（格式），以配对实验检测对焦点模块决策的影响。执行 144 次试验，采用 Cohen’s d 和 bootstrap 95% CI 衡量效应。</p>
+<p><strong>关键结果</strong>：仅 content 通道产生可检测的配对效应（d=0.63，CI 不含零），但未导致推荐翻转，属于亚阈值干扰；该微小偏移在大规模部署（数千次决策）中会复合累积。CBL 与传统对抗注入、多智能体故障传播等正交，表明它是提示组合架构的固有风险。论文确立了跨模块干扰测量为提示组合 Agent 评估的必要环节。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.26356&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.26356" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.26356" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.26356" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 AutoSci，通过结构化持久记忆、流程控制、多智能体增强与自进化，实现跨项目可复用的全周期科研自动化。"><meta property="og:title" content="AutoSci: A Memory-Centric Agentic System for the Full Scientific Research Lifecycle"><meta property="og:description" content="提出 AutoSci，通过结构化持久记忆、流程控制、多智能体增强与自进化，实现跨项目可复用的全周期科研自动化。"><meta property="og:type" content="website"><title>AutoSci: A Memory-Centric Agentic System for the Full Scientific Research Lifecycle</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/MultiAgent">MultiAgent</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.31468" target="_blank" rel="noopener">2605.31468</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>AutoSci: A Memory-Centric Agentic System for the Full Scientific Research Lifecycle</h1> <p class="title-zh">AutoSci：面向全科研生命周期的记忆中心多智能体系统</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent · 多智能体协作与自进化科学发现</span> </div> <p class="affiliations">Peking University</p> <div class="meta">Weitong Qian, Beicheng Xu, Zhongao Xie, Bowen Fan, Guozheng Tang, Jiale Chen 等</div> <p class="one-liner">提出 AutoSci，通过结构化持久记忆、流程控制、多智能体增强与自进化，实现跨项目可复用的全周期科研自动化。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Memory">Memory</a><a class="tag" href="/DailyPaper/tag/MultiAgent">MultiAgent</a><a class="tag" href="/DailyPaper/tag/Scientific Discovery">Scientific Discovery</a><a class="tag" href="/DailyPaper/tag/Evolving">Evolving</a><a class="tag" href="/DailyPaper/tag/DAG">DAG</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>借鉴 SciMem 的分区记忆设计：长期知识记忆（领域/论文/概念/方法/研究者等实体）与活跃研究记忆（想法/实验/稿件/评审）分离，电商 Agent 可类比用户兴趣图谱、商品知识库与当前会话状态的隔离，避免上下文污染与幻觉。</li><li>SciDAG 的多智能体 DAG 编排模板：通过可复用的算子图（生成、辩论、精炼、评审等）自适应执行复杂任务，可用于推荐系统中的多路召回融合、策略辩论、解释生成等，条件边实现动态流程控制。</li><li>SciEvolve 的自进化机制：将用户反馈、实验失败等信号转化为版本化更新，可迁移到 Agent 系统的持续优化中，例如定期分析对话失败模式，自动调整 prompt、工具选择或流程步骤，提升系统鲁棒性。</li><li>信任守护（Trust Guard）设计：对记忆写入进行形式与内容双重验证，可引入到电商知识库更新或模型生成内容的校验环节，避免错误信息传播至下游决策。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+科学研究长期依赖人工协调文献、想法、实验、稿件和评审，过程碎片化且复用性差。现有 LLM 驱动的科研智能体多聚焦单次任务或局部能力，缺乏贯穿全生命周期的持久记忆与自我进化机制，难以形成可积累、可进化的研究环境。</p>
+<p><strong>方法关键点</strong><br>
+AutoSci 构建了一套记忆中心、模块化的智能体系统，共四大模块：</p>
+<ul>
+<li><strong>SciMem</strong>：模式管控的研究记忆，分离长期知识记忆（Topic、Paper、Concept、Method、People 等实体，含类型化关系图）与活跃研究记忆（Idea、Experiment、Manuscript、Review 等带生命周期状态的实体），通过双向流动实现知识跨项目累积。</li>
+<li><strong>SciFlow</strong>：五阶段科研生命周期（文献→构思→实验→写作→反驳），通过 Harness 提供状态记录、上下文构建、验证阻断、反馈路由和可恢复编排，保证长周期执行的可审计与可续接。</li>
+<li><strong>SciDAG</strong>：DAG 形多智能体增强层，内置 generate、variation、debate、refine、review 等可复用算子，以自适应算子图应对困难阶段，并配有阶段专用模板。</li>
+<li><strong>SciEvolve</strong>：从用户、实验和评审信号中启动 /dream、/forge、/morph 三条进化路径，分别优化 SciMem 结构、SciFlow 技能流程和 SciDAG 模板，实现全系统版本化演进。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在 GPU 内核优化和生物医学药物发现两个端到端案例中，AutoSci 完成了从文献消化到论文生产的完整流程，耗时分别为 27.3 和 22.6 小时。生成的论文通过 ICLR 自动化评审获得 6.3/10 和 5.8/10 的分数。其中 GPU 案例中，系统自主筛选出最佳研究方向，执行包含灵敏度分析、主实验、消融和中间数据审计的实验套件，最终生成 157 个全正确内核，几何平均加速比达 1.52 倍（剔除退化基线后 1.18 倍），并给出反馈机制贡献 1.58 倍增益的消融证据。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.31468&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.31468" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.31468" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.31468" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

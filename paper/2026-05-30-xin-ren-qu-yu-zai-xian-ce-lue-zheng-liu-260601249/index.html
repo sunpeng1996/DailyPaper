@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过信任区域划分、异常值前向KL估计和离线指导，解决在线策略蒸馏中分布不匹配导致的训练不稳定问题，显著提升小推理模型性能。"><meta property="og:title" content="Trust Region On-Policy Distillation"><meta property="og:description" content="通过信任区域划分、异常值前向KL估计和离线指导，解决在线策略蒸馏中分布不匹配导致的训练不稳定问题，显著提升小推理模型性能。"><meta property="og:type" content="website"><title>Trust Region On-Policy Distillation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-30">2026-05-30</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.01249" target="_blank" rel="noopener">2606.01249</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Trust Region On-Policy Distillation</h1> <p class="title-zh">信任区域在线策略蒸馏</p> <div class="dir-row"> <span class="direction-chip">🧭 在线策略蒸馏稳定化训练</span> </div> <p class="affiliations">Samsung Research, Beijing, China · University of Oxford · Peking University</p> <div class="meta">Xingrun Xing, Haoqing Wang, Boyan Gao, Ziheng Li, Yehui Tang</div> <p class="one-liner">通过信任区域划分、异常值前向KL估计和离线指导，解决在线策略蒸馏中分布不匹配导致的训练不稳定问题，显著提升小推理模型性能。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/On-Policy Distillation">On-Policy Distillation</a><a class="tag" href="/DailyPaper/tag/Trust Region">Trust Region</a><a class="tag" href="/DailyPaper/tag/Knowledge Distillation">Knowledge Distillation</a><a class="tag" href="/DailyPaper/tag/Small Reasoning Models">Small Reasoning Models</a><a class="tag" href="/DailyPaper/tag/KL Divergence">KL Divergence</a><a class="tag" href="/DailyPaper/tag/Policy Gradient">Policy Gradient</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>面向电商/推荐/Agent 从业者的可借鉴点：</li><li>信任区域思想可迁移至多智体策略更新：仅在教师与学生策略一致性高的区域执行在线策略蒸馏，避免极端策略梯度导致的训练崩溃，类似推荐系统中用置信度过滤不可靠的在线信号。</li><li>离线指导（Off-Policy Guidance）机制可借鉴：用教师前缀引导学生生成，并用前向KL模仿学习，适合在推荐对话或Agent任务中利用高质量模板引导小模型探索有效路径。</li><li>异常值前向KL估计提供了一种廉价的信息保留方式：当教师-学生分布严重不匹配时，用top-k前向KL替代完全丢弃或裁剪，可在电商搜索query改写等场景中保留多样性信号。</li><li>混合目标设计与资源权衡：TrOPD同时使用K1估计器（O(n)内存）和top-k前向KL（O(nk)内存），为生成式推荐中的长序列推理蒸馏提供了内存可控的参考，尤其在序列推荐或文案生成等需要长输出的场景下。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+在线策略蒸馏（OPD）通过直接训练学生生成的轨迹减少暴露偏差，是小推理模型后训练的核心技术，广泛应用于Agent学习、多任务增强和模型压缩。然而，当教师与学生分布差距较大时，基于学生样本的反向KL估计器（K1估计）会产生极端策略梯度，导致优化不稳定甚至崩溃。现有方法如熵过滤或奖励裁剪效果有限，亟需更可靠的监控机制。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>信任区域划分</strong>：按教师-学生解码一致性比例动态区分“信任区域”与“异常值”，仅在可信区域使用K1反向KL优化。</li>
+<li><strong>异常值估计</strong>：对异常值区域，改用top-k前向KL估计保留监督信息，避免完全丢弃有价值信号。</li>
+<li><strong>离线指导</strong>：用教师前缀+学生延续的混合生成方式，通过前向KL仿效教师轨迹，鼓励向可信区域探索。</li>
+<li><strong>统一目标</strong>：集成信任区域反向KL、异常值前向KL和离线指导前向KL，并用余弦退火逐渐减小离线部分，最终转入全在线策略。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>设置：数学、代码、STEM多领域，教师模型Skywork-OR1-Math-7B / Qwen3-Nemotron-4B，学生模型DeepSeek-Qwen2.5-1.5B / Qwen3-SFT-1.7B。</li>
+<li>结果：TrOPD在数学领域平均提升3.06点，通用域提升2.63点；多域蒸馏平均提升4.62点和3.44点。相比OPD、REOPOLD、EOPD等，均取得一致最优。</li>
+<li>消融：仅异常值前向KL即优于掩码或裁剪；加入离线指导进一步增益，且与同期AOPD正交，组合后进一步提升。</li>
+</ul>
+<p><strong>核心结论</strong><br>
+“当教师与学生的分布不匹配时，不是所有在线样本都值得信任——仅在教师可验证区域内蒸馏，并利用教师视角的前向KL补足异常值信息，才能稳定且高效地传导推理能力。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.01249&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.01249" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.01249" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.01249" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="通过多视角组构建与自验证锚点，缓解GRPO在GUI定位中组内无相对优势的问题"><meta property="og:title" content="VISTA: View-Consistent Self-Verified Training for GUI Grounding"><meta property="og:description" content="通过多视角组构建与自验证锚点，缓解GRPO在GUI定位中组内无相对优势的问题"><meta property="og:type" content="website"><title>VISTA: View-Consistent Self-Verified Training for GUI Grounding</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14579" target="_blank" rel="noopener">2606.14579</a>  </div> <h1>VISTA: View-Consistent Self-Verified Training for GUI Grounding</h1> <p class="title-zh">VISTA：面向GUI视觉定位的视角一致自验证训练框架</p> <div class="dir-row"> <span class="direction-chip">🧭 GUI智能体视觉定位训练方法</span> </div> <p class="affiliations">Zhejiang University · Ant Group</p> <div class="meta">Xinyu Qiu, Yunzhu Zhang, Heng Jia, Shuheng Shen, Changhua Meng, Linchao Zhu</div> <p class="one-liner">通过多视角组构建与自验证锚点，缓解GRPO在GUI定位中组内无相对优势的问题</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/GUI Grounding">GUI Grounding</a><a class="tag" href="/DailyPaper/tag/GRPO">GRPO</a><a class="tag" href="/DailyPaper/tag/Reinforcement Learning">Reinforcement Learning</a><a class="tag" href="/DailyPaper/tag/View Consistency">View Consistency</a><a class="tag" href="/DailyPaper/tag/Self-Verified Training">Self-Verified Training</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>GRPO组构建策略：将单一实例的多视角裁剪作为一个组，强制模型学习视角不变性。类似思路可用于电商推荐系统，将同一商品的不同视图（如多角度图片、标题变体）构成对比组，提高模型对输入扰动的鲁棒性。</li><li>自验证锚点机制：在RL训练中动态加入oracle答案作为正则化项，仅在模型已产生高分rollout时激活，既避免策略坍塌为简单模仿，又稳定了短序列生成。该方法可迁移到其他基于RL的文本生成任务（如推荐理由生成、对话式推荐），以提升训练稳定性。</li><li>目标保持裁剪增强：通过裁剪确保目标区域可见且坐标精确映射，实现了语义等价但几何差异的输入增强。在电商场景中，可以类似地构造商品图像局部区域的正样本对，用于训练商品定位或热区预测模型。</li><li>鲁棒性提升思路：VISTA显著降低了预测翻转率（prediction flip rate），表明模型对输入变化更稳定。对于需要高可靠性的Agent系统（如自动化下单、客服），这种训练范式能减少因微小界面变化导致的误操作。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：在GUI Grounding任务中应用GRPO时，rollouts均来自同一截图视角，导致困难样本上群体内全失败、简单样本上全成功，使相对优势信号消失，训练无效。
+<strong>方法</strong>：提出VISTA框架，核心包括：(1) <strong>视角一致性组构建</strong>：对同一GUI实例生成多个目标保持的裁剪视图，保持目标元素可见并重映射边界框，形成语义等价但几何不同的输入组，使rollouts可跨视图比较；(2) <strong>自验证跨视图锚点</strong>：额外维护一个oracle答案，通过优势加权损失优化，但排除在组基线外，仅当模型产出最大奖励rollout时才激活，以此稳定训练而不退化为无条件模仿。
+<strong>结果</strong>：在5个GUI Grounding基准上，VISTA显著提升Qwen3-VL多尺寸模型的准确率。ScreenSpot-Pro上4B/8B/30B分别从55.5/52.7/53.7提升至63.4/65.8/67.0，且在最差视角准确率和预测翻转率等鲁棒性指标上表现更优。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14579&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14579" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14579" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14579" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

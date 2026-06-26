@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="多智能体系统通过迭代假设-验证循环，从海量执行轨迹中自动发现并量化系统性行为模式，生成有证据支撑的诊断报告"><meta property="og:title" content="Insights Generator: Systematic Corpus-Level Trace Diagnostics for LLM Agents"><meta property="og:description" content="多智能体系统通过迭代假设-验证循环，从海量执行轨迹中自动发现并量化系统性行为模式，生成有证据支撑的诊断报告"><meta property="og:type" content="website"><title>Insights Generator: Systematic Corpus-Level Trace Diagnostics for LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21347" target="_blank" rel="noopener">2605.21347</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Insights Generator: Systematic Corpus-Level Trace Diagnostics for LLM Agents</h1> <p class="title-zh">LLM Agent 大规模轨迹诊断系统 Insights Generator</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 多智能体诊断与优化</span> </div> <p class="affiliations">Scale AI</p> <div class="meta">Akshay Manglik, Apaar Shanker, Kaustubh Deshpande, Jason Qin, Yash Maurya, Veronica Chatrath 等</div> <p class="one-liner">多智能体系统通过迭代假设-验证循环，从海量执行轨迹中自动发现并量化系统性行为模式，生成有证据支撑的诊断报告</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Multi-Agent">Multi-Agent</a><a class="tag" href="/DailyPaper/tag/Trace Diagnostics">Trace Diagnostics</a><a class="tag" href="/DailyPaper/tag/Corpus-Level Analysis">Corpus-Level Analysis</a><a class="tag" href="/DailyPaper/tag/Scaffold Optimization">Scaffold Optimization</a><a class="tag" href="/DailyPaper/tag/Agent Debugging">Agent Debugging</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>大规模轨迹分析的工程参考：将轨迹数据预处理成结构化 Parquet，构建 schema 缓存和向量索引，Agent 只通过 Python REPL 调用统计工具而非直接读取原始文本，可大幅降低上下文消耗，适用于电商 Agent 日志的海量诊断。</li><li>假设-验证分离的 Agent 角色设计：Scout 负责在小样本中探索模式提出候选假设，Investigator 在全量数据上进行统计验证并计算效应量（p 值、odd ratio），这种分工可迁移至推荐系统 Agent 的 A/B 实验诊断或行为差异分析。</li><li>报告驱动的 scaffold 优化：人类专家使用 IG 报告后，scaffold 性能提升 30.4 pp（对比无报告基线），且报告深度与证据质量直接影响修改效率；在自动优化循环中，每轮重新生成分析报告可以避免纯 scaffold 搜索的退化。可借鉴该闭环思想，将生成式推荐或电商 Agent 的离线评估日志自动转化为 prompt 或工具链的改进建议。</li><li>评估框架的复用：提出的四维度评估（覆盖度、配对胜率、质量评分、人工干预提升）可作为自建 Agent 诊断系统效果的度量标准，尤其适合验证诊断报告对工程师开发效率的实际价值。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>
+LLM Agent 的执行轨迹通常包含成千上万个 token，单个轨迹的调试无法发现跨轨迹群组的系统性模式，如沉默失败、效率差异或特定条件下的行为退化。这些模式只有在语料库级别进行群体对比时才可见，而现有的单轨迹分析或固定分类法难以自动化地完成此类发现与验证。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>多智能体分工</strong>：Orchestrator 接收诊断问题，调度 Scout（假设生成）和 Investigator（假设验证）。Scout 在约 50-200 条采样轨迹上探索，提出候选假设；Investigator 在全量语料上通过统计计算确认或证伪假设，并输出置信度与效应量。</li>
+<li><strong>结构化数据层</strong>：所有轨迹预先经 Python 处理成带元数据的 Parquet 存储，Agent 仅通过代码执行工具进行分组、对比、Cramér’s V 等分析，避免将原始长文本塞入 LLM 上下文。</li>
+<li><strong>迭代循环</strong>：Orchestrator 可多轮交替分发 Scout 和 Investigator，根据已确认的发现决定是否补充新假设或提交最终报告，报告包含证据引用、流行度估计和可操作建议。</li>
+<li><strong>评估体系</strong>：提出四层评估：LLM 裁判的覆盖率/配对胜率/质量评分、人类专家评分报告质量、人类专家基于报告修改 scaffold 的性能提升、以及自动修补循环的收敛效果。</li>
+</ul>
+<p><strong>关键实验与数字</strong></p>
+<ul>
+<li><strong>基准</strong>：SpreadsheetBench（296 轨迹）和 HLE（250 轨迹），涵盖电子表格操作和闭卷专业问答。</li>
+<li><strong>对比系统</strong>：Single-Agent Coding、CC Subagents、Trace2Skill-style、RLM。IG 在配对胜率（77.9%）和机制解释/特异性维度得分上均领先，而覆盖率（91%）与最佳系统接近。</li>
+<li><strong>人类专家干预</strong>：使用 IG 报告的工程师将 scaffold 准确率提升 30.4 pp（从 27.0% 到 57.4%），远超 CC Subagents 报告的 16.2 pp 提升，编辑改动更精准。</li>
+<li><strong>自动修补循环</strong>：含 IG 分析的循环可持续提升到 0.84 准确率，而无分析输入的纯修补器在第二轮即退化。</li>
+</ul>
+<p><strong>最值得记住的一句话</strong>
+“Insights Generator 的 Scout-Investigator 架构与结构化数据层的结合，使得语料库级别的行为洞察既能覆盖广泛模式，又具备统计严密的证据深度，直接转化为工程师优化 Agent 的显著能力提升。”</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21347&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21347" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21347" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21347" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

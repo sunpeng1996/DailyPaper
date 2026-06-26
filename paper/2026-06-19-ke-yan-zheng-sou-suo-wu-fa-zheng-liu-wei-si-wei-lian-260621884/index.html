@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="对需回溯搜索的任务，直接蒸馏思维链会失败，模型仅学到表面模板而非搜索能力"><meta property="og:title" content="A Verifiable Search Is Not a Learnable Chain-of-Thought"><meta property="og:description" content="对需回溯搜索的任务，直接蒸馏思维链会失败，模型仅学到表面模板而非搜索能力"><meta property="og:type" content="website"><title>A Verifiable Search Is Not a Learnable Chain-of-Thought</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Reasoning">Reasoning</a> <span class="sep">|</span> <time datetime="2026-06-19">2026-06-19</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.21884" target="_blank" rel="noopener">2606.21884</a>  </div> <h1>A Verifiable Search Is Not a Learnable Chain-of-Thought</h1> <p class="title-zh">可验证搜索无法蒸馏为思维链</p> <div class="dir-row"> <span class="direction-chip">🧭 思维链蒸馏的局限性</span> </div> <p class="affiliations">Independent Researcher</p> <div class="meta">Harsh Patel</div> <p class="one-liner">对需回溯搜索的任务，直接蒸馏思维链会失败，模型仅学到表面模板而非搜索能力</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/chain-of-thought">chain-of-thought</a><a class="tag" href="/DailyPaper/tag/search">search</a><a class="tag" href="/DailyPaper/tag/distillation">distillation</a><a class="tag" href="/DailyPaper/tag/LoRA">LoRA</a><a class="tag" href="/DailyPaper/tag/reasoning">reasoning</a><a class="tag" href="/DailyPaper/tag/backtracking">backtracking</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>当推荐/Agent任务包含需搜索（如回溯、试错）的子过程时，避免直接蒸馏为端到端思维链，因为模型会退化为输出模板而非执行搜索。</li><li>可将搜索的核心组合空间预计算为显式目录（类似推荐系统中的索引或候选池），让模型做检索与验证，从而将任务从搜索变为记忆+比较。</li><li>在RL训练中使用可验证奖励时，若任务需要搜索，应确保奖励能指导前向决策，否则稀疏奖励可能导致模型学会“猜测”模板而不探索。</li><li>对于生成式推荐中需多步推理的输出（如解释生成），应验证是否包含隐藏的搜索步骤，考虑将其拆分为搜索阶段和生成阶段。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：常用假设——任何可用短程序解决的任务都能通过写出步骤微调让模型学会——对一类需要回溯搜索的过程不成立。本文在9个由确定性生成器产生的推理任务上验证。<br>
+<strong>方法</strong>：将生成器逆向为Python求解器，渲染为思维链，通过rank-≤32的LoRA蒸馏到30B（3.5B active）的Nemotron模型。任务分为前向可计算型（查找/算术、8-bit布尔规则）和需回溯搜索的cryptarithm任务。还尝试了RL、自训练等11种思维链设计。<br>
+<strong>关键结果</strong>：前向任务迁移良好（≥0.99和0.68），但cryptarithm准确率仅0.01–0.07，尽管搜索求解器正确率71%。模型在算术行上表现优异（97–100%），且71%情况下将正确密码排入top-8，却无法从左到右进行搜索推导。微调学到的是“verdict-as-token”模板，判决正确率仅16–57%。该天花板在3B至671B多种模型和微调/提示下复现。控制实验揭示：若给定密码密钥使推导变为前向，同一批样例准确率从0.03跃升至0.57。当程序唯一的解是搜索无信息结构时，不存在可模仿的前向思维链。通过预计算组合核心为目录，将思维链简化为回忆+验证，任务变得可学习，第一名方案达到Private LB 0.92。结论：蒸馏学到的是记忆与验证，而非搜索。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.21884&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.21884" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.21884" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.21884" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

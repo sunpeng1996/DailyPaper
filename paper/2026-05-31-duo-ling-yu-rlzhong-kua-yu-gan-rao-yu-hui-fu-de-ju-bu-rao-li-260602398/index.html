@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="揭示多领域RL顺序训练的稀疏共享冲突子空间，通过refresh即可高效恢复旧领域性能"><meta property="og:title" content="A Local Perturbation Theory for Cross-Domain Interference and Recovery in Multi-Domain RL"><meta property="og:description" content="揭示多领域RL顺序训练的稀疏共享冲突子空间，通过refresh即可高效恢复旧领域性能"><meta property="og:type" content="website"><title>A Local Perturbation Theory for Cross-Domain Interference and Recovery in Multi-Domain RL</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-31">2026-05-31</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.02398" target="_blank" rel="noopener">2606.02398</a>  </div> <h1>A Local Perturbation Theory for Cross-Domain Interference and Recovery in Multi-Domain RL</h1> <p class="title-zh">多领域RL中跨域干扰与恢复的局部扰动理论</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM多领域RL训练干扰机理与恢复</span> </div> <p class="affiliations">TJUNLP Lab, College of Intelligence and Computing, Tianjin University · Baidu Inc.</p> <div class="meta">Lei Yang, Siyu Ding, Deyi Xiong</div> <p class="one-liner">揭示多领域RL顺序训练的稀疏共享冲突子空间，通过refresh即可高效恢复旧领域性能</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/multi-domain RL">multi-domain RL</a><a class="tag" href="/DailyPaper/tag/interference">interference</a><a class="tag" href="/DailyPaper/tag/parameter sparsity">parameter sparsity</a><a class="tag" href="/DailyPaper/tag/second-order damage">second-order damage</a><a class="tag" href="/DailyPaper/tag/refresh training">refresh training</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>顺序微调LLM多个任务时，可通过简短的“刷新”步骤（用极少量旧域数据再训练几步）以极小代价恢复受损域性能，避免昂贵联合训练。</li><li>干扰集中于低维冲突子空间，可在线监测模型顶部稀疏神经元的梯度方向重叠或参数变化冲突，提前预警新任务训练对旧能力的损害。</li><li>训练免回滚方法揭示了冲突坐标集的存在，可对已部署模型做选择性参数回退，精准修复特定指标退化而无需全量回滚。</li><li>对于电商多技能Agent，不同能力微调可采用LoRA等稀疏适配，冲突时仅需刷新对应适配器，大幅降低跨域干扰风险。</li> </ul> </div> <div class="content"> <p><strong>动机：</strong> 对LLM进行多领域RL后训练时，顺序训练常导致先验域性能大幅退化。现有灾难性遗忘或全局梯度冲突解释不充分，实验发现即使全模型梯度接近正交，干扰仍存在。</p>
+<p><strong>方法关键点：</strong></p>
+<ul>
+<li>单域RL产生稀疏、小幅参数编辑，不同域间top变化神经元重叠弱，但共享活跃计算路径，更新方向决定协同或冲突。</li>
+<li>构建局部扰动模型，证明后训练域的损害主要来自二阶损伤项，集中于共享冲突子空间。</li>
+<li>提出简短域刷新（如重新训练几步）可收缩该子空间的有害成分，实现选择性能恢复；同时发现基于稀疏代理冲突坐标集的训练免回滚也能部分恢复性能。</li>
+</ul>
+<p><strong>关键结果：</strong> 按 Code→Math→QA→Creative Writing 顺序训练后，Math 得分降至57.66，仅3步 Re-Math 刷新后回升至66.04，且不影响其他域，平均分达最优66.39。Math-QA对的训练免回滚操作也部分恢复了Math性能，直接证实了局部损伤机制。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.02398&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.02398" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.02398" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.02398" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

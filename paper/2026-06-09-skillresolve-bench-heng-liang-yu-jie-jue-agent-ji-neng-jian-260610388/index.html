@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出基准 SkillResolve-Bench 及 SkillResolve 方法，通过同类簇解析与效用学习，消除能力相似但执行有害的技能暴露同时提升有用技能排序"><meta property="og:title" content="SkillResolve-Bench: Measuring and Resolving Same-Capability Ambiguity in Agent Skill Retrieval"><meta property="og:description" content="提出基准 SkillResolve-Bench 及 SkillResolve 方法，通过同类簇解析与效用学习，消除能力相似但执行有害的技能暴露同时提升有用技能排序"><meta property="og:type" content="website"><title>SkillResolve-Bench: Measuring and Resolving Same-Capability Ambiguity in Agent Skill Retrieval</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-09">2026-06-09</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.10388" target="_blank" rel="noopener">2606.10388</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>SkillResolve-Bench: Measuring and Resolving Same-Capability Ambiguity in Agent Skill Retrieval</h1> <p class="title-zh">SkillResolve-Bench: 衡量与解决 Agent 技能检索中的同类能力歧义</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 技能代表性选择与检索安全</span> </div> <p class="affiliations">Huawei Technologies Ltd.</p> <div class="meta">Jiandong Ding</div> <p class="one-liner">提出基准 SkillResolve-Bench 及 SkillResolve 方法，通过同类簇解析与效用学习，消除能力相似但执行有害的技能暴露同时提升有用技能排序</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/skill retrieval">skill retrieval</a><a class="tag" href="/DailyPaper/tag/same-capability ambiguity">same-capability ambiguity</a><a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/agent">agent</a><a class="tag" href="/DailyPaper/tag/utility learning">utility learning</a><a class="tag" href="/DailyPaper/tag/representative selection">representative selection</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>同类候选的代表性选择机制可直接迁移：在电商搜索与推荐中，同一品类下常有多个外观相似但适配性不同的商品（如不同型号、版本），可借鉴本文的同类簇解析（Capability Resolver）+ 查询条件化效用评分 + 单代表输出的框架，避免将功能对等但配置过时的物品推给用户，降低体验风险。</li><li>合同特征(contract profile)增强检索信号：从资源绑定、前置条件、时效范围、输出模式等维度构造确定性对比特征，可嵌入排序模型的特征工程中，提升对版本差异、接口兼容性等执行面差异的区分度，适用于需要精准匹配上下文（如 API 推荐、方案选型）的场景。</li><li>以“有害暴露率”作为安全补充指标：在 Agent 多智体或生成式推荐中，可增设类似 HSR@K 的指标，监控系统输出的“低风险但错误执行”推荐比例，而不仅看点击/满意度；结合簇内效用竞争，可在不伤害核心召回的代价下大幅抑制风险项曝光。</li><li>利用易混淆库内负例训练效用模型：使用同一查询下与有用技能相似的但未被采纳的库内候选作为负例进行配对学习，比随机负采样更能让模型学习到细微的上下文区分，对具有丰富标签的电商场景（如真实成交 vs. 高相似度但未转化商品）有直接借鉴意义。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：Agent 技能库日益庞大，同一能力族下常存在多个相似技能，它们共享任务词汇和形式，但在资源绑定、前置条件或执行程序上不同。现有检索系统能匹配到正确的能力族，却可能暴露族内错误代表，导致 agent 使用过期资源、跳过必要前置或执行错误程序。这种“同类能力歧义”所造成的执行风险，在标准相关性检索中被忽略，需要新的评估基准和解决方法。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li>构建 SkillResolve-Bench 1.0 基准，包含 661 个查询，每个查询配对一个有用技能和一个同族但执行有害的“风险兄弟”技能，并加入 7,982 个候选技能以施加库压力，同时记录风险类型、证据和审计检查。</li>
+<li>提出 SkillResolve 方法：1) Capability Resolver 将候选技能按能力族分组；2) Utility Scorer 用易混淆库内负例训练查询条件化效用模型，融合词法、路由分、以及专门设计的“合同特征”（资源绑定、前置条件、API/时间范围、输出模式等）；3) Representative Selector 在每个族内选择效用最高的代表，最终 Top-K 只包含各族的胜者。</li>
+<li>通过逻辑回归学习效用得分，训练负例为同一查询下除有用/风险兄弟外排名靠前的相似但未入选技能，不使用风险兄弟参与损失计算。</li>
+</ul>
+<p><strong>关键结果</strong>：在 661 对及 7,982 候选池上，SkillResolve 取得 Recall@3 0.766、NDCG@3 0.699，且 HSR@3 保持 0。相比 SkillRouter，召回提升 0.112、NDCG 提升 0.165，同时将有害暴露率从 0.693 降至 0。去除代表选择步骤后，HSR@3 反弹至 0.236，证实代表选择是风险控制的关键。公开元数据或文本簇代替基准族关系也能维持 HSR@3=0，但分组更粗糙。组件消融和改写压力测试进一步验证方法稳健性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.10388&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.10388" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.10388" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.10388" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

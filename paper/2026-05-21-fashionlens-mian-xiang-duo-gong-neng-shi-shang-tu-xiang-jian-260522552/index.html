@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出任务自适应学习框架，通过球面查询校准与梯度引导采样解决多任务检索中的特征干扰与优化失衡，性能全面领先。"><meta property="og:title" content="FashionLens: Toward Versatile Fashion Image Retrieval via Task-Adaptive Learning"><meta property="og:description" content="提出任务自适应学习框架，通过球面查询校准与梯度引导采样解决多任务检索中的特征干扰与优化失衡，性能全面领先。"><meta property="og:type" content="website"><title>FashionLens: Toward Versatile Fashion Image Retrieval via Task-Adaptive Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-21">2026-05-21</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.22552" target="_blank" rel="noopener">2605.22552</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>FashionLens: Toward Versatile Fashion Image Retrieval via Task-Adaptive Learning</h1> <p class="title-zh">FashionLens：面向多功能时尚图像检索的任务自适应学习</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态时尚检索 · 任务自适应表示与采样</span> </div> <p class="affiliations">Harbin Institute of Technology (Shenzhen) · City University of Hong Kong · Southern University of Science and Technology · Nanjing University · National University of Singapore</p> <div class="meta">Haokun Wen, Xuemeng Song, Xinghao Xie, Xiaolin Chen, Xiangyu Zhao, Weili Guan</div> <p class="one-liner">提出任务自适应学习框架，通过球面查询校准与梯度引导采样解决多任务检索中的特征干扰与优化失衡，性能全面领先。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Fashion Image Retrieval">Fashion Image Retrieval</a><a class="tag" href="/DailyPaper/tag/Multi-Task Learning">Multi-Task Learning</a><a class="tag" href="/DailyPaper/tag/Spherical Interpolation">Spherical Interpolation</a><a class="tag" href="/DailyPaper/tag/Gradient-Guided Sampling">Gradient-Guided Sampling</a><a class="tag" href="/DailyPaper/tag/MLLM">MLLM</a><a class="tag" href="/DailyPaper/tag/Benchmark">Benchmark</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>梯度引导自适应采样 (GGAS)：利用 [RET] token 的梯度范数目衡量任务实时难度，并用 EMA 平滑后结合数据集大小先验重新加权采样概率，可迁移至电商多任务模型（如同时优化点击率、转化率、互补推荐）以自动平衡高资源与高难度任务，避免小样本任务欠拟合。</li><li>球面查询校准器 (PGSQC)：通过信息瓶颈结构生成意图感知的适应提议，再使用自适应球面线性插值动态旋转查询表示，使同一模型能灵活适配相似、搭配、属性筛选等不同检索意图。可在生成式推荐的多场景召回中借鉴，用可学习的插值系数替代硬路由，减小特征冲突。</li><li>统一多模态指令框架：基于 MLLM 将图片、文本、视频、多图组合及修改文本等多样化查询输入纳入统一编码，并使用自然语言指令显式指定检索意图，为构建电商通用搜索或 Agent 工具调用提供了清晰模板，便于扩展到视频摘要、对话式搜索等复杂交互。</li><li>异构数据整合 Benchmark 构建：U-FIRE 通过人工设计指令模板将 15 个碎片化数据集标准化，并加入两个未见过的组合任务评估 OOD 泛化，可直接用于电商领域多任务模型的全方位测试与上线前的鲁棒性验证。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：时尚电商中的用户搜索意图高度多样，包括以图搜图、文本寻物、跨域匹配、搭配推荐等，当前模型多针对单一任务设计，碎片化严重，且多任务联合训练时存在特征干扰（不同意图对匹配的定义不同）和优化失衡（数据规模与任务难度差异大），难以构建一个真正通用的统一检索框架。为此，论文旨在打造一个能处理多种查询格式和搜索意图的通用时尚图像检索系统。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>U-FIRE 基准</strong>：整合 15 个数据集涵盖 9 类检索任务，新增两个未见过的组合任务（街拍+修改文本→商城图、多图+文本→搭配单品），并用自然语言指令模板统一样本格式，显式标注检索意图。</li>
+<li><strong>基于 MLLM 的统一编码</strong>：使用 Qwen3-VL 作为骨干，通过可学习的 <code>[RET_q]</code> 和 <code>[RET_t]</code> 令牌分别聚合查询与候选图像表示。</li>
+<li><strong>提案引导的球面查询校准器 (PGSQC)</strong>：为解决特征干扰，利用信息瓶颈结构（可学习低秩矩阵 A 和 B）生成意图适应提议，再通过自适应球面线性插值 (Slerp) 将初始查询表示旋转到任务对齐的度量空间，插值系数、低秩矩阵均由查询表示动态生成，并施加正交和范数正则化。</li>
+<li><strong>梯度引导自适应采样 (GGAS)</strong>：用 <code>[RET]</code> 令牌的梯度幅值定义实时任务难度，经 EMA 平滑后，乘以数据集大小的平方根先验得到采样分数，按概率分布进行批次级采样，避免高难度任务因数据少而被忽视。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 U-FIRE 的 11 个任务（含 2 个未见任务）上对比通用多模态检索器 (UniIR, VLM2Vec-V2, MM-Embed, GME)、时尚 VLP 模型 (Fame-ViL, FashionSAP, DA-Fashion) 及微调基线。</li>
+<li>FashionLens 在平均 mR@(1,5,10) 达到 52.21，显著优于最强通用模型 GME (35.40) 和最强时尚模型 DA-Fashion (35.40)；在 OOD 任务上优势更明显，如 Task 10 领先 40.24 点。</li>
+<li>消融实验证实 GGAS 带来最大提升，PGSQC 优于直接使用提议或线性插值，且实例级参数化优于共享参数。</li>
+</ul>
+<p><strong>一句话</strong>：将检索意图解耦为可学习的球面旋转，并用梯度驱动动态平衡多任务训练，是构建工业级通用时尚搜索系统的高效范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.22552&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.22552" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.22552" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.22552" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出兼顾即时转化与新商品长期增长潜力的多价值感知生成式检索框架，在淘宝实现新商品GMV提升5.3%"><meta property="og:title" content="Towards Sustainable Growth: A Multi-Value-Aware Retrieval Framework for E-Commerce Search"><meta property="og:description" content="提出兼顾即时转化与新商品长期增长潜力的多价值感知生成式检索框架，在淘宝实现新商品GMV提升5.3%"><meta property="og:type" content="website"><title>Towards Sustainable Growth: A Multi-Value-Aware Retrieval Framework for E-Commerce Search</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.17994" target="_blank" rel="noopener">2605.17994</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Towards Sustainable Growth: A Multi-Value-Aware Retrieval Framework for E-Commerce Search</h1> <p class="title-zh">面向可持续增长：电商搜索的多价值感知检索框架</p> <div class="dir-row"> <span class="direction-chip">🧭 生成式推荐 · 冷启动与长期生态价值</span> </div> <p class="affiliations">Taobao &amp; Tmall Group of Alibaba</p> <div class="meta">Yifan Wang, Yixuan Wang, YiDan Liang, Qiang Liu, Fei Xiao</div> <p class="one-liner">提出兼顾即时转化与新商品长期增长潜力的多价值感知生成式检索框架，在淘宝实现新商品GMV提升5.3%</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Generative Retrieval">Generative Retrieval</a><a class="tag" href="/DailyPaper/tag/E-commerce Search">E-commerce Search</a><a class="tag" href="/DailyPaper/tag/Cold-Start">Cold-Start</a><a class="tag" href="/DailyPaper/tag/Causal Inference">Causal Inference</a><a class="tag" href="/DailyPaper/tag/Policy Optimization">Policy Optimization</a><a class="tag" href="/DailyPaper/tag/New Item Growth">New Item Growth</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>长短期价值解耦的奖励设计：通过 ItemLTV 反事实预测新商品的“增量交易价值”，将长期潜力量化为可优化信号，可直接迁移到电商推荐/检索的重排或混排阶段，作为长期收益的辅助目标。</li><li>多价值对齐训练范式 (MoPO)：将搜索漏斗（曝光→点击→购买）与 ItemLTV 分数统一为加权奖励，并用 clipped importance weight 缓解头部偏差，可复用到多目标召回模型，自动探索高潜力长尾商品。</li><li>生成式检索 + Semantic ID 的冷启动方案：利用 RQ-VAE 生成三层语义ID，并在解码时使用 trie 约束保证合法性，可借鉴到品类多、新品频出的电商场景，避免 ID 冷启动问题。</li><li>线上 A/B 测试设计：结合用户侧（即时效率）和物品侧（长期增长）分桶实验，提供了一套评估长期生态价值的方法论，对业务中衡量新商品扶持策略的真实效果很有借鉴价值。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：电商搜索系统普遍面临“马太效应”——传统模型依赖历史点击转化数据，导致新商品因缺乏反馈而难以获得曝光，损害平台长期生态。现有冷启动方法缺乏对单次交互长期价值的量化，也无法有效平衡短期效率和长期增长。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>ItemLTV 模块</strong>：用反事实因果推断量化一次点击对新商品未来7天交易额的 uplift。采用双塔结构，底座塔预测基础增长，uplift 塔建模用户交互带来的增量，训练时取对数空间并联合优化。</li>
+<li><strong>MultiGR 生成式检索</strong>：将召回建模为从语义ID生成序列的任务。先用电商多模态基础模型得到商品表征，再用 RQ-VAE 量化为三层语义ID；以 Decoder-only Transformer 自回归生成候选商品，推理时采用 trie 约束解码保证层级合法。</li>
+<li><strong>多价值偏好对齐 (MoPO)</strong>：在监督预训练后，引入组内相对优化：奖励由搜索漏斗标签（曝光、点击、购买）与 ItemLTV 高潜力标签加权组合，并用裁剪的重要性权重（-log概率）纠正流行度偏差，鼓励发现长尾高价值商品。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>离线对比生产 Dense Retrieval 和 TIGER，GrowthGR 在所有 long-term 指标上最优（Recall@1000 达 0.8991）; 两阶段组合 GrowthGR+DR 在所有指标上均大幅提升。</li>
+<li>线上 A/B 测试：新商品 GMV 提升 5.39%，整体搜索 GMV +0.31%，新商品曝光占比 (PVR) +1.54%。</li>
+<li>物品侧长期实验：新商品在第30天后的交易额（TI@30）提升 20.0%，证明模型不仅注入短期流量，而是真正培育出持续转化能力。</li>
+</ul>
+<p><strong>一句话</strong>：通过将长期增长潜力反事实量化并融入生成式检索的奖励对齐，GrowthGR 在不牺牲大盘效率的前提下显著改善了新商品冷启动的生态健康度。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.17994&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.17994" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.17994" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.17994" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

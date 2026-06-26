@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出令牌可教性区分可学习与不可兼容的分歧，TA-OPD 仅保留 5% 高可教性令牌蒸馏即可超越全令牌训练"><meta property="og:title" content="Not All Disagreement Is Learnable: Token Teachability in On-Policy Distillation"><meta property="og:description" content="提出令牌可教性区分可学习与不可兼容的分歧，TA-OPD 仅保留 5% 高可教性令牌蒸馏即可超越全令牌训练"><meta property="og:type" content="website"><title>Not All Disagreement Is Learnable: Token Teachability in On-Policy Distillation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-05-25">2026-05-25</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.26844" target="_blank" rel="noopener">2605.26844</a>  </div> <h1>Not All Disagreement Is Learnable: Token Teachability in On-Policy Distillation</h1> <p class="title-zh">策略蒸馏中的令牌可教性：并非所有分歧都可学习</p> <div class="dir-row"> <span class="direction-chip">🧭 LLM 训练 · 策略蒸馏令牌选择优化</span> </div> <p class="affiliations">The Hong Kong Polytechnic University · InfiX.ai</p> <div class="meta">Yuanyi Wang, Su Lu, Yanggan Gu, Pengkai Wang, Yifan Yang, Zhaoyi Yan 等</div> <p class="one-liner">提出令牌可教性区分可学习与不可兼容的分歧，TA-OPD 仅保留 5% 高可教性令牌蒸馏即可超越全令牌训练</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/On-Policy Distillation">On-Policy Distillation</a><a class="tag" href="/DailyPaper/tag/Token Teachability">Token Teachability</a><a class="tag" href="/DailyPaper/tag/Selective Distillation">Selective Distillation</a><a class="tag" href="/DailyPaper/tag/Knowledge Distillation">Knowledge Distillation</a><a class="tag" href="/DailyPaper/tag/LLM Training">LLM Training</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>蒸馏效率与效果提升：当在电商场景中蒸馏LLM用于商品描述、推荐理由或Agent对话时，可借鉴TA-OPD仅对“可教性”高的token位置施加蒸馏，避免低效甚至有害的监督信号，实验仅用5%令牌即超越全令牌蒸馏，显著节省计算。</li><li>无需额外模型：TA-OPD仅利用教师和学生logits计算局部兼容性，无需奖励模型或验证器，易于集成到现有蒸馏流程（如生成式推荐中的语义ID生成器蒸馏）。</li><li>信号质量重新审视：揭示了原始KL散度作为学习价值代理的缺陷，提示在设计蒸馏损失时，应优先关注教师分布与学生top-K候选重叠高的token，而非简单加权高分歧位置，这对多智能体策略迁移中避免灾难性遗忘有参考价值。</li><li>算法轻量化：可教性计算简单，能在训练时动态筛选token，为推荐系统或Agent中频繁更新的小模型提供了一种低成本、高性能的在线蒸馏策略。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：策略蒸馏（OPD）通过教师分布监督学生自回归生成的每个token，但现有选择性方法多基于高熵或高KL散度筛选token，假设分歧大的位置更重要。本文质疑这一假设，探究哪些教师信号真正可被学生学习。</p>
+<p><strong>方法</strong>：通过固定上下文的诊断实验，度量同一上下文下教师-学生KL散度的降低程度，发现原始KL分歧会混叠两类信号：一是<strong>可学习分歧</strong>，即教师分配了校正质量到学生的top-K候选中；二是<strong>不可兼容分歧</strong>，即教师分布与学生当前支持集几乎无重叠。据此定义<strong>令牌可教性</strong>为教师分布在学生top-K候选上的累积概率，即局部兼容性。提出<strong>TA-OPD</strong>，只对高可教性的token位置施加OPD损失，无需额外模型。</p>
+<p><strong>结果</strong>：在Qwen2.5和Qwen3的多组师生实验中，TA-OPD仅保留5%的令牌，常超越全令牌OPD，并优于基于熵或KL散度的选择基线。结论：选择性蒸馏应关注信号的可学习性，而非单纯显著性。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.26844&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.26844" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.26844" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.26844" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

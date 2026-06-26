@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出DiffCold扩散框架，用检索增强聚合与模拟对齐统一温冷表示，同时提升冷热物品性能"><meta property="og:title" content="DiffCold: A Diffusion-based Generative Model for Cold-Start Item Recommendation"><meta property="og:description" content="提出DiffCold扩散框架，用检索增强聚合与模拟对齐统一温冷表示，同时提升冷热物品性能"><meta property="og:type" content="website"><title>DiffCold: A Diffusion-based Generative Model for Cold-Start Item Recommendation</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-10">2026-06-10</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.12245" target="_blank" rel="noopener">2606.12245</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>DiffCold: A Diffusion-based Generative Model for Cold-Start Item Recommendation</h1> <p class="title-zh">扩散模型解决冷启动推荐的跷跷板困境</p> <div class="dir-row"> <span class="direction-chip">🧭 冷启动物品推荐 · 扩散模型生成表示</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Xiaohongshu Inc.</p> <div class="meta">Kangning Zhang, Yingjie Qin, Weinan Zhang, Yong Yu, Jianghao Lin</div> <p class="one-liner">提出DiffCold扩散框架，用检索增强聚合与模拟对齐统一温冷表示，同时提升冷热物品性能</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Cold-Start">Cold-Start</a><a class="tag" href="/DailyPaper/tag/Diffusion Models">Diffusion Models</a><a class="tag" href="/DailyPaper/tag/Recommendation">Recommendation</a><a class="tag" href="/DailyPaper/tag/Representation Alignment">Representation Alignment</a><a class="tag" href="/DailyPaper/tag/Retrieval-enhanced Aggregator">Retrieval-enhanced Aggregator</a><a class="tag" href="/DailyPaper/tag/Seesaw Dilemma">Seesaw Dilemma</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>扩散模型用于物品嵌入生成：用内容特征作为条件引导逆扩散过程，在温物品上训练，对冷物品生成与温物品分布一致的嵌入，电商可直接移植到新品冷启动，避免跷跷板困境。</li><li>检索增强的起点初始化：对冷物品，基于内容相似度检索top-k温物品，聚合其嵌入作为扩散起点，远优于纯噪声，保留个性化信息，工程实现简单，适合大规模线上推理。</li><li>模拟表示对齐训练技巧：训练时用温物品的内容和聚合起点模拟冷生成过程，并通过对比学习对齐到真实温表示，这种“模拟冷启动”的对齐策略可推广到其他生成式表示学习场景。</li><li>轻量级扩散设计：步数T=20、线性调度即可达最优，时间开销与普通模型持平，证明扩散模型在推荐系统中能够兼顾效果与效率，可低成本部署。</li> </ul> </div> <div class="content"> <h2 id="动机">动机</h2>
+<p>冷启动物品推荐长期面临“跷跷板困境”：提升冷物品效果必然以牺牲温物品性能为代价，反之亦然。本文指出根源在于温冷物品的表示分布存在本质差异——温物品由交互信号学习，形成复杂“行为流形”；冷物品仅依赖内容特征，构成“语义流形”。现有方法（Dropout、生成式、对齐式）强制映射不同分布，导致模型在二者间失衡。</p>
+<h2 id="方法关键点">方法关键点</h2>
+<ul>
+<li><strong>扩散重建框架</strong>：在温物品嵌入上执行正向加噪与逆向去噪，以内容特征为条件，学习从噪声中恢复行为嵌入，建立语义空间到行为空间的柔性桥接。推理时对冷物品由条件扩散生成嵌入。</li>
+<li><strong>检索增强聚合器</strong>：对冷物品依据内容相似度检索top-K温物品，聚合其嵌入作为扩散推理的起点，替代纯高斯噪声，避免丢失个性化信息。</li>
+<li><strong>模拟表示对齐</strong>：训练期间用温物品的内容与聚合起点模拟冷生成过程，将模拟表示与真实温表示经InfoNCE对比对齐，强制分布一致性。</li>
+<li><strong>多任务训练</strong>：联合优化扩散重构损失、BPR冷推荐损失、模拟对齐损失以及温物品增强损失（BPR温+对比），防止温表示退化。</li>
+</ul>
+<h2 id="关键结果">关键结果</h2>
+<p>在Movielens、Citeulike、Xing三数据集、MF/LightGCN/SimGCL三个骨架上，DiffCold全面超越DropoutNet、Heater、GAR、ALDI等基线。以MF为例，Movielens上整体Recall@20提升15.2%，冷物品Recall@20提升9.65%，温物品提升8.68%，首次实现冷热同步增长。分布度量（类内余弦相似度、Wasserstein距离、MMD）显示DiffCold生成的嵌入与温物品分布最一致，可视化也证实冷温表示充分混合。</p>
+<p><strong>最值得记住的一句话</strong>：扩散模型通过学习温物品的流形结构并用内容条件重建，能自然解耦温物品保真度与冷物品生成，为冷启动推荐开辟了新的范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.12245&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.12245" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.12245" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.12245" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

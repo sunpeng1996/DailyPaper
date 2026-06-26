@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出以利益相关者（用户、卖家、平台）为核心的提示注入安全基准，揭示危害的不对称性和异质失败模式。"><meta property="og:title" content="Who Pays the Price? Stakeholder-Centric Prompt Injection Benchmarking for Real-world Web Agents"><meta property="og:description" content="提出以利益相关者（用户、卖家、平台）为核心的提示注入安全基准，揭示危害的不对称性和异质失败模式。"><meta property="og:type" content="website"><title>Who Pays the Price? Stakeholder-Centric Prompt Injection Benchmarking for Real-world Web Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13385" target="_blank" rel="noopener">2606.13385</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Who Pays the Price? Stakeholder-Centric Prompt Injection Benchmarking for Real-world Web Agents</h1> <p class="title-zh">谁来买单？面向真实 Web Agent 的利益相关者中心化提示注入基准测试</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent 安全性评估 · 利益相关者建模</span> </div> <p class="affiliations">Nanyang Technological University, Singapore · ST Engineering, Singapore · IBM Research, USA · University of Illinois Urbana-Champaign, USA</p> <div class="meta">Zihao Wang, Yiming Li, Yutong Wu, Zheyu Liu, Kangjie Chen, Fok Kar Wai 等</div> <p class="one-liner">提出以利益相关者（用户、卖家、平台）为核心的提示注入安全基准，揭示危害的不对称性和异质失败模式。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/prompt injection">prompt injection</a><a class="tag" href="/DailyPaper/tag/web agents">web agents</a><a class="tag" href="/DailyPaper/tag/benchmark">benchmark</a><a class="tag" href="/DailyPaper/tag/security">security</a><a class="tag" href="/DailyPaper/tag/stakeholder-centric">stakeholder-centric</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商推荐 Agent 安全评估中引入利益相关者视角，区分对用户、卖家、平台的损害，不仅看攻击成功率，还要联合任务偏离度（TDR）和行为异常率（BIR），全面捕捉隐蔽操纵（如卖家偏向）和平台扰乱。</li><li>利用 ASR-TDR 矩阵识别“Stealthy Parasitism”等失败模式：高 ASR 低 TDR 的攻击可在不破坏用户体验的情况下实现对抗目标（如商品推荐偏向），需特别关注。</li><li>注意注入内容与用户意图的语义对齐度：相似度越高，越容易在任务不被察觉的情况下成功，防御时可尝试降低攻击目标的语义对齐程度或引入不一致的环境线索。</li><li>多模态注入（产品图片）能影响 Agent 决策，且评分信号不能完全消除视觉影响，需考虑视觉通道的鲁棒性。</li> </ul> </div> <div class="content"> <p><strong>动机：</strong> 基于 LLM 的 Web 智能体在电商等场景中自主执行搜索、比价、交易，但它们极易受到提示注入攻击——隐蔽在网页内容（如评论、评分）中的恶意指令可操纵其行为。现有安全基准多从攻击者角度评估技术可行性，忽略了受害者的异质性：同一攻击对用户、卖家、平台造成的伤害可能截然不同，并且失败模式也存在多种形态。因此亟需一个以利益相关者为中心的评估框架，真实反映部署中的风险。</p>
+<p><strong>方法关键点：</strong></p>
+<ul>
+<li>提出 <strong>StakeBench</strong>，围绕受伤害的实体（用户、第三方卖家、平台）组织攻击分类：定义 12 种具体攻击目标，涵盖强制购买、泄露信息、评价操纵、订单膨胀、工作流绕过等。</li>
+<li>构建 22 个可复用的攻击模板（9 个直接注入、13 个间接注入），在电商环境 OneStopMarket（VisualWebArena 的一部分）中实例化为 264 个可执行测试用例，覆盖 12 个产品类别。</li>
+<li>设计 <strong>多维评估指标</strong>：攻击成功率（ASR）、任务偏离度（TDR）、行为异常率（BIR）。ASR 与 TDR 联合定义四种失败状态：复合失败（高 ASR + 高 TDR）、隐蔽寄生（高 ASR + 低 TDR）、错位中断（低 ASR + 高 TDR）、鲁棒行为（低 ASR + 低 TDR）。</li>
+<li>严格限制攻击者能力：仅能控制评论、评分、元数据等现实可接触的渠道，不能篡改系统提示或平台基础结构。</li>
+</ul>
+<p><strong>关键实验：</strong></p>
+<ul>
+<li>评估在两个代表性 Web Agent 系统（NanoBrowser、BrowserUse）和两个 LLM 骨干（GPT-5、Gemini-2.5-Flash）上进行，3,168 次攻击记录。</li>
+<li>间接注入下，所有配置均无法完全抵抗任何一个攻击目标；平均 ASR 在 41.67% 至 68.16% 之间。</li>
+<li>卖家目标攻击 ASR 最高（约 60%），用户目标 TDR 最低（隐蔽性强），平台目标 BIR 更高（执行不稳定）。</li>
+<li>注入目标与用户意图语义高度相似时，ASR 高达 70–79% 且 TDR 低，呈现隐蔽寄生；语义偏离越远，越易转向错位中断。</li>
+<li>周边线索（如评分与恶意评论不一致）可在某些骨干下大幅降低攻击成功率（GPT-5 从 55.56% 降至 19.44%）。</li>
+<li>视觉操纵初步实验：仅修改产品图片就能显著影响 Agent 的选择，且评分信号不能完全抵消。</li>
+</ul>
+<p><strong>最值得记住的一句话：</strong> 提示注入对 Web Agent 的危害不是单一标量，而是受受害者身份、注入目标与用户任务的语义对齐、以及 Agent 架构共同作用的分布化风险，必须用多维指标和利益相关者视角才能全面揭示。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13385&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13385" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13385" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13385" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

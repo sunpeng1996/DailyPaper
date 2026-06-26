@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="利用可解释性识别检索关键头，在头维度混合全注意力和线性注意力，以极低训练成本突破长上下文瓶颈"><meta property="og:title" content="HydraHead: From Head-Level Functional Heterogeneity to Specialized Attention Hybridization"><meta property="og:description" content="利用可解释性识别检索关键头，在头维度混合全注意力和线性注意力，以极低训练成本突破长上下文瓶颈"><meta property="og:type" content="website"><title>HydraHead: From Head-Level Functional Heterogeneity to Specialized Attention Hybridization</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-18">2026-06-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.20097" target="_blank" rel="noopener">2606.20097</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>HydraHead: From Head-Level Functional Heterogeneity to Specialized Attention Hybridization</h1> <p class="title-zh">HydraHead：基于头功能异质性的头维度混合注意力架构</p> <div class="dir-row"> <span class="direction-chip">🧭 多头注意力混合 · 长上下文高效推理</span> </div> <p class="affiliations">Alibaba Group</p> <div class="meta">Zhentao Tan, Wei Chen, Jingyi Shen, Yao Liu, Xu Shen, Yue Wu 等</div> <p class="one-liner">利用可解释性识别检索关键头，在头维度混合全注意力和线性注意力，以极低训练成本突破长上下文瓶颈</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Hybrid Attention">Hybrid Attention</a><a class="tag" href="/DailyPaper/tag/Linear Attention">Linear Attention</a><a class="tag" href="/DailyPaper/tag/Head-level Fusion">Head-level Fusion</a><a class="tag" href="/DailyPaper/tag/Mechanistic Interpretability">Mechanistic Interpretability</a><a class="tag" href="/DailyPaper/tag/Transfer Learning">Transfer Learning</a><a class="tag" href="/DailyPaper/tag/Long Context">Long Context</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>头维度混合可作为推荐系统长序列建模的新策略：在用户长行为序列中，可借鉴 HydraHead 思路，对部分注意力头保留精确交互（类似 FA），其余头用线性注意力压缩历史，平衡精度与效率。</li><li>可解释性驱动的头部选择可直接用于模型压缩：通过因果修补量化头的重要性，仅保留关键头为全精度，其余替换为低开销模块，能大幅降低长序列推理的 KV cache 和计算量，适合在线服务。</li><li>尺度归一化融合缓解不同注意力特征分布差异：当系统中需要拼合多种注意力输出时（如多模态、多专家），可采用 RMSNorm + 可学习缩放向量的方案，避免直接 concat 带来的优化不稳定，对特征融合模块设计有直接复用价值。</li><li>三阶段迁移学习路线适于将现网大模型快速改装为混合架构：参数继承 + 层对齐 + 全局蒸馏 + 长文微调的流程可在几十亿 token 内完成，对已有业务模型低成本扩展上下文窗口有参考意义。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+注意力二次复杂度是长上下文处理的根本瓶颈，工业界越来越多采用混合架构，但主流层维度混合存在设计空间狭窄、线性注意力与全注意力集成困难的问题。本文通过可解释性分析发现，同一层内不同头的功能高度异质，且部分头对精确检索起决定性作用，而层间输出相似度平滑，缺乏清晰的功能边界。头维度因此成为更自然、更细粒度的混合单位。</p>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>可解释性驱动头部选择</strong>：构建反事实样本，通过激活修补和路径修补测量每个头对长上下文检索任务的因果必要性，融合多任务分数，选出保留全注意力（FA）的关键头（默认 25%），其余头替换为线性注意力（GDN）。</li>
+<li><strong>头维度混合架构</strong>：同一层内并行计算 FA 头和 GDN 头，输入特征经解耦的 QKV 投影；输出先独立进行 RMSNorm，再乘以各头可学习缩放系数后拼接，经 WO 投影，弥合两类注意力的分布差异。</li>
+<li><strong>分支增强</strong>：FA 头移除 RoPE，改用 log-scale 稳定长上下文，并添加门控机制；GDN 头引入 RoPE 和 MHA 配置以增强位置感知与表达能力。</li>
+<li><strong>三阶段迁移学习</strong>：阶段 1 参数初始化与逐层 MSE 对齐，阶段 2 全局 logits 蒸馏，阶段 3 长上下文微调；仅用 15B token 训练，大幅降低转换成本。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在 Qwen3-1.7B 上，HydraHead 在 RULER 单键和多键检索任务上全面超越层维度、token 维度和头维度混合基线。在 LA:FA=7:1 下，其长上下文性能匹配 LA:FA=3:1 的层维度混合方案。512K 上下文 NIAH 指标相对原模型提升超 69%，接近原生 256K 支持的 Qwen3.5-2B-Base。同时，一般推理（MMLU、GSM8K 等）未出现退化，体现了高效与高质的平衡。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.20097&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.20097" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.20097" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.20097" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

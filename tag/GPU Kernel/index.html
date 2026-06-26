@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:title" content="#GPU Kernel - AI Papers Daily"><meta property="og:description" content="每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。"><meta property="og:type" content="website"><title>#GPU Kernel - AI Papers Daily</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <h2 style="margin: 4px 0 8px;">#GPU Kernel</h2> <p style="color: var(--fg-muted); font-size: 14px;">2 篇</p> <ul class="paper-list"> <article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-28-flash-maxsim-mian-xiang-wan-jiao-hu-ping-fen-de-io-gan-zhi-260529517">FLASH-MAXSIM: IO-Aware Fused Kernels for Late-Interaction Scoring</a></h2> <p class="title-zh">FLASH-MAXSIM：面向晚交互评分的 IO 感知融合核</p> <div class="dir-row"> <span class="direction-chip">🧭 ColBERT/MaxSim 的 IO 感知核优化</span>  </div> <p class="affiliations">IBM Research Israel</p> <p class="summary">通过流式融合核避免物化完整相似度张量，大幅降低内存并加速 MaxSim 计算，保持精确排序</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>线上服务直接替换 PyTorch 实现：在 ColBERT/ColPali 的检索或推荐召回中，用 Flash-MaxSim 计算 MaxSim，无需改变模型即可获得 3.9–4.7 倍加速与 16 倍推理内存节省，支持更大 batch 和文档量，降低线上延迟。</li><li>训练时反向传播优化：训练晚交互模型可使用其原子操作无关的梯度聚合，节省约 28 倍训练内存，允许在有限 GPU 资源下增大 batch size 或序列长度，稳定训练过程。</li><li>INT8 量化推理：提供的 INT8×INT8 量化核可进一步压缩内存与带宽，适合对延迟敏感的电商搜索或推荐服务，且在 top-20 排序上完全精确。</li><li>融合归约设计思路可迁移：业务中涉及“点积→行/列最大→求和”类操作（如 attention 变体、多向量匹配），可借鉴其分块流式、在片上归约的策略，避免中间张量膨胀。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-28">2026-05-28</time> <span class="sep">|</span> <span>cs.IR</span> <span class="sep">|</span> <span class="badge badge-score">score 6/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/Late-Interaction">Late-Interaction</a><a class="tag" href="/DailyPaper/tag/MaxSim">MaxSim</a><a class="tag" href="/DailyPaper/tag/GPU Kernel">GPU Kernel</a><a class="tag" href="/DailyPaper/tag/ColBERT">ColBERT</a><a class="tag" href="/DailyPaper/tag/IO-Aware">IO-Aware</a> </div> </article><article class="paper-card"> <h2><a href="/DailyPaper/paper/2026-05-15-agentkernelarena-mian-xiang-fan-hua-xing-de-gpunei-he-you-li-260516819">AgentKernelArena: Generalization-Aware Benchmarking of GPU Kernel Optimization Agents</a></h2> <p class="title-zh">AgentKernelArena：面向泛化性的GPU内核优化代理基准测试</p> <div class="dir-row"> <span class="direction-chip">🧭 GPU内核优化代理评估基准</span>  </div> <p class="affiliations">AMD</p> <p class="summary">首个覆盖HIP/Triton/PyTorch-to-HIP的智能体GPU内核优化评估基准，引入未见配置泛化测试。</p> <details class="practical"> <summary>📌 工作参考价值（4 点）</summary> <ul> <li>Agent迭代优化流程的量化评估：借鉴其编译、正确性、性能三道门控检查的设计，可为推荐系统中代码生成Agent（如特征工程脚本优化、数据处理pipeline生成）构建类似的闭环评测，确保输出代码在真实环境中可用且高效。</li><li>泛化测试避免过拟合：论文揭示从零生成的kernel容易硬编码特定输入形状，在未见配置下正确性大幅下降。在电商场景中，若用Agent生成模型训练或推理代码，应增加不同batch size、序列长度等配置的泛化测试，避免隐式过拟合。</li><li>隔离执行与集中评分：其模块化工作区隔离执行、集中打分的框架可复用于多Agent系统的性能基准测试，尤其适合评估代码优化类Agent的鲁棒性和速度提升。</li><li>对推荐场景的直接价值有限：工作聚焦底层GPU kernel优化，与业务层的生成式推荐、多智能体协作关联较弱，主要提供评估方法论参考。</li> </ul> </details> <div class="meta"> <a href="/DailyPaper/category/Eval">Eval</a> <span class="sep">|</span> <time datetime="2026-05-15">2026-05-15</time> <span class="sep">|</span> <span>HF Daily</span> <span class="sep">|</span> <span class="badge badge-score">score 7/10</span> </div> <div class="tags"> <a class="tag" href="/DailyPaper/tag/GPU Kernel">GPU Kernel</a><a class="tag" href="/DailyPaper/tag/Agent Benchmark">Agent Benchmark</a><a class="tag" href="/DailyPaper/tag/Generalization">Generalization</a><a class="tag" href="/DailyPaper/tag/Code Generation">Code Generation</a><a class="tag" href="/DailyPaper/tag/HIP">HIP</a><a class="tag" href="/DailyPaper/tag/Triton">Triton</a> </div> </article> </ul>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

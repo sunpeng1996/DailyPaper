@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将可复用定向知识缓存为固定大小的上下文地图，显著提升Agent在重复长上下文任务上的准确率和效率。"><meta property="og:title" content="PEEK: Context Map as an Orientation Cache for Long-Context LLM Agents"><meta property="og:description" content="将可复用定向知识缓存为固定大小的上下文地图，显著提升Agent在重复长上下文任务上的准确率和效率。"><meta property="og:type" content="website"><title>PEEK: Context Map as an Orientation Cache for Long-Context LLM Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-18">2026-05-18</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.19932" target="_blank" rel="noopener">2605.19932</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>PEEK: Context Map as an Orientation Cache for Long-Context LLM Agents</h1> <p class="title-zh">PEEK：面向长上下文LLM Agent的上下文地图缓存</p> <div class="dir-row"> <span class="direction-chip">🧭 Agent长上下文交互的上下文知识缓存与更新</span> </div> <p class="affiliations">MIT CSAIL · Stanford University</p> <div class="meta">Zhuohan Gu, Qizheng Zhang, Omar Khattab, Samuel Madden</div> <p class="one-liner">将可复用定向知识缓存为固定大小的上下文地图，显著提升Agent在重复长上下文任务上的准确率和效率。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Context Map">Context Map</a><a class="tag" href="/DailyPaper/tag/Orientation Cache">Orientation Cache</a><a class="tag" href="/DailyPaper/tag/LLM Agents">LLM Agents</a><a class="tag" href="/DailyPaper/tag/Cache Policy">Cache Policy</a><a class="tag" href="/DailyPaper/tag/Long Context">Long Context</a><a class="tag" href="/DailyPaper/tag/Prompt Engineering">Prompt Engineering</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在电商场景（如反复查询商品库、用户评论语料）中，可以维护一个轻量级上下文地图，存储语料结构、关键实体、常用常量等可复用知识，避免每次推理都从零探索。</li><li>Distiller从Agent执行轨迹中自动提取可迁移的上下文知识，而不引入任务特定噪声，这一思路可借鉴为Agent经验回放与知识累积模块。</li><li>Cartographer与Evictor的分离设计（结构化编辑+优先级驱逐）确保缓存紧凑且更新不产生重复/冲突，适合需要固定token预算的生产环境。</li><li>即使只需极少轮次（m≤4）的缓存更新就能带来显著收益，这对成本敏感的在线推理系统极具参考价值。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>LLM Agent越来越多地反复查询大型外部上下文（如文档集、代码库），但现有上下文管理方法（共享聊天、RAG、压缩、提示学习等）或保留对话历史，或被动访问材料，或优化任务策略，无一主动维护<strong>可复用的定向知识</strong>——比如上下文包含什么、如何组织、哪些实体/常量曾有用。这导致每次新任务都要重新发现上下文结构，浪费推理轮次和成本。</p>
+<h3 id="方法">方法</h3>
+<p>PEEK将这类定向知识封装为<strong>上下文地图</strong>：一个固定大小的系统提示片段，作为Agent对长上下文的“一瞥”缓存。</p>
+<ul>
+<li><strong>地图结构</strong>：包含上下文路标、关键理解、域常量、可重用结果、解析模式等节，各条目有唯一ID。</li>
+<li><strong>缓存策略</strong>：由三个模块组成——<strong>Distiller</strong> 从Agent执行轨迹中诊断定向信息的有效性并提取可迁移的上下文知识；<strong>Cartographer</strong> 将诊断结果转化为对地图的结构化编辑（ADD/DELETE/REPLACE），去重并最小化编辑集；<strong>Evictor</strong> 按累积分数和条目重要性实施优先级驱逐，确保不超token预算。</li>
+<li>分离蒸馏与编辑是关键，否则任务特定信息会泄露、更新噪声大且易重复。</li>
+</ul>
+<h3 id="实验结果">实验结果</h3>
+<p>在长上下文推理（OOLONG的三组 hardest splits）和上下文学习（CL-bench）上，以GPT-5-mini为基座，RLM为骨干Agent：</p>
+<ul>
+<li><strong>质量</strong>：PEEK在所有基准上完胜所有基线，OOLONG提升6.3–34.0%，CL-bench解决率提升6.0–14.0%、Rubric准确率提升7.8–12.1%，比SOTA提示学习方法ACE提升7.8–15.0%（OOLONG）和6.0/9.9%（CL-bench）。</li>
+<li><strong>效率</strong>：PEEK位于迭代–质量 Pareto前沿，在OOLONG上比ACE少93–145次迭代，成本低1.7–5.8倍。</li>
+<li><strong>泛化</strong>：切换基座模型（GPT-5.5、Qwen3-Coder-Next-FP8）或换用Codex Agent，增益均保持。</li>
+</ul>
+<h3 id="核心洞察">核心洞察</h3>
+<p>一个固定、可演进的上下文地图能让Agent“记住”长期重复上下文的结构与关键知识，从而在后续任务中快速定位所需信息，大幅提升推理效率与质量。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.19932&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.19932" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.19932" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.19932" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

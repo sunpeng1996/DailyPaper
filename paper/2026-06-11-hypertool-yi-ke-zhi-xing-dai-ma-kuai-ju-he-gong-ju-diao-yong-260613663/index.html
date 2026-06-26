@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出 HyperTool 可执行接口，将多步确定性工具调用封装为单个代码块，使模型可见执行粒度更粗，大幅降低上下文消耗并提升复杂工具使用准确率。"><meta property="og:title" content="HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents"><meta property="og:description" content="提出 HyperTool 可执行接口，将多步确定性工具调用封装为单个代码块，使模型可见执行粒度更粗，大幅降低上下文消耗并提升复杂工具使用准确率。"><meta property="og:type" content="website"><title>HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-06-11">2026-06-11</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.13663" target="_blank" rel="noopener">2606.13663</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents</h1> <p class="title-zh">HyperTool：以可执行代码块聚合工具调用，减少 Agent 上下文膨胀与推理碎片</p> <div class="dir-row"> <span class="direction-chip">🧭 工具增强 Agent 的执行抽象与上下文管理</span> </div> <p class="affiliations">Shanghai Jiao Tong University · IQuest Research · Beijing University of Aeronautics and Astronautics</p> <div class="meta">Yaxin Du, Yifan Zhou, Yujie Ge, Jiajun Wang, Xianghe Pang, Shuo Tang 等</div> <p class="one-liner">提出 HyperTool 可执行接口，将多步确定性工具调用封装为单个代码块，使模型可见执行粒度更粗，大幅降低上下文消耗并提升复杂工具使用准确率。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Tool-Augmented Agents">Tool-Augmented Agents</a><a class="tag" href="/DailyPaper/tag/MCP">MCP</a><a class="tag" href="/DailyPaper/tag/Context Management">Context Management</a><a class="tag" href="/DailyPaper/tag/Execution Abstraction">Execution Abstraction</a><a class="tag" href="/DailyPaper/tag/Supervised Fine-Tuning">Supervised Fine-Tuning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在 Agent 工程中封装工具子程序：当工作流中包含一系列无歧义、不需高层推理的 API 调用（如搜索→过滤→聚合→排序）时，可像 HyperTool 一样用代码块将其合并为单一对外动作，避免每步都往主线径写观察结果，大幅节省 token 开销。</li><li>训练数据合成的策略：借鉴其“组合任务构建＋轨迹展开＋多轮验证”流水线，可以自动生成高质量的工具使用 SFT 数据。关键点是强制约束来自真实工具返回值，并用执行过滤和证据一致性检查淘汰无效轨迹，确保模型学到正确的块边界与内部逻辑。</li><li>统一动作空间优于混合接口：消融实验表明，对中小模型让所有交互统一走 HyperTool 接口（而非原子调用与代码块混合）可避免动作空间异质性带来的认知负载，直接提高准确率。在电商 Agent 设计中，如果模型需要同时处理简单 API 和复杂子流程，统一为代码执行入口可能是更好的选择。</li><li>注意执行安全与超时设置：实际部署时，代码块可能触发恶意行为或无限循环，务必引入沙箱隔离与严格的超时限制（尤其对复杂聚合块可给予更长的单次执行超时）。同时对关键中间返回值做必要日志，平衡可解释性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：当前基于 MCP 的工具增强 LLM Agent 普遍采用原子化逐步调用：每执行一个工具、拿到一个观察结果、写回主线径，导致即使只是局部确定性工作流（如“根据地址查坐标→根据坐标搜咖啡馆→计算时间差”）也被展开成多轮模型可见交互。这造成两大问题：一是观察值的累积导致上下文膨胀，二是模型被迫在高层推理和底层数据搬运之间反复切换，推理碎片化。现有压缩、剪枝、子 agent 等方法都只是在“事后”处理轨迹，未改变执行粒度。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>HyperTool 接口</strong>：将工具调用抽象为一个可执行的 MCP 工具，输入是一段 Python 代码块。代码块内可以用原有 schema 调用任何工具，存储中间结果为局部变量，执行过滤、转换、汇总等操作，最终只返回一个块级观察值给主轨迹。原子调用被包含为特例（单调用块）。设计原则：只有需要高层推理、可能改变计划的结果才暴露到外部。</li>
+<li><strong>数据合成流水线</strong>：① 基于真实实体种子，让教师模型在 MCP 环境中收集跨工具属性，生成只靠单个工具无法回答的组合性任务；② 按照“推理优先、块化执行、内部逻辑自包含”三大规则展开轨迹，并在展开时对旧工具响应做摘要压缩（保留数值/URL等关键信息），对失败的代码块进行本地修复；③ 用执行正确性过滤和 LLM 多数投票证据一致性验证，保留高质量轨迹。</li>
+<li><strong>监督微调</strong>：在保留的 10,422 条轨迹上训练 Qwen3-8B/32B，损失仅作用于模型生成的推理和代码块部分。</li>
+</ul>
+<p><strong>关键实验</strong>：在 MCP-Universe 四个域（财务分析、仓储管理、位置导航、Web 搜索）上评估，HyperTool 将 Qwen3-32B 平均准确率从 15.69% 提高到 35.29%，Qwen3-8B 从 9.93% 提高到 33.33%，超越 GPT-OSS、Kimi-k2.5 等 Agent 模型。同骨干的 ReAct-SFT 仅达 20.92% (8B)，且 HyperTool 几乎消除了工具选择错误，执行失败大幅下降。Token 分析显示，HyperTool 在财务分析域用 78% 更少 Token 实现近倍准确率提升。块类型分布中，超过 55% 的块包含多步工具编排，链式调用和聚合块平均代码复杂度最高达 44-75 行。</p>
+<p><strong>核心启示</strong>：工具增强 Agent 不应只学“该调哪个工具”，更要学“以什么样的粒度暴露执行过程”——将局部确定性流程内化为可执行块，是平衡能力与上下文效率的有效方向。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.13663&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.13663" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.13663" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.13663" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首个面向扩散大语言模型的在线自蒸馏框架，通过后缀条件化与步骤级监督实现高效后训练"><meta property="og:title" content="Learning from the Self-future: On-policy Self-distillation for dLLMs"><meta property="og:description" content="首个面向扩散大语言模型的在线自蒸馏框架，通过后缀条件化与步骤级监督实现高效后训练"><meta property="og:type" content="website"><title>Learning from the Self-future: On-policy Self-distillation for dLLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Training">Training</a> <span class="sep">|</span> <time datetime="2026-06-16">2026-06-16</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.18195" target="_blank" rel="noopener">2606.18195</a>  </div> <h1>Learning from the Self-future: On-policy Self-distillation for dLLMs</h1> <p class="title-zh">从自我未来学习：面向扩散LLM的在线策略自蒸馏</p> <div class="dir-row"> <span class="direction-chip">🧭 扩散LLM后训练 · 在线自蒸馏</span> </div> <p class="affiliations">Tsinghua University · Technical University of Munich · Nanyang Technological University · University of British Columbia · University of Texas at Austin</p> <div class="meta">Yifu Luo, Zeyu Chen, Haoyu Wang, Xinhao Hu, Yuxuan Zhang, Zhizhou Sha 等</div> <p class="one-liner">首个面向扩散大语言模型的在线自蒸馏框架，通过后缀条件化与步骤级监督实现高效后训练</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/OPSD">OPSD</a><a class="tag" href="/DailyPaper/tag/dLLM">dLLM</a><a class="tag" href="/DailyPaper/tag/self-distillation">self-distillation</a><a class="tag" href="/DailyPaper/tag/diffusion models">diffusion models</a><a class="tag" href="/DailyPaper/tag/reasoning">reasoning</a><a class="tag" href="/DailyPaper/tag/sample efficiency">sample efficiency</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>若业务中采用扩散模型做生成式推荐（如商品语义ID序列生成），可借鉴d-OPSD的后缀条件化设计：将已生成的未来token作为条件，为当前token提供稠密监督，无需额外的前缀特权信息。</li><li>步骤级监督（step-level KLD）比token级监督更适配迭代去噪训练过程，可在扩散推荐模型的微调中替换逐token loss，提升生成质量与训练效率。</li><li>该方法样本效率极高（仅需RLVR 10%的优化步数），在大规模推荐模型训练中可大幅降低算力成本，适合资源受限场景的模型后训练。</li><li>自未来经验蒸馏的思路可推广至其他序列生成任务，例如用llm生成搜索query时，利用模型自身后续生成的内容作为监督信号，强化长程一致性。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有在线策略自蒸馏（OPSD）成功应用于自回归LLM的后训练，但其前缀条件化与token级监督与扩散LLM的任意顺序生成特性冲突，无法直接迁移。</p>
+<p><strong>方法</strong>：提出d-OPSD，专为扩散LLM设计的自蒸馏框架。核心改动两点：</p>
+<ul>
+<li><strong>后缀条件化教师</strong>：将原本提供前缀特权信息的教师构造改为利用模型自身生成的答案尾部作为条件，让学生从“自我未来经验”中学习，即学会利用后续生成的tokens修正前序输出。</li>
+<li><strong>步骤级监督</strong>：放弃token级KL散度，改为在每个去噪步骤上计算模型分布与教师分布间的差异，使得训练损失自然对齐dLLM的迭代去噪过程。</li>
+</ul>
+<p>训练时，学生模型采样一条完整序列，其尾部作为教师条件，头部作为学习目标，在多个噪声步骤上逐步蒸馏。</p>
+<p><strong>结果</strong>：在数学、代码等四个推理基准上，d-OPSD一致优于RLVR（如GRPO）和SFT基线，达到更高准确率的同时，仅需RLVR约10%的优化步数，样本效率显著提升。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.18195&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.18195" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.18195" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.18195" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

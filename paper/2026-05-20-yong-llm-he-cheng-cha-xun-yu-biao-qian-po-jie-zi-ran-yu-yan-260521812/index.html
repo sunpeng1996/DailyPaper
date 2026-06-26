@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用少量种子查询引导 LLM 生成带标咨询数据和标签，使查询分布接近真实用户，支持检索与排序模型冷启动训练"><meta property="og:title" content="Bridging the Cold-Start Gap: LLM-Powered Synthetic Data Generation for Natural Language Search at Airbnb"><meta property="og:description" content="用少量种子查询引导 LLM 生成带标咨询数据和标签，使查询分布接近真实用户，支持检索与排序模型冷启动训练"><meta property="og:type" content="website"><title>Bridging the Cold-Start Gap: LLM-Powered Synthetic Data Generation for Natural Language Search at Airbnb</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-20">2026-05-20</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.21812" target="_blank" rel="noopener">2605.21812</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Bridging the Cold-Start Gap: LLM-Powered Synthetic Data Generation for Natural Language Search at Airbnb</h1> <p class="title-zh">用 LLM 合成查询与标签破解自然语言搜索冷启动</p> <div class="dir-row"> <span class="direction-chip">🧭 自然语言搜索 · 合成数据冷启动</span> </div> <p class="affiliations">Airbnb</p> <div class="meta">Wendy Ran Wei, Hao Li, Weiwei Guo, Xiaowei Liu, Xueyin Chen, Dillon Davis 等</div> <p class="one-liner">用少量种子查询引导 LLM 生成带标咨询数据和标签，使查询分布接近真实用户，支持检索与排序模型冷启动训练</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Synthetic Data">Synthetic Data</a><a class="tag" href="/DailyPaper/tag/LLM">LLM</a><a class="tag" href="/DailyPaper/tag/Cold Start">Cold Start</a><a class="tag" href="/DailyPaper/tag/Query Generation">Query Generation</a><a class="tag" href="/DailyPaper/tag/Label Generation">Label Generation</a><a class="tag" href="/DailyPaper/tag/Information Retrieval">Information Retrieval</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用种子查询控制 LLM 生成风格：直接让 LLM 无约束生成会产出冗长、多属性的查询，与真实用户短促、不规范的表达严重不匹配。从用户调研或早期日志中收集数百条种子查询作为模板，可以大幅降低 KL 散度（本文从 4.95→0.66），实现更逼真的查询分布。在电商搜索、对话式推荐中可复用此思路，用小样本种子让合成数据贴合真实语言。</li><li>三类提示模板平衡真实性与多样性：seed_controlled 严格保持种子结构，适合属性覆盖；seed_freeform 模仿风格但允许变化；variety 放松约束、提高温度，探索长尾意图。实际生成时按比例混合三种模板，既能保证主流查询的真实感，又能覆盖边缘场景。推荐系统在生成候选集时可借鉴这种分阶段控制的提示策略。</li><li>困难样本构建的分层采样与提示技巧：为避免全是简单样本（所有模型都能答对），通过限制样本对相似度（同类别、嵌入距离过滤）和提示中加入“难度桶”、反事实编辑等手段生成有区分度的训练数据。这对于提高 ranking 模型的迭代信号非常重要，电商场景下可借鉴硬负样本挖掘来提升模型判别力。</li><li>从 LLM 自生成数据中避开自偏好陷阱：用 LLM 评估 LLM 生成的内容容易出现系统性偏爱（本文 GPT 评估自身生成的对准确率高达 99%），实际训练中建议用构建式标签（对比生成）保证高保真，用 LLM 评估仅作离线质量检查；且通过属性锚定、人工校准、使用异构模型降低自我偏好风险。这对任何用 LLM 生成训练数据的团队都是重要提醒。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：Airbnb 上线自然语言搜索时面临严格的冷启动：没有真实用户查询，也没有标注数据来训练召回或排序模型。传统规则引导或人工标注要么缺乏表现力，要么成本过高且难以规模化。该工作旨在用 LLM 合成逼真查询和相关性标签，在零真实流量的情况下为模型提供训练信号，并实现从冷启动到暖启动的无缝过渡。</p>
+<p><strong>方法要点</strong></p>
+<ul>
+<li><strong>查询生成</strong>：将问题形式化为最小化合成分布与真实查询分布的 KL 散度。解耦为<strong>语言模板 (P(t))</strong> 和<strong>实体属性 (P(e))</strong>，从用户调研中收集约 500 条种子查询作为模板，从真实预订会话中采样对比列表对（已预订 vs. 未预订）为查询提供事实锚点。</li>
+<li><strong>三种提示变体</strong>：<code>seed_controlled</code> 迫使 LLM 严格遵循种子结构，<code>seed_freeform</code> 将种子作为风格示例，<code>variety</code> 放宽限制并提高温度以扩展多样性，混合使用以平衡真实感与覆盖面。</li>
+<li><strong>标签生成</strong>：<strong>对比式生成</strong>在生成查询时即确定正/负例关系（通过构建使标签天然正确），<strong>虚拟法官 (VJ)</strong> 则后期用 LLM 重新判断任意查询-列表对的相关性，用于扩展评估覆盖度。</li>
+<li><strong>困难样本控制</strong>：通过提示增强（防泄露提示、难度桶、思维链、角色扮演）、分层采样（同类目限制、嵌入距离过滤）和反事实编辑来提升样本难度，避免生成过于简单的正则对。</li>
+</ul>
+<p><strong>关键实验与数字</strong></p>
+<ul>
+<li>查询长度分布：无种子引导的对比式生成产出的查询平均 13.6 词，KL 散度 4.95（与真实用户相比）；引入种子后平均 6.0 词，KL 降至 0.66，提升 7.5 倍。</li>
+<li>属性类型分布：种子引导后 KL 仅 0.04，甚至优于种子查询自身（0.09），说明结合种子与平台属性可获得最真实的属性搭配。</li>
+<li>检索评估：我们的方法使样本难度显著上升（SBERT 准确率从 88.7% 降至 77.7%），能有效区分模型能力；排序模型上同样观察到更低的精度（0.792 vs. 0.827），但提供了更有意义的训练信号。</li>
+<li>LLM 自偏好验证：GPT 模型对自己生成的对比对判断准确率高达 99%，明显高于嵌入模型（76–79%），提示需警惕用 LLM 评价自身生成内容。</li>
+</ul>
+<p><strong>值得记住的一句话</strong>：合成数据不必完美——它只需足够指导开发走向正确方向，而少量真实种子是让生成贴近真实的关键杠杆。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.21812&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.21812" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.21812" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.21812" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

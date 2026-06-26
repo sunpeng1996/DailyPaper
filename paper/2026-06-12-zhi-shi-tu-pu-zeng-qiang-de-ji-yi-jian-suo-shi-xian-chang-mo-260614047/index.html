@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="构建动态上下文知识图谱，融合结构、语义与上下文记忆，长文本困惑度降8.5%且内存效率提升2-2.5倍"><meta property="og:title" content="Knowledge Graph Enhanced Memory-Augmented Retrieval for Long Context Modeling"><meta property="og:description" content="构建动态上下文知识图谱，融合结构、语义与上下文记忆，长文本困惑度降8.5%且内存效率提升2-2.5倍"><meta property="og:type" content="website"><title>Knowledge Graph Enhanced Memory-Augmented Retrieval for Long Context Modeling</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-12">2026-06-12</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.14047" target="_blank" rel="noopener">2606.14047</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Knowledge Graph Enhanced Memory-Augmented Retrieval for Long Context Modeling</h1> <p class="title-zh">知识图谱增强的记忆检索实现长上下文建模</p> <div class="dir-row"> <span class="direction-chip">🧭 长上下文建模 · 动态知识图谱增强记忆检索</span> </div> <p class="affiliations">University of New South Wales · Hong Kong University of Science and Technology (Guangzhou) · University of Southampton · Technology Innovation Institute · Mohamed Bin Zayed University of Artificial Intelligence</p> <div class="meta">Ghadir Alselwi, Basem Suleiman, Hao Xue, Shoaib Jameel, Hakim Hacid, Flora D. Salim 等</div> <p class="one-liner">构建动态上下文知识图谱，融合结构、语义与上下文记忆，长文本困惑度降8.5%且内存效率提升2-2.5倍</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/memory-augmented">memory-augmented</a><a class="tag" href="/DailyPaper/tag/knowledge graph">knowledge graph</a><a class="tag" href="/DailyPaper/tag/long-context">long-context</a><a class="tag" href="/DailyPaper/tag/R-GCN">R-GCN</a><a class="tag" href="/DailyPaper/tag/multi-modal memory">multi-modal memory</a><a class="tag" href="/DailyPaper/tag/efficient retrieval">efficient retrieval</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>多记忆银行与融合检索：可借鉴其 contextual/semantic/structural 三组记忆并行检索并学习融合权重的设计，在电商会话或 Agent 长程对话中将短期键值对、长期语义块与图谱关系嵌入混合，提升对“同一设备、不同状态”等实体级依赖的检索精度。</li><li>动态知识图谱构建流水线：NER + 关系抽取 + 实体合并 + 置信度过滤的在线构图方法，能迁移至商品知识库、故障诊断等场景，实时将用户描述的设备、错误码、操作链抽成结构化关系，辅助对话 Agent 理解因果链条。</li><li>图-文跨模态融合：利用 R-GCN 编码结构嵌入再与 LM 文本嵌入做交叉注意力融合，可参考用于推荐系统中物品画像的增强——将商品知识图谱的拓扑信息与文本描述对齐后作为 item 表征，改善冷启动或跨领域推荐。</li><li>内存与延迟的折中分析：论文量化了实时构图带来的延迟成本（比纯记忆检索高约2倍），但内存节省显著；对离线可预计算场景（如固定文档集），可先构图再供线上使用，启发式地平衡精度与吞吐，适合电商推荐离线索引生成。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：长上下文语言建模的核心痛点不是上下文窗口长度，而是跨越数千 token 后仍能追踪实体状态和因果关系的结构理解。现有记忆增强检索方法仅依赖语义相似度，无法区分“同一打印机”的初始化故障和后续无关错误码，导致检索精度不足。静态知识图谱方法又无法适应领域特定的动态实体。因此需要一种能在推理时从输入文本中动态构建知识图谱、并将图结构信息融入记忆检索的框架。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>动态知识图谱构建</strong>：推理时用 BERT-large 做 NER，BERT-base 做关系抽取（TACRED 微调），在局部窗口中提取五种实体类型和七种关系类型；通过字符串和嵌入相似度合并重复实体，置信度加权过滤噪声，形成上下文相关的知识图谱。</li>
+<li><strong>图增强嵌入生成</strong>：用 R-GCN 编码图谱结构得到实体结构嵌入，再与来自底层 LM 的文本嵌入（实体上下文池化）做交叉注意力融合，产出既含语义又含拓扑关系的最终实体表示。</li>
+<li><strong>三记忆银行架构</strong>：维持上下文记忆（key‑value 对，从 LM 中间层抽取）、语义记忆（BGE‑M3 嵌入的文本块，FAISS 索引）和结构记忆（上述融合实体嵌入），通过可学习权重融合三个检索引擎的信号，注入 LM 的检索因果注意力层。</li>
+<li><strong>多任务训练</strong>：语言建模、知识图谱链接预测、检索排序损失和跨模态对齐四目标联合微调，LoRA 适配 OpenLLaMA‑3B。</li>
+</ul>
+<p><strong>关键实验</strong></p>
+<ul>
+<li>数据集：SlimPajama (84.7K 训练样本) 微调，WikiText‑103、PG‑19、Proof‑Pile 评估。</li>
+<li>对比模型：MemLong、ERMAR、LongLLaMA、LongLoRA、YARN、Phi3‑128k 等。</li>
+<li>主要结果：在 WikiText‑103 上，KGERMAR 在 1K~16K token 长度下困惑度显著低于所有同规模记忆增强模型（7.74/7.25/7.20/7.14 vs. ERMAR 的 8.42/7.61/7.62/7.80）；内存峰值仅为 ERMAR 的 2–2.5 倍低（32K 时 14.51 vs 22.87 GB）；ICL 五任务平均准确率最高（4‑shot 78.6%，20‑shot 81.2%）。延迟因实时构图增加约 2 倍，但延迟方差更小且随长度近线性增长。</li>
+</ul>
+<p><strong>核心结论</strong>：动态上下文知识图谱提供的结构信号能有效弥补纯语义检索的不足，以可控的延迟代价换来长上下文建模精确度和内存效率的显著提升。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.14047&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.14047" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.14047" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.14047" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

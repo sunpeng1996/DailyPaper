@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用两层非共享 LLM 做序列推荐：Item LLM 把商品文本压成一个 [ITEM] token 的 embedding，User LLM 把这串 item embedding 当输入序列做 next-item 预测。把&#34;文本进文本出&#34;的低效 LLM4Rec 改成&#34;embedding 进 embedding 出&#34;，序列长度回到 ID 模型量级，复杂度大降；并系统回答了预训练权重有没有用、要不要微调、能不能 scale 三个问题。"><meta property="og:title" content="HLLM: Enhancing Sequential Recommendations via Hierarchical Large Language Models for Item and User Modeling · 论文沉淀"><meta property="og:description" content="用两层非共享 LLM 做序列推荐：Item LLM 把商品文本压成一个 [ITEM] token 的 embedding，User LLM 把这串 item embedding 当输入序列做 next-item 预测。把&#34;文本进文本出&#34;的低效 LLM4Rec 改成&#34;embedding 进 embedding 出&#34;，序列长度回到 ID 模型量级，复杂度大降；并系统回答了预训练权重有没有用、要不要微调、能不能 scale 三个问题。"><meta property="og:type" content="website"><title>HLLM: Enhancing Sequential Recommendations via Hierarchical Large Language Models for Item and User Modeling · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2024-09</time> <span class="sep">·</span><span>arXiv</span>  </div> <h1>HLLM: Enhancing Sequential Recommendations via Hierarchical Large Language Models for Item and User Modeling</h1> <p class="archive-authors">Junyi Chen, Lu Chi, Bingyue Peng, Zehuan Yuan (4 人)</p> <p class="affiliations">ByteDance</p> <p class="one-liner">用两层非共享 LLM 做序列推荐：Item LLM 把商品文本压成一个 [ITEM] token 的 embedding，User LLM 把这串 item embedding 当输入序列做 next-item 预测。把&quot;文本进文本出&quot;的低效 LLM4Rec 改成&quot;embedding 进 embedding 出&quot;，序列长度回到 ID 模型量级，复杂度大降；并系统回答了预训练权重有没有用、要不要微调、能不能 scale 三个问题。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">LLM4Rec</span><span class="tag tag-static">sequential-recommendation</span><span class="tag tag-static">item-embedding</span><span class="tag tag-static">user-modeling</span><span class="tag tag-static">scaling-law</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>主流序列推荐是 ID-based（SASRec/HSTU 等）：item/user 转 ID 查 embedding 表，模型小、靠 embedding 参数撑容量，冷启差、表达浅。直接把 LLM 套进推荐又有两条死路：(1) 把用户行为历史摊成纯文本喂 LLM，序列极长，self-attention 是 O(L²)，同样时间跨度的行为 LLM 需要的 token 数远多于 ID 模型；(2) 推一个 item 要生成多个文本 token、多次 forward，serving 极慢。结果就是现有 LLM4Rec 相比传统模型只有”微弱提升”。</p>
+<p>HLLM 的核心是<strong>分层解耦 + 表征化</strong>：</p>
+<ul>
+<li><strong>Item LLM</strong>：只负责把单个商品的文本描述（title/tag/description 拼成一句话 + 固定 prompt + 末尾追加特殊 token <code>[ITEM]</code>）压成<strong>一个</strong> embedding（取 <code>[ITEM]</code> 位最后一层 hidden state）。这一步把”长文本”压成”一个向量”。</li>
+<li><strong>User LLM</strong>：输入是用户历史交互对应的 item embedding 序列 <code>{E1,...,En}</code>（不是文本 token，而是 Item LLM 产出的向量），输出位置 i 预测下一个 item 的 embedding <code>E'_{i+1}</code>，做 next-item prediction。</li>
+</ul>
+<p>这样用户序列长度就回落到 ID 模型的量级（n 个 item = n 个 token），把 O(L²) 里的 L 从”文本 token 数”砍到”行为数”。两个 LLM <strong>参数不共享</strong>、<strong>都可训练</strong>。</p>
+<p>论文同时把三个被回避的问题摆上台面并用实验回答：预训练权重对推荐到底有没有价值（有，且和预训练 token 数正相关）；要不要面向推荐目标微调（必须，冻结任一侧都崩）；LLM 在推荐里能不能 scale（能，1B→7B 持续涨，数据 0.1M→8M 持续涨，无瓶颈）。</p>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/hllm-hierarchical-large-language-models-for-recommendation/fig1.png" alt="HLLM 总体架构：Item LLM 把商品文本（title/tag/description）末尾追加 [ITEM] 特殊 token，输出单个 item embedding；User LLM 以历史交互的 item embedding 序列 E1..En 为输入，逐位预测下一个 item embedding E&#x27;2..E&#x27;n+1，两个 LLM 参数不共享且均可训练，经 next-item prediction 优化。"></p>
+<p>问题定义：给定用户 u 的按时间排序历史交互 <code>U={I1,...,In}</code>，预测下一个 item <code>I_{n+1}</code>。每个 item 有 ID 和文本（title/tag 等），但 HLLM <strong>只用文本</strong>（ID 仅在兼容性实验里作为补充特征）。</p>
+<p>整体两段式：</p>
+<ol>
+<li><strong>Item 侧</strong>：把 item I 的文本属性 flatten 成句子 T，前面拼固定 prompt（“Compress the following sentence into embedding:”），过 tokenizer 后末尾加 <code>[ITEM]</code>，输入 Item LLM 得 <code>{t1,...,tm,[ITEM]}</code>，最后一层 <code>[ITEM]</code> 位的 hidden state 即 item embedding。</li>
+<li><strong>User 侧</strong>：把 <code>U</code> 经 Item LLM 转成特征序列 <code>{E1,...,En}</code>，喂 User LLM，位置 i 输出 <code>E'_{i+1}</code> 应等于 <code>E_{i+1}</code>。因为输入输出都是 embedding（不是词），所以<strong>丢掉预训练 LLM 的 word embedding 层</strong>，保留其余全部预训练权重。</li>
+</ol>
+<p>面向推荐目标训练分两类，架构通用、只换 loss：</p>
+<ul>
+<li><strong>生成式推荐（Generative，离线用）</strong>：next-item prediction + InfoNCE。沿用 HSTU（Zhai et al. 2024）的检索/排序训练-serving 范式，差别只是骨干换成带预训练权重的 LLM、输入特征从 ID 换成文本-LLM 特征。</li>
+<li><strong>判别式推荐（Discriminative，在线 A/B 用）</strong>：判断 (用户序列 U, 目标 item I_tgt) 是否点击/喜欢/购买，二分类 BCE。两种融合变体（早融/晚融）。</li>
+</ul>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="item-llm特征抽取器">Item LLM（特征抽取器）</h3>
+<ul>
+<li>输入：固定 prompt + flatten 文本（title/tag/description），tokenizer 后追加 <code>[ITEM]</code>。每个 item 文本长度截断 max=256 token。</li>
+<li>输出：<code>[ITEM]</code> 位最后一层 hidden state，作为 item embedding。</li>
+<li><strong>抽取方式消融（Table 10）</strong>：<code>[ITEM]</code> token 优于 mean pooling（R@5 3.484 vs 3.386；N@5 2.319 vs 2.257）。直接拿 next-token 预训练的 LLM 做 mean-pooling 特征抽取器效果差，必须微调。</li>
+<li><strong>文本丰富度/长度消融（Table 9）</strong>：文本内容影响巨大。只给 Tag（无 Title/Description）几乎崩（R@5=0.082）；逐步加 Title、Description，长度从 64→256，R@5 从 3.52→3.755，N@5 从 2.348→2.513。越丰富越长，item 区分度越好。</li>
+</ul>
+<h3 id="user-llm兴趣建模器">User LLM（兴趣建模器）</h3>
+<ul>
+<li>输入：item embedding 序列；<strong>丢弃 word embedding 层</strong>，保留其余预训练权重。</li>
+<li>输出：每个位置预测下一个 item embedding。</li>
+<li><strong>输入特征消融（Table 12, Pixel1M）</strong>：<code>Item ID</code>（查表 embedding）R@5=4.105；<code>LLM Emb</code>（文本特征）5.201，显著更好；<code>LLM Emb + Item ID</code> 反而略降（5.154），说明 ID 在文本已充分描述时无增量；<code>LLM Emb + Timestamp</code> 大涨到 <strong>5.779</strong>，时间戳是文本无法覆盖的互补信息。</li>
+<li><strong>序列长度（Table 11, Pixel1M）</strong>：10→50 仅微涨（学术集用户序列本身短）；工业集（Table 13）200→1000，AUC 0.7429→0.7458 稳定涨，长序列才显威力。</li>
+</ul>
+<h3 id="时间戳编码algorithm-1可直接抄">时间戳编码（Algorithm 1，可直接抄）</h3>
+<p>把 timestamp 拆成 year/month/day/hour/minute/second 6 个分量，各自 <code>nn.Embedding</code>（vocab 分别 2100/13/32/24/60/60，dim=512），concat 成 <code>512×6</code> 再过一个 MLP 投到 <code>user_dim=2048</code>，与 item LLM embedding <strong>sum pooling</strong> 后送 User LLM。<code>time_num=4</code> 精度到小时、=6 到秒。</p>
+<h3 id="损失函数">损失函数</h3>
+<ul>
+<li><strong>生成式 InfoNCE（式1）</strong>：对 User LLM 输出序列里每个预测 <code>E'_{j,i}</code>，正样本是对应真实 <code>E_{j,i}</code>，负样本从数据集中（排除当前用户序列）随机采。s 为带可学习温度的相似度函数。
+$$L_{gen}=-\sum_{j=1}^{b}\sum_{i=2}^{n}\log\frac{e^{s(E’<em>{j,i},E</em>{j,i})}}{e^{s(E’<em>{j,i},E</em>{j,i})}+\sum_{k}^{N}e^{s(E’<em>{j,i},E</em>{j,i,k})}}$$</li>
+<li><strong>判别式 BCE（式2）</strong>：<code>L_cls = -(y·log(x)+(1-y)·log(1-x))</code>。</li>
+<li><strong>联合（式3）</strong>：next-item 作辅助 loss：<code>L_dis = λ·L_gen + L_cls</code>，λ 控制辅助权重，经验上能进一步提点。</li>
+</ul>
+<h3 id="判别式两变体">判别式两变体</h3>
+<p><img src="/ai-papers-daily/figures/hllm-hierarchical-large-language-models-for-recommendation/fig2.png" alt="判别式推荐的两种 User LLM 融合变体：(a) Early Fusion 把目标 item embedding E_tgt 接到用户序列末尾，经 User LLM 做深度交叉后由 Prediction Head 出 logit；(b) Late Fusion 在序列末尾加 [USER] token 抽取与目标无关的用户特征，再与目标 item 一起进 Prediction Head，效率更高、可复用用户特征。"></p>
+<ul>
+<li><strong>Early Fusion</strong>：目标 item embedding <code>E_tgt</code> 接到用户序列末尾 → User LLM 出高阶交叉特征 → 预测头出 logit。效果好（user 与 target 深度交互），但每个候选都要重算 User LLM，难以同时跑大量候选。</li>
+<li><strong>Late Fusion</strong>：序列末尾加 <code>[USER]</code> token 抽与目标无关的用户特征，用户特征 + 目标 item 一起进预测头。效率高（同一用户特征被所有候选复用），但通常掉点。<strong>在线 A/B 选 Late Fusion</strong>。</li>
+</ul>
+<h3 id="模型配置">模型配置</h3>
+<ul>
+<li>HLLM-1B：Item 与 User LLM 都用 TinyLlama-1.1B。</li>
+<li>HLLM-7B：都用 Baichuan2-7B。</li>
+<li>lr=1e-4；PixelRec batch=512、max seq=10、正负比 1:5632；Books batch=128、max seq=50、负样本 512。HLLM 只训 5 epoch（baseline 训 50/200 epoch）。</li>
+<li>公平对比实现：SASRec-1B（把网络换成 TinyLlama-1.1B）、HSTU-1B（同 hidden/层数但去掉传统 FFN，仅 462M 参数）。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据集</strong>：PixelRec 三个子集（200K/1M/8M）+ Amazon Book Reviews（Books），leave-one-out 切分，指标 Recall@K / NDCG@K。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>#User</th><th>#Item</th><th>#Interaction</th></tr></thead><tbody><tr><td>Pixel200K</td><td>200,000</td><td>96,282</td><td>3,965,656</td></tr><tr><td>Pixel1M</td><td>1,001,822</td><td>100,541</td><td>19,886,579</td></tr><tr><td>Pixel8M</td><td>8,886,078</td><td>407,082</td><td>158,488,652</td></tr><tr><td>Books</td><td>694,898</td><td>686,624</td><td>10,053,086</td></tr></tbody></table>
+<p><strong>Baseline</strong>：ID-based SASRec、HSTU；文本-based LEARN。</p>
+<h3 id="rq1-预训练--微调pixel200k-hllm-1b">RQ1 预训练 + 微调（Pixel200K, HLLM-1B）</h3>
+<p>预训练权重对 Item 和 User LLM 都有用（Table 2）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Item LLM</th><th>User LLM</th><th>R@5</th><th>R@10</th><th>N@5</th><th>N@10</th></tr></thead><tbody><tr><td>Scratch</td><td>Scratch</td><td>3.330</td><td>5.063</td><td>2.199</td><td>2.755</td></tr><tr><td>Scratch</td><td>Pre-trained</td><td>3.556</td><td>5.416</td><td>2.371</td><td>2.969</td></tr><tr><td>Pre-trained</td><td>Scratch</td><td>3.521</td><td>5.331</td><td>2.358</td><td>2.940</td></tr><tr><td>Pre-trained</td><td>Pre-trained</td><td><strong>3.755</strong></td><td><strong>5.581</strong></td><td><strong>2.513</strong></td><td><strong>3.100</strong></td></tr></tbody></table>
+<p>预训练 token 数越多越好（Table 3）：0T→3T，R@5 3.330→3.755，且与常识推理 CSR 分（46→53）正相关。但 <code>1T+chat</code>（在对话数据上 SFT）略掉点——世界知识主要来自预训练，对话 SFT 加的是指令跟随能力，对推荐无益。</p>
+<p>微调不可省（Table 4）：冻结任一侧都崩。冻 Item LLM（mean pooling 作特征）R@5=0.588，冻 User LLM R@5=1.619，都不如 SASRec-1B（1.973）；全可学才 3.755。<strong>结论：next-token 预训练的 LLM 不能直接当推荐特征抽取器，必须面向推荐目标全微调。</strong></p>
+<h3 id="rq2-scalingpixel200k--books--pixel8m--工业集">RQ2 Scaling（Pixel200K / Books / Pixel8M / 工业集）</h3>
+<ul>
+<li>Item 模型放大（Table 5，User 固定 SASRec）：BERT-Base 110M R@5=2.576 → BERT-Large 340M 3.032 → TinyLlama 1.1B 3.484。</li>
+<li>User 模型放大（Table 6，Item 固定 TinyLlama）：SASRec 4M 3.484 → Llama-2L 0.1B 3.494 → TinyLlama 1.1B 3.521。</li>
+<li>数据量 scaling（Figure 3，Pixel8M 采样 0.1M→8M）：持续涨，无瓶颈；HLLM-1B 只需 ID 模型 1/6~1/4 的数据量即可追平。</li>
+</ul>
+<p><img src="/ai-papers-daily/figures/hllm-hierarchical-large-language-models-for-recommendation/fig3.png" alt="HLLM 在不同数据规模下的性能：横轴为数据量（0.1M→8M），左为 Recall@5、右为 NDCG@5，HLLM-1B 曲线随数据量持续上升无饱和；横向虚线为 HSTU-1B 在 4M/6M/8M 数据上的水平，HLLM-1B 仅用约 1M 数据即可超过 HSTU-1B 用 8M 数据的效果。"></p>
+<ul>
+<li>工业集（Table 14，AUC）：Item×User = 1B×1B 0.7458 → 1B×7B 0.7498 → 7B×1B 0.7517 → 7B×7B <strong>0.7533</strong>，双侧放大都涨。</li>
+</ul>
+<h3 id="rq3-vs-sotatable-7关键数字">RQ3 vs SOTA（Table 7，关键数字）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集</th><th>方法</th><th>R@10</th><th>R@200</th><th>N@10</th><th>N@200</th><th>Impv.(avg)</th></tr></thead><tbody><tr><td>Pixel8M</td><td>HSTU*</td><td>4.848</td><td>18.327</td><td>2.752</td><td>5.135</td><td>+0.0%</td></tr><tr><td>Pixel8M</td><td>HSTU-1B*</td><td>5.120</td><td>19.393</td><td>2.879</td><td>5.411</td><td>+5.37%</td></tr><tr><td>Pixel8M</td><td>SASRec-1B*</td><td>5.142</td><td>19.044</td><td>2.915</td><td>5.383</td><td>+4.83%</td></tr><tr><td>Pixel8M</td><td><strong>HLLM-1B</strong></td><td><strong>6.129</strong></td><td><strong>21.179</strong></td><td><strong>3.539</strong></td><td><strong>6.221</strong></td><td><strong>+22.93%</strong></td></tr><tr><td>Books</td><td>SASRec</td><td>3.06</td><td>14.31</td><td>1.64</td><td>3.62</td><td>+0.0%</td></tr><tr><td>Books</td><td>LEARN</td><td>4.07</td><td>18.74</td><td>2.24</td><td>4.83</td><td>+34.42%</td></tr><tr><td>Books</td><td>HSTU-large</td><td>4.78</td><td>19.08</td><td>2.62</td><td>5.17</td><td>+47.80%</td></tr><tr><td>Books</td><td><strong>HLLM-1B</strong></td><td><strong>6.97</strong></td><td><strong>24.78</strong></td><td><strong>3.98</strong></td><td><strong>7.16</strong></td><td><strong>+108.68%</strong></td></tr><tr><td>Books</td><td>HLLM-1B†（大负样本 28k/bs512）</td><td>9.28</td><td>27.22</td><td>5.65</td><td>8.89</td><td>+166.42%</td></tr><tr><td>Books</td><td><strong>HLLM-7B†</strong></td><td><strong>9.39</strong></td><td><strong>27.59</strong></td><td><strong>5.69</strong></td><td><strong>8.99</strong></td><td><strong>+169.58%</strong></td></tr></tbody></table>
+<p>要点：HLLM 在所有指标全面领先；ID 模型放大几乎不涨（SASRec-1B 在 Books 甚至全面下降），而 HLLM 1B→7B 仍持续涨。增大负样本数/batch（†：512/128→28k/512），HSTU-large 的 R@200 只 +0.76，HLLM-1B +2.44。</p>
+<h3 id="rq4-效率">RQ4 效率</h3>
+<ul>
+<li><strong>训练数据效率</strong>：HLLM 只需 ID 模型 1/6~1/4 数据量追平。</li>
+<li><strong>Item caching（Table 8, Pixel8M）</strong>：先在 >10 长度序列上预训 HLLM（截到第 10 位防泄漏，覆盖 3M 用户），再冻 Item LLM、只微调 User LLM。HLLM-1B_cache R@5=3.585 > HSTU-1B 3.501，仍超 ID 模型；全微调 HLLM-1B 4.278 更高。因工业场景用户行为量远大于 item 量，缓存 item embedding 后训练/serving 成本可与 ID 模型持平。</li>
+<li>在线三阶段 + 离线缓存（Figure 3 文中）：item embedding 在 item 创建时算好，user embedding 每天只为前一天有活跃的用户更新，在线推理时延几乎不变。</li>
+</ul>
+<h3 id="在线-ab抖音排序">在线 A/B（抖音排序）</h3>
+<ul>
+<li>工业集：抖音 3 年日志构造 3000 万样本（用户历史点击序列 + 目标 item + 点击 label），判别式 + Late Fusion。</li>
+<li><strong>三阶段训练</strong>：Stage I 端到端训全部参数（序列截到 150 加速）；Stage II 用 Stage I 的 Item LLM 离线编码全量 item 存储，只训 User LLM，序列从 150 扩到 1000；Stage III 冻结 HLLM，抽全量 user 特征 + item embedding + 其他特征喂在线推荐模型训练。</li>
+<li>排序任务关键指标 <strong>+0.705%</strong>。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>对电商/搜推的可借鉴点</strong>：</p>
+<ol>
+<li>
+<p><strong>“文本→单 embedding”是把 LLM 塞进序列推荐的关键工程取舍</strong>。把 item 文本压成一个 <code>[ITEM]</code> token 向量，让用户序列长度回落到行为数级别，是 HLLM 能在工业落地的根本——比”行为摊成长文本”省掉一个量级的 attention 开销。电商商品有丰富的标题/类目/属性/详情文本，正是 Item LLM 的理想输入，且 Table 9 证明文本越丰富越长越好，值得把商品结构化属性尽量 flatten 进去。</p>
+</li>
+<li>
+<p><strong>Item caching + 三阶段训练是直接可抄的落地配方</strong>。item 数远小于行为数、且 item 内容相对稳定，故 item embedding 离线算好缓存、只在线训 User LLM，serving 时延几乎不变。这套”item 创建时编码 / user 每日增量更新 / 冻结后喂下游模型”的架构对任何想上 LLM4Rec 的团队都是低风险路径。</p>
+</li>
+<li>
+<p><strong>ID 不是必须，但时间戳是强补充</strong>。Table 12 显示加 Item ID 反而掉点（文本已覆盖），但加 timestamp 大涨。落地时不必纠结引入 ID embedding，但行为时间、停留时长等”文本覆盖不到的行为信号”应优先补进 User LLM（Algorithm 1 的分量式时间编码可直接用）。</p>
+</li>
+<li>
+<p><strong>微调 > 直接用预训练</strong>。结论很硬：冻结 LLM 当现成特征抽取器在推荐上不 work，必须面向推荐目标全微调；对话 SFT 数据甚至有害。想用 LLM 做推荐别只做 prompt/zero-shot，要舍得训。</p>
+</li>
+<li>
+<p><strong>Agent/多目标视角</strong>：早融/晚融的权衡（精度 vs 候选复用效率）对 Agent 驱动的排序/重排同样适用——粗排用晚融（用户特征复用），精排小候选集用早融（深度交叉）。</p>
+</li>
+</ol>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>学术集用户序列短，序列长度收益不明显，长序列优势主要在工业集体现，外部复现需自有长序列数据。</li>
+<li>在线只验证了判别式 Late Fusion 排序 +0.705%，生成式检索的线上收益未报告。</li>
+<li>7B 已是资源上限，更大规模 scaling、以及多模态（图像/视频 item）扩展未触及（Pixel 本是图像集，但这里只用文本）。</li>
+<li>Item LLM 全量重编码成本高，依赖 item caching 才能落地，新 item 冷启时仍需实时编码。</li>
+<li>负样本数/batch 对结果影响极大（†设置带来巨大增益），公平对比时需对齐该配置。</li>
+</ul> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2409.12740" target="_blank" rel="noopener">📄 paper</a> <a href="https://github.com/bytedance/HLLM" target="_blank" rel="noopener">⌬ code</a> <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

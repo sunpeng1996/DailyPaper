@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Shopee 把 LLM 成功的两个「架构之外」机制——上下文工程(context engineering)与多步推理(reasoning)——同时搬进工业级召回+排序级联系统。三大件：①结构化上下文工程(交互历史 IH + 偏好锚点 PA + 情境描述符 SD + 候选集 CIS)统一成 token 序列喂纯 Transformer；②块级隐式推理(block-wise latent reasoning)，把 ReaRec 的单 token 推理升级为「一组 hidden state」迭代精炼，用 block size 调推理带宽；③渐进式多任务训练，用「曝光→点击→下单」反馈链给每一步推理做过程监督。线上 Shopee 主搜召回 +1.08% GMV/UU、排序 +1.12% GMV/UU 且广告收入 +2.90%。"><meta property="og:title" content="OnePiece: Bringing Context Engineering and Reasoning to Industrial Cascade Ranking System · 论文沉淀"><meta property="og:description" content="Shopee 把 LLM 成功的两个「架构之外」机制——上下文工程(context engineering)与多步推理(reasoning)——同时搬进工业级召回+排序级联系统。三大件：①结构化上下文工程(交互历史 IH + 偏好锚点 PA + 情境描述符 SD + 候选集 CIS)统一成 token 序列喂纯 Transformer；②块级隐式推理(block-wise latent reasoning)，把 ReaRec 的单 token 推理升级为「一组 hidden state」迭代精炼，用 block size 调推理带宽；③渐进式多任务训练，用「曝光→点击→下单」反馈链给每一步推理做过程监督。线上 Shopee 主搜召回 +1.08% GMV/UU、排序 +1.12% GMV/UU 且广告收入 +2.90%。"><meta property="og:type" content="website"><title>OnePiece: Bringing Context Engineering and Reasoning to Industrial Cascade Ranking System · 论文沉淀</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="active">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="archive-detail"> <div class="meta"> <a href="/DailyPaper/collection">← 论文沉淀</a> <span class="sep">/</span> <span>🎯 生成式推荐</span> <span class="sep">·</span><time>2025-09</time> <span class="sep">·</span><span>arXiv (Technical Report)</span>  </div> <h1>OnePiece: Bringing Context Engineering and Reasoning to Industrial Cascade Ranking System</h1> <p class="archive-authors">Sunhao Dai, Jiakai Tang, Jiahua Wu, Cong Fu, Anxiang Zeng, Jun Xu, et al. (21 人)</p> <p class="affiliations">Renmin University of China × Shopee × USTC × NUS</p> <p class="one-liner">Shopee 把 LLM 成功的两个「架构之外」机制——上下文工程(context engineering)与多步推理(reasoning)——同时搬进工业级召回+排序级联系统。三大件：①结构化上下文工程(交互历史 IH + 偏好锚点 PA + 情境描述符 SD + 候选集 CIS)统一成 token 序列喂纯 Transformer；②块级隐式推理(block-wise latent reasoning)，把 ReaRec 的单 token 推理升级为「一组 hidden state」迭代精炼，用 block size 调推理带宽；③渐进式多任务训练，用「曝光→点击→下单」反馈链给每一步推理做过程监督。线上 Shopee 主搜召回 +1.08% GMV/UU、排序 +1.12% GMV/UU 且广告收入 +2.90%。</p> <div class="tags" style="margin: 6px 0 22px;"> <span class="tag tag-static">Context Engineering</span><span class="tag tag-static">Latent Reasoning</span><span class="tag tag-static">Cascade Ranking</span><span class="tag tag-static">LLM4Rec</span><span class="tag tag-static">Industrial Deployment</span> </div> <div class="content"> <h2 id="核心思路">核心思路</h2>
+<p>工业搜推圈过去几年「复刻 LLM」的努力，大多停留在<strong>把 Transformer 架构搬过来</strong>（SASRec / BERT4Rec / HSTU / 生成式 transducer），结果相对强 DLRM 只是增量提升——因为 attention、序列特征建模这些早就被经典 DLRM 吸收了。</p>
+<p>本文的 first-principle 论断是：<strong>LLM 的突破不只来自架构，还来自两个互补机制</strong>——</p>
+<ul>
+<li><strong>上下文工程 (Context Engineering)</strong>：从<strong>输入侧</strong>用结构化上下文线索(外部知识、记忆、交互历史)丰富原始 query，更好地「激发」模型能力；</li>
+<li><strong>多步推理 (Multi-Step Reasoning)</strong>：从<strong>输出侧</strong>通过中间(显式 CoT 或隐式 latent)推理步骤迭代精炼预测。</li>
+</ul>
+<p>OnePiece 就是把这两件事<strong>第一次</strong>系统性地、可部署地搬进工业**级联(retrieval + ranking)**系统。落地两个核心难题：</p>
+<ol>
+<li><strong>怎么构造有信息量的输入上下文？</strong> 传统模型只吃 user–item 原始交互序列，缺 LLM prompt 那样的结构化丰富度。→ 用结构化上下文工程，把异构信号统一成 token 序列。</li>
+<li><strong>怎么优化多步推理？</strong> 工业排序没有 CoT 标注，连专家都没法用自然语言写出用户决策路径。→ 用**天然存在的用户反馈链(曝光→点击→加购→下单)**作为推理步骤的过程监督。</li>
+</ol>
+<h2 id="整体实现思路">整体实现思路</h2>
+<p><img src="/ai-papers-daily/figures/onepiece-context-engineering-reasoning-cascade-ranking/fig1.png" alt="OnePiece 总体架构：召回模式 (a) 与排序模式 (b) 共享同一纯 Transformer backbone。两种模式都用结构化上下文工程构造统一输入 token，再经块级隐式推理迭代精炼表征，并由渐进式多任务损失监督；召回额外接 Item Encoder 双塔，排序把候选集 CIS 拼入单塔联合打分。"></p>
+<p>OnePiece 是<strong>召回与排序共享的统一纯 Transformer 框架</strong>，三个组件：</p>
+<ol>
+<li><strong>Context Engineering（输入 token 序列）</strong>：把 4 类异构信号 tokenize 成统一序列——交互历史 IH、偏好锚点 PA、情境描述符 SD、候选集 CIS（仅排序）。召回/排序共享 IH/PA/SD 构造，排序额外拼 CIS 实现单塔联合打分。</li>
+<li><strong>块级推理 Transformer backbone</strong>：在双向 Transformer 编码之上，加 latent reasoning block，迭代精炼中间表征。与 ReaRec「单 hidden state 循环」不同，OnePiece 一次传递<strong>一整块 (M×d) hidden state</strong>，用 block size M 调「推理带宽」。</li>
+<li><strong>渐进式多任务训练</strong>：把不同强度的反馈信号分配给不同推理步——早期步对齐弱而密的信号(曝光/点击)，后期步对齐强而稀的信号(加购/下单)，形成 curriculum，并避免单一表征上的梯度冲突。</li>
+</ol>
+<p>召回与排序的本质差异：<strong>召回</strong>是双塔(user tower / item tower 解耦)、ANN 全库检索、粗粒度；<strong>排序</strong>是单塔联合编码候选、细粒度判别。OnePiece 用同一 backbone 统一两者。</p>
+<h2 id="子模块实现可复现细节">子模块实现（可复现细节）</h2>
+<h3 id="1-结构化上下文工程">1. 结构化上下文工程</h3>
+<p><img src="/ai-papers-daily/figures/onepiece-context-engineering-reasoning-cascade-ranking/fig2.png" alt="上下文工程与 tokenizer 设计：召回与排序共享交互历史 IH、偏好锚点 PA（BOS/EOS 包裹的多组辅助序列）、情境描述符 SD（User/Query token）的构造；每路经各自 Embedding Layer + Concat &#x26; MLP + 位置嵌入打包成统一 token 序列，排序额外把候选集 CIS token 拼到序列尾部以在单塔内联合打分。"></p>
+<p>每个实体(user/query/item)用 entity-specific embedding 函数 φ 把类别+连续特征映射成拼接向量，再用轻量 MLP 投影头 Proj 统一到 backbone 的 d 维隐空间。<strong>IH 与 PA 共享 <code>Proj_shared</code></strong>，user / query / candidate 各有独立投影层。</p>
+<ul>
+<li>
+<p><strong>Interaction History (IH)</strong>：用户近一个月的 click / cart / purchase 序列，按时间排序<strong>合并(mixing)</strong>。每个 item token：
+$$z^{IH}<em>t = \text{Proj}</em>{shared}(\phi_{item}(v^u_t)) \in \mathbb{R}^d,\quad h^{IH}_t = z^{IH}_t + p^{IH}_t$$
+其中 $p^{IH}_t$ 是按交互顺序的可学习位置嵌入。每个 item 含 ID / category / shop / 统计特征 等(共享 Embedding Layer + Concat + Shared MLP)。</p>
+</li>
+<li>
+<p><strong>Preference Anchors (PA)</strong>：基于领域知识构造的<strong>辅助 item 序列</strong>(注入归纳偏置、约束表征空间)。例如个性化搜索里取 query 关联的 <strong>top-k 曝光 / top-k 点击 / top-k 购买</strong>。形式上有 B 个 anchor group，第 b 组 $A^u_b=(v^{PA}<em>{b,1},…,v^{PA}</em>{b,m_b})$，token 同样过 <code>Proj_shared</code>，加组内位置嵌入 $p^{PA}<em>j$，并用可学习边界 token 包裹每组：
+$$(e</em>{BOS}, h^{PA}<em>{b,1}, …, h^{PA}</em>{b,m_b}, e_{EOS})$$
+关键：PA 用<strong>序列拼接(concatenation)而非 mixing</strong>，[BOS]/[EOS] 分隔不同序列类型。组间按业务规则排序。</p>
+</li>
+<li>
+<p><strong>Situational Descriptors (SD)</strong>：静态非 item 信息。两个专用 token——<strong>User Token</strong>(user ID + age + location + 人口学)与 <strong>Query Token</strong>(query ID + 文本 embedding + query 流行度)。$h^U = z^U + p^U_k$，$h^Q = z^Q + p^Q_k$。</p>
+</li>
+<li>
+<p><strong>Candidate Item Set (CIS, 仅排序)</strong>：排序的关键设计是 pointwise / setwise。本文采用 <strong>grouped setwise</strong>：把召回的候选集 V′(常数千)随机切成大小 C(如 12)的小组，组内 item 互相可见(intra-group interaction)，组间独立处理。$C=1$ 退化为 pointwise，$C=|V’|$ 为 full-set。<strong>CIS token 故意不加位置嵌入</strong> $h^{CIS}_i = z^{CIS}_i$，避免学到「位置↔相关性」的虚假相关；训练/推理随机分组让模型对候选排列鲁棒。</p>
+</li>
+<li>
+<p><strong>序列打包(⊕ 为拼接)</strong>：</p>
+<ul>
+<li>召回：<code>I_retrieval = (IH 按时间) ⊕ (B 个 PA 组，BOS/EOS 包裹，组间按业务规则排) ⊕ (SD 段 h^U, h^Q, ...)</code></li>
+<li>排序：<code>I_rank = I_retrieval ⊕ (h^CIS_1, ..., h^CIS_C)</code>（CIS 无位置编码）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-backbone双向-transformer--块级推理">2. Backbone：双向 Transformer + 块级推理</h3>
+<p><strong>编码器</strong>：L 层双向 Transformer + pre-norm。选<strong>双向 attention</strong>(非自回归)，因为推理/服务都非自回归，全上下文条件化更优：
+$$H^l_{attn} = H^{l-1} + \text{MHSA}(\text{LN}(H^{l-1})),\quad H^l = H^l_{attn} + \text{FFN}(\text{LN}(H^l_{attn}))$$</p>
+<p><strong>块级多步推理</strong>：block size M 任务相关，$B_k \in \mathbb{R}^{M\times d}$ 是第 k 个推理块。初始块取编码器输出末尾 M 个 token：
+$$B_0 = H^L[N-M+1:N]$$
+之后第 k 步从上一步输出提取块 $B_k = H^L_{k-1}[N+(k-2)M+1 : N+(k-1)M]$。用 <strong>Reasoning Position Embedding (RPE)</strong> $E_{RPE}\in\mathbb{R}^{K\times d}$ 区分推理步：$\tilde{B}<em>k = B_k + \mathbf{1}<em>M \otimes E</em>{RPE}[k,:]$。每步把基础序列 I 与所有历史增强块 $\tilde{B}</em>{&#x3C;k}$ 拼接，过 backbone 配<strong>块级因果掩码</strong> $M_k$：
+$$[I; \tilde{B}_{&#x3C;k}; \tilde{B}<em>k] \xrightarrow{F</em>\theta(\cdot; M_k)} H^L_k \in \mathbb{R}^{(N+kM)\times d}$$
+掩码规则：块 token 可 attend 所有 base token I 和所有历史块；不可 attend 未来块。</p>
+<p><strong>任务相关 block size</strong>：</p>
+<ul>
+<li><strong>召回</strong>：M = SD 长度。把 user token $h^U$(个性化)与 query token $h^Q$(相关性)当聚合块，迭代推理同时强化两维。</li>
+<li><strong>排序</strong>：M = C(候选组大小)，每块对应全部候选 item token，末块 $\tilde{B}_K$ 含最终排序表征；训练随机分组保证排列不变性。</li>
+</ul>
+<h3 id="3-渐进式多任务训练过程监督">3. 渐进式多任务训练（过程监督）</h3>
+<p>K 个学习目标 ${\tau_1,…,\tau_K}$ 按 curriculum 从基础到高级排列(电商：曝光→点击→下单)。<strong>第 k 步推理只优化任务 $\tau_k$</strong>。</p>
+<p><strong>召回模式</strong>：每块过 LN + mean-pool 得步级 user 表征 $r_k = \text{Mean}(\text{LN}(B_k))$。对每个 instance 构候选池 Ω(含跨任务多行为标签)。两个互补 loss：</p>
+<ul>
+<li><strong>BCE</strong>(点级标定)：$\mathcal{L}^{BCE}<em>k = \sum</em>{v\in\Omega^+}-\log\sigma(\langle r_k,z_v\rangle) + \sum_{v\in\Omega^-}-\log(1-\sigma(\langle r_k,z_v\rangle))$</li>
+<li><strong>双向对比 BCL</strong>(借鉴 CLIP)：U2I 让 user 表征区分正负 item，I2U 让正 item 从 in-batch 所有 user 中认出自己 user，温度 η。$\mathcal{L}^{BCL}_k = \mathcal{L}^{U2I}_k + \mathcal{L}^{I2U}_k$</li>
+<li>总召回 loss：$\mathcal{L}<em>{retrieval} = \sum</em>{k=1}^K (\mathcal{L}^{BCE}_k + \mathcal{L}^{BCL}_k)$</li>
+</ul>
+<p><strong>排序模式</strong>：M=C，每块含 C 个候选 hidden state，过任务专属 MLP 得 logit $s_{i,k}=\text{MLP}<em>{\tau_k}(h</em>{i,k})$。</p>
+<ul>
+<li><strong>BCE</strong> 点级标定 + <strong>Set Contrastive Learning (SCL)</strong> 集合级：$\mathcal{L}^{SCL}<em>k = \sum</em>{i:y=1}-\log\frac{\exp(s_{i,k}/\eta)}{\sum_{j=1}^C \exp(s_{j,k}/\eta)}$，正候选与组内全部候选竞争排序位。</li>
+<li>总排序 loss：$\mathcal{L}<em>{ranking} = \sum</em>{k=1}^K (\mathcal{L}^{BCE}_k + \mathcal{L}^{SCL}_k)$</li>
+</ul>
+<p><strong>数据构造</strong>（附录 A）：召回——保留有点击的 session，m 个点击 item 为曝光+点击双正，n 个曝光未点为曝光正/点击负，再从 top-500 排序结果抽 k 个未曝光为负，外加 l 个同类目 hard negative。排序——按 funnel 取任务专属正样本，funnel 中前序任务的交互作为该任务负样本(如下单任务里，曝光/点击/加购但未购买的为负)，同样加 top-500 未曝光 hard negative。</p>
+<h3 id="4-复杂度与部署技巧">4. 复杂度与部署技巧</h3>
+<ul>
+<li>编码器每层 $O(N^2 d + Nd^2)$，总 $O(L(N^2 d + Nd^2))$。</li>
+<li>推理阶段用 <strong>KV-Cache</strong> 复用历史 K/V，每步只算 M 个新块 token 与缓存的注意力：每层每步 $O(M(N+kM)d + Md^2)$，K 步 L 层总额外开销 $O(LKM(Nd + MKd + d^2))$。</li>
+<li>召回线上：离线生成全库 item 向量 → HNSW ANN 索引。排序线上分数融合：$p_{final}=\alpha\cdot p^a_{ctr}\cdot p^b_{ctcvr} + \beta\cdot p^a_{ctr}\cdot p^b_{ctcvr}\cdot price + \gamma\cdot p_{ctr}\cdot ecpm$。</li>
+<li><strong>生产版排序是降级变体</strong>：block size 降到 M=1、item 边信息特征大幅削减(资源约束)。</li>
+</ul>
+<h2 id="实验设置与结果">实验设置与结果</h2>
+<p><strong>数据</strong>：Shopee 30 天日志(2025-06-11 ~ 07-10)，10M 用户 / 93M item / 12M query / 0.24B 曝光 / 60M 点击 / 12M 加购 / 6M 下单。<strong>流式协议</strong>：逐天增量训练，day-t checkpoint 在 day-(t+1) 未见数据上评估。</p>
+<p><strong>指标</strong>：召回 R@100 / R@500(点击样本)；排序 click/cart/order 三类反馈各报 AUC + GAUC。</p>
+<p><strong>baseline</strong>：DLRM(Shopee 生产基线，召回 DSSM 双塔 + DIN-like + zero-attention + text CNN + DCNv2；排序 ResFlow + DIN target attention + cross-attention + DCNv2 + SENet)、HSTU(Meta 生成式推荐)、ReaRec(隐式推理推荐)，及 +PA 变体。</p>
+<h3 id="主结果30-天table-2">主结果（30 天，Table 2）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>R@100</th><th>R@500</th><th>C-AUC</th><th>C-GAUC</th><th>A-AUC</th><th>A-GAUC</th><th>O-AUC</th><th>O-GAUC</th></tr></thead><tbody><tr><td>DLRM</td><td>0.458</td><td>0.679</td><td>0.856</td><td>0.851</td><td>0.893</td><td>0.843</td><td>0.931</td><td>0.854</td></tr><tr><td>HSTU</td><td>0.443</td><td>0.658</td><td>0.833</td><td>0.829</td><td>0.878</td><td>0.827</td><td>0.913</td><td>0.839</td></tr><tr><td>HSTU+PA</td><td>0.472</td><td>0.680</td><td>0.855</td><td>0.852</td><td>0.901</td><td>0.848</td><td>0.926</td><td>0.849</td></tr><tr><td>ReaRec</td><td>0.452</td><td>0.674</td><td>0.843</td><td>0.838</td><td>0.882</td><td>0.834</td><td>0.919</td><td>0.843</td></tr><tr><td>ReaRec+PA</td><td>0.485</td><td>0.701</td><td>0.862</td><td>0.863</td><td>0.908</td><td>0.851</td><td>0.927</td><td>0.851</td></tr><tr><td><strong>OnePiece</strong></td><td><strong>0.517</strong></td><td><strong>0.731</strong></td><td><strong>0.911</strong></td><td><strong>0.909</strong></td><td><strong>0.952</strong></td><td><strong>0.897</strong></td><td><strong>0.963</strong></td><td><strong>0.886</strong></td></tr></tbody></table>
+<p>要点：①DLRM 仍是很强基线，原版 HSTU/ReaRec 只吃交互序列反而打不过；②PA 机制与 backbone 无关地稳定增益；③OnePiece 比最强 ReaRec+PA 再涨 R@100 0.485→0.517、C-AUC 0.862→0.911。</p>
+<h3 id="上下文工程消融table-3">上下文工程消融（Table 3）</h3>
+<p>PA 长度有清晰 <strong>scaling 效应</strong>：V1 仅 raw item ID → V2 加 side info(R@100 0.407→0.428，C-AUC 0.802→0.846) → V3~V7 PA 从 10 加到 90(R@100 0.428→0.504) → V8 加 SD(R@100 0.504→0.517)。SD 对召回增益明显、对排序边际(排序里 query 相关性已高)。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Version</th><th>Model</th><th>R@100</th><th>C-AUC</th></tr></thead><tbody><tr><td>V2</td><td>IH(ID+SideInfo)</td><td>0.428</td><td>0.846</td></tr><tr><td>V5</td><td>V2+PA(30)</td><td>0.475</td><td>0.892</td></tr><tr><td>V7</td><td>V2+PA(90)</td><td>0.504</td><td>0.908</td></tr><tr><td>V8</td><td>V7+SD</td><td><strong>0.517</strong></td><td><strong>0.911</strong></td></tr></tbody></table>
+<h3 id="训练策略消融table-45">训练策略消融（Table 4/5）</h3>
+<ul>
+<li>召回：因果掩码 0.464 → 双向 0.470 → +1 步推理(末步点击)0.490 → +末步多任务 0.495 → 2 步推理多任务 0.510 → <strong>2 步渐进多任务 0.517</strong>。</li>
+<li>排序：双向+CIS 互不可见 C-AUC 0.860 → <strong>CIS 互可见 0.881</strong>(候选互见是排序最大单点增益) → +1 步推理 0.890 → 3 步多任务 0.906 → <strong>3 步渐进多任务 0.911</strong>。</li>
+<li>渐进式 > 单 embedding 多任务：把不同任务分散到多个推理步当「专用 read-out token」，<strong>解耦梯度流、避免梯度冲突</strong>。召回最优 2 步(曝光-点击)、排序最优 3 步(完整转化漏斗)。</li>
+</ul>
+<h3 id="数据与推理-scaling">数据与推理 scaling</h3>
+<p><img src="/ai-papers-daily/figures/onepiece-context-engineering-reasoning-cascade-ranking/fig3.png" alt="召回(左 Recall@100)与排序(右 Click AUC)随训练数据跨度(天)的收敛曲线：OnePiece 仅 7–10 天即超越 DLRM/HSTU，两条 baseline 很快 plateau，而 OnePiece 到 60 天仍持续上升且差距不断拉大，体现更强的数据 scaling 能力。"></p>
+<ul>
+<li><strong>数据 scaling</strong>：OnePiece 仅 <strong>7–10 天</strong>训练就超 DLRM/HSTU；DLRM/HSTU 很快 plateau，OnePiece 到 60 天仍在涨且 gap 拉大，未收敛。</li>
+<li><strong>block size scaling</strong>(60 天，排序，Table 6)：M=C 从 1→12，C-AUC 0.885→0.913→0.920→<strong>0.927</strong>(+4.7%)。最大跃升在 1→4(pointwise 缺跨样本对比)，之后边际递减(块过大冗余饱和)。</li>
+</ul>
+<h3 id="效率a30table-10">效率（A30，Table 10）</h3>
+<ul>
+<li>召回：推理 40ms→<strong>30ms(-25%)</strong>，MFU 35%→<strong>80%(+129%)</strong>，MU 30%→50%。统一 Transformer 更契合 GPU 并行。</li>
+<li>排序(batch=128，KV-Cache)：M=1 时 110ms(+0.9%)但 MFU 23%→<strong>67%(+191%)</strong>；block size 1→12 仅 +10.1% 时延换 12× 推理容量，子线性(0.9%→2.8%→5.5%→10.1%)。</li>
+</ul>
+<h3 id="线上-ab10-流量">线上 A/B（10% 流量）</h3>
+<ul>
+<li><strong>召回</strong>(替换 DLRM 的 U2I 召回路)：GMV/UU <strong>+1.08%</strong>、GMV(99.5%)/UU +0.91%、Paid Order/UU +0.98%、CTCVR +0.66%、Bad Query Rate <strong>-0.17%</strong>(相关性还更好)。</li>
+<li><strong>排序</strong>(替换 pre-ranking DLRM)：GMV/UU <strong>+1.12%</strong>、AR/UU <strong>+2.90%</strong>、CTR +0.29%。</li>
+<li><strong>召回覆盖与独占贡献</strong>：OnePiece 对其他召回路覆盖率全面提升(STR1 37.3%→66.2%、STR2 31.3%→64.4%、S2I 47.6%→67.8%)；独占曝光 3.6%→9.9%(2.8×)、独占点击 2.4%→5.7%(2.4×)——既能 subsume 其他路又贡献新流量。</li>
+</ul>
+<h2 id="思考与可参考价值">思考与可参考价值</h2>
+<p><strong>局限</strong>：</p>
+<ul>
+<li><strong>过程监督的天花板</strong>：渐进多任务依赖反馈链(曝光→点击→加购→下单)做监督，反馈类型有限 → 推理步数受限，难进一步 scale latent reasoning。作者把 RL（用在线反馈自适应决定推理深度）列为未来方向。</li>
+<li><strong>生产版被迫降级</strong>：线上排序 M=1 且砍 item 边信息，离线 M=12 的 +4.7% C-AUC 增益没完全吃到，离线-在线有 gap。</li>
+<li>在已有强 DLRM + 多路召回的成熟系统里替换/并入，工程复杂度与收益需权衡。</li>
+</ul>
+<p><strong>对电商/搜推/Agent 的可借鉴点</strong>：</p>
+<ol>
+<li><strong>PA(偏好锚点)是最易迁移、最稳的杠杆</strong>：query 关联的 top-k 曝光/点击/购买当辅助序列拼进输入，与 backbone 无关地涨点，且有清晰长度 scaling。对任何带 query 的电商搜索/推荐都可直接试，本质是把「协同过滤聚合信号」结构化注入。</li>
+<li><strong>CIS 候选互可见(grouped setwise)是排序最大单点增益</strong>(C-AUC +2.1pt)：随机分组 + 组内互见 + 候选不加位置编码，既保留 listwise 比较能力又控住成本，比 pointwise 强很多。</li>
+<li><strong>渐进式多任务 = 用反馈漏斗做 curriculum 过程监督</strong>：把曝光→点击→下单分配到不同推理步当专用 read-out，解耦梯度冲突。这套思路对任何有天然反馈链(电商转化漏斗、Agent 多阶段任务)的场景都适用，比所有任务挤在一个表征上更稳。</li>
+<li><strong>block-wise latent reasoning</strong> 比单 token 循环(ReaRec)更优：用 block size 当「推理带宽」旋钮，是 rec 里少见的「推理可调容量」设计；KV-Cache 让多步推理在线上几乎零额外时延(子线性)。</li>
+<li><strong>统一架构的「One For All」野心</strong>：单模型靠不同 prompt(I2U/I2I/U2I/Q2I context engineering)替代多路异构召回系统(图 7)，独占贡献翻倍验证可行性——对维护多路召回的团队是降本方向。</li>
+<li>纯 Transformer 统一 backbone 的 <strong>MFU 大幅提升(召回 +129%、排序 +191%)</strong> 也是实打实的部署红利，DLRM 的异构组件 GPU 利用率低。</li>
+</ol> </div> <div class="ext-links"> <a href="https://arxiv.org/abs/2509.18091" target="_blank" rel="noopener">📄 paper</a>  <a href="/DailyPaper/collection">← 回到沉淀</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

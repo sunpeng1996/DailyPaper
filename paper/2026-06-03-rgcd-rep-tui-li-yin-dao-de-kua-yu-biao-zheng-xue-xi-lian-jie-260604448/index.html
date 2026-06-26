@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="首次将多模态大模型推理蒸馏到轻量模型，学习行为协同的跨域可迁移 item 表征，部署到快手直播推荐系统"><meta property="og:title" content="Bridging Short Videos and Live Streams: Reasoning-Guided Multimodal LLMs for Cross-Domain Representation Learning"><meta property="og:description" content="首次将多模态大模型推理蒸馏到轻量模型，学习行为协同的跨域可迁移 item 表征，部署到快手直播推荐系统"><meta property="og:type" content="website"><title>Bridging Short Videos and Live Streams: Reasoning-Guided Multimodal LLMs for Cross-Domain Representation Learning</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-06-03">2026-06-03</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.04448" target="_blank" rel="noopener">2606.04448</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Bridging Short Videos and Live Streams: Reasoning-Guided Multimodal LLMs for Cross-Domain Representation Learning</h1> <p class="title-zh">RGCD-Rep：推理引导的跨域表征学习，连接短视频与直播推荐</p> <div class="dir-row"> <span class="direction-chip">🧭 跨域推荐 · 多模态蒸馏 · 可迁移表征学习</span> </div> <p class="affiliations">Kuaishou Technology, Beijing, China</p> <div class="meta">Le Zhang, Xiaolan Zhu, Yuchen Wang, Shilong Kang, Jiaqi Xue, Xiaoyu Zhang 等</div> <p class="one-liner">首次将多模态大模型推理蒸馏到轻量模型，学习行为协同的跨域可迁移 item 表征，部署到快手直播推荐系统</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/cross-domain recommendation">cross-domain recommendation</a><a class="tag" href="/DailyPaper/tag/multimodal LLM">multimodal LLM</a><a class="tag" href="/DailyPaper/tag/knowledge distillation">knowledge distillation</a><a class="tag" href="/DailyPaper/tag/live streaming">live streaming</a><a class="tag" href="/DailyPaper/tag/contrastive learning">contrastive learning</a><a class="tag" href="/DailyPaper/tag/representation learning">representation learning</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>用行为对构造跨域蒸馏数据：从用户日志构建 (短视频, 直播) pair 并量化行为共现强度，作为监督信号。电商场景可直接套用，用 “点击-加购” 或 “浏览-转化” 行为对，将源域兴趣迁移到目标域。</li><li>大模型推理结果结构化：教师 MLLM 的输出不只是自由文本，而是分解为「垂直领域、关键主体、内容主题」三个维度的标签和匹配判断。在电商中，可将商品属性（品类、功能、场景）结构化，用于引导跨域匹配，避免噪声。</li><li>Chorus Tokens + 可迁移/残差分离：用少量可学习 token（16个）聚合多模态信息，再用可学习 Query 向量拆出可迁移和残差部分。这种轻量设计适合离线生成 item embedding 并直接供检索使用，低延迟部署友好。</li><li>路由损失解决负迁移：对高可信 pair 鼓励用可迁移空间匹配，低可信 pair 用残差空间吸收噪声，缓解跨域不一致。在电商多域（如搜索、推荐、内容）统一表示时，可借鉴这种“软路由”机制，避免强行对齐带来的性能损失。</li> </ul> </div> <div class="content"> <h3 id="动机">动机</h3>
+<p>快手平台同时提供短视频和直播服务。短视频流量大、行为数据丰富，直播是核心转化场景但行为稀疏、冷启动严重。跨域推荐可将短视频的用户兴趣迁移到直播推荐。已有方法多使用预提取的多模态静态特征，缺乏深层语义推理，难以解释两个域的 item 为何可迁移。多模态大模型（MLLM）能提供丰富理解和推理，但直接用于跨域推荐面临计算开销大、开放域知识可能不相关、跨域兴趣不一致导致负迁移三大挑战。</p>
+<h3 id="方法关键点">方法关键点</h3>
+<ul>
+<li><strong>行为协同 Pair 构造</strong>：基于用户真实行为日志，计算短视频和直播在同一时间窗内的共现频率与行为强度，形成高置信度的行为 pair，作为训练和推理蒸馏的素材。</li>
+<li><strong>结构化跨域推理生成</strong>：用冻结的 35B MLLM（教师）对每个 pair 生成立体结构化知识：(1) item 级多模态内容理解，分解为垂直领域、关键主体、内容主题三个维度；(2) pair 级匹配判断与简要理由，并聚合为语义可迁移分数。</li>
+<li><strong>两阶段训练框架</strong>：
+<ul>
+<li><strong>Stage 1 推理感知蒸馏</strong>：将 pair 级推理分解为独立 item 监督样本，基于可学习的 Chorus Tokens 和 next-token prediction，把教师的理解能力蒸馏到轻量 2B MLLM（学生）。</li>
+<li><strong>Stage 2 可迁移表征学习</strong>：共享学生 MLLM 编码两个域的 item，通过可迁移-残差查询感知聚合模块，将 chorus token 拆分出可迁移表示和域残差表示；结合跨域对比损失和可迁移路由损失进行优化，路由损失利用行为和语义联合分数区分高/低纯度 pair，防止负迁移。</li>
+</ul>
+</li>
+</ul>
+<h3 id="关键结果">关键结果</h3>
+<ul>
+<li>数据集：快手一周真实日志，109,523 用户，2.27M 直播交互，24.6M 短视频交互。评估指标 HR@10 和 NDCG@10。</li>
+<li>离线匹配任务：RGCD-Rep 的 HR@10 和 NDCG@10 分别达到 0.0254 和 0.0127，比最强基线 UniEmbedding 提升 17.59% 和 30.93%。</li>
+<li>长尾和冷启动场景：RGCD-Rep 在尾部 item 和冷启动用户上的优势更明显，证实了利用短视频行为缓解直播稀疏性的有效性。</li>
+<li>线上 A/B 测试：部署在快手和快手极速版的直播召回通道，关注率（follow）分别提升 0.83% 和 0.93%，有效房间进入和点击等核心指标也稳定增长，服务超 4 亿日活用户。</li>
+</ul>
+<h3 id="核心洞见">核心洞见</h3>
+<p>通过结构化蒸馏将大模型的多模态推理能力压缩到轻量编码器，并用行为协同信号和路由机制学习可迁移的 item 表示，既获得了语义深度又保持了工程部署的低成本，为工业级跨域推荐提供了一条实用路径。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.04448&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.04448" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.04448" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.04448" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

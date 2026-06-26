@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出交错式Plan-Write-Reflect循环，让8B模型在长文本生成上超越大模型，打破长度崩溃。"><meta property="og:title" content="IS-CoT: Breaking the Long-form Generation Collapse via Interleaved Structural Thinking"><meta property="og:description" content="提出交错式Plan-Write-Reflect循环，让8B模型在长文本生成上超越大模型，打破长度崩溃。"><meta property="og:type" content="website"><title>IS-CoT: Breaking the Long-form Generation Collapse via Interleaved Structural Thinking</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/LLM">LLM</a> <span class="sep">|</span> <time datetime="2026-06-08">2026-06-08</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.09709" target="_blank" rel="noopener">2606.09709</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>IS-CoT: Breaking the Long-form Generation Collapse via Interleaved Structural Thinking</h1> <p class="title-zh">IS-CoT：通过交错结构思维打破长文本生成崩溃</p> <div class="dir-row"> <span class="direction-chip">🧭 长文本生成 · 动态规划与反思</span> </div> <p class="affiliations">Soochow University · PLA Academy of Military Science</p> <div class="meta">Zechen Sun, Yuyang Sun, Zecheng Tang, Juntao Li, Wenpeng Hu, Wenliang Chen 等</div> <p class="one-liner">提出交错式Plan-Write-Reflect循环，让8B模型在长文本生成上超越大模型，打破长度崩溃。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Long-Form Generation">Long-Form Generation</a><a class="tag" href="/DailyPaper/tag/Chain-of-Thought">Chain-of-Thought</a><a class="tag" href="/DailyPaper/tag/Dynamic Planning">Dynamic Planning</a><a class="tag" href="/DailyPaper/tag/Reflection">Reflection</a><a class="tag" href="/DailyPaper/tag/Length Control">Length Control</a><a class="tag" href="/DailyPaper/tag/SFT">SFT</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>在生成长文本（如商品详情、营销软文）时，可采用 Plan-Write-Reflect 循环：每写一段后反思当前进度并调整后续计划，避免偏离主题或长度失控。</li><li>对于多步对话 Agent（如导购助手），可借鉴全局大纲+局部规划+反思的结构，让模型在长对话中维持目标一致性，防止上下文遗忘。</li><li>训练时保留完整的推理链（计划、反思 token），通过 SFT 直接让模型学习动态规划，小模型也能获得强长度控制与连贯性，适合低资源业务定制。</li><li>多教师蒸馏的设计可提升数据多样性，避免生成风格单一，对构建特定领域（如电商）的高质量“带思考过程”数据集有直接参考价值。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：
+LLM 在生成长文本（>2000 words）时会出现严重的长度和内容质量崩塌——既达不到目标字数，也丧失连贯性。现有模型多在生成前做一次性静态规划，随着篇幅增加，初始规划的引导力急剧衰减。作者希望引入动态交错的规划-写作-反思循环，让模型在生成过程中持续自我调整。</p>
+<p><strong>方法关键点</strong>：</p>
+<ul>
+<li><strong>IS-CoT 框架</strong>：在生成过程中嵌入 <code>&#x3C;global_plan></code> → <code>&#x3C;step_plan></code> → <code>&#x3C;content></code> → <code>&#x3C;reflection></code> 的循环，每一步都重新对齐全局目标。</li>
+<li><strong>三阶段数据合成</strong>：(1) 指令精炼：平衡中英文，为无长度约束的 prompt 补充长度要求；(2) 交错结构合成：双教师（DeepSeek-V3.2、Qwen3-235B）蒸馏生成带完整推理轨迹的长文，通过启发式控制保证格式和长度合规；(3) 质量过滤：采用长度得分 Sl>90 + LLM 评判 + 人工核验，得到约5000条高质量样本。</li>
+<li><strong>训练</strong>：基于 Qwen3-8B 做 SFT，不剥离中间推理 token，学习整个 Plan-Write-Reflect 序列。</li>
+</ul>
+<p><strong>关键实验</strong>：</p>
+<ul>
+<li>在 LongBench-Write 上，IS-Writer-8B 平均分 88.25，比 DeepSeek-V3.2（671B）高 +3.08，比 Gemini-2.5-Flash 高 +4.58；在超长区间 [4k,20k] 长度得分 86.75，远超其他模型（如 DeepSeek-V3.2 仅 53.22）。</li>
+<li>在 WritingBench 上与 DeepSeek-V3.2 打平（8.60），在金融和政治领域达到最优。</li>
+<li>消融表明去除反思或交错规划会使增益大幅下降（+2.45 和 +0.55），验证了组件必要性。</li>
+</ul>
+<p><strong>值得记住的一句话</strong>：<em>有效的长文本生成需要不断更新的规划与反思，而不是一次性静态蓝图——这正是 IS-CoT 用 Plan-Write-Reflect 循环打破长度崩溃的核心思想。</em></p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.09709&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.09709" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.09709" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.09709" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

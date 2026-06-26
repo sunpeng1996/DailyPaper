@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将跨域交互迁移建模为合成数据生成，以模型无关方式缓解目标域数据稀疏"><meta property="og:title" content="Synthetic Data from Cross-Domain Events for Large-Scale Recommendation Systems"><meta property="og:description" content="将跨域交互迁移建模为合成数据生成，以模型无关方式缓解目标域数据稀疏"><meta property="og:type" content="website"><title>Synthetic Data from Cross-Domain Events for Large-Scale Recommendation Systems</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/RecSys">RecSys</a> <span class="sep">|</span> <time datetime="2026-05-29">2026-05-29</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.00282" target="_blank" rel="noopener">2606.00282</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>Synthetic Data from Cross-Domain Events for Large-Scale Recommendation Systems</h1> <p class="title-zh">通过跨域事件合成数据增强大规模推荐系统</p> <div class="dir-row"> <span class="direction-chip">🧭 跨域合成数据增强推荐</span> </div> <p class="affiliations">Meta</p> <div class="meta">Xiangyu Wang, Yawen He, Shivendra Pratap Singh, Han Huang, Mengtong Hu, Sharath Ciddu 等</div> <p class="one-liner">将跨域交互迁移建模为合成数据生成，以模型无关方式缓解目标域数据稀疏</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/synthetic data">synthetic data</a><a class="tag" href="/DailyPaper/tag/cross-domain recommendation">cross-domain recommendation</a><a class="tag" href="/DailyPaper/tag/data augmentation">data augmentation</a><a class="tag" href="/DailyPaper/tag/implicit feedback">implicit feedback</a><a class="tag" href="/DailyPaper/tag/scalable recommendation">scalable recommendation</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>解耦的数据驱动跨域增强：将源域交互转换为目标域格式的合成事件，不侵入下游模型架构，可在多个模型（排序、校准、出价等）间复用同一份合成数据集，显著降低工程耦合。</li><li>采样优于确定性Top-K：实验证明从条件概率分布中采样生成合成事件，相比Top-1选择，能覆盖30%的目标物品目录（Top-1仅4%），显著提升多样性和泛化性能；该结论可推广到任何需要合成交互的场景。</li><li>分布对齐提升效果：对合成事件按物品价值分桶下采样（bucket-wise downsampling），使其分布匹配原始数据，能带来额外0.13%的相对NE改善；简单有效的后处理trick。</li><li>合成数据质量控制：过滤低置信度翻译事件、移除有分布偏移的特征（防止模型利用合成/真实域信息作弊）可提升模型校准度与排序质量，值得在合成数据生产流水线中直接落地。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+大规模推荐系统面临严重的隐式反馈稀疏问题（如转化率常低于1%），传统跨域推荐通过在模型层面共享嵌入或参数来迁移知识，但存在架构耦合、训练耦合和难以扩展至多个下游模型等局限。受LLM中合成数据成功的启发，本文提出将跨域事件迁移重新定义为合成数据生成问题，实现数据级而非模型级的迁移，从而更灵活、模型无关地利用源域丰富信号。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>两阶段框架SCALR</strong>：第一阶段从源域事件（如浏览、内容互动）频次估计目标域物品的翻译分布 <code>P(i_T | u, j_S)</code>，再利用该分布采样生成合成事件；第二阶段下游模型在原始数据与合成数据上联合训练，通过权重 λ 控制合成数据影响。</li>
+<li><strong>频次估计与概率采样</strong>：基于跨域重叠用户计算共现条件概率，通过从分布中随机采样（而非确定性Top-K）产生合成事件，保障物品覆盖多样性。</li>
+<li><strong>模型无关集成</strong>：合成事件沿用目标域原始格式，任何推荐架构（双塔、Wide&#x26;Deep、FM、Transformer）仅需增加一个加权辅助任务即可引入跨域信号，无需改动模型结构。</li>
+<li><strong>分布对齐与质量控制</strong>：采用分桶下采样使合成数据价值分布匹配原始分布，过滤低置信度事件并移除泄露域信息的特征，进一步提升效果。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ul>
+<li>在工业级推荐平台的在线A/B测试中，SCALR在一主要模型上带来连续多周约0.14%–0.24%的转化率（CVR）提升，统计显著。</li>
+<li>离线对比：概率采样（覆盖面30%物品）vs Top-1（覆盖面4%），采样在评估集上相对NE改善0.25%，Top-1几乎无泛化提升；合成数据量增加单调提升效果，但存在收益递减。</li>
+<li>分布对齐：分桶下采样带来额外-0.13%相对NE增益，证实匹配原始分布的重要性。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.00282&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.00282" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.00282" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.00282" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

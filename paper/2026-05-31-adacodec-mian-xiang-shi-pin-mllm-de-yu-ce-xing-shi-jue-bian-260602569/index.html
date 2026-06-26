@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="将视频帧编码为自适应 I/P 帧：高预测代价的参考帧保留全量 tokens，中间帧压缩为紧凑 P-tokens，在 1/7 视觉 token 预算下保持甚至超越基线准确率，并大幅降低延迟。"><meta property="og:title" content="AdaCodec: A Predictive Visual Code for Video MLLMs"><meta property="og:description" content="将视频帧编码为自适应 I/P 帧：高预测代价的参考帧保留全量 tokens，中间帧压缩为紧凑 P-tokens，在 1/7 视觉 token 预算下保持甚至超越基线准确率，并大幅降低延迟。"><meta property="og:type" content="website"><title>AdaCodec: A Predictive Visual Code for Video MLLMs</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Multimodal">Multimodal</a> <span class="sep">|</span> <time datetime="2026-05-31">2026-05-31</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2606.02569" target="_blank" rel="noopener">2606.02569</a>  </div> <h1>AdaCodec: A Predictive Visual Code for Video MLLMs</h1> <p class="title-zh">AdaCodec：面向视频 MLLM 的预测性视觉编码</p> <div class="dir-row"> <span class="direction-chip">🧭 多模态大模型 · 视频压缩编码</span> </div> <p class="affiliations">Shanghai Jiao Tong University · Shanghai Innovation Institute · JD.com</p> <div class="meta">Haowen Hou, Zhen Huang, Zheming Liang, Qingyi Si, Chenglin Li, Shuai Dong 等</div> <p class="one-liner">将视频帧编码为自适应 I/P 帧：高预测代价的参考帧保留全量 tokens，中间帧压缩为紧凑 P-tokens，在 1/7 视觉 token 预算下保持甚至超越基线准确率，并大幅降低延迟。</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/predictive coding">predictive coding</a><a class="tag" href="/DailyPaper/tag/video MLLM">video MLLM</a><a class="tag" href="/DailyPaper/tag/visual token compression">visual token compression</a><a class="tag" href="/DailyPaper/tag/adaptive GOP">adaptive GOP</a><a class="tag" href="/DailyPaper/tag/motion-residual encoding">motion-residual encoding</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>对于多模态购物推荐或直播商品理解场景，可借鉴自适应 I/P 帧选择机制，对关键帧保留全量视觉 token，非关键帧仅传输变化信息，大幅降低视频 token 开销，减少推理时延和成本。</li><li>P-tokenizer 将运动向量和残差编码为紧凑 token 的思路，可复用于商品视频的理解前端，在不损失太多有效信息的前提下压缩 token 序列长度，提升多模态模型的吞吐。</li><li>基于预测代价的自适应 GOP 构造策略，可推广至其他序列建模任务（如用户行为序列），用动态关键点替代均匀采样，平衡信息密度与计算预算。</li><li>整体方案提供了一种视频 MLLM 的视觉接口设计范式，类似视频压缩中的 I/P 帧思想，可直接用于 Agent 或 RAG 场景中对长视频的实时理解与检索。</li> </ul> </div> <div class="content"> <p><strong>动机</strong>：现有视频多模态大模型（video MLLM）对逐帧独立编码，大量视觉 token 重复帧间共有内容，造成严重的计算和内存冗余。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li>将视觉接口设计为预测性编码（predictive visual code），自适应划分视频为图像组（GOP）。</li>
+<li>为每帧计算预测代价 <code>pcost</code>，高于阈值时将其作为 I-frame，用 ViT 编码为全量 256 tokens；否则作为 P-frame，由 P-tokenizer 提取运动向量和重建残差，压缩为 16-token 的紧凑表示。</li>
+<li>该自适应 I/P 选择使得模型仅在场景无法被上下文良好预测时才发送完整参考帧，其余仅发送帧间变化。</li>
+</ul>
+<p><strong>关键结果</strong>：</p>
+<ul>
+<li>在 11 个基准上，与 Qwen3-VL-8B 逐帧基线相比，匹配视觉 token 预算时 AdaCodec 全面优于基线；仅使用 1/7 的 token（32k vs 224k），在长视频基准上已超越基线，在通用视频基准上也匹配甚至小幅提升平均分。</li>
+<li>TTFT（首 token 延迟）从 9.26 秒降至 1.62 秒，端到端延迟从 11.18 秒降至 3.20 秒，同时准确率整体不降。</li>
+</ul> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202606.02569&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2606.02569" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2606.02569" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2606.02569" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>

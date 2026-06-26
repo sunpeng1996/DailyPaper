@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="提出零依赖合成框架，自主生成可执行终端环境与专家轨迹，训练出的Agent大幅超越基座模型"><meta property="og:title" content="LiteCoder-Terminal: Scaling Long-Horizon Terminal Environments for Learning Language Agents"><meta property="og:description" content="提出零依赖合成框架，自主生成可执行终端环境与专家轨迹，训练出的Agent大幅超越基座模型"><meta property="og:type" content="website"><title>LiteCoder-Terminal: Scaling Long-Horizon Terminal Environments for Learning Language Agents</title><link rel="icon" type="image/svg+xml" href="/DailyPaper/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS" href="/DailyPaper/rss.xml"><script>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script><link rel="stylesheet" href="/DailyPaper/_astro/archive.C9JYsY5z.css"><script type="module">(function(){var l=document.querySelector("main.content"),o=document.getElementById("quick-nav"),c=document.getElementById("quick-nav-list");if(!(!l||!o||!c)){var r=[],u=l.querySelector(".today-banner");if(u&&r.push({el:u,label:"今日播报"}),l.querySelectorAll(".section-h").forEach(function(e){var t=(e.textContent||"").split("·")[0].trim();t&&r.push({el:e,label:t})}),r.length===0&&l.querySelectorAll(".detail .content h2, .archive-detail .content h2").forEach(function(e){var t=(e.textContent||"").trim();t&&r.push({el:e,label:t})}),!(r.length<2)){var f=[];if(r.forEach(function(e,t){e.el.id||(e.el.id="qn-"+t);var i=document.createElement("li"),n=document.createElement("a");n.href="#"+e.el.id,n.textContent=e.label,n.addEventListener("click",function(a){a.preventDefault(),e.el.scrollIntoView({behavior:"smooth",block:"start"}),history.replaceState(null,"","#"+e.el.id)}),i.appendChild(n),c.appendChild(i),f.push(n)}),o.hidden=!1,"IntersectionObserver"in window){var s=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){var i=r.findIndex(function(n){return n.el===t.target});i<0||f.forEach(function(n,a){n.classList.toggle("active",a===i)})}})},{rootMargin:"-10% 0px -75% 0px",threshold:0});r.forEach(function(e){s.observe(e.el)})}}}})();
+</script></head> <body> <header class="site-header"> <div class="inner"> <div class="brand"> <a href="/DailyPaper/" aria-label="home" data-home-reset> <span class="logo">AI</span> </a> <div> <h1 class="site-title"><a href="/DailyPaper/" data-home-reset>AI Papers Daily</a></h1> <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p> </div> </div> <nav class="nav"> <a href="/DailyPaper/" class="" data-home-reset>首页</a> <a href="/DailyPaper/collection" class="">论文沉淀</a> <a href="/DailyPaper/search" class="">检索</a> <a href="/DailyPaper/archive" class="">归档</a> <a href="/DailyPaper/categories" class="">分类</a> <a href="/DailyPaper/tags" class="">标签</a> </nav> </div> </header> <div class="layout"> <aside class="sidebar"> <div class="profile-card"> <a href="https://sunpeng1996.github.io/DailyPaper/" class="profile-avatar" target="_blank" rel="noopener" aria-label="DailyPaper">DP</a> <h3 class="profile-name">DailyPaper</h3> <p class="profile-tagline">Agent · Multimodal · Post-training · GenRec</p> </div> <nav class="sidebar-section quick-nav" id="quick-nav" hidden> <h4 class="sidebar-h">本页导航</h4> <ul class="quick-nav-list" id="quick-nav-list"></ul> </nav> <nav class="sidebar-section"> <h4 class="sidebar-h">个人链接</h4> <ul class="sidebar-links"> <li> <a href="https://sunpeng1996.github.io/DailyPaper/" target="_blank" rel="noopener"> <span class="link-icon">📄</span> DailyPaper 站点
+</a> </li> </ul> </nav> <section class="sidebar-section"> <h4 class="sidebar-h">关于本站</h4> <p class="sidebar-text">
+面向电商 / Agent / 生成式推荐方向的每日 AI 论文与行业动态精选，
+      侧重可落地到业务的信息。数据来自 arXiv、Hugging Face Daily Papers、
+      Hacker News、Reddit 及主流中文 AI 媒体。
+</p> </section> </aside>  <main class="content">  <article class="detail"> <div class="meta"> <a href="/DailyPaper/category/Agent">Agent</a> <span class="sep">|</span> <time datetime="2026-05-27">2026-05-27</time> <span class="sep">|</span>
+arXiv:<a href="https://arxiv.org/abs/2605.29559" target="_blank" rel="noopener">2605.29559</a> <span class="sep">|</span><span>★ 深度解读</span> </div> <h1>LiteCoder-Terminal: Scaling Long-Horizon Terminal Environments for Learning Language Agents</h1> <p class="title-zh">LiteCoder-Terminal：长时终端Agent的零依赖环境合成与训练</p> <div class="dir-row"> <span class="direction-chip">🧭 终端Agent训练 · 零依赖环境合成与SFT/DMPO</span> </div> <p class="affiliations">Institute of Software, Chinese Academy of Sciences · University of Chinese Academy of Sciences</p> <div class="meta">Xiaoxuan Peng, Kaiqi Zhang, Xinyu Lu, Boxi Cao, Yaojie Lu, Hongyu Lin 等</div> <p class="one-liner">提出零依赖合成框架，自主生成可执行终端环境与专家轨迹，训练出的Agent大幅超越基座模型</p> <div class="tags" style="margin: 6px 0 18px;"> <a class="tag" href="/DailyPaper/tag/Language Agents">Language Agents</a><a class="tag" href="/DailyPaper/tag/Synthetic Environments">Synthetic Environments</a><a class="tag" href="/DailyPaper/tag/SFT">SFT</a><a class="tag" href="/DailyPaper/tag/DMPO">DMPO</a><a class="tag" href="/DailyPaper/tag/Zero-dependency Synthesis">Zero-dependency Synthesis</a> </div> <div class="pv-block"> <h3>📌 工作参考价值</h3> <ul> <li>领域驱动的任务合成：利用Magpie-style高温采样，仅从领域描述自动生成大量任务，无需外部数据源，适合快速为电商客服、导购等Agent场景定制训练任务池。</li><li>多阶段因果环境构建管线：指令精炼→环境素材化→参考解→对抗式验证器→资源配置，每一步基于前置执行轨迹确保一致性，可直接复用于搭建电商交易模拟或推荐系统仿真环境，避免人工构造的漂移与错误。</li><li>DMPO多轮偏好优化：使用合成环境自带的自动验证器作为奖励信号，对长程Agent轨迹进行偏好学习，提升复杂任务表现；电商场景中的多轮对话式推荐Agent可借鉴此思路，利用可自动校验的虚拟用户行为进行RL训练。</li><li>能力短板定向弥补：零依赖架构天然支持按需合成特定领域训练数据，当电商Agent在售后纠纷、订单修改等弱项上表现不足时，可针对性地生成相关任务轨迹，数据效率高（本文仅用11K轨迹即逼近50万条轨迹方法的性能）。</li> </ul> </div> <div class="content"> <p><strong>动机</strong><br>
+训练能驾驭长时间、多步骤终端任务的Agent，需要大量可交互环境，但现有方法依赖爬取GitHub、Stack Overflow等外部仓库，不仅领域多样性差、环境可控性低，还无法针对性地强化模型的具体能力短板。为解决此问题，本文提出LiteCoder-Terminal-Gen，一种零依赖（zero-dependency）合成管线，能从领域规格出发全自动生成可执行、可验证的终端训练环境，提供可扩展的监督信号。</p>
+<p><strong>方法关键点</strong></p>
+<ul>
+<li><strong>领域→任务生成</strong>：设计领域系统提示，利用对齐LLM的自回归特性（Magpie-style），不提供任何用户输入直接采样出任务描述，再经可行性检查过滤。</li>
+<li><strong>五阶段可执行环境合成</strong>：①指令精炼——将任务描述重写为可测试的规格，约束文件路径与输出格式；②环境初始化——基于Ubuntu Docker模板生成Dockerfile和输入工件；③解决方案合成——生成solve.sh证明任务可解；④验证器构建——通过“草案-攻击-精炼-定稿”四轮对抗迭代产出鲁棒的pytest测试集；⑤资源配置——分析所有产出估算并写入task.toml。每阶段都条件于前序执行日志，保证因果一致性。</li>
+<li><strong>轨迹收集与过滤</strong>：使用MiniMax M2/M2.1等多教师模型在Terminus 2、Claude Code、OpenHands等脚手架上收集交互轨迹，经LLM Judge按适应性、根基性、持久性和明确拒绝四个维度过滤，最终保留11,255条专家轨迹。</li>
+<li><strong>SFT与DMPO训练</strong>：先做SFT，后在自建RL环境上应用DMPO（Direct Multi-turn Preference Optimization），利用合成验证器提供的奖励信号对4B模型进行多轮偏好优化。</li>
+</ul>
+<p><strong>关键结果</strong><br>
+在Terminal Bench 1.0/2.0/Pro上评估：SFT后，32B模型分别达到29.06%、18.54%、34.00% pass@1，较基座Qwen2.5-Coder-32B-Instruct提升16.87、>4倍和20.5个百分点；30B-A3B和4B变体同样全面超越对应基座。仅用11.2K轨迹，性能已接近数据量为其40倍以上的TerminalTraj-32B（50.7K轨迹）和Nemotron-Terminal-32B（490.5K轨迹）。在DMPO后，4B模型在TB-2和TB-Pro上进一步从4.78%/21.50%提升至6.10%/23.00%。消融实验表明各领域的贡献分布均匀，模型在测试时多采样下的pass@k提升显著，且所学终端技能可泛化至SWE-bench（4B模型从1.2%升至5.2%）。</p>
+<p><strong>一句话记忆</strong>：依赖零外部数据，仅从领域定义出发自动生成批量的可执行、可验证环境与高质量轨迹，为语言Agent提供了“按需合成”的规模化训练范式。</p> </div> <div class="ext-links"> <a href="https://github.com/Slinene/ai-papers-daily/issues/new?template=deep-read.yml&title=%E6%B7%B1%E8%AF%BB%3A%202605.29559&paper_url=https%3A%2F%2Farxiv.org%2Fabs%2F2605.29559" target="_blank" rel="noopener" class="deep-read-btn">🔬 一键深读归档</a> <a href="https://arxiv.org/abs/2605.29559" target="_blank" rel="noopener">arXiv 摘要页</a> <a href="https://arxiv.org/pdf/2605.29559" target="_blank" rel="noopener">PDF</a> <a href="/DailyPaper/">← 返回首页</a> </div> </article>  </main> </div> <footer>  <div>
+Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+</div> </footer> </body></html>
