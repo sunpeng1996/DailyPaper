@@ -1,6 +1,22 @@
-# AI Daily
+# DailyPaper
 
-参考 `https://slinene.github.io/ai-papers-daily/` 搭建的 GitHub Pages 静态日报站点。站点每天从 arXiv、Hugging Face Daily Papers、Hacker News、Reddit 和主流中文 AI 媒体抓取 AI 行业动态、热门项目与最新论文，并生成可归档的 JSON 数据。
+这是 `Slinene/ai-papers-daily` 功能模型的复刻版：arXiv + Hugging Face Daily Papers + 新闻源 + GitHub 热门项目，经 LLM 处理后写入 Astro content collection，生成静态日报站点。
+
+线上地址：
+
+`https://sunpeng1996.github.io/DailyPaper/`
+
+## 功能
+
+- 首页 Daily Digest：今日论文、新闻、热门项目、累计统计。
+- 论文详情页：摘要、方向、标签、分数、深度解读。
+- 归档页：按日期聚合。
+- 分类页：按 category 聚合。
+- 标签页：按 tag 聚合。
+- 搜索页：前端静态搜索。
+- RSS：`/rss.xml`。
+- 自动 pipeline：每天北京时间 09:00 抓取、处理、写 Markdown、构建、发布。
+- 可选飞书推送：通过 GitHub Secrets 配置。
 
 ## 本地开发
 
@@ -9,57 +25,61 @@ npm install
 npm run dev
 ```
 
-## 生成每日数据
+默认本地路径：
+
+`http://localhost:4321/DailyPaper/`
+
+## 本地构建
+
+```bash
+npm run build
+```
+
+## 运行完整抓取流水线
+
+需要先配置 `.env`：
+
+```bash
+cp .env.example .env
+```
+
+至少需要：
+
+```bash
+DEEPSEEK_API_KEY=你的 key
+SITE_URL=https://sunpeng1996.github.io
+BASE_PATH=/DailyPaper
+```
+
+然后运行：
 
 ```bash
 pip install -r requirements.txt
-python scripts/fetch_daily.py --public-dir public --config config/sources.json
+python scripts/run_all.py
 ```
 
-生成结果位于：
+## GitHub Secrets / Variables
 
-- `public/data/site-index.json`
-- `public/data/daily/YYYY-MM-DD.json`
-- `public/data/papers/*.json`
-- `public/data/sources-status.json`
+Secrets 不会暴露在公开仓库中。
 
-## 数据源与兴趣筛选
+必需 Secret：
 
-数据源和兴趣关键词集中配置在 `config/sources.json`。
+- `DEEPSEEK_API_KEY`
 
-当前默认数据源：
+可选 Secrets：
 
-- `arxiv`：arXiv Atom API，默认查询 `cs.AI`、`cs.CL`、`cs.CV`、`cs.LG`、`cs.IR`。
-- `hugging_face`：Hugging Face Daily Papers 页面。
-- `hacker_news`：Hacker News Algolia Search API。
-- `reddit`：`LocalLLaMA`、`MachineLearning`、`singularity`、`ArtificialInteligence`。
-- `chinese_media`：机器之心、量子位、InfoQ AI、新智元 RSS。
+- `FEISHU_WEBHOOK`
+- `FEISHU_SECRET`
+- `FEISHU_APP_ID`
+- `FEISHU_APP_SECRET`
+- `FEISHU_CHAT_ID`
 
-前置筛选只保留以下方向相关内容：
+建议 Variables：
 
-- Agent
-- 多模态大模型
-- 后训练 / 对齐 / 偏好优化
-- 生成式搜推 / 生成式推荐 / 生成式检索
-
-添加更多来源：
-
-- 新增中文媒体 RSS：在 `sources.chinese_media.rss` 增加 `"名称": "RSS_URL"`。
-- 新增 Reddit 版块：在 `sources.reddit.subreddits` 追加版块名。
-- 调整 HN 查询：修改 `sources.hacker_news.query`。
-- 调整 arXiv 范围：修改 `sources.arxiv.query`。
-- 关闭某个源：将对应源的 `enabled` 改为 `false`。
-- 扩展研究兴趣：在 `interests.keywords` 增加关键词。
-
-## GitHub Pages
-
-项目包含两个 workflow：
-
-- `.github/workflows/pages.yml`：push 后构建并发布静态站点。
-- `.github/workflows/daily-digest.yml`：北京时间每天 09:00 定时抓取数据、提交 JSON 并发布站点。
-
-首次使用时，在 GitHub 仓库 Settings -> Pages 中选择 GitHub Actions 作为发布来源。
-
-## 可配置项
-
-当前抓取脚本默认不依赖 LLM API Key，使用规则摘要和标签。后续可以在 `scripts/fetch_daily.py` 中接入 OpenAI/Ark 兼容接口，增强中文摘要与工作参考价值。
+- `SITE_URL=https://sunpeng1996.github.io`
+- `BASE_PATH=/DailyPaper`
+- `DEEPSEEK_BASE_URL=https://api.deepseek.com`
+- `DEEPSEEK_MODEL=deepseek-v4-pro`
+- `MAX_PAPERS_PER_DAY=30`
+- `MIN_SCORE_KEEP=6`
+- `MIN_SCORE_DEEP=8`

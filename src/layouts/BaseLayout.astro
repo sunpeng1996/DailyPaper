@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'AI Papers Daily', description = '每日 AI / 电商 / 推荐系统 / Agent 论文与行业动态精选。' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pathname = Astro.url?.pathname?.replace(/\/$/, '') || '';
+const isActive = (p: string) => pathname === `${base}${p}`.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href={`${base}/rss.xml`} />
+    <script is:inline>
+      // Remember scroll position per page so returning from a paper sub-page
+      // lands where you clicked, not at the top. Explicit "首页/logo" clicks
+      // (marked data-home-reset) deliberately forget the position.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var KEY = 'aip:scroll:' + location.pathname;
+          var saved = sessionStorage.getItem(KEY);
+          var target = saved === null ? null : (parseInt(saved, 10) || 0);
+          function restore() {
+            if (target === null) return;
+            // Don't fight the user if they've already started scrolling.
+            if (window.scrollY < 4) window.scrollTo(0, target);
+          }
+          if (target !== null) {
+            document.addEventListener('DOMContentLoaded', restore);
+            window.addEventListener('load', restore);
+          }
+          var ticking = false;
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              sessionStorage.setItem(KEY, String(window.scrollY));
+              ticking = false;
+            });
+          }, { passive: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-home-reset]');
+            if (!a) return;
+            try { sessionStorage.removeItem('aip:scroll:' + new URL(a.href).pathname); } catch (_) {}
+          });
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <div class="brand">
+          <a href={`${base}/`} aria-label="home" data-home-reset>
+            <span class="logo">AI</span>
+          </a>
+          <div>
+            <h1 class="site-title"><a href={`${base}/`} data-home-reset>AI Papers Daily</a></h1>
+            <p class="site-tagline">每日 AI / 电商 / 推荐系统 / Agent 论文精选</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href={`${base}/`} class={isActive('') ? 'active' : ''} data-home-reset>首页</a>
+          <a href={`${base}/collection`} class={pathname.startsWith(`${base}/collection`) ? 'active' : ''}>论文沉淀</a>
+          <a href={`${base}/search`} class={isActive('/search') ? 'active' : ''}>检索</a>
+          <a href={`${base}/archive`} class={isActive('/archive') ? 'active' : ''}>归档</a>
+          <a href={`${base}/categories`} class={isActive('/categories') ? 'active' : ''}>分类</a>
+          <a href={`${base}/tags`} class={isActive('/tags') ? 'active' : ''}>标签</a>
+        </nav>
+      </div>
+    </header>
+    <div class="layout">
+      <Sidebar />
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+    <footer>
+      <slot name="footer" />
+      <div>
+        Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> & DeepSeek
+      </div>
+    </footer>
+  </body>
+</html>
