@@ -20,18 +20,29 @@ import os
 from openai import OpenAI, OpenAIError
 from pydantic import BaseModel, Field, ValidationError
 
-from common import CACHE_DIR, add_usage, env_int, env_str, log, now_iso_date, read_json, write_json
+from common import (
+    CACHE_DIR,
+    add_usage,
+    env_int,
+    env_str,
+    llm_api_key,
+    llm_base_url,
+    llm_model,
+    log,
+    now_iso_date,
+    read_json,
+    write_json,
+)
 
-DEEPSEEK_API_KEY = env_str("DEEPSEEK_API_KEY")
-if not DEEPSEEK_API_KEY:
-    raise SystemExit("DEEPSEEK_API_KEY env var is required")
-DEEPSEEK_BASE_URL = env_str("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-DEEPSEEK_MODEL = env_str("DEEPSEEK_MODEL", "deepseek-v4-pro")
+LLM_API_KEY = llm_api_key()
+LLM_BASE_URL = llm_base_url()
+LLM_MODEL = llm_model()
+HAS_LLM = bool(LLM_API_KEY)
 
 MAX_REPOS_OUT = env_int("REPOS_OUT_MAX", 8)
 README_IN_CHARS = env_int("REPOS_README_IN_CHARS", 2200)
 
-client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=DEEPSEEK_BASE_URL,
+client = OpenAI(api_key=LLM_API_KEY or "missing", base_url=LLM_BASE_URL,
                 timeout=120, max_retries=2)
 
 SYSTEM = """你是一位 AI 工程方向的技术选型分析师。读者是 **专注电商 / 广告 / 搜索推荐系统，
@@ -77,6 +88,28 @@ def main():
         return
 
     by_name = {r["name"]: r for r in raws}
+    if not HAS_LLM:
+        log.warning("LLM_API_KEY is not configured; using heuristic repo processing")
+        ranked = sorted(raws, key=lambda r: int(r.get("stars") or 0), reverse=True)
+        out = []
+        for r in ranked[:MAX_REPOS_OUT]:
+            desc = (r.get("description") or r.get("readme") or "").strip()
+            out.append({
+                "name": r["name"],
+                "url": r.get("url", f"https://github.com/{r['name']}"),
+                "stars": int(r.get("stars") or 0),
+                "language": r.get("language", ""),
+                "topics": (r.get("topics") or [])[:6],
+                "one_liner": desc[:117].rstrip() + ("..." if len(desc) > 117 else ""),
+                "capability": desc[:300],
+                "value": "- 未配置 DeepSeek API Key，当前使用 GitHub 元数据和 README 摘要兜底。\n- 配置 Key 后会恢复项目能力分析和业务借鉴点生成。",
+                "tags": [t for t in (r.get("topics") or []) if isinstance(t, str)][:6],
+            })
+        write_json(CACHE_DIR / "processed_repos.json",
+                   {"date": now_iso_date(), "repos": out})
+        log.info("kept %d repos with heuristic fallback", len(out))
+        return
+
     lines = []
     for i, r in enumerate(raws):
         rm = (r.get("readme") or "").replace("\n", " ")[:README_IN_CHARS]
@@ -99,14 +132,14 @@ def main():
     for attempt in range(2):
         try:
             resp = client.chat.completions.create(
-                model=DEEPSEEK_MODEL, messages=messages,
+                model=LLM_MODEL, messages=messages,
                 response_format={"type": "json_object"},
                 temperature=0.3, max_tokens=8000,
             )
         except OpenAIError as exc:
             log.warning("repos llm error attempt=%d: %s", attempt, exc)
             break
-        add_usage(DEEPSEEK_MODEL, getattr(resp, "usage", None))
+        add_usage(LLM_MODEL, getattr(resp, "usage", None))
         text = (resp.choices[0].message.content or "").strip()
         try:
             result = ReposResult.model_validate_json(text)

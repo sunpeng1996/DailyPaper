@@ -15,7 +15,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const direction = (data.direction || '').trim();
 // 一键深读：跳到预填好的 GitHub Issue 表单（paper_url 自动填入），提交后 Action 自动深读归档
 const deepReadUrl =
-  'https://github.com/Slinene/ai-papers-daily/issues/new'
+  'https://github.com/sunpeng1996/DailyPaper/issues/new'
   + '?template=deep-read.yml'
   + '&title=' + encodeURIComponent('深读: ' + data.arxiv_id)
   + '&paper_url=' + encodeURIComponent(data.url);

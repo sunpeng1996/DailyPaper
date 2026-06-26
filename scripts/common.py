@@ -69,6 +69,62 @@ def env_float(key: str, default: float) -> float:
         return default
 
 
+# --- local key file fallback (for devboxes; never commit the key) ---------
+# When running locally outside of GitHub Actions, allow the API key to live in
+# a plain text file outside the repo (e.g. ~/playground/api/api_key.txt).
+# This keeps the key out of git history while still letting `python scripts/process.py`
+# work without manually exporting env vars every time.
+
+_LOCAL_API_KEY_PATHS = [
+    Path("/mlx_devbox/users/sunpeng.sp/playground/api/api_key.txt"),
+]
+
+
+def _read_local_api_key() -> str:
+    """Read the first non-empty API key file from _LOCAL_API_KEY_PATHS.
+
+    Returns "" if none of the files exist or are blank.
+    Best-effort — any I/O error is silently swallowed (treated as "no key").
+    """
+    for p in _LOCAL_API_KEY_PATHS:
+        try:
+            if not p.exists():
+                continue
+            text = p.read_text(encoding="utf-8").strip()
+            if text:
+                return text.splitlines()[0].strip()
+        except Exception:
+            continue
+    return ""
+
+
+def llm_api_key() -> str:
+    """Preferred key source: env (GitHub Secrets / .env) > local key file.
+
+    Falls back to the local key file so local development doesn't require
+    exporting the key by hand. Never hardcodes a key in the repo.
+    """
+    return env_str("LLM_API_KEY", env_str("DEEPSEEK_API_KEY", _read_local_api_key()))
+
+
+def llm_base_url() -> str:
+    """Default base URL matches the ARK / Doubao OpenAI-compatible endpoint
+    shown in codebase/api/demo.py. Override with LLM_BASE_URL / DEEPSEEK_BASE_URL
+    if you want to point at DeepSeek or another provider."""
+    return env_str(
+        "LLM_BASE_URL",
+        env_str("DEEPSEEK_BASE_URL", "https://ark-cn-beijing.bytedance.net/api/v3"),
+    )
+
+
+def llm_model(default: str = "ep-20260626155131-7psq6") -> str:
+    """Default model is the ARK endpoint id from the demo script.
+
+    Override with LLM_MODEL / DEEPSEEK_MODEL (DEEPSEEK_MODEL kept for
+    backwards compat with the original DeepSeek workflow)."""
+    return env_str("LLM_MODEL", env_str("DEEPSEEK_MODEL", default))
+
+
 # --- LLM usage accounting ---------------------------------------------------
 # Pipeline scripts run as separate processes (process.py -> process_news.py ->
 # push_feishu.py), so token usage is accumulated in a JSON file the final

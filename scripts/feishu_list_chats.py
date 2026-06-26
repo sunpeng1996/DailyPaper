@@ -6,7 +6,7 @@ The IM API's receive_id_type=chat_id expects the `oc_...` open_chat_id, NOT
 the numeric id you see in a group's link/UI. This script fetches the correct
 one for every chat the bot can see.
 
-Usage (from ai-papers-daily/, with .env containing FEISHU_APP_ID/SECRET):
+Usage (from DailyPaper/, with .env containing FEISHU_APP_ID/SECRET):
   .venv/bin/python scripts/feishu_list_chats.py
 
 Prereq: the app must be added to the target group first

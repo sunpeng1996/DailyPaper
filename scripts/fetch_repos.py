@@ -22,7 +22,7 @@ import httpx
 from common import CACHE_DIR, env_int, env_str, log, recent_repo_names, write_json
 
 GITHUB_TOKEN = env_str("GITHUB_TOKEN")
-UA = "ai-papers-daily/0.1 (+https://github.com/Slinene/ai-papers-daily)"
+UA = "DailyPaper/0.1 (+https://github.com/sunpeng1996/DailyPaper)"
 API = "https://api.github.com"
 
 # GitHub search caps boolean operators (~5) and query length (256), so a big

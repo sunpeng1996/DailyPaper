@@ -21,10 +21,12 @@ from openai import OpenAI
 from pypdf import PdfReader
 from slugify import slugify as _slugify
 
+from common import env_int, llm_api_key, llm_base_url, llm_model
+
 ROOT = Path(__file__).resolve().parent.parent
 ARCHIVE = ROOT / "src" / "content" / "archive_papers"
 FIGROOT = ROOT / "public" / "figures"
-FIG_BASE = "/ai-papers-daily/figures"  # GitHub Pages base prefix
+FIG_BASE = "/DailyPaper/figures"  # GitHub Pages base prefix
 
 # Canonical topics (id -> name, icon). New topics handled via env.
 TOPICS = {
@@ -37,12 +39,12 @@ TOPICS = {
     "agent-auto-research": ("Agent Auto-Research", "🔬"),
 }
 
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "").strip()
-DEEPSEEK_BASE_URL = os.environ.get("DEEPSEEK_BASE_URL", "").strip() or "https://api.deepseek.com"
-DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "").strip() or "deepseek-v4-pro"
-PDF_MAX_CHARS = int(os.environ.get("DEEP_PDF_MAX_CHARS", "80000"))
+LLM_API_KEY = llm_api_key()
+LLM_BASE_URL = llm_base_url()
+LLM_MODEL = llm_model()
+PDF_MAX_CHARS = env_int("DEEP_PDF_MAX_CHARS", 80000)
 
-client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=DEEPSEEK_BASE_URL,
+client = OpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL,
                 timeout=httpx.Timeout(300.0, connect=15.0), max_retries=2)
 
 SYSTEM = """你是论文深度解读专家，读者是 AI 算法工程师。读完整篇论文，产出「可复现细节级」的中文深度解读。
@@ -99,7 +101,7 @@ def fetch_meta(aid: str) -> dict:
 def fetch_pdf_text(aid: str, dest: Path) -> str:
     url = f"https://arxiv.org/pdf/{aid}"
     with httpx.Client(timeout=120.0, follow_redirects=True) as cli:
-        r = cli.get(url, headers={"User-Agent": "ai-papers-daily-deepread/0.1"})
+        r = cli.get(url, headers={"User-Agent": "DailyPaper-deepread/0.1"})
         r.raise_for_status()
         dest.write_bytes(r.content)
     reader = PdfReader(io.BytesIO(dest.read_bytes()))
@@ -119,7 +121,7 @@ def gen_deep(meta: dict, full_text: str) -> dict:
         "请按系统要求输出 JSON。body_md 写到可复现细节级。"
     )
     resp = client.chat.completions.create(
-        model=DEEPSEEK_MODEL,
+        model=LLM_MODEL,
         messages=[{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
         response_format={"type": "json_object"},
         temperature=0.3, max_tokens=12000,

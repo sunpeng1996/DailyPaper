@@ -1,6 +1,6 @@
 # DailyPaper
 
-这是 `Slinene/ai-papers-daily` 功能模型的复刻版：arXiv + Hugging Face Daily Papers + 新闻源 + GitHub 热门项目，经 LLM 处理后写入 Astro content collection，生成静态日报站点。
+这是一个 AI 每日论文 + 行业动态静态站：arXiv + Hugging Face Daily Papers + 新闻源 + GitHub 热门项目，经 LLM 处理后写入 Astro content collection，生成静态日报站点。
 
 线上地址：
 

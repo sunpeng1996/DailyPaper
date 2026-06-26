@@ -91,6 +91,6 @@ jobs:
 
       - name: Comment + close issue
         run: |
-          URL="https://slinene.github.io/ai-papers-daily/collection/${{ steps.deep.outputs.topic }}/${{ steps.deep.outputs.slug }}/"
+          URL="https://sunpeng1996.github.io/DailyPaper/collection/${{ steps.deep.outputs.topic }}/${{ steps.deep.outputs.slug }}/"
           gh issue comment "${{ env.ISSUE_NUMBER }}" --body "✅ 深读完成，归到 **${{ steps.deep.outputs.topic_name }}**（DeepSeek 可复现深度正文，标记未核实）。几分钟后上线：${URL} ｜ CI 深读只产正文不配图；如需配图+人工核验，本机用 \`/paper-to-pages ${URL}\` 重做覆盖。"
           gh issue close "${{ env.ISSUE_NUMBER }}"

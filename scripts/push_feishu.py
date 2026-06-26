@@ -43,8 +43,8 @@ FEISHU_CHAT_ID = env_str("FEISHU_CHAT_ID")
 FEISHU_RECEIVE_ID_TYPE = env_str("FEISHU_RECEIVE_ID_TYPE", "chat_id")
 FEISHU_OPEN_HOST = env_str("FEISHU_OPEN_HOST", "https://open.feishu.cn").rstrip("/")
 
-SITE_URL = env_str("SITE_URL", "https://slinene.github.io").rstrip("/")
-BASE_PATH = env_str("BASE_PATH", "/ai-papers-daily").strip("/")
+SITE_URL = env_str("SITE_URL", "https://sunpeng1996.github.io").rstrip("/")
+BASE_PATH = env_str("BASE_PATH", "/DailyPaper").strip("/")
 SITE_BASE = f"{SITE_URL}/{BASE_PATH}" if BASE_PATH else SITE_URL
 
 # How many of each to show in the single card (keeps it scannable)

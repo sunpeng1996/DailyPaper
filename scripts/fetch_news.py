@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 
 from common import CACHE_DIR, env_int, env_str, log, write_json
 
-UA = "ai-papers-daily/0.1 (https://github.com/Slinene/ai-papers-daily)"
+UA = "DailyPaper/0.1 (https://github.com/sunpeng1996/DailyPaper)"
 TIMEOUT = 20.0
 
 HN_API = "https://hn.algolia.com/api/v1/search"

@@ -32,18 +32,19 @@ from common import (
     add_usage,
     env_int,
     env_str,
+    llm_api_key,
+    llm_base_url,
+    llm_model,
     log,
     now_iso_date,
     read_json,
     write_json,
 )
 
-DEEPSEEK_API_KEY = env_str("DEEPSEEK_API_KEY")
-if not DEEPSEEK_API_KEY:
-    raise SystemExit("DEEPSEEK_API_KEY env var is required")
-
-DEEPSEEK_BASE_URL = env_str("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-DEEPSEEK_MODEL = env_str("DEEPSEEK_MODEL", "deepseek-v4-pro")
+LLM_API_KEY = llm_api_key()
+LLM_BASE_URL = llm_base_url()
+LLM_MODEL = llm_model()
+HAS_LLM = bool(LLM_API_KEY)
 
 MAX_NEWS_ITEMS = env_int("MAX_NEWS_ITEMS", 50)
 MAX_NEWS_TOPICS = env_int("MAX_NEWS_TOPICS", 10)
@@ -76,8 +77,8 @@ CN_KEYWORD_RE = re.compile(
 )
 
 client = OpenAI(
-    api_key=DEEPSEEK_API_KEY,
-    base_url=DEEPSEEK_BASE_URL,
+    api_key=LLM_API_KEY or "missing",
+    base_url=LLM_BASE_URL,
     timeout=120,
     max_retries=2,
 )
@@ -123,6 +124,32 @@ class ClusterOutput(BaseModel):
     topics: list[Topic]
 
 
+def heuristic_cluster(items: list[dict]) -> ClusterOutput:
+    """Fallback when no DeepSeek key is configured."""
+    topics: list[Topic] = []
+    for idx, it in enumerate(items[:MAX_NEWS_TOPICS]):
+        title = re.sub(r"\s+", " ", it.get("title") or "").strip()
+        snippet = re.sub(r"\s+", " ", it.get("snippet") or "").strip()
+        source = it.get("source", "")
+        tags = ["AI"]
+        if source.startswith("cn:"):
+            tags.append("China AI")
+        elif source.startswith("blog:"):
+            tags.append("Company Blog")
+        elif source.startswith("reddit:"):
+            tags.append("Reddit")
+        elif source == "hn":
+            tags.append("Hacker News")
+        summary = snippet or title
+        topics.append(Topic(
+            title=title[:30] or "AI 动态",
+            summary=(summary[:220] or "未配置 DeepSeek，使用规则聚合生成摘要。"),
+            tags=tags[:4],
+            source_indices=[idx],
+        ))
+    return ClusterOutput(topics=topics)
+
+
 def prefilter(raws: list[dict]) -> list[dict]:
     """Keep items that mention an AI/LLM keyword (EN or CN), or come from a
     domain-curated AI source (where the source itself is the trust signal)."""
@@ -148,6 +175,10 @@ def prefilter(raws: list[dict]) -> list[dict]:
 
 def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
     """Single LLM call: cluster + summarize. Retries once on invalid JSON."""
+    if not HAS_LLM:
+        log.warning("LLM_API_KEY is not configured; using heuristic news clustering")
+        return heuristic_cluster(items)
+
     lines: list[str] = []
     for idx, it in enumerate(items):
         meta = f"[{it.get('source','?')}"
@@ -175,7 +206,7 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
     for attempt in range(2):
         try:
             resp = client.chat.completions.create(
-                model=DEEPSEEK_MODEL,
+                model=LLM_MODEL,
                 messages=messages,
                 response_format={"type": "json_object"},
                 temperature=0.3,
@@ -186,7 +217,7 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
         except OpenAIError as exc:
             log.warning("news cluster api error attempt=%d: %s", attempt, exc)
             return None
-        add_usage(DEEPSEEK_MODEL, getattr(resp, "usage", None))
+        add_usage(LLM_MODEL, getattr(resp, "usage", None))
         text = (resp.choices[0].message.content or "").strip()
         try:
             return ClusterOutput.model_validate_json(text)

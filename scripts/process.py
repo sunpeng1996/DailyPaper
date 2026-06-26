@@ -19,6 +19,7 @@ from __future__ import annotations
 import io
 import json
 import os
+import re
 import time
 from typing import Type, TypeVar
 
@@ -32,24 +33,25 @@ from common import (
     add_usage,
     env_int,
     env_str,
+    llm_api_key,
+    llm_base_url,
+    llm_model,
     log,
     read_json,
     reset_usage,
     write_json,
 )
 
-DEEPSEEK_API_KEY = env_str("DEEPSEEK_API_KEY")
-if not DEEPSEEK_API_KEY:
-    raise SystemExit("DEEPSEEK_API_KEY env var is required")
+LLM_API_KEY = llm_api_key()
+LLM_BASE_URL = llm_base_url()
+HAS_LLM = bool(LLM_API_KEY)
 
-DEEPSEEK_BASE_URL = env_str("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 # Two-tier model strategy:
 #   SCORE_MODEL — wide funnel, every candidate scored; use light/fast model
 #   SUMMARY_MODEL — narrow output (~MAX_PAPERS_PER_DAY calls); use pro
-# Both fall back to DEEPSEEK_MODEL for back-compat.
-DEEPSEEK_MODEL = env_str("DEEPSEEK_MODEL", "deepseek-v4-pro")
-DEEPSEEK_SCORE_MODEL = env_str("DEEPSEEK_SCORE_MODEL", "deepseek-v4-flash")
-DEEPSEEK_SUMMARY_MODEL = env_str("DEEPSEEK_SUMMARY_MODEL", DEEPSEEK_MODEL)
+LLM_MODEL = llm_model()
+LLM_SCORE_MODEL = env_str("LLM_SCORE_MODEL", env_str("DEEPSEEK_SCORE_MODEL", LLM_MODEL))
+LLM_SUMMARY_MODEL = env_str("LLM_SUMMARY_MODEL", env_str("DEEPSEEK_SUMMARY_MODEL", LLM_MODEL))
 
 MIN_SCORE_KEEP = env_int("MIN_SCORE_KEEP", 6)
 MIN_SCORE_DEEP = env_int("MIN_SCORE_DEEP", 8)
@@ -58,8 +60,8 @@ MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
 
 client = OpenAI(
-    api_key=DEEPSEEK_API_KEY,
-    base_url=DEEPSEEK_BASE_URL,
+    api_key=LLM_API_KEY or "missing",
+    base_url=LLM_BASE_URL,
     timeout=httpx.Timeout(120.0, connect=15.0),
     max_retries=2,
 )
@@ -176,6 +178,84 @@ def _short_authors(p: dict) -> str:
     return head + (" 等" if len(a) > 5 else "")
 
 
+def _heuristic_score(paper: dict) -> Relevance:
+    blob = f"{paper.get('title','')} {paper.get('abstract','')}".lower()
+    score = 4
+    rules = [
+        (r"\b(recommend|recommender|ranking|retrieval|search|advertis|ctr|cvr|query)\b", 3),
+        (r"\b(agent|agentic|multi-agent|tool use|planning|memory)\b", 2),
+        (r"\b(llm|large language model|gpt|rag|reasoning|alignment|post-training|rlhf|grpo)\b", 2),
+        (r"\b(multimodal|vision-language|vlm|image|video|speech)\b", 1),
+        (r"\b(benchmark|evaluation|dataset)\b", 1),
+    ]
+    hits: list[str] = []
+    for pattern, weight in rules:
+        if re.search(pattern, blob):
+            score += weight
+            hits.append(pattern.split("|")[0].strip(r"\b("))
+    if paper.get("source") == "huggingface-daily":
+        score += 1
+    if int(paper.get("hf_upvotes") or 0) >= 10:
+        score += 1
+    score = max(0, min(10, score))
+    reason = "规则打分"
+    if hits:
+        reason += "：" + "、".join(hits[:3])
+    return Relevance(score=score, reasoning=reason[:120])
+
+
+def _category_from_text(text: str) -> str:
+    t = text.lower()
+    if re.search(r"recommend|recommender|ranking|ctr|cvr|advertis", t):
+        return "RecSys"
+    if re.search(r"query|search suggestion|autocomplete", t):
+        return "QueryRec"
+    if re.search(r"agent|agentic|tool use|multi-agent", t):
+        return "Agent"
+    if re.search(r"rag|retrieval", t):
+        return "RAG"
+    if re.search(r"multimodal|vision-language|vlm|image|video|speech", t):
+        return "Multimodal"
+    if re.search(r"train|alignment|rlhf|grpo|post-training|distill", t):
+        return "Training"
+    if re.search(r"reasoning", t):
+        return "Reasoning"
+    return "LLM"
+
+
+def _heuristic_summary(paper: dict) -> Summary:
+    title = (paper.get("title") or "").strip()
+    abstract = re.sub(r"\s+", " ", paper.get("abstract") or "").strip()
+    category = _category_from_text(f"{title} {abstract}")
+    tags = [category, "LLM" if category != "LLM" else "AI"]
+    if "agent" in f"{title} {abstract}".lower() and "Agent" not in tags:
+        tags.append("Agent")
+    if "recommend" in f"{title} {abstract}".lower() and "RecSys" not in tags:
+        tags.append("RecSys")
+    one_liner = abstract[:95].rstrip() + ("..." if len(abstract) > 95 else "")
+    if not one_liner:
+        one_liner = "未配置 DeepSeek，使用标题和摘要生成规则摘要"
+    practical = (
+        "- 可先根据论文标题和摘要判断是否进入人工精读列表。\n"
+        "- 当前未配置 DeepSeek API Key，已使用规则摘要兜底；配置 Key 后会恢复中文精读、打分和业务可借鉴点生成。"
+    )
+    summary = (
+        "### 摘要\n\n"
+        f"{abstract or title}\n\n"
+        "> 当前运行未检测到 DeepSeek API Key，本卡片由规则降级流程生成。"
+    )
+    return Summary(
+        title_zh=title[:50] or "未命名论文",
+        one_liner=one_liner[:120],
+        category=category,
+        direction=category,
+        tags=tags[:6],
+        affiliations=[],
+        practical_value=practical,
+        summary_md=summary,
+    )
+
+
 def _call_json(
     system: str,
     user: str,
@@ -188,7 +268,7 @@ def _call_json(
     """One round-trip to DeepSeek that demands a JSON object and validates it
     against the given Pydantic schema. Retries once on parse/validation error
     with an explicit "must be JSON only" reminder."""
-    model = model or DEEPSEEK_SUMMARY_MODEL
+    model = model or LLM_SUMMARY_MODEL
     # Single chokepoint for every LLM call (score / abstract / deep) — strip
     # surrogates so the OpenAI SDK can UTF-8 encode the request body.
     messages = [
@@ -221,6 +301,9 @@ def _call_json(
 
 
 def score_relevance(paper: dict) -> Relevance | None:
+    if not HAS_LLM:
+        return _heuristic_score(paper)
+
     # authors give the model a weak extra signal for the big-lab boost (arXiv
     # has no affiliations, but author names sometimes hint at the team).
     user = (
@@ -232,7 +315,7 @@ def score_relevance(paper: dict) -> Relevance | None:
     # chain made 19 candidates take ~45 min — overkill for a 0-10 score.
     return _call_json(
         RELEVANCE_SYSTEM, user, Relevance,
-        model=DEEPSEEK_SCORE_MODEL,
+        model=LLM_SCORE_MODEL,
         max_tokens=1500,
         label=f"score:{paper['arxiv_id']}",
     )
@@ -252,6 +335,9 @@ def _first_page_text(paper: dict) -> str:
 
 
 def summarize_abstract(paper: dict) -> Summary | None:
+    if not HAS_LLM:
+        return _heuristic_summary(paper)
+
     fp = _first_page_text(paper)
     fp_block = (
         f"\n\nPDF 首页文本（含作者单位，用于提取 affiliations）:\n"
@@ -275,7 +361,7 @@ def summarize_abstract(paper: dict) -> Summary | None:
 def _fetch_pdf(url: str) -> bytes | None:
     try:
         with httpx.Client(timeout=60.0, follow_redirects=True) as cli:
-            r = cli.get(url, headers={"User-Agent": "ai-papers-daily/0.1"})
+            r = cli.get(url, headers={"User-Agent": "DailyPaper/0.1"})
             r.raise_for_status()
             return r.content
     except Exception as exc:
@@ -309,6 +395,9 @@ def _extract_pdf_text(pdf_bytes: bytes, max_chars: int) -> str:
 
 
 def summarize_with_pdf(paper: dict) -> Summary | None:
+    if not HAS_LLM:
+        return None
+
     pdf_url = paper.get("pdf_url")
     if not pdf_url:
         return None
@@ -341,8 +430,10 @@ def summarize_with_pdf(paper: dict) -> Summary | None:
 def main():
     reset_usage()  # first LLM stage of the pipeline — start the cost tally fresh
     raws = read_json(CACHE_DIR / "raw_papers.json") or []
+    if not HAS_LLM:
+        log.warning("LLM_API_KEY is not configured; using heuristic paper processing")
     log.info("processing %d raw papers via %s @ %s",
-             len(raws), DEEPSEEK_MODEL, DEEPSEEK_BASE_URL)
+             len(raws), LLM_MODEL, LLM_BASE_URL)
 
     # Step 1: relevance scoring. The persona prompt biases ranking, but must
     # NOT empty the daily digest on days arxiv has few e-comm/Agent/GenRec
