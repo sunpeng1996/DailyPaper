@@ -77,6 +77,7 @@ def env_float(key: str, default: float) -> float:
 
 _LOCAL_API_KEY_PATHS = [
     Path("/mlx_devbox/users/sunpeng.sp/playground/api/api_key.txt"),
+    Path("/Users/bytedance/Documents/trae_projects/api.txt"),
 ]
 
 
@@ -108,9 +109,11 @@ def llm_api_key() -> str:
 
 
 def llm_base_url() -> str:
-    """Default base URL matches the ARK / Doubao OpenAI-compatible endpoint
-    shown in codebase/api/demo.py. Override with LLM_BASE_URL / DEEPSEEK_BASE_URL
-    if you want to point at DeepSeek or another provider."""
+    """Default base URL matches the Doubao ARK OpenAI-compatible endpoint.
+
+    Override with LLM_BASE_URL; DEEPSEEK_BASE_URL kept for backwards compat
+    with older workflow configs.
+    """
     return env_str(
         "LLM_BASE_URL",
         env_str("DEEPSEEK_BASE_URL", "https://ark-cn-beijing.bytedance.net/api/v3"),
@@ -118,10 +121,10 @@ def llm_base_url() -> str:
 
 
 def llm_model(default: str = "ep-20260626155131-7psq6") -> str:
-    """Default model is the ARK endpoint id from the demo script.
+    """Default model is the Doubao ARK endpoint id.
 
-    Override with LLM_MODEL / DEEPSEEK_MODEL (DEEPSEEK_MODEL kept for
-    backwards compat with the original DeepSeek workflow)."""
+    Override with LLM_MODEL; DEEPSEEK_MODEL kept for backwards compat.
+    """
     return env_str("LLM_MODEL", env_str("DEEPSEEK_MODEL", default))
 
 
@@ -140,7 +143,7 @@ def reset_usage() -> None:
 
 def add_usage(model: str, usage) -> None:
     """Accumulate per-model token usage. `usage` is the OpenAI SDK usage
-    object (DeepSeek adds prompt_cache_hit_tokens). Best-effort: never raise."""
+    object. Best-effort: never raise."""
     try:
         if usage is None:
             return

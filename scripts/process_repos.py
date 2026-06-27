@@ -1,4 +1,4 @@
-"""Stage 2c: filter + rank + summarize today's hot AI repos via DeepSeek.
+"""Stage 2c: filter + rank + summarize today's hot AI repos via Doubao.
 
 Reads .cache/raw_repos.json -> writes .cache/processed_repos.json:
 {
@@ -102,7 +102,7 @@ def main():
                 "topics": (r.get("topics") or [])[:6],
                 "one_liner": desc[:117].rstrip() + ("..." if len(desc) > 117 else ""),
                 "capability": desc[:300],
-                "value": "- 未配置 DeepSeek API Key，当前使用 GitHub 元数据和 README 摘要兜底。\n- 配置 Key 后会恢复项目能力分析和业务借鉴点生成。",
+                "value": "- 未配置 LLM API Key，当前使用 GitHub 元数据和 README 摘要兜底。\n- 配置 Key 后会恢复项目能力分析和业务借鉴点生成。",
                 "tags": [t for t in (r.get("topics") or []) if isinstance(t, str)][:6],
             })
         write_json(CACHE_DIR / "processed_repos.json",

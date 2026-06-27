@@ -1,4 +1,4 @@
-"""Stage 2: filter relevance + summarize using DeepSeek (OpenAI-compatible).
+"""Stage 2: filter relevance + summarize using Doubao (OpenAI-compatible).
 
 Reads .cache/raw_papers.json -> writes .cache/processed_papers.json.
 
@@ -8,7 +8,7 @@ Pipeline per paper (single model, varying input/output size):
   3. If score >= MIN_SCORE_DEEP, download the PDF, extract text with pypdf,
      and write a deeper card with the extracted full text in context.
 
-DeepSeek API is OpenAI-compatible; we use the openai SDK with base_url
+Doubao (ARK) API is OpenAI-compatible; we use the openai SDK with base_url
 overridden. PDFs are not natively supported — text is extracted locally.
 Structured output uses response_format={"type":"json_object"} plus
 Pydantic validation (since strict json_schema isn't guaranteed on
@@ -55,7 +55,7 @@ LLM_SUMMARY_MODEL = env_str("LLM_SUMMARY_MODEL", env_str("DEEPSEEK_SUMMARY_MODEL
 
 MIN_SCORE_KEEP = env_int("MIN_SCORE_KEEP", 6)
 MIN_SCORE_DEEP = env_int("MIN_SCORE_DEEP", 8)
-MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 5)   # backfill floor
+MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 8)   # backfill floor
 MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
 
@@ -234,15 +234,15 @@ def _heuristic_summary(paper: dict) -> Summary:
         tags.append("RecSys")
     one_liner = abstract[:95].rstrip() + ("..." if len(abstract) > 95 else "")
     if not one_liner:
-        one_liner = "未配置 DeepSeek，使用标题和摘要生成规则摘要"
+        one_liner = "未配置 LLM API Key，使用标题和摘要生成规则摘要"
     practical = (
         "- 可先根据论文标题和摘要判断是否进入人工精读列表。\n"
-        "- 当前未配置 DeepSeek API Key，已使用规则摘要兜底；配置 Key 后会恢复中文精读、打分和业务可借鉴点生成。"
+        "- 当前未配置 LLM API Key，已使用规则摘要兜底；配置 Key 后会恢复中文精读、打分和业务可借鉴点生成。"
     )
     summary = (
         "### 摘要\n\n"
         f"{abstract or title}\n\n"
-        "> 当前运行未检测到 DeepSeek API Key，本卡片由规则降级流程生成。"
+        "> 当前运行未检测到 LLM API Key，本卡片由规则降级流程生成。"
     )
     return Summary(
         title_zh=title[:50] or "未命名论文",
@@ -265,7 +265,7 @@ def _call_json(
     max_tokens: int = 2000,
     label: str = "",
 ) -> T | None:
-    """One round-trip to DeepSeek that demands a JSON object and validates it
+    """One round-trip to the LLM that demands a JSON object and validates it
     against the given Pydantic schema. Retries once on parse/validation error
     with an explicit "must be JSON only" reminder."""
     model = model or LLM_SUMMARY_MODEL

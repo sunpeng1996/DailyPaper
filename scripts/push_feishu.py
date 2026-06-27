@@ -83,9 +83,9 @@ def _src_label(s: str) -> str:
 # --------- data loaders ------------------------------------------------------
 
 def estimate_cost_cny() -> tuple[float, int]:
-    """Approximate this run's DeepSeek spend in RMB from .cache/usage.json.
-    Rates are 元 / 1M tokens, env-configurable (DeepSeek V4 pricing changes;
-    tune PRICE_* repo vars to match your real bill). Returns (cny, tokens)."""
+    """Approximate this run's LLM spend in RMB from .cache/usage.json.
+    Rates are 元 / 1M tokens, env-configurable (tune PRICE_* vars to match
+    your actual model pricing). Returns (cny, tokens)."""
     usage = read_json(CACHE_DIR / "usage.json") or {}
     rates = {
         "pro":   (env_float("PRICE_PRO_IN", 2.0),   env_float("PRICE_PRO_OUT", 8.0)),

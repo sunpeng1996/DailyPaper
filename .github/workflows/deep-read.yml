@@ -14,9 +14,9 @@ jobs:
     if: contains(github.event.issue.labels.*.name, 'deep-read')
     runs-on: ubuntu-latest
     env:
-      DEEPSEEK_API_KEY:  ${{ secrets.DEEPSEEK_API_KEY }}
-      DEEPSEEK_BASE_URL: ${{ vars.DEEPSEEK_BASE_URL }}
-      DEEPSEEK_MODEL:    ${{ vars.DEEPSEEK_MODEL }}
+      LLM_API_KEY:        ${{ secrets.LLM_API_KEY }}
+      LLM_BASE_URL:       ${{ vars.LLM_BASE_URL }}
+      LLM_MODEL:          ${{ vars.LLM_MODEL }}
       ISSUE_BODY:        ${{ github.event.issue.body }}
       ISSUE_NUMBER:      ${{ github.event.issue.number }}
       GH_TOKEN:          ${{ secrets.GITHUB_TOKEN }}
@@ -92,5 +92,5 @@ jobs:
       - name: Comment + close issue
         run: |
           URL="https://sunpeng1996.github.io/DailyPaper/collection/${{ steps.deep.outputs.topic }}/${{ steps.deep.outputs.slug }}/"
-          gh issue comment "${{ env.ISSUE_NUMBER }}" --body "✅ 深读完成，归到 **${{ steps.deep.outputs.topic_name }}**（DeepSeek 可复现深度正文，标记未核实）。几分钟后上线：${URL} ｜ CI 深读只产正文不配图；如需配图+人工核验，本机用 \`/paper-to-pages ${URL}\` 重做覆盖。"
+          gh issue comment "${{ env.ISSUE_NUMBER }}" --body "✅ 深读完成，归到 **${{ steps.deep.outputs.topic_name }}**（豆包可复现深度正文，标记未核实）。几分钟后上线：${URL} ｜ CI 深读只产正文不配图；如需配图+人工核验，本机用 \`/paper-to-pages ${URL}\` 重做覆盖。"
           gh issue close "${{ env.ISSUE_NUMBER }}"

@@ -1,4 +1,4 @@
-"""Stage 2b: filter + cluster + summarize today's news items via DeepSeek.
+"""Stage 2b: filter + cluster + summarize today's news items via Doubao.
 
 Reads .cache/raw_news.json -> writes .cache/processed_news.json with shape:
 {
@@ -14,7 +14,7 @@ Reads .cache/raw_news.json -> writes .cache/processed_news.json with shape:
 Pipeline:
   1) Local keyword pre-filter — drop items that don't mention any AI/LLM term.
      Cheap, high-precision noise removal before paying for LLM tokens.
-  2) DeepSeek single call clusters the survivors into 4-6 topics, writes a
+  2) Doubao single call clusters the survivors into 4-6 topics, writes a
      2-3 sentence Chinese summary per topic, picks tags, and references items
      by index. Uses response_format=json_object + Pydantic validation.
 """
@@ -125,7 +125,7 @@ class ClusterOutput(BaseModel):
 
 
 def heuristic_cluster(items: list[dict]) -> ClusterOutput:
-    """Fallback when no DeepSeek key is configured."""
+    """Fallback when no LLM key is configured."""
     topics: list[Topic] = []
     for idx, it in enumerate(items[:MAX_NEWS_TOPICS]):
         title = re.sub(r"\s+", " ", it.get("title") or "").strip()
@@ -143,7 +143,7 @@ def heuristic_cluster(items: list[dict]) -> ClusterOutput:
         summary = snippet or title
         topics.append(Topic(
             title=title[:30] or "AI 动态",
-            summary=(summary[:220] or "未配置 DeepSeek，使用规则聚合生成摘要。"),
+            summary=(summary[:220] or "未配置 LLM API Key，使用规则聚合生成摘要。"),
             tags=tags[:4],
             source_indices=[idx],
         ))

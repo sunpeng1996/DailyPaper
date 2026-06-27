@@ -32,7 +32,7 @@ def main():
     step("fetch repos",       "fetch_repos.py",   fatal=False)
     step("process repos",     "process_repos.py", fatal=False)
     step("write repos md",    "write_repos_md.py", fatal=False)
-    step("push feishu",       "push_feishu.py")
+    # step("push feishu",       "push_feishu.py")
     log.info("pipeline done")
 
 

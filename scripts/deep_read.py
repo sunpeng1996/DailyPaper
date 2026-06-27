@@ -1,5 +1,5 @@
 """One-click deep-read: triggered by a GitHub issue, reads a paper's full text,
-generates a 5-section reproducible deep analysis via DeepSeek, extracts best-effort
+generates a 5-section reproducible deep analysis via Doubao, extracts best-effort
 figures, and writes src/content/archive_papers/<topic>/<slug>.md (+ figures).
 
 Inputs via env (set by the GitHub Action from the issue form):
@@ -9,7 +9,7 @@ Inputs via env (set by the GitHub Action from the issue form):
   NEW_TOPIC_ICON   emoji (optional)
 
 Writes the .md + figures. Prints a JSON line {slug, topic, ok} for the workflow.
-Does NOT git. Reuses the DeepSeek (OpenAI-compatible) client like process.py.
+Does NOT git. Reuses the Doubao (OpenAI-compatible) client like process.py.
 """
 from __future__ import annotations
 import io, json, os, re, subprocess, sys
@@ -174,7 +174,7 @@ def main():
         "idea": deep.get("idea", ""),
         "paperUrl": f"https://arxiv.org/abs/{aid}", "codeUrl": None,
         "tags": deep.get("tags", []),
-        "unverified": True,  # 机器自动生成（DeepSeek），标「未核实」，可在本机用 /paper-to-pages 精修
+        "unverified": True,  # 机器自动生成（LLM），标「未核实」，可在本机用 /paper-to-pages 精修
     }
     import yaml
     fm_yaml = yaml.safe_dump(fm, allow_unicode=True, sort_keys=False, default_flow_style=False)
