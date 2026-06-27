@@ -40,8 +40,7 @@ LLM_MODEL = llm_model()
 HAS_LLM = bool(LLM_API_KEY)
 
 MAX_REPOS_OUT = env_int("REPOS_OUT_MAX", 8)
-README_IN_CHARS = env_int("REPOS_README_IN_CHARS", 1500)
-MAX_INPUT_REPOS = env_int("REPOS_MAX_INPUT", 12)
+README_IN_CHARS = env_int("REPOS_README_IN_CHARS", 2200)
 
 client = OpenAI(api_key=LLM_API_KEY or "missing", base_url=LLM_BASE_URL,
                 timeout=180, max_retries=3)
@@ -111,7 +110,6 @@ def main():
         log.info("kept %d repos with heuristic fallback", len(out))
         return
 
-    raws = raws[:MAX_INPUT_REPOS]
     by_name = {r["name"]: r for r in raws}
 
     lines = []
