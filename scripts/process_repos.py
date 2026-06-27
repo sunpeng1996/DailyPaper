@@ -40,10 +40,11 @@ LLM_MODEL = llm_model()
 HAS_LLM = bool(LLM_API_KEY)
 
 MAX_REPOS_OUT = env_int("REPOS_OUT_MAX", 8)
-README_IN_CHARS = env_int("REPOS_README_IN_CHARS", 2200)
+README_IN_CHARS = env_int("REPOS_README_IN_CHARS", 1500)
+MAX_INPUT_REPOS = env_int("REPOS_MAX_INPUT", 12)
 
 client = OpenAI(api_key=LLM_API_KEY or "missing", base_url=LLM_BASE_URL,
-                timeout=120, max_retries=2)
+                timeout=180, max_retries=3)
 
 SYSTEM = """你是一位 AI 工程方向的技术选型分析师。读者是 **专注电商 / 广告 / 搜索推荐系统，
 核心关注 Agent 与 LLM 结合搜索推荐系统的 AI 算法从业者**，他想知道今天 GitHub 上比较火的
@@ -102,13 +103,16 @@ def main():
                 "topics": (r.get("topics") or [])[:6],
                 "one_liner": desc[:117].rstrip() + ("..." if len(desc) > 117 else ""),
                 "capability": desc[:300],
-                "value": "- 未配置 LLM API Key，当前使用 GitHub 元数据和 README 摘要兜底。\n- 配置 Key 后会恢复项目能力分析和业务借鉴点生成。",
+                "value": "- ⚠️ LLM API Key 未配置，当前使用 GitHub 元数据和 README 摘要兜底。\n- 配置 Key 后会恢复项目能力分析和业务借鉴点生成。",
                 "tags": [t for t in (r.get("topics") or []) if isinstance(t, str)][:6],
             })
         write_json(CACHE_DIR / "processed_repos.json",
                    {"date": now_iso_date(), "repos": out})
         log.info("kept %d repos with heuristic fallback", len(out))
         return
+
+    raws = raws[:MAX_INPUT_REPOS]
+    by_name = {r["name"]: r for r in raws}
 
     lines = []
     for i, r in enumerate(raws):
@@ -150,9 +154,25 @@ def main():
             messages.append({"role": "user", "content": "只返回合法 JSON 对象。"})
 
     if result is None or not result.repos:
-        log.warning("repos clustering failed; writing empty")
+        log.warning("repos llm call failed; falling back to heuristic")
+        ranked = sorted(raws, key=lambda r: int(r.get("stars") or 0), reverse=True)
+        out = []
+        for r in ranked[:MAX_REPOS_OUT]:
+            desc = (r.get("description") or r.get("readme") or "").strip()
+            out.append({
+                "name": r["name"],
+                "url": r.get("url", f"https://github.com/{r['name']}"),
+                "stars": int(r.get("stars") or 0),
+                "language": r.get("language", ""),
+                "topics": (r.get("topics") or [])[:6],
+                "one_liner": desc[:117].rstrip() + ("..." if len(desc) > 117 else ""),
+                "capability": desc[:300],
+                "value": "- ⚠️ LLM 调用失败（超时/网络异常），当前使用 GitHub 元数据和 README 摘要兜底。\n- LLM 恢复后会自动生成项目能力分析和业务借鉴点。",
+                "tags": [t for t in (r.get("topics") or []) if isinstance(t, str)][:6],
+            })
         write_json(CACHE_DIR / "processed_repos.json",
-                   {"date": now_iso_date(), "repos": []})
+                   {"date": now_iso_date(), "repos": out})
+        log.info("kept %d repos with heuristic fallback (llm failed)", len(out))
         return
 
     out = []
