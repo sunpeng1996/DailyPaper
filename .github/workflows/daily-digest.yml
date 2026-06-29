@@ -113,6 +113,7 @@ jobs:
             DATE=$(date -u +%Y-%m-%d)
             N=$(git diff --cached --name-only | wc -l | tr -d ' ')
             git commit -m "chore(content): daily update $DATE ($N files)"
+            git pull --rebase origin main
             git push
           fi
 
