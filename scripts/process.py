@@ -20,7 +20,9 @@ import io
 import json
 import os
 import re
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Type, TypeVar
 
 import httpx
@@ -58,6 +60,7 @@ MIN_SCORE_DEEP = env_int("MIN_SCORE_DEEP", 8)
 MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 8)   # backfill floor
 MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
+SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 5)
 
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
@@ -472,17 +475,38 @@ def main():
     # Step 1: relevance scoring. Resume from where we left off.
     all_scored: list[dict] = list(prev_scored)
     remaining_raws = [p for p in raws if p["arxiv_id"] not in prev_scored_ids]
-
     total_raws = len(raws)
-    for i, p in enumerate(remaining_raws, start=len(all_scored) + 1):
-        log.info("[scoring %d/%d] %s", i, total_raws, p.get("arxiv_id") or p.get("title", "")[:60])
-        rel = score_relevance(p)
-        if rel is None:
-            continue
-        p["_score"] = rel.score
-        p["_score_reason"] = rel.reasoning
-        all_scored.append(p)
-        _save_progress(all_scored, prev_processed)
+
+    if remaining_raws:
+        log.info("scoring %d remaining papers with concurrency=%d",
+                 len(remaining_raws), SCORE_CONCURRENCY)
+        _score_lock = threading.Lock()
+        _done_count = len(all_scored)
+
+        def _score_one(paper: dict) -> dict | None:
+            rel = score_relevance(paper)
+            if rel is None:
+                return None
+            paper["_score"] = rel.score
+            paper["_score_reason"] = rel.reasoning
+            with _score_lock:
+                nonlocal _done_count
+                _done_count += 1
+                log.info("[scoring %d/%d] %s (score=%.1f)",
+                         _done_count, total_raws,
+                         paper.get("arxiv_id") or paper.get("title", "")[:60],
+                         rel.score)
+                all_scored.append(paper)
+                _save_progress(all_scored, prev_processed)
+            return paper
+
+        with ThreadPoolExecutor(max_workers=SCORE_CONCURRENCY) as pool:
+            futures = [pool.submit(_score_one, p) for p in remaining_raws]
+            for f in as_completed(futures):
+                try:
+                    f.result()
+                except Exception as exc:
+                    log.warning("score task crashed: %s", exc)
 
     all_scored.sort(
         key=lambda x: (x["_score"], x.get("hf_upvotes", 0)),
