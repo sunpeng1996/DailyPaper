@@ -427,6 +427,30 @@ def summarize_with_pdf(paper: dict) -> Summary | None:
     )
 
 
+PROGRESS_FILE = CACHE_DIR / "process_progress.json"
+
+
+def _load_progress() -> dict:
+    data = read_json(PROGRESS_FILE)
+    if not isinstance(data, dict):
+        return {"scored_papers": [], "processed_papers": []}
+    data.setdefault("scored_papers", [])
+    data.setdefault("processed_papers", [])
+    return data
+
+
+def _save_progress(scored_papers: list[dict], processed_papers: list[dict]) -> None:
+    write_json(PROGRESS_FILE, {
+        "scored_papers": scored_papers,
+        "processed_papers": processed_papers,
+    })
+
+
+def _clear_progress() -> None:
+    if PROGRESS_FILE.exists():
+        PROGRESS_FILE.unlink()
+
+
 def main():
     reset_usage()  # first LLM stage of the pipeline — start the cost tally fresh
     raws = read_json(CACHE_DIR / "raw_papers.json") or []
@@ -435,19 +459,30 @@ def main():
     log.info("processing %d raw papers via %s @ %s",
              len(raws), LLM_MODEL, LLM_BASE_URL)
 
-    # Step 1: relevance scoring. The persona prompt biases ranking, but must
-    # NOT empty the daily digest on days arxiv has few e-comm/Agent/GenRec
-    # papers. So: score everything, prefer >= MIN_SCORE_KEEP, but always
-    # backfill up to MIN_PAPERS_PER_DAY from the next-best regardless of
-    # threshold. Cap at MAX_PAPERS_PER_DAY.
-    all_scored: list[dict] = []
-    for p in raws:
+    progress = _load_progress()
+    prev_scored = progress["scored_papers"]
+    prev_processed = progress["processed_papers"]
+    prev_scored_ids = {p["arxiv_id"] for p in prev_scored}
+    prev_processed_ids = {p["arxiv_id"] for p in prev_processed}
+
+    if prev_scored:
+        log.info("resumed from progress file: %d scored, %d processed already done",
+                 len(prev_scored), len(prev_processed))
+
+    # Step 1: relevance scoring. Resume from where we left off.
+    all_scored: list[dict] = list(prev_scored)
+    remaining_raws = [p for p in raws if p["arxiv_id"] not in prev_scored_ids]
+
+    total_raws = len(raws)
+    for i, p in enumerate(remaining_raws, start=len(all_scored) + 1):
+        log.info("[scoring %d/%d] %s", i, total_raws, p.get("arxiv_id") or p.get("title", "")[:60])
         rel = score_relevance(p)
         if rel is None:
             continue
         p["_score"] = rel.score
         p["_score_reason"] = rel.reasoning
         all_scored.append(p)
+        _save_progress(all_scored, prev_processed)
 
     all_scored.sort(
         key=lambda x: (x["_score"], x.get("hf_upvotes", 0)),
@@ -464,13 +499,21 @@ def main():
              len(all_scored), len(above), MIN_SCORE_KEEP, len(scored),
              MIN_PAPERS_PER_DAY, MAX_PAPERS_PER_DAY)
 
-    # Step 2: summarize. One bad paper must never abort the whole batch.
-    processed: list[dict] = []
-    for p in scored:
+    # Step 2: summarize. Resume from where we left off.
+    processed: list[dict] = list(prev_processed)
+    remaining_scored = [p for p in scored if p["arxiv_id"] not in prev_processed_ids]
+
+    total_to_process = len(scored)
+    for i, p in enumerate(remaining_scored, start=len(processed) + 1):
+        log.info("[summarizing %d/%d] %s (score=%.1f)",
+                 i, total_to_process,
+                 p.get("arxiv_id") or p.get("title", "")[:60],
+                 p.get("_score", 0))
         depth = "abstract"
         summary: Summary | None = None
         try:
             if p["_score"] >= MIN_SCORE_DEEP:
+                log.info("  -> deep read (score >= %d), downloading PDF...", MIN_SCORE_DEEP)
                 summary = summarize_with_pdf(p)
                 if summary is not None:
                     depth = "full_pdf"
@@ -502,10 +545,13 @@ def main():
             "source": p.get("source", ""),
             "depth": depth,
         })
+        log.info("  -> done, depth=%s", depth)
+        _save_progress(all_scored, processed)
         time.sleep(0.3)
 
     write_json(CACHE_DIR / "processed_papers.json", processed)
-    log.info("processed %d papers (deep=%d)",
+    _clear_progress()
+    log.info("processed %d papers (deep=%d). All done — progress cleared.",
              len(processed), sum(1 for x in processed if x["depth"] == "full_pdf"))
 
 
