@@ -61,6 +61,7 @@ MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 8)   # backfill floor
 MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
 SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 5)
+SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 3)
 
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
@@ -526,52 +527,68 @@ def main():
     # Step 2: summarize. Resume from where we left off.
     processed: list[dict] = list(prev_processed)
     remaining_scored = [p for p in scored if p["arxiv_id"] not in prev_processed_ids]
-
     total_to_process = len(scored)
-    for i, p in enumerate(remaining_scored, start=len(processed) + 1):
-        log.info("[summarizing %d/%d] %s (score=%.1f)",
-                 i, total_to_process,
-                 p.get("arxiv_id") or p.get("title", "")[:60],
-                 p.get("_score", 0))
-        depth = "abstract"
-        summary: Summary | None = None
-        try:
-            if p["_score"] >= MIN_SCORE_DEEP:
-                log.info("  -> deep read (score >= %d), downloading PDF...", MIN_SCORE_DEEP)
-                summary = summarize_with_pdf(p)
-                if summary is not None:
-                    depth = "full_pdf"
-            if summary is None:
-                summary = summarize_abstract(p)
-        except Exception as exc:
-            log.warning("summarize crashed for %s: %s — skipping",
-                        p.get("arxiv_id"), exc)
-            continue
-        if summary is None:
-            continue
 
-        processed.append({
-            "arxiv_id": p["arxiv_id"],
-            "title": p["title"],                    # English original
-            "title_zh": summary.title_zh,
-            "authors": p.get("authors", []),
-            "affiliations": summary.affiliations or [],
-            "url": p["url"],
-            "pdf_url": p.get("pdf_url"),
-            "published": (p.get("published") or "")[:10],
-            "category": summary.category or "Other",
-            "direction": summary.direction or "",
-            "tags": summary.tags or [],
-            "one_liner": summary.one_liner,
-            "practical_value": summary.practical_value or "",
-            "summary_md": summary.summary_md,
-            "score": p["_score"],
-            "source": p.get("source", ""),
-            "depth": depth,
-        })
-        log.info("  -> done, depth=%s", depth)
-        _save_progress(all_scored, processed)
-        time.sleep(0.3)
+    if remaining_scored:
+        log.info("summarizing %d remaining papers with concurrency=%d",
+                 len(remaining_scored), SUMMARY_CONCURRENCY)
+        _summary_lock = threading.Lock()
+        _summary_done = len(processed)
+
+        def _summarize_one(paper: dict) -> dict | None:
+            depth = "abstract"
+            summary: Summary | None = None
+            arxiv_id = paper.get("arxiv_id", "")
+            try:
+                if paper["_score"] >= MIN_SCORE_DEEP:
+                    summary = summarize_with_pdf(paper)
+                    if summary is not None:
+                        depth = "full_pdf"
+                if summary is None:
+                    summary = summarize_abstract(paper)
+            except Exception as exc:
+                log.warning("summarize crashed for %s: %s — skipping", arxiv_id, exc)
+                return None
+            if summary is None:
+                return None
+
+            result = {
+                "arxiv_id": paper["arxiv_id"],
+                "title": paper["title"],
+                "title_zh": summary.title_zh,
+                "authors": paper.get("authors", []),
+                "affiliations": summary.affiliations or [],
+                "url": paper["url"],
+                "pdf_url": paper.get("pdf_url"),
+                "published": (paper.get("published") or "")[:10],
+                "category": summary.category or "Other",
+                "direction": summary.direction or "",
+                "tags": summary.tags or [],
+                "one_liner": summary.one_liner,
+                "practical_value": summary.practical_value or "",
+                "summary_md": summary.summary_md,
+                "score": paper["_score"],
+                "source": paper.get("source", ""),
+                "depth": depth,
+            }
+            with _summary_lock:
+                nonlocal _summary_done
+                _summary_done += 1
+                log.info("[summarizing %d/%d] %s (score=%.1f, depth=%s)",
+                         _summary_done, total_to_process,
+                         arxiv_id or paper.get("title", "")[:60],
+                         paper.get("_score", 0), depth)
+                processed.append(result)
+                _save_progress(all_scored, processed)
+            return result
+
+        with ThreadPoolExecutor(max_workers=SUMMARY_CONCURRENCY) as pool:
+            futures = [pool.submit(_summarize_one, p) for p in remaining_scored]
+            for f in as_completed(futures):
+                try:
+                    f.result()
+                except Exception as exc:
+                    log.warning("summary task crashed: %s", exc)
 
     write_json(CACHE_DIR / "processed_papers.json", processed)
     _clear_progress()
