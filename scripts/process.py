@@ -434,6 +434,11 @@ def summarize_with_pdf(paper: dict) -> Summary | None:
 PROGRESS_FILE = CACHE_DIR / "process_progress.json"
 
 
+def _progress(msg: str) -> None:
+    log.info(msg)
+    print(msg, flush=True)
+
+
 def _load_progress() -> dict:
     data = read_json(PROGRESS_FILE)
     if not isinstance(data, dict):
@@ -479,8 +484,7 @@ def main():
     total_raws = len(raws)
 
     if remaining_raws:
-        log.info("scoring %d remaining papers with concurrency=%d",
-                 len(remaining_raws), SCORE_CONCURRENCY)
+        _progress(f"=== Step 1: Scoring {len(remaining_raws)} papers (concurrency={SCORE_CONCURRENCY}) ===")
         _score_lock = threading.Lock()
         _done_count = len(all_scored)
 
@@ -493,10 +497,7 @@ def main():
             with _score_lock:
                 nonlocal _done_count
                 _done_count += 1
-                log.info("[scoring %d/%d] %s (score=%.1f)",
-                         _done_count, total_raws,
-                         paper.get("arxiv_id") or paper.get("title", "")[:60],
-                         rel.score)
+                _progress(f"[scoring {_done_count}/{total_raws}] {paper.get('arxiv_id') or paper.get('title', '')[:60]} (score={rel.score:.1f})")
                 all_scored.append(paper)
                 _save_progress(all_scored, prev_processed)
             return paper
@@ -508,6 +509,7 @@ def main():
                     f.result()
                 except Exception as exc:
                     log.warning("score task crashed: %s", exc)
+        _progress(f"=== Step 1 done: scored {len(all_scored)} papers ===")
 
     all_scored.sort(
         key=lambda x: (x["_score"], x.get("hf_upvotes", 0)),
@@ -530,8 +532,7 @@ def main():
     total_to_process = len(scored)
 
     if remaining_scored:
-        log.info("summarizing %d remaining papers with concurrency=%d",
-                 len(remaining_scored), SUMMARY_CONCURRENCY)
+        _progress(f"=== Step 2: Summarizing {len(remaining_scored)} papers (concurrency={SUMMARY_CONCURRENCY}) ===")
         _summary_lock = threading.Lock()
         _summary_done = len(processed)
 
@@ -574,10 +575,7 @@ def main():
             with _summary_lock:
                 nonlocal _summary_done
                 _summary_done += 1
-                log.info("[summarizing %d/%d] %s (score=%.1f, depth=%s)",
-                         _summary_done, total_to_process,
-                         arxiv_id or paper.get("title", "")[:60],
-                         paper.get("_score", 0), depth)
+                _progress(f"[summarizing {_summary_done}/{total_to_process}] {arxiv_id or paper.get('title', '')[:60]} (score={paper.get('_score', 0):.1f}, depth={depth})")
                 processed.append(result)
                 _save_progress(all_scored, processed)
             return result
@@ -589,6 +587,7 @@ def main():
                     f.result()
                 except Exception as exc:
                     log.warning("summary task crashed: %s", exc)
+        _progress(f"=== Step 2 done: processed {len(processed)} papers ===")
 
     write_json(CACHE_DIR / "processed_papers.json", processed)
     _clear_progress()
