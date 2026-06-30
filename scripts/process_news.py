@@ -79,8 +79,8 @@ CN_KEYWORD_RE = re.compile(
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
     base_url=LLM_BASE_URL,
-    timeout=120,
-    max_retries=2,
+    timeout=300,
+    max_retries=3,
 )
 
 

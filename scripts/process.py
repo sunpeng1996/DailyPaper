@@ -66,8 +66,8 @@ SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 2)
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
     base_url=LLM_BASE_URL,
-    timeout=httpx.Timeout(120.0, connect=15.0),
-    max_retries=2,
+    timeout=httpx.Timeout(300.0, connect=30.0),
+    max_retries=3,
 )
 
 RELEVANCE_SYSTEM = """你是一位 AI 论文领域专家。读者是一名 **AI 算法从业者**，专注：
