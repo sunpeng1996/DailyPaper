@@ -490,24 +490,22 @@ def main():
         _fail_count = 0
 
         def _score_one(paper: dict) -> dict | None:
+            nonlocal _done_count, _fail_count
             arxiv_id = paper.get("arxiv_id", "")
             try:
                 rel = score_relevance(paper)
             except Exception as exc:
                 with _score_lock:
-                    nonlocal _fail_count
                     _fail_count += 1
                 log.warning("[scoring FAIL] %s: %s", arxiv_id, exc)
                 return None
             if rel is None:
                 with _score_lock:
-                    nonlocal _fail_count
                     _fail_count += 1
                 return None
             paper["_score"] = rel.score
             paper["_score_reason"] = rel.reasoning
             with _score_lock:
-                nonlocal _done_count
                 _done_count += 1
                 _progress(f"[scoring {_done_count}/{total_raws}] {arxiv_id or paper.get('title', '')[:60]} (score={rel.score:.1f})")
                 all_scored.append(paper)
@@ -550,6 +548,7 @@ def main():
         _summary_fail = 0
 
         def _summarize_one(paper: dict) -> dict | None:
+            nonlocal _summary_done, _summary_fail
             depth = "abstract"
             summary: Summary | None = None
             arxiv_id = paper.get("arxiv_id", "")
@@ -562,13 +561,11 @@ def main():
                     summary = summarize_abstract(paper)
             except Exception as exc:
                 with _summary_lock:
-                    nonlocal _summary_fail
                     _summary_fail += 1
                 log.warning("[summarize FAIL] %s: %s", arxiv_id, exc)
                 return None
             if summary is None:
                 with _summary_lock:
-                    nonlocal _summary_fail
                     _summary_fail += 1
                 return None
 
@@ -592,7 +589,6 @@ def main():
                 "depth": depth,
             }
             with _summary_lock:
-                nonlocal _summary_done
                 _summary_done += 1
                 _progress(f"[summarizing {_summary_done}/{total_to_process}] {arxiv_id or paper.get('title', '')[:60]} (score={paper.get('_score', 0):.1f}, depth={depth})")
                 processed.append(result)
