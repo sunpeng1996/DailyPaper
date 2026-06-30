@@ -120,7 +120,7 @@ def llm_base_url() -> str:
     )
 
 
-def llm_model(default: str = "ep-20250611141711-v8j6g") -> str:
+def llm_model(default: str = "ep-20260415142843-ckmp2") -> str:
     """Default model is the Doubao ARK endpoint id.
 
     Override with LLM_MODEL; DEEPSEEK_MODEL kept for backwards compat.
