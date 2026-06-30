@@ -25,6 +25,29 @@ const isActive = (p: string) => pathname === `${base}${p}`.replace(/\/$/, '');
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="alternate" type="application/rss+xml" title="RSS" href={`${base}/rss.xml`} />
     <script is:inline>
+      // Time-based theme switcher (Beijing time: dark 18:00 - 06:00)
+      (function () {
+        function getBeijingHour() {
+          var now = new Date();
+          var utc = now.getTime() + now.getTimezoneOffset() * 60000;
+          var beijing = new Date(utc + 8 * 3600000);
+          return beijing.getHours();
+        }
+        function updateTheme() {
+          var hour = getBeijingHour();
+          var isDark = hour >= 18 || hour < 6;
+          var html = document.documentElement;
+          if (isDark) {
+            html.classList.add('dark');
+          } else {
+            html.classList.remove('dark');
+          }
+        }
+        updateTheme();
+        setInterval(updateTheme, 60000);
+      })();
+    </script>
+    <script is:inline>
       // Remember scroll position per page so returning from a paper sub-page
       // lands where you clicked, not at the top. Explicit "首页/logo" clicks
       // (marked data-home-reset) deliberately forget the position.

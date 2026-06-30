@@ -60,13 +60,13 @@ MIN_SCORE_DEEP = env_int("MIN_SCORE_DEEP", 8)
 MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 8)   # backfill floor
 MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
-SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 2)
-SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 2)
+SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 6)
+SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 6)
 
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
     base_url=LLM_BASE_URL,
-    timeout=httpx.Timeout(300.0, connect=30.0),
+    timeout=httpx.Timeout(200.0, connect=30.0),
     max_retries=3,
 )
 

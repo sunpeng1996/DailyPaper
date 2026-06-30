@@ -47,8 +47,8 @@ LLM_MODEL = llm_model()
 HAS_LLM = bool(LLM_API_KEY)
 
 MAX_NEWS_ITEMS = env_int("MAX_NEWS_ITEMS", 50)
-MAX_NEWS_TOPICS = env_int("MAX_NEWS_TOPICS", 10)
-MIN_NEWS_TOPICS = env_int("MIN_NEWS_TOPICS", 7)
+MAX_NEWS_TOPICS = env_int("MAX_NEWS_TOPICS", 12)
+MIN_NEWS_TOPICS = env_int("MIN_NEWS_TOPICS", 8)
 
 # Keep an item if its title or snippet matches any of these (case-insensitive).
 # Broad on purpose — the LLM will do the precise filtering downstream.
