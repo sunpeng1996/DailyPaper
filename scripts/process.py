@@ -279,6 +279,7 @@ def _call_json(
         {"role": "system", "content": _strip_surrogates(system)},
         {"role": "user", "content": _strip_surrogates(user)},
     ]
+    last_error = None
     for attempt in range(2):
         try:
             resp = client.chat.completions.create(
@@ -290,7 +291,8 @@ def _call_json(
             )
         except OpenAIError as exc:
             log.warning("[%s] api error attempt=%d: %s", label, attempt, exc)
-            return None
+            last_error = exc
+            continue
         add_usage(model, getattr(resp, "usage", None))
         text = (resp.choices[0].message.content or "").strip()
         try:
@@ -298,9 +300,11 @@ def _call_json(
         except (ValidationError, json.JSONDecodeError) as exc:
             log.warning("[%s] parse failed attempt=%d: %s | text=%.200s",
                         label, attempt, exc, text)
+            last_error = exc
             messages.append({"role": "assistant", "content": text})
             messages.append({"role": "user",
                              "content": "上次返回不是有效 JSON 或字段不符合。请只返回一个 JSON 对象，不要加任何前后说明。"})
+    log.warning("[%s] all %d attempts failed: %s", label, 2, last_error)
     return None
 
 
@@ -502,6 +506,7 @@ def main():
             if rel is None:
                 with _score_lock:
                     _fail_count += 1
+                log.warning("[scoring FAIL] %s: returned None", arxiv_id)
                 return None
             paper["_score"] = rel.score
             paper["_score_reason"] = rel.reasoning
@@ -567,6 +572,7 @@ def main():
             if summary is None:
                 with _summary_lock:
                     _summary_fail += 1
+                log.warning("[summarize FAIL] %s: returned None", arxiv_id)
                 return None
 
             result = {
