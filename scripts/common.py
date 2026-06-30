@@ -116,7 +116,7 @@ def llm_base_url() -> str:
     """
     return env_str(
         "LLM_BASE_URL",
-        env_str("DEEPSEEK_BASE_URL", "https://ark-cn-beijing.bytedance.net/api/v3"),
+        env_str("DEEPSEEK_BASE_URL", "https://ark.cn-beijing.volces.com/api/v3"),
     )
 
 

@@ -14,7 +14,7 @@ Usage:
 
 Env (loaded from .env at project root if present):
   LLM_API_KEY           required (or DEEPSEEK_API_KEY for back-compat)
-  LLM_BASE_URL          default https://ark-cn-beijing.bytedance.net/api/v3
+  LLM_BASE_URL          default https://ark.cn-beijing.volces.com/api/v3
   LLM_MODEL             default ep-20260626155131-7psq6
   PAPER_FILE_SITE       override DailyPaper project root
 """
@@ -94,7 +94,7 @@ def call_llm(paper: dict) -> DeepReadResult:
         raise SystemExit("LLM_API_KEY missing (looked in env and .env)")
     base_url = (os.environ.get("LLM_BASE_URL")
                 or os.environ.get("DEEPSEEK_BASE_URL")
-                or "https://ark-cn-beijing.bytedance.net/api/v3")
+                or "https://ark.cn-beijing.volces.com/api/v3")
     model = (os.environ.get("LLM_MODEL")
              or os.environ.get("DEEPSEEK_MODEL")
              or "ep-20260626155131-7psq6")
