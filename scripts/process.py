@@ -60,8 +60,8 @@ MIN_SCORE_DEEP = env_int("MIN_SCORE_DEEP", 8)
 MIN_PAPERS_PER_DAY = env_int("MIN_PAPERS_PER_DAY", 8)   # backfill floor
 MAX_PAPERS_PER_DAY = env_int("MAX_PAPERS_PER_DAY", 30)
 PDF_TEXT_MAX_CHARS = env_int("PDF_TEXT_MAX_CHARS", 60000)
-SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 10)
-SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 5)
+SCORE_CONCURRENCY = env_int("SCORE_CONCURRENCY", 5)
+SUMMARY_CONCURRENCY = env_int("SUMMARY_CONCURRENCY", 3)
 
 client = OpenAI(
     api_key=LLM_API_KEY or "missing",
@@ -487,17 +487,29 @@ def main():
         _progress(f"=== Step 1: Scoring {len(remaining_raws)} papers (concurrency={SCORE_CONCURRENCY}) ===")
         _score_lock = threading.Lock()
         _done_count = len(all_scored)
+        _fail_count = 0
 
         def _score_one(paper: dict) -> dict | None:
-            rel = score_relevance(paper)
+            arxiv_id = paper.get("arxiv_id", "")
+            try:
+                rel = score_relevance(paper)
+            except Exception as exc:
+                with _score_lock:
+                    nonlocal _fail_count
+                    _fail_count += 1
+                log.warning("[scoring FAIL] %s: %s", arxiv_id, exc)
+                return None
             if rel is None:
+                with _score_lock:
+                    nonlocal _fail_count
+                    _fail_count += 1
                 return None
             paper["_score"] = rel.score
             paper["_score_reason"] = rel.reasoning
             with _score_lock:
                 nonlocal _done_count
                 _done_count += 1
-                _progress(f"[scoring {_done_count}/{total_raws}] {paper.get('arxiv_id') or paper.get('title', '')[:60]} (score={rel.score:.1f})")
+                _progress(f"[scoring {_done_count}/{total_raws}] {arxiv_id or paper.get('title', '')[:60]} (score={rel.score:.1f})")
                 all_scored.append(paper)
                 _save_progress(all_scored, prev_processed)
             return paper
@@ -509,7 +521,7 @@ def main():
                     f.result()
                 except Exception as exc:
                     log.warning("score task crashed: %s", exc)
-        _progress(f"=== Step 1 done: scored {len(all_scored)} papers ===")
+        _progress(f"=== Step 1 done: scored {len(all_scored)} papers, {_fail_count} failed ===")
 
     all_scored.sort(
         key=lambda x: (x["_score"], x.get("hf_upvotes", 0)),
@@ -535,6 +547,7 @@ def main():
         _progress(f"=== Step 2: Summarizing {len(remaining_scored)} papers (concurrency={SUMMARY_CONCURRENCY}) ===")
         _summary_lock = threading.Lock()
         _summary_done = len(processed)
+        _summary_fail = 0
 
         def _summarize_one(paper: dict) -> dict | None:
             depth = "abstract"
@@ -548,9 +561,15 @@ def main():
                 if summary is None:
                     summary = summarize_abstract(paper)
             except Exception as exc:
-                log.warning("summarize crashed for %s: %s — skipping", arxiv_id, exc)
+                with _summary_lock:
+                    nonlocal _summary_fail
+                    _summary_fail += 1
+                log.warning("[summarize FAIL] %s: %s", arxiv_id, exc)
                 return None
             if summary is None:
+                with _summary_lock:
+                    nonlocal _summary_fail
+                    _summary_fail += 1
                 return None
 
             result = {
@@ -587,7 +606,7 @@ def main():
                     f.result()
                 except Exception as exc:
                     log.warning("summary task crashed: %s", exc)
-        _progress(f"=== Step 2 done: processed {len(processed)} papers ===")
+        _progress(f"=== Step 2 done: processed {len(processed)} papers, {_summary_fail} failed ===")
 
     write_json(CACHE_DIR / "processed_papers.json", processed)
     _clear_progress()
