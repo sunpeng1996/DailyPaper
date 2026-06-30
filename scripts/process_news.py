@@ -174,7 +174,7 @@ def prefilter(raws: list[dict]) -> list[dict]:
 
 
 def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
-    """Single LLM call: cluster + summarize. Retries once on invalid JSON."""
+    """Single LLM call: cluster + summarize. Retries on API error and bad JSON."""
     if not HAS_LLM:
         log.warning("LLM_API_KEY is not configured; using heuristic news clustering")
         return heuristic_cluster(items)
@@ -203,6 +203,7 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
         {"role": "system", "content": SYSTEM},
         {"role": "user", "content": safe_user},
     ]
+    last_error = None
     for attempt in range(2):
         try:
             resp = client.chat.completions.create(
@@ -216,7 +217,8 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
             )
         except OpenAIError as exc:
             log.warning("news cluster api error attempt=%d: %s", attempt, exc)
-            return None
+            last_error = exc
+            continue
         add_usage(LLM_MODEL, getattr(resp, "usage", None))
         text = (resp.choices[0].message.content or "").strip()
         try:
@@ -224,10 +226,12 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
         except (ValidationError, json.JSONDecodeError) as exc:
             log.warning("news cluster parse attempt=%d failed: %s | text=%.300s",
                         attempt, exc, text)
+            last_error = exc
             messages.append({"role": "assistant", "content": text})
             messages.append({"role": "user",
                              "content": "返回的不是合法 JSON 或字段不符合 schema。只返回一个 JSON 对象。"})
-    return None
+    log.warning("news cluster failed after 2 attempts: %s — falling back to heuristic", last_error)
+    return heuristic_cluster(items)
 
 
 def main():
