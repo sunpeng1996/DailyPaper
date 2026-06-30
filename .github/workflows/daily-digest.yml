@@ -113,8 +113,20 @@ jobs:
             DATE=$(date -u +%Y-%m-%d)
             N=$(git diff --cached --name-only | wc -l | tr -d ' ')
             git commit -m "chore(content): daily update $DATE ($N files)"
-            git pull --rebase origin main
-            git push
+            # Retry push with pull + auto-resolve conflicts (ours = generated content wins)
+            for i in 1 2 3; do
+              if git push; then
+                echo "Push succeeded on attempt $i"
+                exit 0
+              fi
+              echo "Push failed, attempt $i/3 — pulling and retrying..."
+              git pull --no-rebase -X ours --no-edit || git merge --abort 2>/dev/null || true
+              git reset --soft HEAD~1 2>/dev/null || true
+              git add src/content/papers/ src/content/news/ src/content/archive_papers/ src/content/repos/ 2>/dev/null || true
+              git commit -m "chore(content): daily update $DATE ($N files)" || true
+            done
+            echo "Push failed after 3 attempts"
+            exit 1
           fi
 
       # ---- build + deploy Pages (self-contained, no cross-workflow trigger) ----
