@@ -13,8 +13,12 @@ on:
       - "requirements.txt"
       - ".github/workflows/daily-digest.yml"
   schedule:
-    # 01:00 UTC = 09:00 Asia/Shanghai. GitHub cron can lag 5-15 min.
-    - cron: "0 1 * * *"
+    # 北京时间 07:00 = UTC 23:00（前一天）
+    - cron: "0 23 * * *"
+    # 北京时间 10:00 = UTC 02:00
+    - cron: "0 2 * * *"
+    # 北京时间 15:00 = UTC 07:00
+    - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       push_empty_day:
