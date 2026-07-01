@@ -68,7 +68,9 @@ const RESUME_URL = "https://sunpeng1996.github.io/DailyPaper/";
       a.textContent = it.label;
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        it.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var headerOffset = 80;
+        var elTop = it.el.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: elTop - headerOffset, behavior: 'smooth' });
         history.replaceState(null, '', '#' + it.el.id);
       });
       li.appendChild(a);

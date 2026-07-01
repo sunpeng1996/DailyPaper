@@ -51,6 +51,8 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   position: relative;
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
 }
 body::before {
   content: '';
