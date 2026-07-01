@@ -87,7 +87,7 @@ client = OpenAI(
 SYSTEM = """你是一位 AI 行业观察分析师，要把今天从 Hacker News 和 Reddit 收集到的若干条 AI 动态聚成几个新闻主题。
 
 任务约束：
-- **目标产出 7-10 个主题**。颗粒度要细，不要过度合并
+- **目标产出 8-12 个主题**。颗粒度要细，不要过度合并
 - 一个主题 = **一个公司的一个具体动作 / 一个产品发布 / 一个事件**
 - 即使只有 1 个 source 也可以独立成 topic，只要事件本身值得关注（产品发布、并购、争议、开源、benchmark 等）
 - 强反模式（不要这样做）：把"阿里悟空放量""蚂蚁灵波开源""国产 GPU 联盟""田渊栋创业""淘天金码奖"聚成一个"中国 AI 多领域加速突破"——这是 5 个独立 topic
@@ -194,7 +194,7 @@ def cluster_and_summarize(items: list[dict]) -> ClusterOutput | None:
     user = (
         f"今天收集到 {len(items)} 条候选新闻条目，已按 source 标注（hn / reddit:<sub>）:\n\n"
         + "\n".join(lines)
-        + "\n\n请按要求聚成 3-6 个主题输出 JSON。"
+        + "\n\n请按要求聚成 8-12 个主题输出 JSON。"
     )
 
     # defensive: drop lone surrogates so the SDK can UTF-8 encode the body
