@@ -18,6 +18,14 @@
 - 自动 pipeline：每天北京时间 09:00 抓取、处理、写 Markdown、构建、发布。
 - 可选飞书推送：通过 GitHub Secrets 配置。
 
+## 论文沉淀主题
+
+主题 ID、名称、图标及页面顺序统一配置在 `config/paper-topics.json`，深读脚本和本地添加脚本共用该配置。主题即使暂未收录论文，也会显示在论文沉淀页。
+
+新增主题时，同时更新 `.github/ISSUE_TEMPLATE/deep-read.yml` 中的下拉选项，格式为 `图标 名称 (主题ID)`。单篇论文通过 Markdown frontmatter 的 `topic` 指定归属，`topic_name` 和 `topic_icon` 保存显示信息。
+
+每日论文的关注方向与打分偏好仍由 `scripts/process.py` 的 `RELEVANCE_SYSTEM` 控制。
+
 ## 本地开发
 
 ```bash

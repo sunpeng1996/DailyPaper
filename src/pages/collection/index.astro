@@ -2,20 +2,23 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArchiveCard from '../../components/ArchiveCard.astro';
+import paperTopics from '../../../config/paper-topics.json';
 
 export const prerender = true;
 
 const all = await getCollection('archive_papers');
 
-// Group by topic, preserve a stable order matching the 6 canonical categories.
-const ORDER = ['agentic-rec', 'gen-rec', 'user-simulation', 'gen-search', 'llm-general', 'agent-general'];
+// Keep configured topics visible even before the first paper is archived.
+const ORDER = paperTopics.map(t => t.id);
 type TopicGroup = {
   id: string;
   name: string;
   icon: string;
   papers: typeof all;
 };
-const byTopic = new Map<string, TopicGroup>();
+const byTopic = new Map<string, TopicGroup>(
+  paperTopics.map(t => [t.id, { ...t, papers: [] }])
+);
 for (const p of all) {
   const id = p.data.topic;
   if (!byTopic.has(id)) {
@@ -72,7 +75,9 @@ const totalPapers = all.length;
   <div class="collection-list">
     {topics.map((t, i) => (
       <section data-topic={t.id} class={i === 0 ? 'topic-pane' : 'topic-pane hidden'}>
-        {t.papers.map((p: any) => <ArchiveCard paper={p} />)}
+        {t.papers.length > 0
+          ? t.papers.map((p: any) => <ArchiveCard paper={p} />)
+          : <p class="empty-topic">该主题暂未收录论文。</p>}
       </section>
     ))}
   </div>

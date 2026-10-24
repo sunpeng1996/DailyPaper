@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "config/**"
       - "src/**"
       - "public/**"
       - "astro.config.mjs"

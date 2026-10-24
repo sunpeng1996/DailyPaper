@@ -1,0 +1,16 @@
+[
+  { "id": "agentic-rec", "name": "Agent推荐", "icon": "🧭" },
+  { "id": "gen-rec", "name": "生成式推荐", "icon": "🎯" },
+  { "id": "user-simulation", "name": "用户模拟器", "icon": "👥" },
+  { "id": "gen-search", "name": "生成式搜索", "icon": "🔎" },
+  { "id": "llm-general", "name": "LLM通用", "icon": "🧠" },
+  { "id": "agent-general", "name": "Agent通用", "icon": "🤖" },
+  { "id": "agent-auto-research", "name": "Agent Auto-Research", "icon": "🔬" },
+  { "id": "audience-exploration-agent", "name": "人群探索Agent", "icon": "🕵️" },
+  { "id": "item-to-user", "name": "商品找人范式", "icon": "🛍️" },
+  { "id": "llm4rec", "name": "LLM4Rec", "icon": "💡" },
+  { "id": "dialogue-systems", "name": "对话系统", "icon": "💬" },
+  { "id": "multi-turn-rl", "name": "多轮强化", "icon": "🔄" },
+  { "id": "credit-assignment", "name": "信用分配", "icon": "⚖️" },
+  { "id": "knowledge-base", "name": "知识库", "icon": "📚" }
+]

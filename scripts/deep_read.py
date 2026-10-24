@@ -28,15 +28,10 @@ ARCHIVE = ROOT / "src" / "content" / "archive_papers"
 FIGROOT = ROOT / "public" / "figures"
 FIG_BASE = "/DailyPaper/figures"  # GitHub Pages base prefix
 
-# Canonical topics (id -> name, icon). New topics handled via env.
+# Shared canonical topics (id -> name, icon). New topics handled via env.
 TOPICS = {
-    "gen-rec": ("生成式推荐", "🎯"),
-    "gen-search": ("生成式搜索", "🔎"),
-    "agentic-rec": ("Agent推荐", "🧭"),
-    "user-simulation": ("User Simulator", "👥"),
-    "llm-general": ("LLM通用", "🧠"),
-    "agent-general": ("Agent通用", "🤖"),
-    "agent-auto-research": ("Agent Auto-Research", "🔬"),
+    t["id"]: (t["name"], t["icon"])
+    for t in json.loads((ROOT / "config" / "paper-topics.json").read_text(encoding="utf-8"))
 }
 
 LLM_API_KEY = llm_api_key()

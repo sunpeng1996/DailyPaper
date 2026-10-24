@@ -164,13 +164,8 @@ def fetch_meta(aid: str) -> dict:
 # ------- Markdown writer -----------------------------------------------------
 
 TOPIC_NAMES = {
-    "gen-rec": ("生成式推荐", "🎯"),
-    "gen-search": ("生成式搜索", "🔎"),
-    "agentic-rec": ("Agent推荐", "🧭"),
-    "user-simulation": ("User Simulator", "👥"),
-    "llm-general": ("LLM通用", "🧠"),
-    "agent-general": ("Agent通用", "🤖"),
-    "agent-auto-research": ("Agent Auto-Research", "🔬"),
+    t["id"]: (t["name"], t["icon"])
+    for t in json.loads((DEFAULT_SITE / "config" / "paper-topics.json").read_text(encoding="utf-8"))
 }
 
 
@@ -197,6 +192,8 @@ url: "{paper['url']}"
 authors: "{authors_line}"
 tags: [{tags_line}]
 topic: "{topic}"
+topic_name: "{TOPIC_NAMES[topic][0]}"
+topic_icon: "{TOPIC_NAMES[topic][1]}"
 ---
 
 {result.body_md}

@@ -10,7 +10,8 @@ description: 把一篇 arXiv 论文加进「论文沉淀」存档。使用场景
 ## 资源
 
 - 网站项目：`~/playground/personal/` (GitHub: `sunpeng1996/DailyPaper`)
-- 当前已有主题：`gen-rec`（生成式推荐 🎯）/ `gen-search`（生成式搜索 🔎）/ `agentic-rec`（Agent推荐 🧭）/ `user-simulation`（User Simulator 👥）/ `llm-general`（LLM通用 🧠）/ `agent-general`（Agent通用 🤖）/ `agent-auto-research`（Agent Auto-Research 🔬）
+- 主题配置：项目根目录的 `config/paper-topics.json`，包含主题 ID、名称、图标和页面顺序。选择主题前读取此文件。
+- 主题包括：生成式推荐、生成式搜索、Agent推荐、用户模拟器、LLM通用、Agent通用、Agent Auto-Research、人群探索Agent、商品找人范式、LLM4Rec、对话系统、多轮强化、信用分配、知识库。
 - 绑定 LLM：ARK / 豆包（OpenAI 兼容，key 在 `~/playground/api/api_key.txt`）
 
 ## 处理流程

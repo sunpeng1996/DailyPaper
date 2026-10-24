@@ -22,10 +22,17 @@ body:
         - 🎯 生成式推荐 (gen-rec)
         - 🔎 生成式搜索 (gen-search)
         - 🧭 Agent推荐 (agentic-rec)
-        - 👥 User Simulator (user-simulation)
+        - 👥 用户模拟器 (user-simulation)
         - 🧠 LLM通用 (llm-general)
         - 🤖 Agent通用 (agent-general)
         - 🔬 Agent Auto-Research (agent-auto-research)
+        - 🕵️ 人群探索Agent (audience-exploration-agent)
+        - 🛍️ 商品找人范式 (item-to-user)
+        - 💡 LLM4Rec (llm4rec)
+        - 💬 对话系统 (dialogue-systems)
+        - 🔄 多轮强化 (multi-turn-rl)
+        - ⚖️ 信用分配 (credit-assignment)
+        - 📚 知识库 (knowledge-base)
         - 🆕 新建 topic（在下方填名字）
     validations:
       required: true
